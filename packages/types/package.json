@@ -34,7 +34,7 @@
     "build:esm": "tsc --build tsconfig.esm.json && echo '{\"type\": \"module\"}' > ./dist/esm/package.json && yarn esm:fix",
     "build:types": "tsc --build tsconfig.types.json",
     "esm:fix": "node ../../scripts/fix-esm.js dist/esm",
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint --fix --ext .js,.ts .",
     "format": "prettier --write '**/*'",
     "start": "tsc --watch",
