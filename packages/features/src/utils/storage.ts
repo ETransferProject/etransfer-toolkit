@@ -8,7 +8,7 @@ export const getETransferJWT = (key: string) => {
     const data = JSON.parse(jwtData) as { [key: string]: TETransferJWTData };
     const cData = data[key];
     if (!cData || !cData?.expiresTime) return;
-    if (Date.now() - 0.5 * Day > cData?.expiresTime) return;
+    if (Date.now() + 0.5 * Day > cData?.expiresTime) return;
     return cData;
   } catch (error) {
     return;
