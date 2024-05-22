@@ -1,5 +1,15 @@
 import { TBaseConfig, TRequestConfig } from './types';
 
+export const isDeniedRequest = (error: { message: string }) => {
+  try {
+    const message: string = error.message;
+    if (message?.includes('401')) return true;
+  } catch (error) {
+    console.warn(error);
+  }
+  return false;
+};
+
 export function spliceUrl(baseUrl: string, extendArg?: string) {
   return extendArg ? baseUrl + '/' + extendArg : baseUrl;
 }

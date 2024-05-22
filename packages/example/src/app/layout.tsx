@@ -2,6 +2,8 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import './globals.css';
+import dynamic from 'next/dynamic';
+const GetAuth = dynamic(() => import('@/pageComponents/login'), { ssr: false });
 
 export const metadata: Metadata = {
   title: 'ETransfer toolkit example',
@@ -26,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               colorSplit: '#f0f0f0',
             },
           }}>
+          <GetAuth />
           {children}
         </ConfigProvider>
       </body>

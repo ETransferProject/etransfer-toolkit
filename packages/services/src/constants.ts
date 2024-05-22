@@ -1,4 +1,5 @@
 import { TBaseConfig } from '@etransfer/request';
+import { TAuthApiBaseParams } from './types';
 
 export const DEFAULT_METHOD = 'GET';
 
@@ -46,3 +47,10 @@ export enum CancelTokenSourceKey {
   GET_WITHDRAW_INFO = 'GET_WITHDRAW_INFO',
   GET_NETWORK_LIST = 'GET_NETWORK_LIST',
 }
+
+export const AUTH_API_BASE_PARAMS: TAuthApiBaseParams = {
+  grant_type: 'signature',
+  scope: 'ETransferServer',
+  client_id: 'ETransferServer_App',
+  source: 'portkey',
+};

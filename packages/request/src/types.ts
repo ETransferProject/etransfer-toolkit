@@ -1,7 +1,8 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type TEtransferRequest = {
-  parseRouter: (name: string, urlObj: TSupportUrl) => void;
+  post: (url: string, data?: any, config?: AxiosRequestConfig<any> | undefined) => Promise<AxiosResponse<any, any>>;
+  get: (url: string, config?: AxiosRequestConfig<any> | undefined) => Promise<AxiosResponse<any, any>>;
   send: (base: TBaseConfig, config: TRequestConfig) => void;
   setHeaders: (key: string, value: string) => void;
   setConfig: (key: keyof TRequestConfig, value: TRequestConfig[keyof TRequestConfig]) => void;
@@ -21,5 +22,3 @@ export type TBaseRequest = {
 } & TRequestConfig;
 
 export type TBaseConfig = string | { target: string; baseConfig: TRequestConfig };
-
-export type TSupportUrl = { [key: string]: TBaseConfig };

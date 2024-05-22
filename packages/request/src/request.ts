@@ -1,5 +1,5 @@
-import axios, { AxiosInstance, CancelTokenSource } from 'axios';
-import { TBaseConfig, TEtransferRequest, TRequestConfig, TSupportUrl } from './types';
+import axios, { AxiosInstance, AxiosRequestConfig, CancelTokenSource } from 'axios';
+import { TBaseConfig, TEtransferRequest, TRequestConfig } from './types';
 import { getRequestConfig, spliceUrl } from './utils';
 import { baseRequest } from './axios';
 import { DEFAULT_METHOD } from './constants';
@@ -13,7 +13,15 @@ export class EtransferRequest implements TEtransferRequest {
     this._baseRequest = baseRequest;
   }
 
-  public send(base: TBaseConfig, config: TRequestConfig) {
+  public async post(url: string, data?: any, config?: AxiosRequestConfig<any> | undefined) {
+    return await this._baseRequest.post(url, data, config);
+  }
+
+  public async get(url: string, config?: AxiosRequestConfig<any> | undefined) {
+    return await this._baseRequest.get(url, config);
+  }
+
+  public async send(base: TBaseConfig, config: TRequestConfig) {
     const {
       method = DEFAULT_METHOD,
       query = '',
@@ -28,22 +36,11 @@ export class EtransferRequest implements TEtransferRequest {
       }
       cancelTokenSources.set(cancelTokenSourceKey, source);
     }
-    return this._baseRequest({
+    return await this._baseRequest({
       ...axiosConfig,
       url: url || spliceUrl(typeof base === 'string' ? base : base.target, query),
       method,
       cancelToken: source.token,
-    });
-  }
-
-  /**
-   * @param  {string} name
-   * @param  {TSupportUrl} urlObj
-   */
-  public parseRouter(name: string, urlObj: TSupportUrl) {
-    const obj: any = (this[name] = {});
-    Object.keys(urlObj).forEach(key => {
-      obj[key] = this.send.bind(this, urlObj[key]);
     });
   }
 

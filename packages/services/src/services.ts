@@ -1,6 +1,9 @@
+import { stringify } from 'query-string';
 import {
   TCreateWithdrawOrderRequest,
   TCreateWithdrawOrderResult,
+  TGetAuthRequest,
+  TGetAuthResult,
   TGetDepositCalculateRequest,
   TGetDepositCalculateResult,
   TGetDepositInfoRequest,
@@ -19,7 +22,7 @@ import {
   TServices,
 } from './types';
 import { formatApiError } from './utils';
-import { API_LIST, CancelTokenSourceKey } from './constants';
+import { API_LIST, AUTH_API_BASE_PARAMS, CancelTokenSourceKey } from './constants';
 import { TRequestConfig, EtransferRequest } from '@etransfer/request';
 
 export abstract class BaseService {
@@ -36,9 +39,24 @@ export abstract class BaseService {
   public setRequestHeaders(key: string, value: string) {
     this._request.setHeaders(key, value);
   }
+
+  public getRequest() {
+    return this._request;
+  }
 }
 
 export class Services extends BaseService implements TServices {
+  async getAuthToken(params: TGetAuthRequest): Promise<TGetAuthResult> {
+    try {
+      const res = await this._request.post(`/connect/token`, stringify({ ...AUTH_API_BASE_PARAMS, ...params }), {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      });
+      return res.data;
+    } catch (error) {
+      throw formatApiError(error, 'getAuthToken error', false);
+    }
+  }
+
   async getTokenList(params: TGetTokenListRequest): Promise<TGetTokenListResult> {
     try {
       const res = await this._request.send(API_LIST.common.getTokenList, { params });
@@ -132,6 +150,4 @@ export class Services extends BaseService implements TServices {
       throw formatApiError(error, 'getRecordStatus error', false);
     }
   }
-
-  // TODO auth
 }

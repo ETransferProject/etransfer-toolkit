@@ -1,11 +1,12 @@
 import { AxiosResponse } from 'axios';
 import { TRequestConfig } from '@etransfer/request';
 import { ChainId } from '@portkey/types';
-import { PortkeyVersion } from '@etransfer/types';
+import { BusinessType, PortkeyVersion } from '@etransfer/types';
 
 export type TRequestFunction = (config?: TRequestConfig) => Promise<any | AxiosResponse<any>>;
 
 export type TServices = {
+  getAuthToken(params: TGetAuthRequest): Promise<TGetAuthResult>;
   getTokenList(params: TGetTokenListRequest): Promise<TGetTokenListResult>;
   getTokenOption(params: TGetTokenOptionRequest): Promise<TGetTokenOptionResult>;
   getNetworkList(params: TGetNetworkListRequest): Promise<TGetNetworkListResult>;
@@ -17,10 +18,28 @@ export type TServices = {
   getRecordStatus(): Promise<TGetRecordStatusResult>;
 };
 
-export enum BusinessType {
-  Deposit = 'Deposit',
-  Withdraw = 'Withdraw',
-}
+export type TAuthApiBaseParams = {
+  grant_type: string;
+  scope: string;
+  client_id: string;
+  source: string;
+};
+
+export type TGetAuthRequest = {
+  pubkey: string;
+  signature: string;
+  plain_text: string;
+  ca_hash: string;
+  chain_id: string;
+  managerAddress: string;
+  version: PortkeyVersion;
+};
+
+export type TGetAuthResult = {
+  token_type: string;
+  access_token: string;
+  expires_in: number;
+};
 
 export type TGetTokenListRequest = {
   type: BusinessType;
