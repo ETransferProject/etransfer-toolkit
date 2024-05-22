@@ -1,18 +1,26 @@
+import { TBaseConfig } from '@etransfer/request';
+
 export const DEFAULT_METHOD = 'GET';
 
-const AuthList = {
+const AuthList: Record<string, TBaseConfig> = {
   token: {
     target: '/connect/token',
     baseConfig: { method: 'POST' },
   },
 };
 
-const CommonApiList = {
+const CommonApiList: Record<string, TBaseConfig> = {
   getTokenList: '/api/etransfer/token/list',
-  getDepositTokenList: '/api/etransfer/token/option',
+  getTokenOption: '/api/etransfer/token/option',
   getNetworkList: '/api/etransfer/network/list',
+};
+
+const DepositApiList: Record<string, TBaseConfig> = {
   getDepositInfo: '/api/etransfer/deposit/info',
   depositCalculator: '/api/etransfer/deposit/calculator',
+};
+
+const WithdrawApiList: Record<string, TBaseConfig> = {
   getWithdrawInfo: '/api/etransfer/withdraw/info',
   createWithdrawOrder: {
     target: '/api/etransfer/withdraw/order',
@@ -20,13 +28,18 @@ const CommonApiList = {
   },
 };
 
-const HistoryApiList = {
+const HistoryApiList: Record<string, TBaseConfig> = {
   getRecordsList: '/api/etransfer/record/list',
   getRecordStatus: '/api/etransfer/record/status',
-  postRecordRead: '/api/etransfer/record/read',
 };
 
-export const API_LIST = { auth: AuthList, common: CommonApiList, records: HistoryApiList };
+export const API_LIST: Record<string, Record<string, TBaseConfig>> = {
+  auth: AuthList,
+  common: CommonApiList,
+  deposit: DepositApiList,
+  withdraw: WithdrawApiList,
+  records: HistoryApiList,
+};
 
 export enum CancelTokenSourceKey {
   GET_DEPOSIT_INFO = 'GET_DEPOSIT_INFO',

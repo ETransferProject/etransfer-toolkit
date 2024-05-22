@@ -13,7 +13,7 @@ const isDeniedRequest = (error: { message: string }) => {
 
 const axiosInstance = axios.create({
   baseURL: '/',
-  timeout: 50000,
+  timeout: 20000,
 });
 
 axiosInstance.defaults.headers.common['x-csrf-token'] = 'AUTH_TOKEN';

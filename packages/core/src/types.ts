@@ -5,3 +5,7 @@ export type TETransferCore = {
   login(params: any): Promise<any>;
   sendWithdrawOrder(params: any): Promise<{ orderId: string }>;
 };
+
+export type TETransferCoreInitParams = { etransferUrl: string };
+
+export type TETransferCoreOptions = TETransferCoreInitParams;
