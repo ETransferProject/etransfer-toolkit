@@ -1,10 +1,10 @@
 'use client';
 
 import { eTransferCore } from '@/utils/core';
-import { Button, Divider, Select } from 'antd';
+import { Button, Divider, Select, Input } from 'antd';
 import { useCallback, useState } from 'react';
 import { BusinessType } from '@etransfer/types';
-import { TDepositInfo, TNetworkItem } from '@etransfer/services';
+import { TConversionRate, TDepositInfo, TNetworkItem } from '@etransfer/services';
 import { ChainList } from '@/config';
 import { ChainId } from '@portkey/types';
 
@@ -34,6 +34,8 @@ export default function Deposit() {
 
   // deposit info
   const [depositInfo, setDepositInfo] = useState<TDepositInfo | undefined>();
+  const [amount, setAmount] = useState('');
+  const [conversionRate, setConversionRate] = useState<TConversionRate | undefined>();
 
   const fetchNetworkList = useCallback(
     async (symbol?: string) => {
@@ -83,14 +85,32 @@ export default function Deposit() {
   }, [fetchNetworkList, fromToken]);
 
   const fetchDepositAddress = useCallback(async () => {
-    const res = await eTransferCore.services.getDepositInfo({
-      chainId: toChain,
-      network: fromNetwork,
-      symbol: fromToken,
-      toSymbol: toToken,
-    });
-    setDepositInfo(res.depositInfo);
+    try {
+      const res = await eTransferCore.services.getDepositInfo({
+        chainId: toChain,
+        network: fromNetwork,
+        symbol: fromToken,
+        toSymbol: toToken,
+      });
+      setDepositInfo(res.depositInfo);
+    } catch (error) {
+      console.error('fetchDepositAddress', error);
+    }
   }, [fromNetwork, fromToken, toChain, toToken]);
+
+  const fetchCalculate = useCallback(async () => {
+    try {
+      const res = await eTransferCore.services.getDepositCalculate({
+        toChainId: toChain,
+        fromSymbol: fromToken,
+        toSymbol: toToken,
+        fromAmount: amount,
+      });
+      setConversionRate(res.conversionRate);
+    } catch (error) {
+      console.error('fetchCalculate', error);
+    }
+  }, [amount, fromToken, toChain, toToken]);
 
   const onFromTokenChange = useCallback(
     (val: string) => {
@@ -124,6 +144,14 @@ export default function Deposit() {
     [fetchNetworkList],
   );
 
+  const onChangeAmount = useCallback((event: any) => {
+    const value = event.target.value;
+    if (!value) {
+      setConversionRate(undefined);
+    }
+    setAmount(event.target.value);
+  }, []);
+
   return (
     <div>
       <h1 className="page-title">Deposit Assets</h1>
@@ -149,6 +177,43 @@ export default function Deposit() {
         <div className="space-y-2">
           <span className="form-label">To Token:</span>
           <Select value={toToken} style={{ width: 200 }} onChange={onToTokenChange} options={toTokenList} />
+        </div>
+
+        <div className="space-y-2">
+          <span className="form-label">Calculate:</span>
+          <Input
+            value={amount}
+            style={{ width: 200 }}
+            onChange={onChangeAmount}
+            placeholder="Please select token first"
+          />
+          <Button style={{ marginLeft: 4, marginRight: 4 }} onClick={fetchCalculate}>
+            Get Receive
+          </Button>
+          <div>
+            {!!conversionRate?.toAmount && (
+              <span>
+                Receive:
+                <span
+                  className="text-brand-normal inline-block"
+                  style={{
+                    marginLeft: 4,
+                    marginRight: 20,
+                  }}>{`${conversionRate?.toAmount} ${conversionRate?.fromSymbol}`}</span>
+              </span>
+            )}
+            {!!conversionRate?.minimumReceiveAmount && (
+              <span>
+                <span>Minimum Receive:</span>
+                <span
+                  className="text-brand-normal inline-block"
+                  style={{
+                    marginLeft: 4,
+                    marginRight: 4,
+                  }}>{`${conversionRate?.minimumReceiveAmount} ${conversionRate?.fromSymbol}`}</span>
+              </span>
+            )}
+          </div>
         </div>
       </section>
 
