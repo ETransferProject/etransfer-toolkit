@@ -30,7 +30,7 @@ export default function Deposit() {
   // To
   const [toTokenList, setToTokenList] = useState<TCascadeSelectorOption[]>([]);
   const [toToken, setToToken] = useState<string>('');
-  const [toChain, setToChain] = useState<ChainId>(ChainList[1].key);
+  const [toChain, setToChain] = useState<ChainId>(ChainList[1].value);
 
   // deposit info
   const [depositInfo, setDepositInfo] = useState<TDepositInfo | undefined>();
@@ -42,7 +42,7 @@ export default function Deposit() {
       try {
         const res = await eTransferCore.services.getNetworkList({
           type: BusinessType.Deposit,
-          chainId: 'tDVW',
+          chainId: toChain,
           symbol: symbol || fromToken,
         });
         const list: any[] = JSON.parse(JSON.stringify(res.networkList)) || [];
@@ -56,7 +56,7 @@ export default function Deposit() {
         console.error('fetchNetworkList', error);
       }
     },
-    [fromToken],
+    [fromToken, toChain],
   );
 
   const fetchTokenOption = useCallback(async () => {
@@ -162,55 +162,45 @@ export default function Deposit() {
       <section>
         <div className="space-y-2">
           <span className="form-label">Chain:</span>
-          <Select value={toChain} style={{ width: 200 }} onChange={onToChainChange} options={ChainList} />
+          <Select value={toChain} className="w-[200px]" onChange={onToChainChange} options={ChainList} />
         </div>
         <div className="space-y-2">
           <span className="form-label">From Token:</span>
-          <Select value={fromToken} style={{ width: 200 }} onChange={onFromTokenChange} options={fromTokenList} />
+          <Select value={fromToken} className="w-[200px]" onChange={onFromTokenChange} options={fromTokenList} />
         </div>
 
         <div className="space-y-2">
           <span className="form-label">Network:</span>
-          <Select value={fromNetwork} style={{ width: 200 }} onChange={onFromNetworkChange} options={fromNetworkList} />
+          <Select value={fromNetwork} className="w-[200px]" onChange={onFromNetworkChange} options={fromNetworkList} />
         </div>
 
         <div className="space-y-2">
           <span className="form-label">To Token:</span>
-          <Select value={toToken} style={{ width: 200 }} onChange={onToTokenChange} options={toTokenList} />
+          <Select value={toToken} className="w-[200px]" onChange={onToTokenChange} options={toTokenList} />
         </div>
 
         <div className="space-y-2">
           <span className="form-label">Calculate:</span>
           <Input
             value={amount}
-            style={{ width: 200 }}
+            className="w-[200px]"
             onChange={onChangeAmount}
             placeholder="Please select token first"
           />
-          <Button style={{ marginLeft: 4, marginRight: 4 }} onClick={fetchCalculate}>
+          <Button className="ml-2 mr-2" onClick={fetchCalculate}>
             Get Receive
           </Button>
           <div>
             {!!conversionRate?.toAmount && (
               <span>
                 Receive:
-                <span
-                  className="text-brand-normal inline-block"
-                  style={{
-                    marginLeft: 4,
-                    marginRight: 20,
-                  }}>{`${conversionRate?.toAmount} ${conversionRate?.fromSymbol}`}</span>
+                <span className="text-brand-normal inline-block ml-2 mr-10">{`${conversionRate?.toAmount} ${conversionRate?.fromSymbol}`}</span>
               </span>
             )}
             {!!conversionRate?.minimumReceiveAmount && (
               <span>
                 <span>Minimum Receive:</span>
-                <span
-                  className="text-brand-normal inline-block"
-                  style={{
-                    marginLeft: 4,
-                    marginRight: 4,
-                  }}>{`${conversionRate?.minimumReceiveAmount} ${conversionRate?.fromSymbol}`}</span>
+                <span className="text-brand-normal inline-block ml-2 mr-2">{`${conversionRate?.minimumReceiveAmount} ${conversionRate?.fromSymbol}`}</span>
               </span>
             )}
           </div>
@@ -219,7 +209,7 @@ export default function Deposit() {
 
       <Divider plain>Last Step</Divider>
       <Button onClick={fetchDepositAddress}>Get Deposit Address</Button>
-      <span>{`>>> ${depositInfo?.depositAddress || ''}`}</span>
+      <span className="ml-2">{`>>> ${depositInfo?.depositAddress || ''}`}</span>
     </div>
   );
 }

@@ -1,22 +1,11 @@
 'use client';
-import { Button } from 'antd';
+import QuickRouter from '@/pageComponents/quickRouter';
 
 export default function Home() {
   return (
-    <main>
-      <div className="flex flex-row gap-2">
-        <a href="login">
-          <Button>Go to login</Button>
-        </a>
-
-        <a href="deposit">
-          <Button>Go to deposit</Button>
-        </a>
-
-        <a href="withdraw">
-          <Button>Go to withdraw</Button>
-        </a>
-      </div>
+    <main className="mt-2">
+      <QuickRouter />
+      <div className="mt-60 text-3xl w-full text-center">Welcome to ETransfer toolkit!</div>
     </main>
   );
 }

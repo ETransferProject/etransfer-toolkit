@@ -10,7 +10,7 @@ export type TETransferCore = {
   setAuthHost(host?: string): void;
   getAuth(params: TGetAuthParams): Promise<string>;
   getAuthApi(params: TGetAuthRequest): Promise<string>;
-  sendWithdrawOrder(params: any): Promise<{ orderId: string }>;
+  sendWithdrawOrder(params: TSendWithdrawOrderParams): Promise<{ orderId: string }>;
 };
 
 export type TETransferCoreInitParams = { etransferHost: string; etransferAuthHost: string };
@@ -25,4 +25,8 @@ export type TGetAuthParams = {
   chainId: string;
   managerAddress: string;
   version: PortkeyVersion;
+};
+
+export type TSendWithdrawOrderParams = {
+  address: string;
 };

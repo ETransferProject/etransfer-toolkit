@@ -19,6 +19,7 @@ const config: Config = {
         'brand-hover': '#3b6cff',
         'brand-click': '#1e52f0',
         'brand-disable': '#a9bfff',
+        'success-normal': '#00b73e',
       },
     },
   },
