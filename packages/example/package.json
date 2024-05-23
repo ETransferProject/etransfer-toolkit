@@ -10,9 +10,27 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@etransfer/core": "^1.0.0",
+    "@portkey-v1/contracts": "1.5.4-alpha.22",
+    "@portkey-v1/did-ui-react": "1.5.4-alpha.22",
+    "@portkey-v1/graphql": "1.5.4-alpha.22",
+    "@portkey-v1/request": "1.5.4-alpha.22",
+    "@portkey-v1/services": "1.5.4-alpha.22",
+    "@portkey-v1/types": "1.5.4-alpha.22",
+    "@portkey-v1/utils": "1.5.4-alpha.22",
+    "@portkey/contracts": "2.4.0",
+    "@portkey/detect-provider": "2.2.0",
+    "@portkey/did-ui-react": "2.4.0",
+    "@portkey/graphql": "2.4.0",
+    "@portkey/onboarding": "2.2.0",
+    "@portkey/provider-types": "2.2.0",
+    "@portkey/ramp": "2.4.0",
+    "@portkey/request": "2.4.0",
+    "@portkey/services": "2.4.0",
     "@portkey/types": "2.4.0",
-    "aelf-sdk": "^3.4.7",
+    "@portkey/utils": "2.4.0",
+    "@etransfer/core": "^1.0.0",
+    "@etransfer/utils": "^1.0.0",
+    "aelf-web-login": "2.0.1-beta.9",
     "antd": "5.12.7",
     "query-string": "^7.1.1",
     "next": "14.0.1",
@@ -23,7 +41,6 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/node-telegram-bot-api": "^0.64.3",
-    "@types/react": "^18.2.25",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
@@ -35,5 +52,9 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "resolutions": {
+    "@types/react": "^16 || ^17",
+    "aelf-sdk": "3.4.8"
   }
 }

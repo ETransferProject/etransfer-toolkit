@@ -1,5 +1,7 @@
 import { Services, TGetAuthRequest } from '@etransfer/services';
 import { PortkeyVersion } from '@etransfer/types';
+import { TTokenContract } from '@etransfer/utils';
+import { ChainId } from '@portkey/types';
 
 export type TETransferCore = {
   services: Services;
@@ -27,6 +29,22 @@ export type TGetAuthParams = {
   version: PortkeyVersion;
 };
 
-export type TSendWithdrawOrderParams = {
+export type TSendWithdrawOrderParams = THandleApproveTokenParams & {
   address: string;
+  caContractAddress: string;
+  caHash: string;
+  network: string;
+  chainId: ChainId;
+  userManagerAddress: string;
+  getSignature: (param: string) => Promise<string>;
+};
+
+export type THandleApproveTokenParams = {
+  tokenContract: TTokenContract;
+  tokenContractAddress: string;
+  endPoint: string;
+  symbol: string;
+  amount: string;
+  userAccountAddress: string;
+  eTransferContractAddress: string;
 };

@@ -1,7 +1,29 @@
 import { Services, TGetAuthRequest } from '@etransfer/services';
-import { TETransferCore, TETransferCoreInitParams, TETransferCoreOptions, TGetAuthParams } from './types';
-import { etransferEvents } from '@etransfer/utils';
+import {
+  TETransferCore,
+  TETransferCoreInitParams,
+  TETransferCoreOptions,
+  TGetAuthParams,
+  THandleApproveTokenParams,
+  TSendWithdrawOrderParams,
+} from './types';
+import {
+  checkTokenAllowanceAndApprove,
+  createTransferTokenTransaction,
+  etransferEvents,
+  isDIDAddressSuffix,
+  getBalance,
+  removeDIDAddressSuffix,
+  sleep,
+} from '@etransfer/utils';
 import { getETransferJWT, setETransferJWT } from '@etransfer/features';
+import {
+  INSUFFICIENT_ALLOWANCE_MESSAGE,
+  WITHDRAW_ERROR_MESSAGE,
+  WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
+  ZERO,
+} from './constants';
+import { ChainId } from '@portkey/types';
 
 export class ETransferCore implements TETransferCore {
   public services: Services;
@@ -68,8 +90,128 @@ export class ETransferCore implements TETransferCore {
     return `${token_type} ${access_token}`;
   }
 
-  async sendWithdrawOrder(params: any) {
+  async sendWithdrawOrder(params: TSendWithdrawOrderParams) {
+    const {
+      tokenContract,
+      tokenContractAddress,
+      endPoint,
+      address,
+      caContractAddress,
+      eTransferContractAddress,
+      caHash,
+      symbol,
+      network,
+      amount,
+      chainId,
+      userAccountAddress,
+      userManagerAddress,
+      getSignature,
+    } = params;
     console.log('check allowance, approve, transfer, createOrder ... ', params);
-    return { orderId: '' };
+
+    const approveRes = await this.handleApproveToken({
+      tokenContract,
+      tokenContractAddress,
+      endPoint,
+      symbol,
+      amount,
+      userAccountAddress,
+      eTransferContractAddress,
+    });
+    if (!approveRes) throw new Error(INSUFFICIENT_ALLOWANCE_MESSAGE);
+    console.log('>>>>>> sendTransferTokenTransaction approveRes', approveRes);
+
+    if (approveRes) {
+      const transaction = await createTransferTokenTransaction({
+        caContractAddress,
+        eTransferContractAddress,
+        caHash,
+        symbol,
+        amount,
+        chainId,
+        endPoint,
+        fromManagerAddress: userManagerAddress,
+        getSignature,
+      });
+      console.log(transaction, '=====transaction');
+
+      await this.handleCreateWithdrawOrder({ chainId, symbol, network, address, amount, rawTransaction: transaction });
+
+      return { orderId: '' };
+    } else {
+      throw new Error('Approve Failed');
+    }
+  }
+
+  async handleApproveToken({
+    tokenContract,
+    tokenContractAddress,
+    endPoint,
+    symbol,
+    amount,
+    userAccountAddress,
+    eTransferContractAddress,
+  }: THandleApproveTokenParams) {
+    const maxBalance = await getBalance(tokenContract, symbol, userAccountAddress);
+    console.log('>>>>>> maxBalance', maxBalance);
+    if (ZERO.plus(maxBalance).isLessThan(ZERO.plus(amount))) {
+      throw new Error(
+        `Insufficient ${symbol} balance in your account. Please consider transferring a smaller amount or topping up before you try again.`,
+      );
+    }
+
+    const checkRes = await checkTokenAllowanceAndApprove({
+      tokenContract,
+      tokenContractAddress,
+      endPoint,
+      symbol,
+      amount,
+      owner: userAccountAddress,
+      spender: eTransferContractAddress,
+    });
+
+    return checkRes;
+  }
+
+  async handleCreateWithdrawOrder({
+    chainId,
+    symbol,
+    network,
+    address,
+    amount,
+    rawTransaction,
+  }: {
+    chainId: ChainId;
+    symbol: string;
+    network: string;
+    address: string;
+    amount: string;
+    rawTransaction: string;
+  }) {
+    try {
+      const createWithdrawOrderRes = await this.services.createWithdrawOrder({
+        network,
+        symbol,
+        amount,
+        fromChainId: chainId,
+        toAddress: isDIDAddressSuffix(address) ? removeDIDAddressSuffix(address) : address,
+        rawTransaction: rawTransaction,
+      });
+      console.log('>>>>>> handleCreateWithdrawOrder createWithdrawOrderRes', createWithdrawOrderRes);
+      if (createWithdrawOrderRes.orderId) {
+        return createWithdrawOrderRes;
+      } else {
+        throw new Error(WITHDRAW_ERROR_MESSAGE);
+      }
+    } catch (error: any) {
+      if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
+        throw new Error(error?.message);
+      } else {
+        throw new Error(WITHDRAW_ERROR_MESSAGE);
+      }
+    } finally {
+      await sleep(1000);
+      etransferEvents.UpdateNewRecordStatus.emit();
+    }
   }
 }

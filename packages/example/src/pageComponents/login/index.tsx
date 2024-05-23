@@ -1,8 +1,9 @@
 'use client';
 import { eTransferCore } from '@/utils/core';
 import { PortkeyVersion } from '@etransfer/types';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { useCallback } from 'react';
+import { WebLoginState, useWebLogin } from 'aelf-web-login';
 
 export default function GetAuth() {
   const fetchAuthToken = useCallback(async () => {
@@ -33,10 +34,25 @@ export default function GetAuth() {
     });
   }, []);
 
+  const { login, loginState } = useWebLogin();
+  const onLogin = useCallback(() => {
+    if (loginState === WebLoginState.logining) return;
+    if (loginState === WebLoginState.logined) {
+      message.info('You are logged in.');
+    }
+    if (loginState === WebLoginState.initial || loginState === WebLoginState.lock) {
+      login();
+    }
+  }, [login, loginState]);
+
   return (
     <div>
-      <Button onClick={fetchAuthToken}>Get ETransfer Token</Button>
-      <span style={{ display: 'inline-block', width: 8 }} />
+      <Button className="mr-2" onClick={onLogin}>
+        Log in
+      </Button>
+      <Button className="mr-2" onClick={fetchAuthToken}>
+        Get ETransfer Token
+      </Button>
       <Button onClick={fetchNewAuthToken}>Get New ETransfer Token</Button>
     </div>
   );

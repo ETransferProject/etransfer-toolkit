@@ -7,6 +7,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
 import { BusinessType, PortkeyVersion } from '@etransfer/types';
 import type { TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/services';
+import { TTokenContract, getTokenContract } from '@etransfer/utils';
 
 type TTokenItemForSelect = TTokenItem & {
   value: string;
@@ -119,14 +120,41 @@ export default function Withdraw() {
 
   const onSubmit = useCallback(async () => {
     try {
-      const res = await eTransferCore.services.createWithdrawOrder({
-        network: currentNetwork,
-        symbol: currentToken,
-        amount: amount,
-        fromChainId: currentChain,
-        toAddress: address,
-        rawTransaction: '',
+      // const res = await eTransferCore.services.createWithdrawOrder({
+      //   network: currentNetwork,
+      //   symbol: currentToken,
+      //   amount: amount,
+      //   fromChainId: currentChain,
+      //   toAddress: address,
+      //   rawTransaction: '',
+      // });
+      const tokenContract = getTokenContract(
+        'https://tdvw-test-node.aelf.io',
+        'ASh2Wt7nSEmYqnGxPPzp4pnVDU4uhj1XW9Se5VeZcX2UDdyjx',
+      );
+      console.log('>>>>>> tokenContract', tokenContract);
+
+      const res = await eTransferCore.sendWithdrawOrder({
+        tokenContract: { ...tokenContract } as unknown as TTokenContract,
+        tokenContractAddress: 'ASh2Wt7nSEmYqnGxPPzp4pnVDU4uhj1XW9Se5VeZcX2UDdyjx',
+        endPoint: 'https://tdvw-test-node.aelf.io',
+        symbol: 'SGR-1',
+        amount: '1',
+        userAccountAddress: 'Py2TJpjTtt29zAtqLWyLEU1DEzBFPz1LJU594hy6evPF8Cvft',
+        address: '0x3cf2f10669cb9f9169027c033f5b1a2477bcd5c9',
+        caContractAddress: '2WzfRW6KZhAfh3gCZ8Akw4wcti69GUNc1F2sXNa2fgjndv59bE',
+        eTransferContractAddress: '2AgU8BfyKyrxUrmskVCUukw63Wk96MVfVoJzDDbwKszafioCN1',
+        caHash: '134374c6dc3be101de6009e20d3888da43eaf7683bc7f41faac254286e85e032',
+        network: 'SETH',
+        chainId: 'AELF',
+        userManagerAddress: '7iC6EQtt4rKsqv9vFiwpUDvZVipSoKwvPLy7pRG189qJjyVT7',
+        getSignature: async (str: string) => {
+          console.log('getSignature srt', str);
+          return '';
+        },
       });
+      console.log('>>>>>> res', res);
+
       if (res.orderId) {
         setWithdrawResult(true);
       } else {
@@ -135,7 +163,7 @@ export default function Withdraw() {
     } catch (error) {
       setWithdrawResult(false);
     }
-  }, [address, amount, currentChain, currentNetwork, currentToken]);
+  }, []);
 
   return (
     <div>
