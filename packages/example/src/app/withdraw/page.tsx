@@ -1,5 +1,6 @@
 'use client';
 
+import AElf from 'aelf-sdk';
 import { ChainList } from '@/config';
 import { ChainId } from '@portkey/types';
 import { Button, Divider, Input, Select } from 'antd';
@@ -7,8 +8,12 @@ import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
 import { BusinessType, PortkeyVersion } from '@etransfer/types';
 import type { TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/services';
-import { TSignatureParams, TTokenContract, getTokenContract } from '@etransfer/utils';
+import { getTokenContract, timesDecimals } from '@etransfer/utils';
 import { useWalletContext } from '@/provider/walletProvider';
+import { ETRANSFER_USER_ACCOUNT, ETRANSFER_USER_CA_HASH, ETRANSFER_USER_MANAGER_ADDRESS } from '@/constants/storage';
+import { WalletType } from 'aelf-web-login';
+import { ADDRESS_MAP, AelfReact, SupportedELFChainId } from '@/constants';
+import { ContractType } from '@/constants/chain';
 
 type TTokenItemForSelect = TTokenItem & {
   value: string;
@@ -18,11 +23,12 @@ type TTokenItemForSelect = TTokenItem & {
 export default function Withdraw() {
   const [currentChain, setCurrentChain] = useState<ChainId>(ChainList[1].value);
   const [tokenList, setTokenList] = useState<TTokenItem[]>([]);
-  const [currentToken, setCurrentToken] = useState<string>('USDT');
-  const [address, setAddress] = useState<string>('');
+  const [currentToken, setCurrentToken] = useState<string>('SGR-1');
+  const [currentDecimals, setCurrentDecimals] = useState<number>(8);
+  const [address, setAddress] = useState<string>('0x3cf2f10669cb9f9169027c033f5b1a2477bcd5c9');
   const [networkList, setNetworkList] = useState<TNetworkItem[]>([]);
-  const [currentNetwork, setCurrentNetwork] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
+  const [currentNetwork, setCurrentNetwork] = useState<string>('SETH');
+  const [amount, setAmount] = useState<string>('2.21');
   const [withdrawInfo, setWithdrawInfo] = useState<TWithdrawInfo>();
   const [withdrawResult, setWithdrawResult] = useState<boolean | undefined>(undefined);
 
@@ -74,6 +80,7 @@ export default function Withdraw() {
 
       setTokenList(tokenList);
       setCurrentToken(tokenList[0].symbol);
+      setCurrentDecimals(tokenList[0].decimals);
 
       await fetchNetworkList(tokenList[0].symbol);
     } catch (error) {
@@ -101,9 +108,15 @@ export default function Withdraw() {
     setCurrentChain(val);
   }, []);
 
-  const onTokenChange = useCallback((val: string) => {
-    setCurrentToken(val);
-  }, []);
+  const onTokenChange = useCallback(
+    (val: string) => {
+      setCurrentToken(val);
+      const token = tokenList.find(item => item.symbol === val);
+      if (!token) return;
+      setCurrentDecimals(token.decimals);
+    },
+    [tokenList],
+  );
 
   const onAddressChange = useCallback((event: any) => {
     const value = event.target.value;
@@ -122,37 +135,49 @@ export default function Withdraw() {
   const [{ wallet }] = useWalletContext();
   const onSubmit = useCallback(async () => {
     try {
-      // const res = await eTransferCore.services.createWithdrawOrder({
-      //   network: currentNetwork,
-      //   symbol: currentToken,
-      //   amount: amount,
-      //   fromChainId: currentChain,
-      //   toAddress: address,
-      //   rawTransaction: '',
-      // });
-      const tokenContract = getTokenContract(
-        'https://tdvw-test-node.aelf.io',
-        'ASh2Wt7nSEmYqnGxPPzp4pnVDU4uhj1XW9Se5VeZcX2UDdyjx',
-      );
-      console.log('>>>>>> tokenContract', tokenContract);
+      const endPoint = AelfReact[currentChain as SupportedELFChainId].rpcUrl;
+      const tokenContractAddress = ADDRESS_MAP[currentChain as SupportedELFChainId][ContractType.TOKEN];
+      const tokenContract = await getTokenContract(endPoint, tokenContractAddress);
+
+      const caContractAddress = ADDRESS_MAP[currentChain as SupportedELFChainId][ContractType.CA];
+      const eTransferContractAddress = ADDRESS_MAP[currentChain as SupportedELFChainId][ContractType.ETRANSFER];
+      const caHash = localStorage.getItem(ETRANSFER_USER_CA_HASH);
+      const managerAddress = localStorage.getItem(ETRANSFER_USER_MANAGER_ADDRESS);
+      const account = JSON.parse(localStorage.getItem(ETRANSFER_USER_ACCOUNT) || '');
+      if (!caHash || !managerAddress) throw new Error('User information is missing');
+      if (!account?.[currentChain]?.[0]) throw new Error('User address is missing');
 
       const res = await eTransferCore.sendWithdrawOrder({
-        tokenContract: { ...tokenContract } as unknown as TTokenContract,
-        tokenContractAddress: 'ASh2Wt7nSEmYqnGxPPzp4pnVDU4uhj1XW9Se5VeZcX2UDdyjx',
-        endPoint: 'https://tdvw-test-node.aelf.io',
-        symbol: 'SGR-1',
-        amount: '1',
-        userAccountAddress: 'Py2TJpjTtt29zAtqLWyLEU1DEzBFPz1LJU594hy6evPF8Cvft',
-        address: '0x3cf2f10669cb9f9169027c033f5b1a2477bcd5c9',
-        caContractAddress: '2WzfRW6KZhAfh3gCZ8Akw4wcti69GUNc1F2sXNa2fgjndv59bE',
-        eTransferContractAddress: '2AgU8BfyKyrxUrmskVCUukw63Wk96MVfVoJzDDbwKszafioCN1',
-        caHash: '134374c6dc3be101de6009e20d3888da43eaf7683bc7f41faac254286e85e032',
-        network: 'SETH',
-        chainId: 'AELF',
-        userManagerAddress: '7iC6EQtt4rKsqv9vFiwpUDvZVipSoKwvPLy7pRG189qJjyVT7',
-        getSignature: async (params: TSignatureParams) => {
+        tokenContract: {
+          ...tokenContract,
+          callSendMethod: (params, sendOptions) => wallet?.callSendMethod(currentChain, params, sendOptions),
+        },
+        tokenContractAddress,
+        endPoint: endPoint,
+        symbol: currentToken,
+        decimals: currentDecimals,
+        amount,
+        userAccountAddress: account[currentChain][0],
+        address,
+        caContractAddress,
+        eTransferContractAddress,
+        caHash,
+        network: currentNetwork,
+        chainId: currentChain,
+        userManagerAddress: managerAddress,
+        getSignature: async (ser: any) => {
           if (!wallet) return '';
-          return await wallet.getSignature(params);
+          let signInfo: string;
+          if (wallet.walletType !== WalletType.portkey) {
+            // nightElf or discover
+            signInfo = AElf.utils.sha256(ser);
+          } else {
+            // portkey sdk
+            signInfo = Buffer.from(ser).toString('hex');
+          }
+
+          // signature
+          return await wallet.getSignature({ signInfo });
         },
       });
       console.log('>>>>>> res', res);
@@ -165,7 +190,7 @@ export default function Withdraw() {
     } catch (error) {
       setWithdrawResult(false);
     }
-  }, []);
+  }, [address, amount, currentChain, currentDecimals, currentNetwork, currentToken, wallet]);
 
   return (
     <div>

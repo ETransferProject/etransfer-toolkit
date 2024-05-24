@@ -15,6 +15,7 @@ import {
   getBalance,
   removeDIDAddressSuffix,
   sleep,
+  timesDecimals,
 } from '@etransfer/utils';
 import { getETransferJWT, setETransferJWT } from '@etransfer/features';
 import {
@@ -100,6 +101,7 @@ export class ETransferCore implements TETransferCore {
       eTransferContractAddress,
       caHash,
       symbol,
+      decimals,
       network,
       amount,
       chainId,
@@ -127,7 +129,7 @@ export class ETransferCore implements TETransferCore {
         eTransferContractAddress,
         caHash,
         symbol,
-        amount,
+        amount: timesDecimals(amount, decimals).toFixed(),
         chainId,
         endPoint,
         fromManagerAddress: userManagerAddress,
@@ -135,9 +137,27 @@ export class ETransferCore implements TETransferCore {
       });
       console.log(transaction, '=====transaction');
 
-      await this.handleCreateWithdrawOrder({ chainId, symbol, network, address, amount, rawTransaction: transaction });
-
-      return { orderId: '' };
+      try {
+        const createOrderResult = await this.handleCreateWithdrawOrder({
+          chainId,
+          symbol,
+          network,
+          address,
+          amount,
+          rawTransaction: transaction,
+        });
+        if (createOrderResult.orderId) {
+          return createOrderResult;
+        } else {
+          throw new Error(WITHDRAW_ERROR_MESSAGE);
+        }
+      } catch (error: any) {
+        if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
+          throw new Error(error?.message);
+        } else {
+          throw new Error(WITHDRAW_ERROR_MESSAGE);
+        }
+      }
     } else {
       throw new Error('Approve Failed');
     }

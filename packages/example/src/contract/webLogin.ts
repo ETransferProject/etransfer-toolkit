@@ -58,23 +58,11 @@ class Wallet implements TWallet {
     return getTxResult(transactionId, endPoint);
   }
 
-  getSignature(params: TSignatureParams): Promise<SignatureData> {
-    let signInfo: string = '';
-    if (params?.signInfo) {
-      if (this.walletInfo.walletType !== WalletType.portkey) {
-        // nightElf or discover
-        signInfo = AElf.utils.sha256(params?.signInfo);
-      } else {
-        // portkey sdk
-        signInfo = Buffer.from(params?.signInfo).toString('hex');
-      }
-    }
-
-    return this._getSignature({
+  async getSignature(params: TSignatureParams): Promise<SignatureData> {
+    return await this._getSignature({
       appName: AppName || '',
       address: this.walletInfo.address,
       ...params,
-      signInfo,
     });
   }
 
