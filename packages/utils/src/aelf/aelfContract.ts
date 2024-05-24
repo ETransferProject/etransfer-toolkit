@@ -24,9 +24,7 @@ export const getBalance = async (tokenContract: TTokenContract, symbol: string, 
     symbol,
     owner,
   });
-
-  if (!result.balance) throw new Error(CONTRACT_GET_DATA_ERROR);
-  return result.balance;
+  return result?.balance;
 };
 
 export const getAllowance = async (tokenContract: TTokenContract, symbol: string, owner: string, spender: string) => {
@@ -35,9 +33,7 @@ export const getAllowance = async (tokenContract: TTokenContract, symbol: string
     owner,
     spender,
   });
-
-  if (!result.allowance) throw new Error(CONTRACT_GET_DATA_ERROR);
-  return result.allowance;
+  return result?.allowance;
 };
 
 export const getTokenInfo = async (tokenContract: TTokenContract, symbol: string) => {

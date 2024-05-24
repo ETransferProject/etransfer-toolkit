@@ -25,6 +25,7 @@ import {
   ZERO,
 } from './constants';
 import { ChainId } from '@portkey/types';
+import { divDecimals } from '@etransfer/utils';
 
 export class ETransferCore implements TETransferCore {
   public services: Services;
@@ -116,6 +117,7 @@ export class ETransferCore implements TETransferCore {
       tokenContractAddress,
       endPoint,
       symbol,
+      decimals,
       amount,
       userAccountAddress,
       eTransferContractAddress,
@@ -168,13 +170,15 @@ export class ETransferCore implements TETransferCore {
     tokenContractAddress,
     endPoint,
     symbol,
+    decimals,
     amount,
     userAccountAddress,
     eTransferContractAddress,
   }: THandleApproveTokenParams) {
     const maxBalance = await getBalance(tokenContract, symbol, userAccountAddress);
-    console.log('>>>>>> maxBalance', maxBalance);
-    if (ZERO.plus(maxBalance).isLessThan(ZERO.plus(amount))) {
+    const maxBalanceFormat = divDecimals(maxBalance, decimals).toFixed();
+    console.log('>>>>>> maxBalance', maxBalanceFormat);
+    if (ZERO.plus(maxBalanceFormat).isLessThan(ZERO.plus(amount))) {
       throw new Error(
         `Insufficient ${symbol} balance in your account. Please consider transferring a smaller amount or topping up before you try again.`,
       );

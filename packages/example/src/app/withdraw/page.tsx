@@ -8,7 +8,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
 import { BusinessType, PortkeyVersion } from '@etransfer/types';
 import type { TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/services';
-import { getTokenContract, timesDecimals } from '@etransfer/utils';
+import { getTokenContract, removeDIDAddressSuffix } from '@etransfer/utils';
 import { useWalletContext } from '@/provider/walletProvider';
 import { ETRANSFER_USER_ACCOUNT, ETRANSFER_USER_CA_HASH, ETRANSFER_USER_MANAGER_ADDRESS } from '@/constants/storage';
 import { WalletType } from 'aelf-web-login';
@@ -157,7 +157,7 @@ export default function Withdraw() {
         symbol: currentToken,
         decimals: currentDecimals,
         amount,
-        userAccountAddress: account[currentChain][0],
+        userAccountAddress: removeDIDAddressSuffix(account[currentChain][0]),
         address,
         caContractAddress,
         eTransferContractAddress,
