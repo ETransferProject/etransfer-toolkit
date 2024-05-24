@@ -1,7 +1,7 @@
 import AElf from 'aelf-sdk';
 import { COMMON_PRIVATE, CONTRACT_GET_DATA_ERROR, CONTRACT_METHOD_NAME, MANAGER_FORWARD_CALL } from '../constants';
 import { GetRawTx, getAElf, getRawTx, getTxResult } from './aelfBase';
-import { TTokenContract } from '../types';
+import { TGetSignatureFunc, TTokenContract } from '../types';
 import { timesDecimals } from '../calculate';
 import BigNumber from 'bignumber.js';
 import aelfInstance from './aelfInstance';
@@ -178,7 +178,7 @@ export const handleTransaction = async ({
   functionName,
   getSignature,
 }: GetRawTx & {
-  getSignature: (param: string) => Promise<string>;
+  getSignature: TGetSignatureFunc;
 }) => {
   // Create transaction
   const rawTx = getRawTx({

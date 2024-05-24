@@ -1,14 +1,7 @@
+import AElf from 'aelf-sdk';
 import { WalletInfo, WalletType, CallContractParams, SignatureData, WebLoginInterface } from 'aelf-web-login';
-import {
-  TCallContractFunc,
-  TGetSignatureFunc,
-  TWallet,
-  TWalletProps,
-  TCallSendMethod,
-  TCallViewMethod,
-  TSignatureParams,
-} from './types';
-
+import { TCallContractFunc, TWallet, TWalletProps, TCallSendMethod, TCallViewMethod } from './types';
+import { TGetSignatureFunc, TSignatureParams } from '@etransfer/utils';
 import { ChainId, SendOptions } from '@portkey/types';
 import { SendOptions as SendOptionsV1 } from '@portkey-v1/types';
 import { sleep } from '@portkey/utils';
@@ -66,10 +59,22 @@ class Wallet implements TWallet {
   }
 
   getSignature(params: TSignatureParams): Promise<SignatureData> {
+    let signInfo: string = '';
+    if (params?.signInfo) {
+      if (this.walletInfo.walletType !== WalletType.portkey) {
+        // nightElf or discover
+        signInfo = AElf.utils.sha256(params?.signInfo);
+      } else {
+        // portkey sdk
+        signInfo = Buffer.from(params?.signInfo).toString('hex');
+      }
+    }
+
     return this._getSignature({
       appName: AppName || '',
       address: this.walletInfo.address,
       ...params,
+      signInfo,
     });
   }
 

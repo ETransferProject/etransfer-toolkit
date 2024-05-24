@@ -7,7 +7,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
 import { BusinessType, PortkeyVersion } from '@etransfer/types';
 import type { TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/services';
-import { TTokenContract, getTokenContract } from '@etransfer/utils';
+import { TSignatureParams, TTokenContract, getTokenContract } from '@etransfer/utils';
+import { useWalletContext } from '@/provider/walletProvider';
 
 type TTokenItemForSelect = TTokenItem & {
   value: string;
@@ -118,6 +119,7 @@ export default function Withdraw() {
     setAmount(value);
   }, []);
 
+  const [{ wallet }] = useWalletContext();
   const onSubmit = useCallback(async () => {
     try {
       // const res = await eTransferCore.services.createWithdrawOrder({
@@ -148,9 +150,9 @@ export default function Withdraw() {
         network: 'SETH',
         chainId: 'AELF',
         userManagerAddress: '7iC6EQtt4rKsqv9vFiwpUDvZVipSoKwvPLy7pRG189qJjyVT7',
-        getSignature: async (str: string) => {
-          console.log('getSignature srt', str);
-          return '';
+        getSignature: async (params: TSignatureParams) => {
+          if (!wallet) return '';
+          return await wallet.getSignature(params);
         },
       });
       console.log('>>>>>> res', res);

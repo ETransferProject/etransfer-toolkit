@@ -9,12 +9,11 @@ import {
 } from 'aelf-web-login';
 import { ChainId, SendOptions } from '@portkey/types';
 import { SendOptions as SendOptionsV1 } from '@portkey-v1/types';
+import { TGetSignatureFunc, TSignatureParams } from '@etransfer/utils';
 
 export type TCallViewMethod = CallContractHookInterface['callViewMethod'];
 export type TCallSendMethod = CallContractHookInterface['callSendMethod'];
 export type TCallContractFunc = any; //WalletHookInterface['callContract'];
-export type TGetSignatureFunc = WalletHookInterface['getSignature'];
-export type TSignatureParams = Omit<SignatureParams, 'appName' | 'address'>;
 
 export type TWallet = {
   walletInfo: WalletInfo;

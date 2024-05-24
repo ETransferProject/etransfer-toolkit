@@ -9,6 +9,26 @@ export function getAElf(rpc: string) {
   return httpProviders[rpc];
 }
 
+export const recoverPubKey = (msg: any, signature: string) => {
+  const signatureObj = {
+    r: signature.slice(0, 64),
+    s: signature.slice(64, 128),
+    recoveryParam: Number(signature.slice(128, 130)),
+  };
+
+  const hexMsg = AElf.utils.sha256(msg);
+  const publicKey = AElf.wallet.ellipticEc
+    .recoverPubKey(Buffer.from(hexMsg, 'hex'), signatureObj, signatureObj.recoveryParam)
+    .encode('hex', false);
+  return publicKey;
+};
+
+export const pubKeyToAddress = (pubKey: string) => {
+  const onceSHAResult = Buffer.from(AElf.utils.sha256(Buffer.from(pubKey, 'hex')), 'hex');
+  const hash = AElf.utils.sha256(onceSHAResult).slice(0, 64);
+  return AElf.utils.encodeAddressRep(hash);
+};
+
 export type GetRawTx = {
   blockHeightInput: string;
   blockHashInput: string;

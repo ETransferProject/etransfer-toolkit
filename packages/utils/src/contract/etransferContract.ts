@@ -2,6 +2,7 @@ import AElf from 'aelf-sdk';
 import { ChainId } from '@portkey/types';
 import { createManagerForwardCall, getAElf, handleTransaction } from '../aelf';
 import { CONTRACT_METHOD_NAME, MANAGER_FORWARD_CALL } from '../constants';
+import { TGetSignatureFunc } from '../types';
 
 export interface CreateTransferTokenTransactionParams {
   caContractAddress: string;
@@ -12,7 +13,7 @@ export interface CreateTransferTokenTransactionParams {
   chainId: ChainId;
   endPoint: string;
   fromManagerAddress: string;
-  getSignature: (param: string) => Promise<string>;
+  getSignature: TGetSignatureFunc;
 }
 
 export const createTransferTokenTransaction = async ({
