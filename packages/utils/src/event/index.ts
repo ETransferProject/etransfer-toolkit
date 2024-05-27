@@ -1,10 +1,9 @@
 import EventEmitter from 'events';
+import { EVENT_LIST } from '../constants';
+import { TETransferEventsTypes } from '../types/event';
 
 export const eventBus = new EventEmitter();
 
-const EventList = ['DeniedRequest', 'AuthTokenSuccess', 'UpdateNewRecordStatus'] as const;
-
-// eslint-disable-next-line no-new-func
 const eventsServer = new Function();
 
 eventsServer.prototype.parseEvent = function (name: string, eventMap: string[]) {
@@ -27,18 +26,6 @@ eventsServer.prototype.addListener = function (eventType: string, listener: (dat
   return { ...cListener, remove: () => eventBus.removeListener(eventType, listener) };
 };
 
-eventsServer.prototype.parseEvent('base', EventList);
-
-export type TMyEventEmitter = {
-  remove: () => void;
-} & EventEmitter;
-
-export type TETransferEventsTypes = {
-  [x in (typeof EventList)[number]]: {
-    emit: (...params: any[]) => void;
-    addListener: (listener: (data: any) => void) => TMyEventEmitter;
-    name: string;
-  };
-};
+eventsServer.prototype.parseEvent('base', EVENT_LIST);
 
 export const etransferEvents = { ...eventsServer.prototype.base } as unknown as TETransferEventsTypes;
