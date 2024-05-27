@@ -1,5 +1,5 @@
-import { Day, LocalStorageKey } from '../../constants';
-import { TETransferJWTData } from '../../types';
+import { Day, LocalStorageKey } from '../constants';
+import { TETransferJWTData } from '../types';
 
 export const getETransferJWT = (key: string) => {
   try {

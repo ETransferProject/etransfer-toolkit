@@ -30,6 +30,7 @@
     "@portkey/utils": "2.4.0",
     "@etransfer/core": "^1.0.0",
     "@etransfer/utils": "^1.0.0",
+    "@etransfer/types": "^1.0.0",
     "aelf-web-login": "2.0.1-beta.9",
     "antd": "5.12.7",
     "query-string": "^7.1.1",
