@@ -17,7 +17,7 @@ import {
   sleep,
   timesDecimals,
 } from '@etransfer/utils';
-import { getETransferJWT, setETransferJWT } from '@etransfer/features';
+import { getETransferJWT, setETransferJWT } from './utils';
 import {
   INSUFFICIENT_ALLOWANCE_MESSAGE,
   WITHDRAW_ERROR_MESSAGE,

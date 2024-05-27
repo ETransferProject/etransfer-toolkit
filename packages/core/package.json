@@ -41,7 +41,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@etransfer/features": "^1.0.0",
     "@etransfer/services": "^1.0.0",
     "@etransfer/types": "^1.0.0",
     "@etransfer/utils": "^1.0.0"

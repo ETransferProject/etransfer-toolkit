@@ -15,7 +15,6 @@
     "clean": "lerna run clean --stream --parallel",
     "core": "yarn workspace @etransfer/core run",
     "example": "yarn workspace @etransfer/example run",
-    "features": "yarn workspace @etransfer/features run",
     "request": "yarn workspace @etransfer/request run",
     "services": "yarn workspace @etransfer/services run",
     "types": "yarn workspace @etransfer/types run",
