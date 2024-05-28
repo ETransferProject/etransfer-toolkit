@@ -4,7 +4,6 @@ export * from './common';
 export * from './constants';
 export * from './contract';
 export * from './error';
-export * from './error/textProcessor';
 export * from './event';
 export * from './reg';
 export * from './types';
