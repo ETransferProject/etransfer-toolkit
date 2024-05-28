@@ -105,12 +105,12 @@ export function useQueryAuthToken() {
     }
   }, [getSignature, loginState, wallet, walletType]);
 
-  const getAuth = useCallback(async () => {
+  const getAuthToken = useCallback(async () => {
     if (!wallet) throw new Error('Failed to obtain wallet information.');
     if (loginState !== WebLoginState.logined) throw new Error('You are not logged in.');
     try {
       const { pubkey, signature, plainText, caHash, managerAddress, originChainId } = await getUserInfo();
-      await eTransferCore.getAuth({
+      await eTransferCore.getAuthToken({
         pubkey,
         signature,
         plainText,
@@ -126,5 +126,5 @@ export function useQueryAuthToken() {
     }
   }, [getUserInfo, loginState, loginSuccessActive, wallet]);
 
-  return { getAuth, getUserInfo, loginSuccessActive };
+  return { getAuthToken, getUserInfo, loginSuccessActive };
 }

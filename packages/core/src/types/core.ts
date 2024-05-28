@@ -10,8 +10,8 @@ export type TETransferCore = {
   init(options: TETransferCoreInitParams): void;
   setBaseHost(host?: string): void;
   setAuthHost(host?: string): void;
-  getAuth(params: TGetAuthParams): Promise<string>;
-  getAuthApi(params: TGetAuthRequest): Promise<string>;
+  getAuthToken(params: TGetAuthParams): Promise<string>;
+  getAuthTokenFromApi(params: TGetAuthRequest): Promise<string>;
   sendWithdrawOrder(params: TSendWithdrawOrderParams): Promise<{ orderId: string }>;
 };
 

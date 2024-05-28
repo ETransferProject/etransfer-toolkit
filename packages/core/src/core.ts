@@ -66,7 +66,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     this.authHost = host;
   }
 
-  async getAuth(params: TGetAuthParams) {
+  async getAuthToken(params: TGetAuthParams) {
     const key = params.caHash + params.managerAddress;
     if (!this._storage) throw new Error('Please set up the storage suite first');
     const data = await getETransferJWT(this._storage, key);
@@ -77,7 +77,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       return `${data.token_type} ${data.access_token}`;
     } else {
       // 2: local storage don not has JWT token
-      return await this.getAuthApi({
+      return await this.getAuthTokenFromApi({
         pubkey: params.pubkey,
         signature: params.signature,
         plain_text: params.plainText,
@@ -89,7 +89,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     }
   }
 
-  async getAuthApi(params: TGetAuthRequest) {
+  async getAuthTokenFromApi(params: TGetAuthRequest) {
     const res = await this.services.getAuthToken(params);
     const token_type = res.token_type;
     const access_token = res.access_token;

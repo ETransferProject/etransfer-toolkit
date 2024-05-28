@@ -7,14 +7,14 @@ import { WebLoginState, useWebLogin } from 'aelf-web-login';
 import { useQueryAuthToken } from '@/hooks/authToken';
 
 export default function GetAuth() {
-  const { getAuth } = useQueryAuthToken();
+  const { getAuthToken } = useQueryAuthToken();
   const fetchAuthToken = useCallback(async () => {
-    await getAuth();
-  }, [getAuth]);
+    await getAuthToken();
+  }, [getAuthToken]);
 
   const fetchNewAuthToken = useCallback(async () => {
     // Please set freely.
-    await eTransferCore.getAuthApi({
+    await eTransferCore.getAuthTokenFromApi({
       pubkey:
         '04671bfc20edb4cdc171bd7d20877aa64862e88dc9f52173673db9789e0dea71aca45472fd4841cad362cae8b5b6f05c55a350014f7917fe90870fd680c845edae',
       signature:
