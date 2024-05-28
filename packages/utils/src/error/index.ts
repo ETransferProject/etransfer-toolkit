@@ -1,5 +1,3 @@
-import { textProcessor } from './textProcessor';
-
 export const handleError = (error: any) => {
   return error?.error || error;
 };
@@ -9,7 +7,7 @@ export function handleContractError(error?: any, req?: any) {
   if (error?.message) return error;
   if (error?.Error) {
     return {
-      message: error.Error.Details || error.Error.Message || error.Error || error.Status,
+      message: error.Error.Details || error.Error.Message || error.Error,
       code: error.Error.Code,
     };
   }
@@ -20,12 +18,11 @@ export function handleContractError(error?: any, req?: any) {
 }
 
 export const handleErrorMessage = (error: any, errorText?: string) => {
-  if (error.status === 500) {
+  if (error?.status === 500) {
     return errorText || 'Failed to fetch data';
   }
   error = handleError(error);
   error = handleContractError(error);
-  if (typeof error === 'string') errorText = error;
   if (typeof error.message === 'string') errorText = error.message;
-  return textProcessor.format(errorText || '') || '';
+  return errorText || '';
 };

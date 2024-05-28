@@ -9,7 +9,7 @@ describe('timesDecimals', () => {
 });
 
 describe('divDecimals', () => {
-  test('amount / decimals', async () => {
+  test('amount / decimals', () => {
     const result = divDecimals('12345678', 6).toFixed();
     expect(result).toBe('12.345678');
   });
