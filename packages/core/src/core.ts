@@ -42,17 +42,16 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   public baseHost?: string;
   public authHost?: string;
 
-  constructor({ etransferHost, etransferAuthHost, storage }: TETransferCoreOptions) {
-    super(storage);
+  constructor(options: TETransferCoreOptions) {
+    super(options.storage);
     this.services = new Services();
-
-    this.setBaseHost(etransferHost);
-    this.setAuthHost(etransferAuthHost);
+    this.init(options);
   }
 
-  public init({ etransferHost, etransferAuthHost }: TETransferCoreInitParams) {
-    this.setBaseHost(etransferHost);
-    this.setAuthHost(etransferAuthHost);
+  public init({ etransferHost, etransferAuthHost, storage }: TETransferCoreOptions) {
+    etransferHost && this.setBaseHost(etransferHost);
+    etransferAuthHost && this.setAuthHost(etransferAuthHost);
+    storage && this.setStorage(storage);
   }
 
   public setBaseHost(host?: string) {

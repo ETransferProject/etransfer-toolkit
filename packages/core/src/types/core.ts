@@ -1,4 +1,4 @@
-import { Services, TGetAuthRequest } from '@etransfer/services';
+import { Services, TCreateWithdrawOrderResult, TGetAuthRequest } from '@etransfer/services';
 import { PortkeyVersion } from '@etransfer/types';
 import { TGetSignatureFunc, TTokenContract } from '@etransfer/utils';
 import { ChainId, IStorageSuite } from '@portkey/types';
@@ -12,7 +12,7 @@ export type TETransferCore = {
   setAuthHost(host?: string): void;
   getAuthToken(params: TGetAuthParams): Promise<string>;
   getAuthTokenFromApi(params: TGetAuthRequest): Promise<string>;
-  sendWithdrawOrder(params: TSendWithdrawOrderParams): Promise<{ orderId: string }>;
+  sendWithdrawOrder(params: TSendWithdrawOrderParams): Promise<TCreateWithdrawOrderResult>;
 };
 
 export type TETransferCoreInitParams = { etransferHost: string; etransferAuthHost: string; storage?: IStorageSuite };
