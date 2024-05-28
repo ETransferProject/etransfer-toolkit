@@ -1,5 +1,5 @@
 import { aelf } from '@portkey/utils';
-import AelfAbstract from './AelfAbstract';
+import { AelfAbstract } from './AelfAbstract';
 
 class AelfInstance extends AelfAbstract {
   constructor() {
@@ -12,6 +12,4 @@ class AelfInstance extends AelfAbstract {
   };
 }
 
-const aelfInstance = new AelfInstance();
-
-export default aelfInstance;
+export const aelfInstance = new AelfInstance();

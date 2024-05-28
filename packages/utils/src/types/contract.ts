@@ -1,4 +1,4 @@
-import { SendOptions } from '@portkey/types';
+import { ChainId, SendOptions } from '@portkey/types';
 
 export type TTokenContract = {
   GetBalance: TContractGetBalance;
@@ -50,3 +50,13 @@ export interface CallContractParams<T> {
   methodName: string;
   args: T;
 }
+
+export type TCreateHandleManagerForwardCall = {
+  caContractAddress: string;
+  contractAddress: string;
+  endPoint: string;
+  args: any;
+  methodName: string;
+  caHash: string;
+  chainId: ChainId;
+};

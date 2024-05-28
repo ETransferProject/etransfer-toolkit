@@ -2,6 +2,8 @@ import AElf from 'aelf-sdk';
 import { sleep } from '../common';
 import { SupportedChainId } from '@etransfer/types';
 import { isValidBase58 } from '../reg';
+import { TGetRawTx } from '../types';
+import { handleContractErrorMessage } from '@portkey/contracts';
 
 const httpProviders: any = {};
 export function getAElf(rpc: string) {
@@ -9,7 +11,7 @@ export function getAElf(rpc: string) {
   return httpProviders[rpc];
 }
 
-export const recoverPubKey = (msg: any, signature: string) => {
+export const recoverPubKeyBySignature = (msg: any, signature: string) => {
   const signatureObj = {
     r: signature.slice(0, 64),
     s: signature.slice(64, 128),
@@ -23,19 +25,10 @@ export const recoverPubKey = (msg: any, signature: string) => {
   return publicKey;
 };
 
-export const pubKeyToAddress = (pubKey: string) => {
+export const recoverManagerAddressByPubkey = (pubKey: string) => {
   const onceSHAResult = Buffer.from(AElf.utils.sha256(Buffer.from(pubKey, 'hex')), 'hex');
   const hash = AElf.utils.sha256(onceSHAResult).slice(0, 64);
   return AElf.utils.encodeAddressRep(hash);
-};
-
-export type GetRawTx = {
-  blockHeightInput: string;
-  blockHashInput: string;
-  packedInput: string;
-  address: string;
-  contractAddress: string;
-  functionName: string;
 };
 
 export const getRawTx = ({
@@ -45,7 +38,7 @@ export const getRawTx = ({
   address,
   contractAddress,
   functionName,
-}: GetRawTx) => {
+}: TGetRawTx) => {
   const rawTx = AElf.pbUtils.getTransaction(address, contractAddress, functionName, packedInput);
   rawTx.refBlockNumber = blockHeightInput;
   const blockHash = blockHashInput.match(/^0x/) ? blockHashInput.substring(2) : blockHashInput;
@@ -63,15 +56,6 @@ class TXError extends Error {
   }
 }
 
-export function handleContractErrorMessage(error?: any) {
-  if (typeof error === 'string') return error;
-  if (error?.message) return error.message;
-  if (error.Error) {
-    return error.Error.Details || error.Error.Message || error.Error || error.Status;
-  }
-  return `Transaction: ${error.Status}`;
-}
-
 export async function getTxResult(
   TransactionId: string,
   endPoint: string,
@@ -82,7 +66,7 @@ export async function getTxResult(
   let txResult;
   try {
     txResult = await txFun(TransactionId);
-    console.log(txResult, TransactionId, 'compBalanceMetadata====txResult');
+    // console.log(txResult, TransactionId, 'compBalanceMetadata====txResult');
   } catch (error) {
     console.log('getTxResult:error', error);
     throw new TXError(handleContractErrorMessage(error), TransactionId);

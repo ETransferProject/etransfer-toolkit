@@ -1,12 +1,11 @@
 import AElf from 'aelf-sdk';
 import { COMMON_PRIVATE, CONTRACT_GET_DATA_ERROR, CONTRACT_METHOD_NAME, MANAGER_FORWARD_CALL } from '../constants';
-import { GetRawTx, getAElf, getRawTx, getTxResult } from './aelfBase';
-import { TGetSignatureFunc, TTokenContract } from '../types';
+import { getAElf, getRawTx, getTxResult } from './aelfBase';
+import { TCreateHandleManagerForwardCall, TGetRawTx, TGetSignatureFunc, TTokenContract } from '../types';
 import { timesDecimals } from '../calculate';
 import BigNumber from 'bignumber.js';
-import aelfInstance from './aelfInstance';
+import { aelfInstance } from './aelfInstance';
 import { handleManagerForwardCall, getContractMethods } from '@portkey/contracts';
-import { ChainId } from '@portkey/types';
 
 export const getContract = async (endPoint: string, contractAddress: string, wallet?: any) => {
   if (!wallet) wallet = AElf.wallet.getWalletByPrivateKey(COMMON_PRIVATE);
@@ -119,16 +118,6 @@ export const checkTokenAllowanceAndApprove = async ({
   return true;
 };
 
-type CreateHandleManagerForwardCall = {
-  caContractAddress: string;
-  contractAddress: string;
-  endPoint: string;
-  args: any;
-  methodName: string;
-  caHash: string;
-  chainId: ChainId;
-};
-
 export const createManagerForwardCall = async ({
   caContractAddress,
   contractAddress,
@@ -137,7 +126,7 @@ export const createManagerForwardCall = async ({
   methodName,
   caHash,
   chainId,
-}: CreateHandleManagerForwardCall) => {
+}: TCreateHandleManagerForwardCall) => {
   let instance: any, res: { args: string }, methods: { [x: string]: any };
 
   instance = aelfInstance.getInstance(chainId, endPoint);
@@ -173,7 +162,7 @@ export const handleTransaction = async ({
   contractAddress,
   functionName,
   getSignature,
-}: GetRawTx & {
+}: TGetRawTx & {
   getSignature: TGetSignatureFunc;
 }) => {
   // Create transaction

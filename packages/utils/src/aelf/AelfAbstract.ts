@@ -1,7 +1,7 @@
 import { ChainId } from '@portkey/types';
 import { AELFInstances, IAelfAbstract } from '../types';
 
-abstract class AelfAbstract implements IAelfAbstract {
+export abstract class AelfAbstract implements IAelfAbstract {
   public instances: AELFInstances;
   public aelfSDK: any;
 
@@ -25,5 +25,3 @@ abstract class AelfAbstract implements IAelfAbstract {
     }
   };
 }
-
-export default AelfAbstract;

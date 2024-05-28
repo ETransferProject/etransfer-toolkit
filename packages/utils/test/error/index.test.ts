@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { handleContractError, handleError, handleErrorMessage } from '../../src/error';
+import { handleContractError, handleContractErrorMessage, handleError, handleErrorMessage } from '../../src/error';
 import { ServicesError } from '../__mocks__/error';
 
 describe('handleError', () => {
@@ -72,6 +72,38 @@ describe('handleContractError', () => {
     expect(error.message).toBe(ContractErrorMessage);
     expect(error).toHaveProperty('code');
     expect(error.code).toBe(ContractErrorCode);
+  });
+});
+
+describe('handleContractErrorMessage', () => {
+  const ContractErrorMessage = 'Contract Error';
+  test('Input is string, and return the correct format.', () => {
+    const error = handleContractErrorMessage(ContractErrorMessage);
+    expect(error).toBe(ContractErrorMessage);
+  });
+  test('Input error.message, and return the correct format.', () => {
+    const error = handleContractErrorMessage({ message: ContractErrorMessage });
+    expect(error).toBe(ContractErrorMessage);
+  });
+  test('Input error.Error, and return the correct format.', () => {
+    const error = handleContractErrorMessage({ Error: ContractErrorMessage });
+    expect(error).toBe(ContractErrorMessage);
+  });
+  test('Input error.Error.Details, and return the correct format.', () => {
+    const error = handleContractErrorMessage({ Error: { Details: ContractErrorMessage } });
+    expect(error).toBe(ContractErrorMessage);
+  });
+  test('Input error.Error.Message, and return the correct format.', () => {
+    const error = handleContractErrorMessage({ Error: { Message: ContractErrorMessage } });
+    expect(error).toBe(ContractErrorMessage);
+  });
+  test('Input error.Status, and return the correct format.', () => {
+    const error = handleContractErrorMessage({ Status: 500 });
+    expect(error).toBe('Transaction: 500');
+  });
+  test('Input undefined, and return the correct format.', () => {
+    const error = handleContractErrorMessage(undefined);
+    expect(error).toBe('Transaction: error');
   });
 });
 

@@ -95,7 +95,7 @@ export default function Withdraw() {
         network: currentNetwork,
         symbol: currentToken,
         amount: amount,
-        address: address,
+        address: address || undefined,
         version: PortkeyVersion.v2,
       });
       setWithdrawInfo(res.withdrawInfo);

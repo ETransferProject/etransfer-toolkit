@@ -18,3 +18,12 @@ export interface IAelfAbstract {
 
 export type TGetSignatureFunc = (params: any) => Promise<SignatureData>; // WalletHookInterface['getSignature']
 export type TSignatureParams = Omit<SignatureParams, 'appName' | 'address'>;
+
+export type TGetRawTx = {
+  blockHeightInput: string;
+  blockHashInput: string;
+  packedInput: string;
+  address: string;
+  contractAddress: string;
+  functionName: string;
+};

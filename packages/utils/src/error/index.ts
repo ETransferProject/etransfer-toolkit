@@ -17,6 +17,15 @@ export function handleContractError(error?: any, req?: any) {
   };
 }
 
+export const handleContractErrorMessage = (error?: any) => {
+  if (typeof error === 'string') return error;
+  if (error?.message) return error.message;
+  if (error?.Error) {
+    return error.Error.Details || error.Error.Message || error.Error;
+  }
+  return `Transaction: ${error?.Status || 'error'}`;
+};
+
 export const handleErrorMessage = (error: any, errorText?: string) => {
   if (error?.status === 500) {
     return errorText || 'Failed to fetch data';

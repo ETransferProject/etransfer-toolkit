@@ -4,7 +4,7 @@ import { Accounts, ChainId } from '@portkey/provider-types';
 import { useWebLogin, WebLoginState, WalletType, PortkeyDid } from 'aelf-web-login';
 import { SupportedChainId, AppName } from '@/constants/index';
 import { useCallback } from 'react';
-import { pubKeyToAddress, recoverPubKey } from '@etransfer/utils';
+import { recoverManagerAddressByPubkey, recoverPubKeyBySignature } from '@etransfer/utils';
 import { PortkeyVersion } from '@etransfer/types';
 import { eTransferCore } from '@/utils/core';
 import {
@@ -89,8 +89,8 @@ export function useQueryAuthToken() {
       console.log('>>>>>> signature', result);
       if (result.error) throw result.errorMessage;
       const signature = result?.signature || '';
-      const pubkey = recoverPubKey(plainText, signature) + '';
-      const managerAddress = pubKeyToAddress(pubkey);
+      const pubkey = recoverPubKeyBySignature(plainText, signature) + '';
+      const managerAddress = recoverManagerAddressByPubkey(pubkey);
       localStorage.setItem(ETRANSFER_USER_MANAGER_ADDRESS, managerAddress);
       return {
         pubkey,
