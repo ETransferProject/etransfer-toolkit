@@ -1,7 +1,7 @@
 import { Services, TGetAuthRequest } from '@etransfer/services';
 import {
+  TCreateWithdrawOrderParams,
   TETransferCore,
-  TETransferCoreInitParams,
   TETransferCoreOptions,
   TGetAuthParams,
   THandleApproveTokenParams,
@@ -24,7 +24,7 @@ import {
   WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
   ZERO,
 } from './constants';
-import { ChainId, IStorageSuite } from '@portkey/types';
+import { IStorageSuite } from '@portkey/types';
 import { divDecimals } from '@etransfer/utils';
 
 export abstract class BaseETransferCore {
@@ -151,7 +151,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       console.log(transaction, '=====transaction');
 
       try {
-        const createOrderResult = await this.handleCreateWithdrawOrder({
+        const createOrderResult = await this.createWithdrawOrder({
           chainId,
           symbol,
           network,
@@ -185,7 +185,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     amount,
     userAccountAddress,
     eTransferContractAddress,
-  }: THandleApproveTokenParams) {
+  }: THandleApproveTokenParams): Promise<boolean> {
     const maxBalance = await getBalance(tokenContract, symbol, userAccountAddress);
     const maxBalanceFormat = divDecimals(maxBalance, decimals).toFixed();
     console.log('>>>>>> maxBalance', maxBalanceFormat);
@@ -208,21 +208,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     return checkRes;
   }
 
-  async handleCreateWithdrawOrder({
-    chainId,
-    symbol,
-    network,
-    address,
-    amount,
-    rawTransaction,
-  }: {
-    chainId: ChainId;
-    symbol: string;
-    network: string;
-    address: string;
-    amount: string;
-    rawTransaction: string;
-  }) {
+  async createWithdrawOrder({ chainId, symbol, network, address, amount, rawTransaction }: TCreateWithdrawOrderParams) {
     try {
       const createWithdrawOrderRes = await this.services.createWithdrawOrder({
         network,

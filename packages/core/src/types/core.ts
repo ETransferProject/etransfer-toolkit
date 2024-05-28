@@ -12,7 +12,9 @@ export type TETransferCore = {
   setAuthHost(host?: string): void;
   getAuthToken(params: TGetAuthParams): Promise<string>;
   getAuthTokenFromApi(params: TGetAuthRequest): Promise<string>;
+  handleApproveToken(params: THandleApproveTokenParams): Promise<boolean>;
   sendWithdrawOrder(params: TSendWithdrawOrderParams): Promise<TCreateWithdrawOrderResult>;
+  createWithdrawOrder(params: TCreateWithdrawOrderParams): Promise<TCreateWithdrawOrderResult>;
 };
 
 export type TETransferCoreInitParams = { etransferHost: string; etransferAuthHost: string; storage?: IStorageSuite };
@@ -48,4 +50,13 @@ export type THandleApproveTokenParams = {
   amount: string;
   userAccountAddress: string;
   eTransferContractAddress: string;
+};
+
+export type TCreateWithdrawOrderParams = {
+  chainId: ChainId;
+  symbol: string;
+  network: string;
+  address: string;
+  amount: string;
+  rawTransaction: string;
 };

@@ -16,8 +16,8 @@ export const getETransferJWT = async (storage: IStorageSuite, key: string) => {
   }
 };
 
-export const resetETransferJWT = () => {
-  return localStorage.removeItem(LocalStorageKey.ETRANSFER_ACCESS_TOKEN);
+export const resetETransferJWT = (storage: IStorageSuite) => {
+  return storage.removeItem(LocalStorageKey.ETRANSFER_ACCESS_TOKEN);
 };
 
 export const setETransferJWT = (storage: IStorageSuite, key: string, data: TETransferJWTData) => {
