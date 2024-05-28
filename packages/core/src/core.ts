@@ -24,15 +24,26 @@ import {
   WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
   ZERO,
 } from './constants';
-import { ChainId } from '@portkey/types';
+import { ChainId, IStorageSuite } from '@portkey/types';
 import { divDecimals } from '@etransfer/utils';
 
-export class ETransferCore implements TETransferCore {
+export abstract class BaseETransferCore {
+  protected _storage?: IStorageSuite;
+  constructor(storage?: IStorageSuite) {
+    this._storage = storage;
+  }
+  setStorage(storage: IStorageSuite) {
+    this._storage = storage;
+  }
+}
+
+export class ETransferCore extends BaseETransferCore implements TETransferCore {
   public services: Services;
   public baseHost?: string;
   public authHost?: string;
 
-  constructor({ etransferHost, etransferAuthHost }: TETransferCoreOptions) {
+  constructor({ etransferHost, etransferAuthHost, storage }: TETransferCoreOptions) {
+    super(storage);
     this.services = new Services();
 
     this.setBaseHost(etransferHost);
@@ -57,7 +68,8 @@ export class ETransferCore implements TETransferCore {
 
   async getAuth(params: TGetAuthParams) {
     const key = params.caHash + params.managerAddress;
-    const data = getETransferJWT(key);
+    if (!this._storage) throw new Error('Please set up the storage suite first');
+    const data = await getETransferJWT(this._storage, key);
     // 1: local storage has JWT token
     if (data) {
       this.services.setRequestHeaders('Authorization', `${data.token_type} ${data.access_token}`);
@@ -85,8 +97,8 @@ export class ETransferCore implements TETransferCore {
     this.services.setRequestHeaders('Authorization', `${token_type} ${access_token}`);
     etransferEvents.AuthTokenSuccess.emit();
 
-    if (localStorage) {
-      setETransferJWT(params.ca_hash + params.managerAddress, res);
+    if (this._storage) {
+      await setETransferJWT(this._storage, params.ca_hash + params.managerAddress, res);
     }
 
     return `${token_type} ${access_token}`;

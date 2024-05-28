@@ -1,7 +1,7 @@
 import { Services, TGetAuthRequest } from '@etransfer/services';
 import { PortkeyVersion } from '@etransfer/types';
 import { TGetSignatureFunc, TTokenContract } from '@etransfer/utils';
-import { ChainId } from '@portkey/types';
+import { ChainId, IStorageSuite } from '@portkey/types';
 
 export type TETransferCore = {
   services: Services;
@@ -15,7 +15,7 @@ export type TETransferCore = {
   sendWithdrawOrder(params: TSendWithdrawOrderParams): Promise<{ orderId: string }>;
 };
 
-export type TETransferCoreInitParams = { etransferHost: string; etransferAuthHost: string };
+export type TETransferCoreInitParams = { etransferHost: string; etransferAuthHost: string; storage?: IStorageSuite };
 
 export type TETransferCoreOptions = Partial<TETransferCoreInitParams>;
 
