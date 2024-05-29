@@ -3,7 +3,7 @@ import { sleep } from '../common';
 import { SupportedChainId } from '@etransfer/types';
 import { isValidBase58 } from '../reg';
 import { TGetRawTx } from '../types';
-import { handleContractErrorMessage } from '@portkey/contracts';
+import { handleContractErrorMessage } from '../error';
 
 const httpProviders: any = {};
 export function getAElf(rpc: string) {

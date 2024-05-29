@@ -106,7 +106,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
 
   async sendWithdrawOrder(params: TSendWithdrawOrderParams) {
     const {
-      callSendMethod,
+      tokenContractCallSendMethod,
       tokenContractAddress,
       endPoint,
       caContractAddress,
@@ -125,7 +125,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     console.log('check allowance, approve, transfer, createOrder ... ', params);
 
     const approveRes = await this.handleApproveToken({
-      callSendMethod,
+      tokenContractCallSendMethod,
       tokenContractAddress,
       endPoint,
       symbol,
@@ -158,7 +158,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   }
 
   async withdrawOrder(
-    params: Omit<TSendWithdrawOrderParams, 'callSendMethod' | 'tokenContractAddress' | 'accountAddress'>,
+    params: Omit<TSendWithdrawOrderParams, 'tokenContractCallSendMethod' | 'tokenContractAddress' | 'accountAddress'>,
   ) {
     const {
       caContractAddress,
@@ -211,7 +211,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   }
 
   async handleApproveToken({
-    callSendMethod,
+    tokenContractCallSendMethod,
     tokenContractAddress,
     endPoint,
     symbol,
@@ -231,7 +231,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     }
 
     const checkRes = await checkTokenAllowanceAndApprove({
-      callSendMethod,
+      tokenContractCallSendMethod,
       tokenContractAddress,
       endPoint,
       symbol,

@@ -52,14 +52,14 @@ export const getTokenInfo = async (tokenContract: TTokenContract, symbol: string
 };
 
 export const approveAllowance = async ({
-  callSendMethod,
+  tokenContractCallSendMethod,
   tokenContractAddress,
   endPoint,
   symbol,
   amount,
   spender,
 }: TApproveAllowanceParams) => {
-  const approveResult = await callSendMethod({
+  const approveResult = await tokenContractCallSendMethod({
     contractAddress: tokenContractAddress,
     methodName: CONTRACT_METHOD_NAME.Approve,
     args: {
@@ -68,13 +68,15 @@ export const approveAllowance = async ({
       amount: amount.toString(),
     },
   });
+  if (!approveResult?.transactionId) throw new Error('Missing transactionId');
+
   const txRes = await getTxResult(approveResult.transactionId, endPoint);
   console.log('approveResult: ', approveResult, txRes);
   return true;
 };
 
 export const checkTokenAllowanceAndApprove = async ({
-  callSendMethod,
+  tokenContractCallSendMethod,
   tokenContractAddress,
   endPoint,
   symbol,
@@ -94,7 +96,7 @@ export const checkTokenAllowanceAndApprove = async ({
 
   if (allowanceBN.lt(bigA)) {
     await approveAllowance({
-      callSendMethod,
+      tokenContractCallSendMethod,
       tokenContractAddress,
       endPoint,
       symbol,

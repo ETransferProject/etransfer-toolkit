@@ -7,14 +7,14 @@ export type TTokenContract = {
   GetTokenInfo: TContractGetTokenInfo;
 };
 
-export type TCallSendMethod = {
-  callSendMethod<T, R>(
+export type TTokenContractCallSendMethod = {
+  tokenContractCallSendMethod<T, R>(
     params: CallContractParams<T>,
     sendOptions?: SendOptions,
-  ): Promise<R & { transactionId: string }>;
+  ): Promise<R & { transactionId: string }> | undefined;
 };
 
-export type TApproveAllowanceParams = TCallSendMethod & {
+export type TApproveAllowanceParams = TTokenContractCallSendMethod & {
   tokenContractAddress: string;
   endPoint: string;
   symbol: string;
@@ -22,7 +22,7 @@ export type TApproveAllowanceParams = TCallSendMethod & {
   spender: string;
 };
 
-export type TCheckTokenAllowanceAndApproveParams = TCallSendMethod & {
+export type TCheckTokenAllowanceAndApproveParams = TTokenContractCallSendMethod & {
   tokenContractAddress: string;
   endPoint: string;
   symbol: string;

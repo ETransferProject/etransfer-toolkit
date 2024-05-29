@@ -1,6 +1,6 @@
 import { Services, TCreateWithdrawOrderResult, TGetAuthRequest } from '@etransfer/services';
 import { PortkeyVersion } from '@etransfer/types';
-import { TCallSendMethod } from '@etransfer/utils';
+import { TTokenContractCallSendMethod } from '@etransfer/utils';
 import { TGetSignatureFunc } from '@etransfer/utils';
 import { ChainId, IStorageSuite } from '@portkey/types';
 
@@ -42,7 +42,7 @@ export type TSendWithdrawOrderParams = THandleApproveTokenParams & {
   getSignature: TGetSignatureFunc;
 };
 
-export type THandleApproveTokenParams = TCallSendMethod & {
+export type THandleApproveTokenParams = TTokenContractCallSendMethod & {
   tokenContractAddress: string;
   endPoint: string;
   symbol: string;

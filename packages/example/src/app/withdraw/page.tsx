@@ -146,7 +146,7 @@ export default function Withdraw() {
       if (!account?.[currentChain]?.[0]) throw new Error('User address is missing');
 
       const res = await eTransferCore.sendWithdrawOrder({
-        callSendMethod: (params, sendOptions) => wallet?.callSendMethod(currentChain, params, sendOptions),
+        tokenContractCallSendMethod: (params, sendOptions) => wallet?.callSendMethod(currentChain, params, sendOptions),
         tokenContractAddress,
         endPoint: endPoint,
         symbol: currentToken,
