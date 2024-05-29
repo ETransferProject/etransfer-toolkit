@@ -138,42 +138,75 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     console.log('>>>>>> sendTransferTokenTransaction approveRes', approveRes);
 
     if (approveRes) {
-      const transaction = await createTransferTokenTransaction({
+      return this.withdrawOrder({
         caContractAddress,
         eTransferContractAddress,
         caHash,
         symbol,
-        amount: timesDecimals(amount, decimals).toFixed(),
+        amount,
         chainId,
         endPoint,
-        fromManagerAddress: managerAddress,
+        managerAddress,
+        decimals,
         getSignature,
+        network,
+        toAddress,
       });
-      console.log(transaction, '=====transaction');
-
-      try {
-        const createOrderResult = await this.createWithdrawOrder({
-          chainId,
-          symbol,
-          network,
-          toAddress,
-          amount,
-          rawTransaction: transaction,
-        });
-        if (createOrderResult.orderId) {
-          return createOrderResult;
-        } else {
-          throw new Error(WITHDRAW_ERROR_MESSAGE);
-        }
-      } catch (error: any) {
-        if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
-          throw new Error(error?.message);
-        } else {
-          throw new Error(WITHDRAW_ERROR_MESSAGE);
-        }
-      }
     } else {
       throw new Error('Approve Failed');
+    }
+  }
+
+  async withdrawOrder(
+    params: Omit<TSendWithdrawOrderParams, 'callSendMethod' | 'tokenContractAddress' | 'accountAddress'>,
+  ) {
+    const {
+      caContractAddress,
+      eTransferContractAddress,
+      caHash,
+      symbol,
+      amount,
+      chainId,
+      endPoint,
+      managerAddress,
+      decimals,
+      getSignature,
+      network,
+      toAddress,
+    } = params;
+    const transaction = await createTransferTokenTransaction({
+      caContractAddress,
+      eTransferContractAddress,
+      caHash,
+      symbol,
+      amount: timesDecimals(amount, decimals).toFixed(),
+      chainId,
+      endPoint,
+      fromManagerAddress: managerAddress,
+      getSignature,
+    });
+    console.log(transaction, '=====transaction');
+
+    try {
+      const createOrderResult = await this.createWithdrawOrder({
+        chainId,
+        symbol,
+        network,
+        toAddress,
+        amount,
+        rawTransaction: transaction,
+      });
+      if (createOrderResult.orderId) {
+        return createOrderResult;
+      } else {
+        throw new Error(WITHDRAW_ERROR_MESSAGE);
+      }
+    } catch (error: any) {
+      if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
+        throw new Error(error?.message);
+      } else {
+        throw new Error(WITHDRAW_ERROR_MESSAGE);
+      }
     }
   }
 
