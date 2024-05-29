@@ -1,6 +1,7 @@
 import { Services, TCreateWithdrawOrderResult, TGetAuthRequest } from '@etransfer/services';
 import { PortkeyVersion } from '@etransfer/types';
-import { TGetSignatureFunc, TTokenContract } from '@etransfer/utils';
+import { TCallSendMethod } from '@etransfer/utils';
+import { TGetSignatureFunc } from '@etransfer/utils';
 import { ChainId, IStorageSuite } from '@portkey/types';
 
 export type TETransferCore = {
@@ -32,7 +33,7 @@ export type TGetAuthParams = {
 };
 
 export type TSendWithdrawOrderParams = THandleApproveTokenParams & {
-  address: string;
+  toAddress: string;
   caContractAddress: string;
   caHash: string;
   network: string;
@@ -41,8 +42,7 @@ export type TSendWithdrawOrderParams = THandleApproveTokenParams & {
   getSignature: TGetSignatureFunc;
 };
 
-export type THandleApproveTokenParams = {
-  tokenContract: TTokenContract;
+export type THandleApproveTokenParams = TCallSendMethod & {
   tokenContractAddress: string;
   endPoint: string;
   symbol: string;
@@ -56,7 +56,7 @@ export type TCreateWithdrawOrderParams = {
   chainId: ChainId;
   symbol: string;
   network: string;
-  address: string;
+  toAddress: string;
   amount: string;
   rawTransaction: string;
 };

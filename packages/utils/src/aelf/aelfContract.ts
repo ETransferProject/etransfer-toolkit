@@ -1,7 +1,14 @@
 import AElf from 'aelf-sdk';
 import { COMMON_PRIVATE, CONTRACT_GET_DATA_ERROR, CONTRACT_METHOD_NAME, MANAGER_FORWARD_CALL } from '../constants';
 import { getAElf, getRawTx, getTxResult } from './aelfBase';
-import { TCreateHandleManagerForwardCall, TGetRawTx, TGetSignatureFunc, TTokenContract } from '../types';
+import {
+  TApproveAllowanceParams,
+  TCheckTokenAllowanceAndApproveParams,
+  TCreateHandleManagerForwardCall,
+  TGetRawTx,
+  TGetSignatureFunc,
+  TTokenContract,
+} from '../types';
 import { timesDecimals } from '../calculate';
 import BigNumber from 'bignumber.js';
 import { aelfInstance } from './aelfInstance';
@@ -45,21 +52,14 @@ export const getTokenInfo = async (tokenContract: TTokenContract, symbol: string
 };
 
 export const approveAllowance = async ({
-  tokenContract,
+  callSendMethod,
   tokenContractAddress,
   endPoint,
   symbol,
   amount,
   spender,
-}: {
-  tokenContract: TTokenContract; //TODO
-  tokenContractAddress: string;
-  endPoint: string;
-  symbol: string;
-  amount: BigNumber | number | string;
-  spender: string;
-}) => {
-  const approveResult: any = await tokenContract.callSendMethod({
+}: TApproveAllowanceParams) => {
+  const approveResult: any = await callSendMethod({
     contractAddress: tokenContractAddress,
     methodName: CONTRACT_METHOD_NAME.Approve,
     args: {
@@ -74,25 +74,18 @@ export const approveAllowance = async ({
 };
 
 export const checkTokenAllowanceAndApprove = async ({
-  tokenContract,
+  callSendMethod,
   tokenContractAddress,
   endPoint,
   symbol,
   amount,
   owner,
   spender,
-}: {
-  tokenContract: TTokenContract;
-  tokenContractAddress: string;
-  endPoint: string;
-  symbol: string;
-  amount: string;
-  owner: string;
-  spender: string;
-}) => {
+}: TCheckTokenAllowanceAndApproveParams) => {
+  const tokenContractOrigin = await getTokenContract(endPoint, tokenContractAddress);
   const [allowance, tokenInfo] = await Promise.all([
-    getAllowance(tokenContract, symbol, owner, spender),
-    getTokenInfo(tokenContract, symbol),
+    getAllowance(tokenContractOrigin, symbol, owner, spender),
+    getTokenInfo(tokenContractOrigin, symbol),
   ]);
   console.log('>>>>>> allowance', allowance);
   console.log('>>>>>> tokenInfo', tokenInfo);
@@ -101,7 +94,7 @@ export const checkTokenAllowanceAndApprove = async ({
 
   if (allowanceBN.lt(bigA)) {
     await approveAllowance({
-      tokenContract,
+      callSendMethod,
       tokenContractAddress,
       endPoint,
       symbol,
@@ -109,7 +102,7 @@ export const checkTokenAllowanceAndApprove = async ({
       spender,
     });
 
-    const allowanceNew = await getAllowance(tokenContract, symbol, owner, spender);
+    const allowanceNew = await getAllowance(tokenContractOrigin, symbol, owner, spender);
     console.log('>>>>>> allowanceNew', allowanceNew);
     console.log('second check allowance:', allowanceNew);
 

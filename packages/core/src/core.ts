@@ -16,6 +16,7 @@ import {
   removeDIDAddressSuffix,
   sleep,
   timesDecimals,
+  getTokenContract,
 } from '@etransfer/utils';
 import { getETransferJWT, setETransferJWT } from './utils';
 import {
@@ -105,12 +106,12 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
 
   async sendWithdrawOrder(params: TSendWithdrawOrderParams) {
     const {
-      tokenContract,
+      callSendMethod,
       tokenContractAddress,
       endPoint,
-      address,
       caContractAddress,
       eTransferContractAddress,
+      toAddress,
       caHash,
       symbol,
       decimals,
@@ -124,7 +125,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     console.log('check allowance, approve, transfer, createOrder ... ', params);
 
     const approveRes = await this.handleApproveToken({
-      tokenContract,
+      callSendMethod,
       tokenContractAddress,
       endPoint,
       symbol,
@@ -155,7 +156,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
           chainId,
           symbol,
           network,
-          address,
+          toAddress,
           amount,
           rawTransaction: transaction,
         });
@@ -177,7 +178,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   }
 
   async handleApproveToken({
-    tokenContract,
+    callSendMethod,
     tokenContractAddress,
     endPoint,
     symbol,
@@ -186,7 +187,8 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     userAccountAddress,
     eTransferContractAddress,
   }: THandleApproveTokenParams): Promise<boolean> {
-    const maxBalance = await getBalance(tokenContract, symbol, userAccountAddress);
+    const tokenContractOrigin = await getTokenContract(endPoint, tokenContractAddress);
+    const maxBalance = await getBalance(tokenContractOrigin, symbol, userAccountAddress);
     const maxBalanceFormat = divDecimals(maxBalance, decimals).toFixed();
     console.log('>>>>>> maxBalance', maxBalanceFormat);
     if (ZERO.plus(maxBalanceFormat).isLessThan(ZERO.plus(amount))) {
@@ -196,7 +198,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     }
 
     const checkRes = await checkTokenAllowanceAndApprove({
-      tokenContract,
+      callSendMethod,
       tokenContractAddress,
       endPoint,
       symbol,
@@ -208,14 +210,21 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     return checkRes;
   }
 
-  async createWithdrawOrder({ chainId, symbol, network, address, amount, rawTransaction }: TCreateWithdrawOrderParams) {
+  async createWithdrawOrder({
+    chainId,
+    symbol,
+    network,
+    toAddress,
+    amount,
+    rawTransaction,
+  }: TCreateWithdrawOrderParams) {
     try {
       const createWithdrawOrderRes = await this.services.createWithdrawOrder({
         network,
         symbol,
         amount,
         fromChainId: chainId,
-        toAddress: isDIDAddressSuffix(address) ? removeDIDAddressSuffix(address) : address,
+        toAddress: isDIDAddressSuffix(toAddress) ? removeDIDAddressSuffix(toAddress) : toAddress,
         rawTransaction: rawTransaction,
       });
       console.log('>>>>>> handleCreateWithdrawOrder createWithdrawOrderRes', createWithdrawOrderRes);

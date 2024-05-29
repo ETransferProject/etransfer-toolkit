@@ -8,7 +8,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
 import { BusinessType, PortkeyVersion } from '@etransfer/types';
 import type { TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/services';
-import { getTokenContract, removeDIDAddressSuffix } from '@etransfer/utils';
+import { removeDIDAddressSuffix } from '@etransfer/utils';
 import { useWalletContext } from '@/provider/walletProvider';
 import { ETRANSFER_USER_ACCOUNT, ETRANSFER_USER_CA_HASH, ETRANSFER_USER_MANAGER_ADDRESS } from '@/constants/storage';
 import { WalletType } from 'aelf-web-login';
@@ -137,8 +137,6 @@ export default function Withdraw() {
     try {
       const endPoint = AelfReact[currentChain as SupportedELFChainId].rpcUrl;
       const tokenContractAddress = ADDRESS_MAP[currentChain as SupportedELFChainId][ContractType.TOKEN];
-      const tokenContract = await getTokenContract(endPoint, tokenContractAddress);
-
       const caContractAddress = ADDRESS_MAP[currentChain as SupportedELFChainId][ContractType.CA];
       const eTransferContractAddress = ADDRESS_MAP[currentChain as SupportedELFChainId][ContractType.ETRANSFER];
       const caHash = localStorage.getItem(ETRANSFER_USER_CA_HASH);
@@ -148,17 +146,14 @@ export default function Withdraw() {
       if (!account?.[currentChain]?.[0]) throw new Error('User address is missing');
 
       const res = await eTransferCore.sendWithdrawOrder({
-        tokenContract: {
-          ...tokenContract,
-          callSendMethod: (params, sendOptions) => wallet?.callSendMethod(currentChain, params, sendOptions),
-        },
+        callSendMethod: (params, sendOptions) => wallet?.callSendMethod(currentChain, params, sendOptions),
         tokenContractAddress,
         endPoint: endPoint,
         symbol: currentToken,
         decimals: currentDecimals,
         amount,
         userAccountAddress: removeDIDAddressSuffix(account[currentChain][0]),
-        address,
+        toAddress: address,
         caContractAddress,
         eTransferContractAddress,
         caHash,

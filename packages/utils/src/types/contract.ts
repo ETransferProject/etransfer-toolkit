@@ -1,10 +1,31 @@
 import { ChainId, SendOptions } from '@portkey/types';
+import BigNumber from 'bignumber.js';
 
 export type TTokenContract = {
   GetBalance: TContractGetBalance;
   GetAllowance: TContractGetAllowance;
   GetTokenInfo: TContractGetTokenInfo;
+};
+
+export type TCallSendMethod = {
   callSendMethod<T, R>(params: CallContractParams<T>, sendOptions?: SendOptions): Promise<R> | undefined;
+};
+
+export type TApproveAllowanceParams = TCallSendMethod & {
+  tokenContractAddress: string;
+  endPoint: string;
+  symbol: string;
+  amount: BigNumber | number | string;
+  spender: string;
+};
+
+export type TCheckTokenAllowanceAndApproveParams = TCallSendMethod & {
+  tokenContractAddress: string;
+  endPoint: string;
+  symbol: string;
+  amount: string;
+  owner: string;
+  spender: string;
 };
 
 export type TContractGetBalance = {

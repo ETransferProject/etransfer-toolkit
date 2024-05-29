@@ -122,7 +122,7 @@ export function useQueryAuthToken() {
 
       loginSuccessActive();
     } catch (error) {
-      throw new Error('Failed to obtain etransfer authorization.');
+      throw error || new Error('Failed to obtain etransfer authorization.');
     }
   }, [getUserInfo, loginState, loginSuccessActive, wallet]);
 
