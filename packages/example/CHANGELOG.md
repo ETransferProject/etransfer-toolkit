@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0-alpha.8](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2024-05-29)
+
+### Features
+
+- 🎸 modify handleContractErrorMessage import and nameing ([c648bf5](https://github.com/ETransferProject/etransfer-toolkit/commit/c648bf52fd8ffe13bfa6af52d7dbf03667748a1d))
+
 ## [1.0.0-alpha.7](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2024-05-29)
 
 **Note:** Version bump only for package @etransfer/example
