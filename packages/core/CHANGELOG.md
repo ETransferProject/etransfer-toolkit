@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0-alpha.7](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2024-05-29)
+
+### Features
+
+- 🎸 withdrawOrder ([724d1ec](https://github.com/ETransferProject/etransfer-toolkit/commit/724d1ec3b72dc3a79938dbc8c0529fcb83578ee0))
+
 ## [1.0.0-alpha.6](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2024-05-29)
 
 **Note:** Version bump only for package @etransfer/core
