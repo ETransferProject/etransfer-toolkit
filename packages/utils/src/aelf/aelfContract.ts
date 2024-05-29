@@ -59,7 +59,7 @@ export const approveAllowance = async ({
   amount,
   spender,
 }: TApproveAllowanceParams) => {
-  const approveResult: any = await callSendMethod({
+  const approveResult = await callSendMethod({
     contractAddress: tokenContractAddress,
     methodName: CONTRACT_METHOD_NAME.Approve,
     args: {

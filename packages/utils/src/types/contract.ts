@@ -8,7 +8,10 @@ export type TTokenContract = {
 };
 
 export type TCallSendMethod = {
-  callSendMethod<T, R>(params: CallContractParams<T>, sendOptions?: SendOptions): Promise<R> | undefined;
+  callSendMethod<T, R>(
+    params: CallContractParams<T>,
+    sendOptions?: SendOptions,
+  ): Promise<R & { transactionId: string }>;
 };
 
 export type TApproveAllowanceParams = TCallSendMethod & {
