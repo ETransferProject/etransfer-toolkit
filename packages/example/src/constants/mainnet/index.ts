@@ -69,16 +69,17 @@ export const AELF_NODES = {
   tDVV: tDVV.CHAIN_INFO,
 };
 
-export const ETransferHost = 'https://etransfer.exchange';
-export const ETransferAuthHost = 'https://etransfer.exchange';
-export const WebLoginGraphqlUrlV1 = 'https://dapp-portkey.portkey.finance/Portkey_DID/PortKeyIndexerCASchema/graphql';
-export const WebLoginGraphqlUrlV2 =
+export const ETRANSFER_URL = 'https://etransfer.exchange';
+export const ETRANSFER_AUTH_URL = 'https://etransfer.exchange';
+export const WEB_LOGIN_GRAPHQL_URL_V1 =
+  'https://dapp-portkey.portkey.finance/Portkey_DID/PortKeyIndexerCASchema/graphql';
+export const WEB_LOGIN_GRAPHQL_URL_V2 =
   'https://dapp-aa-portkey.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql';
-export const WebLoginRequestDefaultsUrlV1 = 'https://did-portkey.portkey.finance';
-export const WebLoginRequestDefaultsUrlV2 = 'https://aa-portkey.portkey.finance';
-export const WebLoginServiceUrlV1 = 'https://did-portkey.portkey.finance';
-export const WebLoginServiceUrlV2 = 'https://aa-portkey.portkey.finance';
-export const WebLoginConnectUrlV2 = 'https://auth-aa-portkey.portkey.finance';
+export const WEB_LOGIN_REQUEST_URL_V1 = 'https://did-portkey.portkey.finance';
+export const WEB_LOGIN_REQUEST_URL_V2 = 'https://aa-portkey.portkey.finance';
+export const WEB_LOGIN_SERVICE_URL_V1 = 'https://did-portkey.portkey.finance';
+export const WEB_LOGIN_SERVICE_URL_V2 = 'https://aa-portkey.portkey.finance';
+export const WEB_LOGIN_CONNECT_URL_V2 = 'https://auth-aa-portkey.portkey.finance';
 
 export const ADDRESS_MAP = {
   [SupportedELFChainId.AELF]: {

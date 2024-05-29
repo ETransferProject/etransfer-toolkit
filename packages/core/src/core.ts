@@ -39,8 +39,8 @@ export abstract class BaseETransferCore {
 
 export class ETransferCore extends BaseETransferCore implements TETransferCore {
   public services: Services;
-  public baseHost?: string;
-  public authHost?: string;
+  public baseUrl?: string;
+  public authUrl?: string;
 
   constructor(options: TETransferCoreOptions) {
     super(options.storage);
@@ -48,21 +48,21 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     this.init(options);
   }
 
-  public init({ etransferHost, etransferAuthHost, storage }: TETransferCoreOptions) {
-    etransferHost && this.setBaseHost(etransferHost);
-    etransferAuthHost && this.setAuthHost(etransferAuthHost);
+  public init({ etransferUrl, etransferAuthUrl, storage }: TETransferCoreOptions) {
+    etransferUrl && this.setBaseUrl(etransferUrl);
+    etransferAuthUrl && this.setAuthUrl(etransferAuthUrl);
     storage && this.setStorage(storage);
   }
 
-  public setBaseHost(host?: string) {
-    if (!host) return;
-    this.baseHost = host;
-    this.services.setRequestConfig('baseURL', host);
+  public setBaseUrl(url?: string) {
+    if (!url) return;
+    this.baseUrl = url;
+    this.services.setRequestConfig('baseURL', url);
   }
 
-  public setAuthHost(host?: string) {
-    if (!host) return;
-    this.authHost = host;
+  public setAuthUrl(url?: string) {
+    if (!url) return;
+    this.authUrl = url;
   }
 
   async getAuthToken(params: TGetAuthParams) {
@@ -89,7 +89,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   }
 
   async getAuthTokenFromApi(params: TGetAuthRequest) {
-    const res = await this.services.getAuthToken(params);
+    const res = await this.services.getAuthToken(params, { baseURL: this.authUrl || '' });
     const token_type = res.token_type;
     const access_token = res.access_token;
 

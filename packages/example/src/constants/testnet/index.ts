@@ -70,17 +70,17 @@ export const AELF_NODES = {
 };
 
 // testnet-jenkins
-export const ETransferHost = 'https://test.etransfer.exchange';
-export const ETransferAuthHost = 'https://test.etransfer.exchange';
-export const WebLoginGraphqlUrlV1 =
+export const ETRANSFER_URL = 'https://test.etransfer.exchange';
+export const ETRANSFER_AUTH_URL = 'https://test.etransfer.exchange';
+export const WEB_LOGIN_GRAPHQL_URL_V1 =
   'https://dapp-portkey-test.portkey.finance/Portkey_DID/PortKeyIndexerCASchema/graphql';
-export const WebLoginGraphqlUrlV2 =
+export const WEB_LOGIN_GRAPHQL_URL_V2 =
   'https://dapp-aa-portkey-test.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql';
-export const WebLoginRequestDefaultsUrlV1 = 'https://did-portkey-test.portkey.finance';
-export const WebLoginRequestDefaultsUrlV2 = 'https://aa-portkey-test.portkey.finance';
-export const WebLoginServiceUrlV1 = 'https://did-portkey-test.portkey.finance';
-export const WebLoginServiceUrlV2 = 'https://aa-portkey-test.portkey.finance';
-export const WebLoginConnectUrlV2 = 'https://auth-aa-portkey-test.portkey.finance';
+export const WEB_LOGIN_REQUEST_URL_V1 = 'https://did-portkey-test.portkey.finance';
+export const WEB_LOGIN_REQUEST_URL_V2 = 'https://aa-portkey-test.portkey.finance';
+export const WEB_LOGIN_SERVICE_URL_V1 = 'https://did-portkey-test.portkey.finance';
+export const WEB_LOGIN_SERVICE_URL_V2 = 'https://aa-portkey-test.portkey.finance';
+export const WEB_LOGIN_CONNECT_URL_V2 = 'https://auth-aa-portkey-test.portkey.finance';
 
 export const ADDRESS_MAP = {
   [SupportedELFChainId.AELF]: {

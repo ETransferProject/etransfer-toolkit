@@ -53,8 +53,8 @@ class Store implements IStorageSuite {
 }
 
 eTransferCore.init({
-    etransferHost: 'your etransferHost',
-    etransferAuthHost: 'your etransferAuthHost' , 
+    etransferUrl: 'your etransfer service url',
+    etransferAuthUrl: 'your etransfer authorization service url' , 
     storage: new Store()
 });
 

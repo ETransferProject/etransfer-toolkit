@@ -3,13 +3,13 @@ import {
   AelfReact,
   AppName,
   NETWORK_TYPE_V1,
-  WebLoginConnectUrlV2,
-  WebLoginGraphqlUrlV1,
-  WebLoginGraphqlUrlV2,
-  WebLoginRequestDefaultsUrlV2,
+  WEB_LOGIN_CONNECT_URL_V2,
+  WEB_LOGIN_GRAPHQL_URL_V1,
+  WEB_LOGIN_GRAPHQL_URL_V2,
+  WEB_LOGIN_REQUEST_URL_V2,
   NETWORK_TYPE_V2,
-  WebLoginServiceUrlV1,
-  WebLoginServiceUrlV2,
+  WEB_LOGIN_SERVICE_URL_V1,
+  WEB_LOGIN_SERVICE_URL_V2,
   SupportedChainId,
 } from '@/constants';
 import dynamic from 'next/dynamic';
@@ -42,22 +42,22 @@ const WebLoginProviderDynamic = dynamic(
       // networkType: NETWORK_TYPE_V1,
       portkey: {
         useLocalStorage: true,
-        graphQLUrl: WebLoginGraphqlUrlV1,
+        graphQLUrl: WEB_LOGIN_GRAPHQL_URL_V1,
         requestDefaults: {
-          baseURL: WebLoginServiceUrlV1,
+          baseURL: WEB_LOGIN_SERVICE_URL_V1,
         },
       },
       onlyShowV2: true,
       portkeyV2: {
         useLocalStorage: true,
-        graphQLUrl: WebLoginGraphqlUrlV2,
+        graphQLUrl: WEB_LOGIN_GRAPHQL_URL_V2,
         networkType: NETWORK_TYPE_V2,
-        connectUrl: WebLoginConnectUrlV2,
+        connectUrl: WEB_LOGIN_CONNECT_URL_V2,
         requestDefaults: {
-          baseURL: WebLoginServiceUrlV2,
+          baseURL: WEB_LOGIN_SERVICE_URL_V2,
           timeout: 20000, // NETWORK_NAME === NetworkName.testnet ? 300000 : 80000
         },
-        serviceUrl: WebLoginRequestDefaultsUrlV2,
+        serviceUrl: WEB_LOGIN_REQUEST_URL_V2,
       },
       aelfReact: {
         appName: AppName,

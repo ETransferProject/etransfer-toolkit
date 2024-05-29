@@ -5,11 +5,11 @@ import { ChainId, IStorageSuite } from '@portkey/types';
 
 export type TETransferCore = {
   services: Services;
-  baseHost?: string;
-  authHost?: string;
+  baseUrl?: string;
+  authUrl?: string;
   init(options: TETransferCoreInitParams): void;
-  setBaseHost(host?: string): void;
-  setAuthHost(host?: string): void;
+  setBaseUrl(url?: string): void;
+  setAuthUrl(url?: string): void;
   getAuthToken(params: TGetAuthParams): Promise<string>;
   getAuthTokenFromApi(params: TGetAuthRequest): Promise<string>;
   handleApproveToken(params: THandleApproveTokenParams): Promise<boolean>;
@@ -17,7 +17,7 @@ export type TETransferCore = {
   createWithdrawOrder(params: TCreateWithdrawOrderParams): Promise<TCreateWithdrawOrderResult>;
 };
 
-export type TETransferCoreInitParams = { etransferHost: string; etransferAuthHost: string; storage?: IStorageSuite };
+export type TETransferCoreInitParams = { etransferUrl: string; etransferAuthUrl: string; storage?: IStorageSuite };
 
 export type TETransferCoreOptions = Partial<TETransferCoreInitParams>;
 

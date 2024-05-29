@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import { stringify } from 'query-string';
 import {
   TCreateWithdrawOrderRequest,
@@ -46,9 +47,10 @@ export abstract class BaseService {
 }
 
 export class Services extends BaseService implements TServices {
-  async getAuthToken(params: TGetAuthRequest): Promise<TGetAuthResult> {
+  async getAuthToken(params: TGetAuthRequest, config?: AxiosRequestConfig<any>): Promise<TGetAuthResult> {
     try {
       const res = await this._request.post(`/connect/token`, stringify({ ...AUTH_API_BASE_PARAMS, ...params }), {
+        ...config,
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
       return res.data;
