@@ -152,14 +152,14 @@ export default function Withdraw() {
         symbol: currentToken,
         decimals: currentDecimals,
         amount,
-        userAccountAddress: removeDIDAddressSuffix(account[currentChain][0]),
         toAddress: address,
         caContractAddress,
         eTransferContractAddress,
         caHash,
         network: currentNetwork,
         chainId: currentChain,
-        userManagerAddress: managerAddress,
+        managerAddress: managerAddress,
+        accountAddress: removeDIDAddressSuffix(account[currentChain][0]),
         getSignature: async (ser: any) => {
           if (!wallet) return '';
           let signInfo: string;

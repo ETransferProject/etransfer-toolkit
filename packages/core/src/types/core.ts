@@ -38,7 +38,7 @@ export type TSendWithdrawOrderParams = THandleApproveTokenParams & {
   caHash: string;
   network: string;
   chainId: ChainId;
-  userManagerAddress: string;
+  managerAddress: string;
   getSignature: TGetSignatureFunc;
 };
 
@@ -48,7 +48,7 @@ export type THandleApproveTokenParams = TCallSendMethod & {
   symbol: string;
   decimals: string | number;
   amount: string;
-  userAccountAddress: string;
+  accountAddress: string;
   eTransferContractAddress: string;
 };
 

@@ -118,8 +118,8 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       network,
       amount,
       chainId,
-      userAccountAddress,
-      userManagerAddress,
+      accountAddress,
+      managerAddress,
       getSignature,
     } = params;
     console.log('check allowance, approve, transfer, createOrder ... ', params);
@@ -131,7 +131,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       symbol,
       decimals,
       amount,
-      userAccountAddress,
+      accountAddress,
       eTransferContractAddress,
     });
     if (!approveRes) throw new Error(INSUFFICIENT_ALLOWANCE_MESSAGE);
@@ -146,7 +146,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
         amount: timesDecimals(amount, decimals).toFixed(),
         chainId,
         endPoint,
-        fromManagerAddress: userManagerAddress,
+        fromManagerAddress: managerAddress,
         getSignature,
       });
       console.log(transaction, '=====transaction');
@@ -184,11 +184,11 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     symbol,
     decimals,
     amount,
-    userAccountAddress,
+    accountAddress,
     eTransferContractAddress,
   }: THandleApproveTokenParams): Promise<boolean> {
     const tokenContractOrigin = await getTokenContract(endPoint, tokenContractAddress);
-    const maxBalance = await getBalance(tokenContractOrigin, symbol, userAccountAddress);
+    const maxBalance = await getBalance(tokenContractOrigin, symbol, accountAddress);
     const maxBalanceFormat = divDecimals(maxBalance, decimals).toFixed();
     console.log('>>>>>> maxBalance', maxBalanceFormat);
     if (ZERO.plus(maxBalanceFormat).isLessThan(ZERO.plus(amount))) {
@@ -203,7 +203,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       endPoint,
       symbol,
       amount,
-      owner: userAccountAddress,
+      owner: accountAddress,
       spender: eTransferContractAddress,
     });
 
