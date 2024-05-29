@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0-alpha.4](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2024-05-29)
+
+### Features
+
+- 🎸 modify core and utils about contract ([c090f3d](https://github.com/ETransferProject/etransfer-toolkit/commit/c090f3d7969034d7b0d42ee713c031638af833ba))
+
 ## [1.0.0-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2024-05-29)
 
 ### Features
