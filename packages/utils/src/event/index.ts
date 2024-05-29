@@ -4,28 +4,30 @@ import { TETransferEventsTypes } from '../types/event';
 
 export const eventBus = new EventEmitter();
 
-const eventsServer = new Function();
+class EventsService {
+  constructor() {
+    this.parseEvent(EVENT_LIST);
+  }
 
-eventsServer.prototype.parseEvent = function (name: string, eventMap: string[]) {
-  const obj: any = (this[name] = {});
-  eventMap.forEach(item => {
-    const eventName = item.toLocaleUpperCase();
-    obj[item] = {
-      emit: this.emit.bind(this, eventName),
-      addListener: this.addListener.bind(this, eventName),
-      name: eventName,
-    };
-  });
-};
+  parseEvent = (eventMap: typeof EVENT_LIST) => {
+    eventMap.forEach(item => {
+      const eventName = item.toLocaleUpperCase();
+      this[item] = {
+        emit: this.emit.bind(this, eventName),
+        addListener: this.addListener.bind(this, eventName),
+        name: eventName,
+      };
+    });
+  };
 
-eventsServer.prototype.emit = function (eventType: string, ...params: any[]) {
-  eventBus.emit(eventType, ...params);
-};
-eventsServer.prototype.addListener = function (eventType: string, listener: (data: any) => void) {
-  const cListener = eventBus.addListener(eventType, listener);
-  return { ...cListener, remove: () => eventBus.removeListener(eventType, listener) };
-};
+  emit = (eventType: string, ...params: any[]) => {
+    eventBus.emit(eventType, ...params);
+  };
 
-eventsServer.prototype.parseEvent('base', EVENT_LIST);
+  addListener = (eventType: string, listener: (data: any) => void) => {
+    const cListener = eventBus.addListener(eventType, listener);
+    return { ...cListener, remove: () => eventBus.removeListener(eventType, listener) };
+  };
+}
 
-export const etransferEvents = { ...eventsServer.prototype.base } as unknown as TETransferEventsTypes;
+export const etransferEvents = new EventsService() as unknown as TETransferEventsTypes;
