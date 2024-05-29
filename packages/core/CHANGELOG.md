@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2024-05-29)
+
+### Features
+
+- 🎸 modify static variable naming ([5a4bef6](https://github.com/ETransferProject/etransfer-toolkit/commit/5a4bef6a72332f0c1cba2f7261a5c6ae6f29ef77))
+
 ## [1.0.0-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2024-05-28)
 
 ### Features
