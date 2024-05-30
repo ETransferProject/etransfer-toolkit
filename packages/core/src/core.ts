@@ -186,6 +186,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       getSignature,
     });
     console.log(transaction, '=====transaction');
+    if (!transaction) throw new Error('Generate transaction raw failed.');
 
     try {
       const createOrderResult = await this.createWithdrawOrder({

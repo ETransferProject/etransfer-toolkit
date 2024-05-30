@@ -55,7 +55,6 @@
     "@portkey/types": "^2.4.0",
     "@portkey/utils": "^2.4.0",
     "aelf-sdk": "^3.4.7",
-    "aelf-web-login": "2.0.1-beta.9",
     "bignumber.js": "^9.1.0",
     "query-string": "^7.1.1"
   }

@@ -1,5 +1,4 @@
 import { ChainId } from '@portkey/types';
-import { SignatureParams, SignatureData } from 'aelf-web-login';
 
 export type AelfInstanceType = { getAelfInstance: (rpcUrl: string, timeout?: number) => any };
 
@@ -8,6 +7,7 @@ export type AELFInstances = {
   tDVV?: AelfInstanceType;
   tDVW?: AelfInstanceType;
 };
+
 export interface IAelfAbstract {
   instances?: AELFInstances;
   rpcUrl?: string;
@@ -16,7 +16,22 @@ export interface IAelfAbstract {
   getInstance: (chainId: ChainId, rpcUrl: string) => AelfInstanceType;
 }
 
+export type SignatureParams = {
+  appName: string;
+  address: string;
+  signInfo: string;
+  hexToBeSign?: string;
+};
+
+export type SignatureData = {
+  signature: string;
+  error: number;
+  errorMessage: string;
+  from: string;
+};
+
 export type TGetSignatureFunc = (params: any) => Promise<SignatureData>; // WalletHookInterface['getSignature']
+
 export type TSignatureParams = Omit<SignatureParams, 'appName' | 'address'>;
 
 export type TGetRawTx = {
