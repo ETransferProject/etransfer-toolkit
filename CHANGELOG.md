@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0-alpha.9](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2024-05-30)
+
+### Features
+
+- 🎸 optimize ts and core ([f57e5a4](https://github.com/ETransferProject/etransfer-toolkit/commit/f57e5a471e2c2d45d39ad27433ea0c765738c7de))
+
 ## [1.0.0-alpha.8](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2024-05-29)
 
 ### Features
