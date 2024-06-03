@@ -5,6 +5,7 @@ import { Button, message } from 'antd';
 import { useCallback } from 'react';
 import { WebLoginState, useWebLogin } from 'aelf-web-login';
 import { useQueryAuthToken } from '@/hooks/authToken';
+import { ETRANSFER_URL } from '@/constants';
 
 export default function GetAuth() {
   const { getAuthToken } = useQueryAuthToken();
@@ -39,6 +40,15 @@ export default function GetAuth() {
     }
   }, [login, loginState]);
 
+  const getReCaptcha = useCallback(() => {
+    window.open(ETRANSFER_URL + '/recaptcha');
+    window.onmessage = function (event) {
+      if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
+        console.log('Google reCaptcha response:', event.data.data);
+      }
+    };
+  }, []);
+
   return (
     <div>
       <Button className="mr-2" onClick={onLogin}>
@@ -47,7 +57,10 @@ export default function GetAuth() {
       <Button className="mr-2" onClick={fetchAuthToken}>
         Get ETransfer Token
       </Button>
-      <Button onClick={fetchNewAuthToken}>Get New ETransfer Token</Button>
+      <Button className="mr-2" onClick={fetchNewAuthToken}>
+        Get New ETransfer Token
+      </Button>
+      <Button onClick={getReCaptcha}>Google reCaptcha</Button>
     </div>
   );
 }
