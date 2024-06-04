@@ -4,6 +4,9 @@
 ![Node Version](https://img.shields.io/badge/node-18.x-green)
 [![NPM Package Version][npm-image-version]][npm-url]
 
+This package provides common methods about etransfer services.
+
+Including obtaining contracts, operating contracts, formatting amounts, address judgment, etc.
 
 ## Installation
 
@@ -34,6 +37,16 @@ yarn add @etransfer/utils
 | lint:fix | Uses `eslint` to check and fix any warnings        |
 | format   | Uses `prettier` to format the code                 |
 
+## How to use
+```typescript
+import { checkTokenAllowanceAndApprove } from '@etransfer/utils'
+
+// Get the token contract.
+const tokenContract = await getTokenContract('node address', 'token contract address');
+
+// Check whether the account balance is sufficient. If not, trigger setting allowance.
+const result = await checkTokenAllowanceAndApprove()
+```
 
 [npm-image-version]: https://img.shields.io/npm/v/@etransfer/utils
 [npm-url]: https://npmjs.org/package/@etransfer/utils
