@@ -1,6 +1,8 @@
 import { AxiosRequestConfig } from 'axios';
 import { stringify } from 'query-string';
 import {
+  TCheckEOARegistrationRequest,
+  TCheckEOARegistrationResult,
   TCreateWithdrawOrderRequest,
   TCreateWithdrawOrderResult,
   TGetAuthRequest,
@@ -150,6 +152,15 @@ export class Services extends BaseService implements TServices {
       return res.data;
     } catch (error: any) {
       throw formatApiError(error, 'getRecordStatus error', false);
+    }
+  }
+
+  async checkEOARegistration(params: TCheckEOARegistrationRequest): Promise<TCheckEOARegistrationResult> {
+    try {
+      const res = await this._request.send(API_LIST.user.checkEOARegistration, { params });
+      return res.data;
+    } catch (error: any) {
+      throw formatApiError(error, 'checkEOARegistration error', false);
     }
   }
 }

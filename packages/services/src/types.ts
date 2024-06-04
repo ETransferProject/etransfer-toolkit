@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { TRequestConfig } from '@etransfer/request';
 import { ChainId } from '@portkey/types';
 import { BusinessType, PortkeyVersion } from '@etransfer/types';
+import { AuthTokenSource } from '@etransfer/types';
 
 export type TRequestFunction = (config?: TRequestConfig) => Promise<any | AxiosResponse<any>>;
 
@@ -16,13 +17,13 @@ export type TServices = {
   createWithdrawOrder(params: TCreateWithdrawOrderRequest): Promise<TCreateWithdrawOrderResult>;
   createWithdrawOrder(params: TCreateWithdrawOrderRequest): Promise<TCreateWithdrawOrderResult>;
   getRecordStatus(): Promise<TGetRecordStatusResult>;
+  checkEOARegistration(params: TCheckEOARegistrationRequest): Promise<TCheckEOARegistrationResult>;
 };
 
 export type TAuthApiBaseParams = {
   grant_type: string;
   scope: string;
   client_id: string;
-  source: string;
 };
 
 export type TGetAuthRequest = {
@@ -33,6 +34,7 @@ export type TGetAuthRequest = {
   chain_id: string;
   managerAddress: string;
   version: PortkeyVersion;
+  source: AuthTokenSource;
 };
 
 export type TGetAuthResult = {
@@ -251,4 +253,12 @@ export type TToTransferFeeInfo = {
 
 export type TGetRecordStatusResult = {
   status: boolean;
+};
+
+export type TCheckEOARegistrationRequest = {
+  address: string;
+};
+
+export type TCheckEOARegistrationResult = {
+  result: boolean;
 };

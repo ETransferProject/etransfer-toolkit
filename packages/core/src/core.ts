@@ -27,6 +27,7 @@ import {
 } from './constants';
 import { IStorageSuite } from '@portkey/types';
 import { divDecimals } from '@etransfer/utils';
+import { AuthTokenSource } from '@etransfer/types';
 
 export abstract class BaseETransferCore {
   protected _storage?: IStorageSuite;
@@ -85,6 +86,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
         chain_id: params.chainId,
         managerAddress: params.managerAddress,
         version: params.version,
+        source: params.source || AuthTokenSource.Portkey,
       });
     }
   }

@@ -34,12 +34,17 @@ const HistoryApiList: Record<string, TBaseConfig> = {
   getRecordStatus: '/api/etransfer/record/status',
 };
 
+const UserApiList: Record<string, TBaseConfig> = {
+  checkEOARegistration: '/api/etransfer/user/check-eoa-registration',
+};
+
 export const API_LIST: Record<string, Record<string, TBaseConfig>> = {
   auth: AuthList,
   common: CommonApiList,
   deposit: DepositApiList,
   withdraw: WithdrawApiList,
   records: HistoryApiList,
+  user: UserApiList,
 };
 
 export enum CancelTokenSourceKey {
@@ -52,5 +57,4 @@ export const AUTH_API_BASE_PARAMS: TAuthApiBaseParams = {
   grant_type: 'signature',
   scope: 'ETransferServer',
   client_id: 'ETransferServer_App',
-  source: 'portkey',
 };

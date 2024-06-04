@@ -88,7 +88,7 @@ export default function Providers({ children }: { children: ReactNode }) {
           iconSrc: EtransferLogoIconBase64,
           title: 'Log In to ETransfer',
         }}
-        extraWallets={['discover']}
+        extraWallets={['discover', 'elf']}
         discover={{
           autoRequestAccount: true,
           autoLogoutOnDisconnected: true,
