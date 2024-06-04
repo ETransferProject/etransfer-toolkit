@@ -29,7 +29,7 @@ export default function GetAuth() {
     });
   }, []);
 
-  const { login, loginState } = useWebLogin();
+  const { login, loginState, logout } = useWebLogin();
   const onLogin = useCallback(() => {
     if (loginState === WebLoginState.logining) return;
     if (loginState === WebLoginState.logined) {
@@ -39,6 +39,12 @@ export default function GetAuth() {
       login();
     }
   }, [login, loginState]);
+
+  const handleLogout = useCallback(async () => {
+    await Promise.resolve(logout()).then(() => {
+      localStorage.clear();
+    });
+  }, [logout]);
 
   const getReCaptcha = useCallback(() => {
     window.open(ETRANSFER_URL + '/recaptcha');
@@ -57,6 +63,9 @@ export default function GetAuth() {
     <div>
       <Button className="mr-2" onClick={onLogin}>
         Log in
+      </Button>
+      <Button className="mr-2" onClick={handleLogout}>
+        Log out
       </Button>
       <Button className="mr-2" onClick={fetchAuthToken}>
         Get ETransfer Token
