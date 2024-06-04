@@ -8,7 +8,7 @@ import { useQueryAuthToken } from '@/hooks/authToken';
 import { ETRANSFER_URL } from '@/constants';
 
 export default function GetAuth() {
-  const { getAuthToken } = useQueryAuthToken();
+  const { getAuthToken, getUserInfo } = useQueryAuthToken();
   const fetchAuthToken = useCallback(async () => {
     await getAuthToken();
   }, [getAuthToken]);
@@ -49,6 +49,10 @@ export default function GetAuth() {
     };
   }, []);
 
+  const onGetUserInfo = useCallback(async () => {
+    await getUserInfo(false);
+  }, [getUserInfo]);
+
   return (
     <div>
       <Button className="mr-2" onClick={onLogin}>
@@ -60,6 +64,7 @@ export default function GetAuth() {
       <Button className="mr-2" onClick={fetchNewAuthToken}>
         Get New ETransfer Token
       </Button>
+      <Button onClick={onGetUserInfo}>Get UserInfo</Button>
       <Button onClick={getReCaptcha}>Google reCaptcha</Button>
     </div>
   );

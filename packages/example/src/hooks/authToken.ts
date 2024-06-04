@@ -106,42 +106,48 @@ export function useQueryAuthToken() {
     }
   }, [wallet.address, walletType]);
 
-  const getUserInfo = useCallback(async () => {
-    if (!wallet) throw new Error('Failed to obtain wallet information.');
-    if (loginState !== WebLoginState.logined) throw new Error('You are not logged in.');
+  const getUserInfo = useCallback(
+    async (isCheckReCaptcha: boolean = true) => {
+      if (!wallet) throw new Error('Failed to obtain wallet information.');
+      if (loginState !== WebLoginState.logined) throw new Error('You are not logged in.');
 
-    const reCaptchaToken = await handleReCaptcha();
-    const { caHash, originChainId } = await getCaHashAndOriginChainIdByWallet(wallet, walletType);
-    localStorage.setItem(ETRANSFER_USER_CA_HASH, caHash);
-    localStorage.setItem(ETRANSFER_USER_ORIGIN_CHAIN_ID, originChainId);
-    try {
-      const signatureResult = await handleGetSignature();
-      const pubkey = recoverPubKeyBySignature(signatureResult.plainText, signatureResult.signature) + '';
-      const managerAddress = recoverManagerAddressByPubkey(pubkey);
-      localStorage.setItem(ETRANSFER_USER_MANAGER_ADDRESS, managerAddress);
-      console.log('>>>>>> user information:', {
-        pubkey,
-        signature: signatureResult.signature,
-        plainText: signatureResult.plainText,
-        caHash,
-        originChainId,
-        managerAddress: managerAddress,
-        reCaptchaToken: '',
-      });
+      let reCaptchaToken = undefined;
+      if (isCheckReCaptcha) {
+        reCaptchaToken = await handleReCaptcha();
+      }
 
-      return {
-        pubkey,
-        signature: signatureResult.signature,
-        plainText: signatureResult.plainText,
-        caHash,
-        originChainId,
-        managerAddress: managerAddress,
-        recaptchaToken: reCaptchaToken || undefined,
-      };
-    } catch (error) {
-      throw new Error('Failed to obtain user information');
-    }
-  }, [handleGetSignature, handleReCaptcha, loginState, wallet, walletType]);
+      const { caHash, originChainId } = await getCaHashAndOriginChainIdByWallet(wallet, walletType);
+      localStorage.setItem(ETRANSFER_USER_CA_HASH, caHash);
+      localStorage.setItem(ETRANSFER_USER_ORIGIN_CHAIN_ID, originChainId);
+      try {
+        const signatureResult = await handleGetSignature();
+        const pubkey = recoverPubKeyBySignature(signatureResult.plainText, signatureResult.signature) + '';
+        const managerAddress = recoverManagerAddressByPubkey(pubkey);
+        localStorage.setItem(ETRANSFER_USER_MANAGER_ADDRESS, managerAddress);
+        console.log('>>>>>> user information:', {
+          pubkey,
+          signature: signatureResult.signature,
+          plainText: signatureResult.plainText,
+          caHash,
+          originChainId,
+          managerAddress: managerAddress,
+        });
+
+        return {
+          pubkey,
+          signature: signatureResult.signature,
+          plainText: signatureResult.plainText,
+          caHash,
+          originChainId,
+          managerAddress: managerAddress,
+          recaptchaToken: reCaptchaToken || undefined,
+        };
+      } catch (error) {
+        throw new Error('Failed to obtain user information');
+      }
+    },
+    [handleGetSignature, handleReCaptcha, loginState, wallet, walletType],
+  );
 
   const getAuthToken = useCallback(async () => {
     if (!wallet) throw new Error('Failed to obtain wallet information.');
