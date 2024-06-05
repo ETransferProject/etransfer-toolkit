@@ -1,4 +1,4 @@
-import { Services, TGetAuthRequest } from '@etransfer/services';
+import { Services } from '@etransfer/services';
 import {
   TCreateWithdrawOrderParams,
   TETransferCore,
@@ -17,16 +17,18 @@ import {
   sleep,
   timesDecimals,
   getTokenContract,
+  getETransferJWT,
+  setETransferJWT,
 } from '@etransfer/utils';
-import { getETransferJWT, setETransferJWT } from './utils';
 import {
   INSUFFICIENT_ALLOWANCE_MESSAGE,
   WITHDRAW_ERROR_MESSAGE,
   WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
   ZERO,
 } from './constants';
-import { IStorageSuite } from '@portkey/types';
 import { divDecimals } from '@etransfer/utils';
+import { IStorageSuite } from '@etransfer/types';
+import { TGetAuthRequest } from '@etransfer/types';
 
 export abstract class BaseETransferCore {
   protected _storage?: IStorageSuite;

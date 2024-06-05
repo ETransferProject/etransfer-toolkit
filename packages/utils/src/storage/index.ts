@@ -1,6 +1,5 @@
-import { IStorageSuite } from '@portkey/types';
 import { Day, LocalStorageKey } from '../constants';
-import { TETransferJWTData } from '../types';
+import { IStorageSuite, TETransferJWTData } from '@etransfer/types';
 
 export const getETransferJWT = async (storage: IStorageSuite, key: string) => {
   try {

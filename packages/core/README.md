@@ -44,7 +44,8 @@ See the `@etransfer/example` for usage examples.
 
 ### Init
 ```typescript
-import {eTransferCore} from '@etransfer/core'
+import { eTransferCore } from '@etransfer/core';
+import { IStorageSuite } from '@etransfer/types';
 
 class Store implements IStorageSuite {
   async getItem(key: string) {

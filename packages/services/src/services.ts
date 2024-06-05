@@ -1,27 +1,27 @@
 import { AxiosRequestConfig } from 'axios';
 import { stringify } from 'query-string';
 import {
-  TCreateWithdrawOrderRequest,
-  TCreateWithdrawOrderResult,
   TGetAuthRequest,
   TGetAuthResult,
-  TGetDepositCalculateRequest,
-  TGetDepositCalculateResult,
-  TGetDepositInfoRequest,
-  TGetDepositInfoResult,
-  TGetNetworkListRequest,
-  TGetNetworkListResult,
-  TGetRecordStatusResult,
-  TGetRecordsListRequest,
-  TGetRecordsListResult,
   TGetTokenListRequest,
   TGetTokenListResult,
   TGetTokenOptionRequest,
   TGetTokenOptionResult,
+  TGetNetworkListRequest,
+  TGetNetworkListResult,
+  TGetDepositInfoRequest,
+  TGetDepositInfoResult,
+  TGetDepositCalculateRequest,
+  TGetDepositCalculateResult,
   TGetWithdrawInfoRequest,
   TGetWithdrawInfoResult,
-  TServices,
-} from './types';
+  TCreateWithdrawOrderRequest,
+  TCreateWithdrawOrderResult,
+  TGetRecordsListRequest,
+  TGetRecordsListResult,
+  TGetRecordStatusResult,
+} from '@etransfer/types';
+import { TServices } from './types';
 import { formatApiError } from './utils';
 import { API_LIST, AUTH_API_BASE_PARAMS, CancelTokenSourceKey } from './constants';
 import { TRequestConfig, EtransferRequest } from '@etransfer/request';

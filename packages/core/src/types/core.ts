@@ -1,5 +1,5 @@
-import { Services, TCreateWithdrawOrderResult, TGetAuthRequest } from '@etransfer/services';
-import { PortkeyVersion } from '@etransfer/types';
+import { Services } from '@etransfer/services';
+import { TGetAuthRequest, TCreateWithdrawOrderResult, PortkeyVersion } from '@etransfer/types';
 import { TTokenContractCallSendMethod } from '@etransfer/utils';
 import { TGetSignatureFunc } from '@etransfer/utils';
 import { ChainId, IStorageSuite } from '@portkey/types';

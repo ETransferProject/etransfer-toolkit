@@ -35,3 +35,18 @@ export const handleErrorMessage = (error: any, errorText?: string) => {
   if (typeof error.message === 'string') errorText = error.message;
   return errorText || '';
 };
+
+export const isHtmlError = (code: string | number, message: string) => {
+  if (String(code)?.substring(0, 1) === '5' && message.includes('<!DOCTYPE HTML PUBLIC')) {
+    return true;
+  }
+  return false;
+};
+
+export const isAuthTokenError = (error: any) => {
+  const msg = handleErrorMessage(error);
+  if (msg.includes('401')) {
+    return true;
+  }
+  return false;
+};
