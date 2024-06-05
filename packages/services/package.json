@@ -1,6 +1,6 @@
 {
   "name": "@etransfer/services",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0-alpha.10",
   "description": "",
   "main": "./dist/commonjs/index.js",
   "module": "./dist/esm/index.js",
@@ -41,9 +41,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@etransfer/request": "^1.0.0-alpha.9",
-    "@etransfer/types": "^1.0.0-alpha.9",
-    "@etransfer/utils": "^1.0.0-alpha.9",
+    "@etransfer/request": "^1.0.0-alpha.10",
+    "@etransfer/types": "^1.0.0-alpha.10",
+    "@etransfer/utils": "^1.0.0-alpha.10",
     "@portkey/types": "2.4.0"
   },
   "devDependencies": {
