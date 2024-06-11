@@ -42,6 +42,8 @@ yarn add @etransfer/core
 ## How to use
 See the `@etransfer/example` for usage examples.
 
+See more [Developer Documentation](https://etransfer.gitbook.io/docs/sdk).
+
 ### Init
 ```typescript
 import { eTransferCore } from '@etransfer/core';
@@ -60,8 +62,8 @@ class Store implements IStorageSuite {
 }
 
 eTransferCore.init({
-  etransferUrl: 'your etransfer service url',
-  etransferAuthUrl: 'your etransfer authorization service url' , 
+  etransferUrl: 'etransfer service url',
+  etransferAuthUrl: 'etransfer authorization service url' , 
   storage: new Store()
 });
 ```

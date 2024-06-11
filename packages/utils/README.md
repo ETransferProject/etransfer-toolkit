@@ -38,6 +38,9 @@ yarn add @etransfer/utils
 | format   | Uses `prettier` to format the code                 |
 
 ## How to use
+
+See more [Developer Documentation](https://etransfer.gitbook.io/docs/sdk).
+
 ```typescript
 import { checkTokenAllowanceAndApprove } from '@etransfer/utils'
 

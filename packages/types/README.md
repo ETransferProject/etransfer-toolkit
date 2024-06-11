@@ -8,6 +8,8 @@ This package defines common types related to etransfer.
 
 ## Installation
 
+See more [Developer Documentation](https://etransfer.gitbook.io/docs/sdk).
+
 ### Using NPM
 
 ```bash

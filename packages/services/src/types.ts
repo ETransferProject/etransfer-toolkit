@@ -16,6 +16,8 @@ import {
   TCreateWithdrawOrderRequest,
   TCreateWithdrawOrderResult,
   TGetRecordStatusResult,
+  TGetRecordsListRequest,
+  TGetRecordsListResult,
 } from '@etransfer/types';
 
 export type TServices = {
@@ -27,6 +29,6 @@ export type TServices = {
   getDepositCalculate(params: TGetDepositCalculateRequest): Promise<TGetDepositCalculateResult>;
   getWithdrawInfo(params: TGetWithdrawInfoRequest): Promise<TGetWithdrawInfoResult>;
   createWithdrawOrder(params: TCreateWithdrawOrderRequest): Promise<TCreateWithdrawOrderResult>;
-  createWithdrawOrder(params: TCreateWithdrawOrderRequest): Promise<TCreateWithdrawOrderResult>;
+  getRecordsList(params: TGetRecordsListRequest): Promise<TGetRecordsListResult>;
   getRecordStatus(): Promise<TGetRecordStatusResult>;
 };

@@ -70,7 +70,10 @@ export default function Withdraw() {
 
   const fetchTokenList = useCallback(async () => {
     try {
-      const res = await eTransferCore.services.getTokenOption({ type: BusinessType.Deposit });
+      const res = await eTransferCore.services.getTokenList({
+        type: BusinessType.Withdraw,
+        chainId: currentChain,
+      });
       const tokenList: TTokenItemForSelect[] = JSON.parse(JSON.stringify(res.tokenList));
       tokenList.forEach(token => {
         token.value = token.symbol;
@@ -85,7 +88,7 @@ export default function Withdraw() {
     } catch (error) {
       console.error('fetchTokenList', error);
     }
-  }, [fetchNetworkList]);
+  }, [currentChain, fetchNetworkList]);
 
   const fetchWithdrawInfo = useCallback(async () => {
     try {

@@ -37,6 +37,9 @@ yarn add @etransfer/services
 
 
 ## How to use
+
+See more [Developer Documentation](https://etransfer.gitbook.io/docs/sdk).
+
 ```typescript
 import { Services } from '@etransfer/services';
 

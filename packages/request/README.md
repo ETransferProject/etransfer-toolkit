@@ -37,6 +37,10 @@ yarn add @etransfer/request
 | format   | Uses `prettier` to format the code                 |
 
 ## How to use
+
+See more [Developer Documentation](https://etransfer.gitbook.io/docs/sdk).
+
+
 ```typescript
 import { EtransferRequest } from '@etransfer/request';
 
