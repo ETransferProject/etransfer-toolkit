@@ -1,5 +1,5 @@
 import { eTransferCore as _eTransferCore } from '@etransfer/core';
-import { IStorageSuite } from '@portkey/types';
+import { IStorageSuite } from '@etransfer/types';
 
 class Store implements IStorageSuite {
   async getItem(key: string) {

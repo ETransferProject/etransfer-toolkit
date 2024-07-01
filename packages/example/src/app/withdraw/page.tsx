@@ -6,8 +6,7 @@ import { ChainId } from '@portkey/types';
 import { Button, Divider, Input, Select } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
-import { BusinessType, PortkeyVersion } from '@etransfer/types';
-import type { TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/services';
+import { BusinessType, PortkeyVersion, TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/types';
 import { removeDIDAddressSuffix } from '@etransfer/utils';
 import { useWalletContext } from '@/provider/walletProvider';
 import { ETRANSFER_USER_ACCOUNT, ETRANSFER_USER_CA_HASH, ETRANSFER_USER_MANAGER_ADDRESS } from '@/constants/storage';
@@ -71,7 +70,10 @@ export default function Withdraw() {
 
   const fetchTokenList = useCallback(async () => {
     try {
-      const res = await eTransferCore.services.getTokenOption({ type: BusinessType.Deposit });
+      const res = await eTransferCore.services.getTokenList({
+        type: BusinessType.Withdraw,
+        chainId: currentChain,
+      });
       const tokenList: TTokenItemForSelect[] = JSON.parse(JSON.stringify(res.tokenList));
       tokenList.forEach(token => {
         token.value = token.symbol;
@@ -86,7 +88,7 @@ export default function Withdraw() {
     } catch (error) {
       console.error('fetchTokenList', error);
     }
-  }, [fetchNetworkList]);
+  }, [currentChain, fetchNetworkList]);
 
   const fetchWithdrawInfo = useCallback(async () => {
     try {

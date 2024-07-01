@@ -6,4 +6,5 @@ export * from './contract';
 export * from './error';
 export * from './event';
 export * from './reg';
+export * from './storage';
 export * from './types';

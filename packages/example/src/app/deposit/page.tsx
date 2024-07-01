@@ -3,8 +3,7 @@
 import { eTransferCore } from '@/utils/core';
 import { Button, Divider, Select, Input } from 'antd';
 import { useCallback, useState } from 'react';
-import { BusinessType } from '@etransfer/types';
-import { TConversionRate, TDepositInfo, TNetworkItem } from '@etransfer/services';
+import { BusinessType, TConversionRate, TDepositInfo, TNetworkItem } from '@etransfer/types';
 import { ChainList } from '@/config';
 import { ChainId } from '@portkey/types';
 

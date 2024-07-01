@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.11...v1.0.0) (2024-06-17)
+
+**Note:** Version bump only for package @etransfer/services
+
+## [1.0.0-alpha.11](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2024-06-11)
+
+### Features
+
+- 🎸 add TServices props and readme ([f5323d0](https://github.com/ETransferProject/etransfer-toolkit/commit/f5323d05fe81b71014a1be5d28bab5f0d1024df1))
+
+## [1.0.0-alpha.10](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2024-06-05)
+
+**Note:** Version bump only for package @etransfer/services
+
 ## [1.0.0-alpha.9](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2024-05-30)
 
 **Note:** Version bump only for package @etransfer/services

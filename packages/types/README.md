@@ -4,8 +4,11 @@
 ![Node Version](https://img.shields.io/badge/node-18.x-green)
 [![NPM Package Version][npm-image-version]][npm-url]
 
+This package defines common types related to etransfer.
 
 ## Installation
+
+See more [Developer Documentation](https://etransfer.gitbook.io/docs/sdk).
 
 ### Using NPM
 

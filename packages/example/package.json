@@ -1,6 +1,6 @@
 {
   "name": "@etransfer/example",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev-https": "next dev --experimental-https",
@@ -10,9 +10,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@etransfer/core": "^1.0.0-alpha.9",
-    "@etransfer/types": "^1.0.0-alpha.9",
-    "@etransfer/utils": "^1.0.0-alpha.9",
+    "@etransfer/core": "^1.0.0",
+    "@etransfer/types": "^1.0.0",
+    "@etransfer/utils": "^1.0.0",
     "@portkey-v1/contracts": "1.5.4-alpha.22",
     "@portkey-v1/did-ui-react": "1.5.4-alpha.22",
     "@portkey-v1/graphql": "1.5.4-alpha.22",

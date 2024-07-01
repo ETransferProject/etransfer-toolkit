@@ -1,5 +1,5 @@
 import { TBaseConfig } from '@etransfer/request';
-import { TAuthApiBaseParams } from './types';
+import { TAuthApiBaseParams } from '@etransfer/types';
 
 export const DEFAULT_METHOD = 'GET';
 
