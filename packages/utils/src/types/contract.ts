@@ -84,3 +84,10 @@ export type TCreateHandleManagerForwardCall = {
   caHash: string;
   chainId: ChainId;
 };
+
+export type TCreateTransferToken = {
+  contractAddress: string;
+  endPoint: string;
+  chainId: ChainId;
+  args: any;
+};

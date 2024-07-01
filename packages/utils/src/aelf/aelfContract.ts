@@ -5,6 +5,7 @@ import {
   TApproveAllowanceParams,
   TCheckTokenAllowanceAndApproveParams,
   TCreateHandleManagerForwardCall,
+  TCreateTransferToken,
   TGetRawTx,
   TGetSignatureFunc,
   TTokenContract,
@@ -141,6 +142,23 @@ export const createManagerForwardCall = async ({
   const protoInputType = methods[MANAGER_FORWARD_CALL];
 
   let input = AElf.utils.transform.transformMapToArray(protoInputType, res);
+
+  input = AElf.utils.transform.transform(protoInputType, input, AElf.utils.transform.INPUT_TRANSFORMERS);
+
+  const message = protoInputType.fromObject(input);
+
+  return protoInputType.encode(message).finish();
+};
+
+export const createTransferToken = async ({ contractAddress, chainId, endPoint, args }: TCreateTransferToken) => {
+  let instance: any, methods: { [x: string]: any };
+
+  instance = aelfInstance.getInstance(chainId, endPoint);
+  methods = await getContractMethods(instance, contractAddress);
+
+  const protoInputType = methods[CONTRACT_METHOD_NAME.TransferToken];
+
+  let input = AElf.utils.transform.transformMapToArray(protoInputType, args);
 
   input = AElf.utils.transform.transform(protoInputType, input, AElf.utils.transform.INPUT_TRANSFORMERS);
 

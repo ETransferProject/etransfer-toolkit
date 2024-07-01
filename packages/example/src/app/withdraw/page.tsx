@@ -6,7 +6,7 @@ import { ChainId } from '@portkey/types';
 import { Button, Divider, Input, Select } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
-import { BusinessType, PortkeyVersion, TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/types';
+import { BusinessType, PortkeyVersion, TNetworkItem, TTokenItem, TWalletType, TWithdrawInfo } from '@etransfer/types';
 import { removeDIDAddressSuffix } from '@etransfer/utils';
 import { useWalletContext } from '@/provider/walletProvider';
 import { ETRANSFER_USER_ACCOUNT, ETRANSFER_USER_CA_HASH, ETRANSFER_USER_MANAGER_ADDRESS } from '@/constants/storage';
@@ -144,8 +144,10 @@ export default function Withdraw() {
       const caHash = localStorage.getItem(ETRANSFER_USER_CA_HASH);
       const managerAddress = localStorage.getItem(ETRANSFER_USER_MANAGER_ADDRESS);
       const account = JSON.parse(localStorage.getItem(ETRANSFER_USER_ACCOUNT) || '');
-      if (!caHash || !managerAddress) throw new Error('User information is missing');
-      if (!account?.[currentChain]?.[0]) throw new Error('User address is missing');
+      const ownerAddress = account?.[currentChain]?.[0] || '';
+      if (wallet?.walletType !== WalletType.elf && (!caHash || !managerAddress))
+        throw new Error('User information is missing');
+      if (!ownerAddress) throw new Error('User address is missing');
 
       const res = await eTransferCore.sendWithdrawOrder({
         tokenContractCallSendMethod: (params, sendOptions) => wallet?.callSendMethod(currentChain, params, sendOptions),
@@ -157,10 +159,11 @@ export default function Withdraw() {
         toAddress: address,
         caContractAddress,
         eTransferContractAddress,
-        caHash,
+        walletType: wallet?.walletType === WalletType.elf ? TWalletType.NightElf : TWalletType.Portkey,
+        caHash: caHash || undefined,
         network: currentNetwork,
         chainId: currentChain,
-        managerAddress: managerAddress,
+        managerAddress: wallet?.walletType === WalletType.elf ? ownerAddress : managerAddress,
         accountAddress: removeDIDAddressSuffix(account[currentChain][0]),
         getSignature: async (ser: any) => {
           if (!wallet) return '';

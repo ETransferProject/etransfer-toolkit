@@ -1,13 +1,14 @@
 'use client';
 import { eTransferCore } from '@/utils/core';
-import { PortkeyVersion } from '@etransfer/types';
+import { AuthTokenSource, PortkeyVersion } from '@etransfer/types';
 import { Button, message } from 'antd';
 import { useCallback } from 'react';
-import { WebLoginState, useWebLogin } from 'aelf-web-login';
+import { WebLoginState, useWebLogin, WalletType } from 'aelf-web-login';
 import { useQueryAuthToken } from '@/hooks/authToken';
 import { ETRANSFER_URL } from '@/constants';
 
 export default function GetAuth() {
+  const { login, loginState, logout, walletType } = useWebLogin();
   const { getAuthToken, getUserInfo } = useQueryAuthToken();
   const fetchAuthToken = useCallback(async () => {
     await getAuthToken();
@@ -26,10 +27,10 @@ export default function GetAuth() {
       chain_id: 'tDVW',
       managerAddress: '7iC6EQtt4rKsqv9vFiwpUDvZVipSoKwvPLy7pRG189qJjyVT7',
       version: PortkeyVersion.v2,
+      source: walletType === WalletType.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey,
     });
-  }, []);
+  }, [walletType]);
 
-  const { login, loginState, logout } = useWebLogin();
   const onLogin = useCallback(() => {
     if (loginState === WebLoginState.logining) return;
     if (loginState === WebLoginState.logined) {
@@ -73,7 +74,9 @@ export default function GetAuth() {
       <Button className="mr-2" onClick={fetchNewAuthToken}>
         Get New ETransfer Token
       </Button>
-      <Button onClick={onGetUserInfo}>Get UserInfo</Button>
+      <Button className="mr-2" onClick={onGetUserInfo}>
+        Get UserInfo
+      </Button>
       <Button onClick={getReCaptcha}>Google reCaptcha</Button>
     </div>
   );

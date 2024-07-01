@@ -1,5 +1,11 @@
 import { Services } from '@etransfer/services';
-import { AuthTokenSource, TGetAuthRequest, TCreateWithdrawOrderResult, PortkeyVersion } from '@etransfer/types';
+import {
+  AuthTokenSource,
+  TGetAuthRequest,
+  TCreateWithdrawOrderResult,
+  PortkeyVersion,
+  TWalletType,
+} from '@etransfer/types';
 import { TTokenContractCallSendMethod } from '@etransfer/utils';
 import { TGetSignatureFunc } from '@etransfer/utils';
 import { ChainId, IStorageSuite } from '@portkey/types';
@@ -13,6 +19,7 @@ export type TETransferCore = {
   setAuthUrl(url?: string): void;
   getAuthToken(params: TGetAuthParams): Promise<string>;
   getAuthTokenFromApi(params: TGetAuthRequest): Promise<string>;
+  getAuthTokenFromStorage(params: TGetAuthFromStorageParams): Promise<string | undefined>;
   handleApproveToken(params: THandleApproveTokenParams): Promise<boolean>;
   sendWithdrawOrder(params: TSendWithdrawOrderParams): Promise<TCreateWithdrawOrderResult>;
   createWithdrawOrder(params: TCreateWithdrawOrderParams): Promise<TCreateWithdrawOrderResult>;
@@ -26,20 +33,27 @@ export type TGetAuthParams = {
   pubkey: string;
   signature: string;
   plainText: string;
-  caHash: string;
-  chainId: string;
+  caHash?: string;
+  chainId?: string;
   managerAddress: string;
   version: PortkeyVersion;
   source?: AuthTokenSource;
 };
 
+export type TGetAuthFromStorageParams = {
+  walletType: TWalletType;
+  managerAddress: string;
+  caHash?: string;
+};
+
 export type TSendWithdrawOrderParams = THandleApproveTokenParams & {
   toAddress: string;
   caContractAddress: string;
-  caHash: string;
   network: string;
   chainId: ChainId;
   managerAddress: string;
+  walletType?: TWalletType;
+  caHash?: string;
   getSignature: TGetSignatureFunc;
 };
 

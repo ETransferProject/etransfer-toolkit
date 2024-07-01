@@ -44,7 +44,7 @@
     "@etransfer/request": "^1.0.0",
     "@etransfer/types": "^1.0.0",
     "@etransfer/utils": "^1.0.0",
-    "@portkey/types": "2.4.0"
+    "@portkey/types": "2.6.6"
   },
   "devDependencies": {
     "@jest/globals": "^29.3.1",

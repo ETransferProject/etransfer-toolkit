@@ -3,6 +3,7 @@ import {
   TCreateWithdrawOrderParams,
   TETransferCore,
   TETransferCoreOptions,
+  TGetAuthFromStorageParams,
   TGetAuthParams,
   THandleApproveTokenParams,
   TSendWithdrawOrderParams,
@@ -27,7 +28,7 @@ import {
   ZERO,
 } from './constants';
 import { divDecimals } from '@etransfer/utils';
-import { IStorageSuite } from '@etransfer/types';
+import { IStorageSuite, TWalletType } from '@etransfer/types';
 import { AuthTokenSource, TGetAuthRequest } from '@etransfer/types';
 
 export abstract class BaseETransferCore {
@@ -69,27 +70,42 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   }
 
   async getAuthToken(params: TGetAuthParams) {
-    const key = params.caHash + params.managerAddress;
-    if (!this._storage) throw new Error('Please set up the storage suite first');
-    const data = await getETransferJWT(this._storage, key);
     // 1: local storage has JWT token
+    const data = await this.getAuthTokenFromStorage({
+      walletType: (params?.source as unknown as TWalletType) || TWalletType.Portkey,
+      caHash: params.caHash,
+      managerAddress: params.managerAddress,
+    });
+    if (data) return data;
+
+    // 2: local storage don not has JWT token
+    return await this.getAuthTokenFromApi({
+      pubkey: params.pubkey,
+      signature: params.signature,
+      plain_text: params.plainText,
+      ca_hash: params?.caHash || undefined,
+      chain_id: params?.chainId || undefined,
+      managerAddress: params.managerAddress,
+      version: params.version,
+      source: params.source || AuthTokenSource.Portkey,
+    });
+  }
+
+  async getAuthTokenFromStorage(params: TGetAuthFromStorageParams) {
+    // Portkey key = caHash + managerAddress
+    // NightElf key = AuthTokenSource.NightElf + managerAddress
+    const frontPartKey = params.walletType === TWalletType.NightElf ? AuthTokenSource.NightElf : params.caHash;
+    const key = frontPartKey + params.managerAddress;
+
+    if (!this._storage) throw new Error('Please set up the storage suite first');
+
+    const data = await getETransferJWT(this._storage, key);
     if (data) {
       this.services.setRequestHeaders('Authorization', `${data.token_type} ${data.access_token}`);
       etransferEvents.AuthTokenSuccess.emit();
       return `${data.token_type} ${data.access_token}`;
-    } else {
-      // 2: local storage don not has JWT token
-      return await this.getAuthTokenFromApi({
-        pubkey: params.pubkey,
-        signature: params.signature,
-        plain_text: params.plainText,
-        ca_hash: params.caHash,
-        chain_id: params.chainId,
-        managerAddress: params.managerAddress,
-        version: params.version,
-        source: params.source || AuthTokenSource.Portkey,
-      });
     }
+    return undefined;
   }
 
   async getAuthTokenFromApi(params: TGetAuthRequest) {
@@ -101,7 +117,10 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     etransferEvents.AuthTokenSuccess.emit();
 
     if (this._storage) {
-      await setETransferJWT(this._storage, params.ca_hash + params.managerAddress, res);
+      const frontPartKey =
+        params?.source === AuthTokenSource.NightElf ? AuthTokenSource.NightElf : params?.ca_hash || '';
+      const key = frontPartKey + params.managerAddress;
+      await setETransferJWT(this._storage, key, res);
     }
 
     return `${token_type} ${access_token}`;
@@ -115,6 +134,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       caContractAddress,
       eTransferContractAddress,
       toAddress,
+      walletType,
       caHash,
       symbol,
       decimals,
@@ -147,13 +167,14 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
         caHash,
         symbol,
         amount,
+        walletType,
         chainId,
         endPoint,
         managerAddress,
         decimals,
-        getSignature,
         network,
         toAddress,
+        getSignature,
       });
     } else {
       throw new Error('Approve Failed');
@@ -169,6 +190,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       caHash,
       symbol,
       amount,
+      walletType,
       chainId,
       endPoint,
       managerAddress,
@@ -180,6 +202,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     const transaction = await createTransferTokenTransaction({
       caContractAddress,
       eTransferContractAddress,
+      walletType,
       caHash,
       symbol,
       amount: timesDecimals(amount, decimals).toFixed(),

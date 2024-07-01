@@ -11,6 +11,11 @@ export enum AuthTokenSource {
   NightElf = 'nightElf',
 }
 
+export enum TWalletType {
+  Portkey = 'portkey',
+  NightElf = 'nightElf',
+}
+
 export type TAuthApiBaseParams = {
   grant_type: string;
   scope: string;
@@ -21,11 +26,12 @@ export type TGetAuthRequest = {
   pubkey: string;
   signature: string;
   plain_text: string;
-  ca_hash: string;
-  chain_id: string;
-  managerAddress: string;
+  ca_hash?: string; // for Portkey
+  chain_id?: string; // for Portkey
+  managerAddress?: string; // for Portkey
   version: PortkeyVersion;
   source: AuthTokenSource;
+  recaptchaToken?: string; // for NightElf
 };
 
 export type TGetAuthResult = {

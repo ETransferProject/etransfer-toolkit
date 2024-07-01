@@ -52,7 +52,7 @@
     "ts-jest": "^29.0.5"
   },
   "peerDependencies": {
-    "@portkey/types": "2.4.0",
+    "@portkey/types": "2.6.6",
     "aelf-sdk": "^3.4.7",
     "bignumber.js": "^9.1.0",
     "query-string": "^7.1.1"
