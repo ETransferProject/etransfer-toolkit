@@ -19,7 +19,7 @@ type TTokenItemForSelect = TTokenItem & {
   label: string;
 };
 
-export default function Withdraw() {
+export default function WithdrawPage() {
   const [currentChain, setCurrentChain] = useState<ChainId>(ChainList[1].value);
   const [tokenList, setTokenList] = useState<TTokenItem[]>([]);
   const [currentToken, setCurrentToken] = useState<string>('SGR-1');

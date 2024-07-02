@@ -3,6 +3,7 @@ import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import Provider from '@/provider';
 import 'aelf-web-login/dist/assets/index.css';
+import '@etransfer/ui-react/dist/assets/index.css';
 import './globals.css';
 import dynamic from 'next/dynamic';
 const GetAuth = dynamic(() => import('@/pageComponents/login'), { ssr: false });

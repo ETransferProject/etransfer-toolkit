@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: Roboto-Bold;
+  font-display: swap;
+  src: url('/font/Roboto-Bold.ttf');
+}
+@font-face {
+  font-family: Roboto-Medium;
+  font-display: swap;
+  src: url('/font/Roboto-Medium.ttf');
+}
+@font-face {
+  font-family: Roboto-Regular;
+  font-display: swap;
+  src: url('/font/Roboto-Regular.ttf');
+}
+
 /* set text-decoration */
 a,
 a:hover {

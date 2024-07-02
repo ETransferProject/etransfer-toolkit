@@ -1,0 +1,56 @@
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-token-card-for-mobile {
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 1px solid var(--etransfer-ui-dividers);
+  background: var(--etransfer-ui-page-bg);
+  cursor: pointer;
+
+  .token-card-name {
+    color: var(--etransfer-ui-primary-text);
+    font-size: 14px;
+    .font-medium();
+  }
+  .token-card-symbol {
+    color: var(--etransfer-ui-secondary-text);
+    margin-left: 8px;
+    // line-height: 22px;
+  }
+}
+
+.etransfer-ui-token-card-for-web {
+  display: flex;
+  padding: 16px 12px;
+  align-items: center;
+  border-bottom: 1px solid var(--etransfer-ui-dividers);
+  background: var(--etransfer-ui-page-bg);
+  cursor: pointer;
+
+  .token-card-name {
+    color: var(--etransfer-ui-primary-text);
+    font-size: 16px;
+    .font-medium()
+  }
+  .token-card-symbol {
+    color: var(--etransfer-ui-secondary-text);
+    // line-height: 22px;
+    margin-left: 8px;
+    .text-overflow(1);
+    word-break: break-all;
+  }
+}
+
+.etransfer-ui-token-card-for-web-hover {
+  &:hover {
+    background: var(--etransfer-ui-hover-bg);
+  }
+}
+
+.etransfer-ui-token-card-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}

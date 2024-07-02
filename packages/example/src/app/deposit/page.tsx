@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react';
 import { BusinessType, TConversionRate, TDepositInfo, TNetworkItem } from '@etransfer/types';
 import { ChainList } from '@/config';
 import { ChainId } from '@portkey/types';
+import { Deposit } from '@etransfer/ui-react';
 
 type TCascadeSelectorOption = {
   value: string;
@@ -19,7 +20,7 @@ type TCascadeSelectorOption = {
   children?: TCascadeSelectorOption[];
 };
 
-export default function Deposit() {
+export default function DepositPage() {
   // From
   const [fromTokenList, setFromTokenList] = useState<TCascadeSelectorOption[]>([]);
   const [fromToken, setFromToken] = useState<string>('USDT');
@@ -158,7 +159,11 @@ export default function Deposit() {
       <Button onClick={fetchTokenOption}>Get Token\Network Data</Button>
 
       <Divider plain>Second Step</Divider>
-      <section>
+
+      <Deposit />
+
+      {/* <section>
+        
         <div className="space-y-2">
           <span className="form-label">Chain:</span>
           <Select value={toChain} className="w-[200px]" onChange={onToChainChange} options={ChainList} />
@@ -208,7 +213,7 @@ export default function Deposit() {
 
       <Divider plain>Last Step</Divider>
       <Button onClick={fetchDepositAddress}>Get Deposit Address</Button>
-      <span className="ml-2">{`>>> ${depositInfo?.depositAddress || ''}`}</span>
+      <span className="ml-2">{`>>> ${depositInfo?.depositAddress || ''}`}</span> */}
     </div>
   );
 }
