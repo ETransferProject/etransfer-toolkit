@@ -32,12 +32,12 @@ import { IStorageSuite, TWalletType } from '@etransfer/types';
 import { AuthTokenSource, TGetAuthRequest } from '@etransfer/types';
 
 export abstract class BaseETransferCore {
-  protected _storage?: IStorageSuite;
+  public storage?: IStorageSuite;
   constructor(storage?: IStorageSuite) {
-    this._storage = storage;
+    this.storage = storage;
   }
   setStorage(storage: IStorageSuite) {
-    this._storage = storage;
+    this.storage = storage;
   }
 }
 
@@ -97,9 +97,9 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     const frontPartKey = params.walletType === TWalletType.NightElf ? AuthTokenSource.NightElf : params.caHash;
     const key = frontPartKey + params.managerAddress;
 
-    if (!this._storage) throw new Error('Please set up the storage suite first');
+    if (!this.storage) throw new Error('Please set up the storage suite first');
 
-    const data = await getETransferJWT(this._storage, key);
+    const data = await getETransferJWT(this.storage, key);
     if (data) {
       this.services.setRequestHeaders('Authorization', `${data.token_type} ${data.access_token}`);
       etransferEvents.AuthTokenSuccess.emit();
@@ -116,11 +116,11 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     this.services.setRequestHeaders('Authorization', `${token_type} ${access_token}`);
     etransferEvents.AuthTokenSuccess.emit();
 
-    if (this._storage) {
+    if (this.storage) {
       const frontPartKey =
         params?.source === AuthTokenSource.NightElf ? AuthTokenSource.NightElf : params?.ca_hash || '';
       const key = frontPartKey + params.managerAddress;
-      await setETransferJWT(this._storage, key, res);
+      await setETransferJWT(this.storage, key, res);
     }
 
     return `${token_type} ${access_token}`;

@@ -1,0 +1,72 @@
+@import '../../../assets/theme/breakpoint.less';
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-deposit-select-chain {
+  .select-chain-label {
+    color: var(--etransfer-ui-secondary-text);
+    font-size: 12px;
+    line-height: 16px;
+    user-select: none;
+    margin-right: 6px;
+  }
+
+  .select-chain {
+    color: var(--etransfer-ui-primary-text);
+    font-size: 12px;
+    line-height: 16px;
+    .font-medium();
+  }
+
+  .select-chain-web {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .select-chain-container {
+    padding: 0;
+  }
+
+  .select-chain-container-web {
+    justify-content: space-between;
+    flex: 1;
+  }
+
+  .select-chain-content {
+    color: var(--etransfer-ui-primary-text);
+    font-size: 12px;
+    line-height: 16px;
+    .font-medium();
+
+    div {
+      font-size: 12px;
+      line-height: 16px;
+      .font-medium();
+      .text-overflow(1);
+      word-break: break-all;
+    }
+
+    span {
+      margin-left: 6px;
+    }
+  }
+
+  .select-chain-content-web {
+    font-size: 16px;
+    line-height: 24px;
+
+    div {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    span {
+      margin-left: 8px;
+    }
+  }
+}
+
+.select-chain-overlay {
+  width: 100% !important;
+  top: 84px !important;
+  left: 0px !important;
+}

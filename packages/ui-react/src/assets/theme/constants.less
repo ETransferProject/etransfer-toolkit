@@ -80,3 +80,16 @@
   -webkit-transform: rotate(@deg);
   transition: transform @duration linear;
 }
+
+.form-item-value {
+  color: var(--etransfer-ui-primary-text);
+  font-size: 16px;
+  line-height: 1.5;
+  .font-medium();
+  &::placeholder {
+    color: var(--etransfer-ui-disable-text);
+    font-size: 16px;
+    line-height: 1.5;
+    .font-medium();
+  }
+}

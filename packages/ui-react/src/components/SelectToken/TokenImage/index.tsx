@@ -21,7 +21,7 @@ export default function TokenImage({ src, isShowImage = true, symbol, size = 24 
   }, [isSuccess, isShowImage]);
 
   return (
-    <div className="etransfer-ui-token-image-wrapper">
+    <div className="etransfer-ui-flex-shrink-0 etransfer-ui-token-image-wrapper">
       {showIcon && src && (
         <CommonImage
           src={src}

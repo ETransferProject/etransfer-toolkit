@@ -4,7 +4,7 @@
   display: flex;
   padding: 16px;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   border-bottom: 1px solid var(--etransfer-ui-dividers);
   background: var(--etransfer-ui-page-bg);
   cursor: pointer;
@@ -16,13 +16,12 @@
   }
   .token-card-symbol {
     color: var(--etransfer-ui-secondary-text);
-    margin-left: 8px;
-    // line-height: 22px;
   }
 }
 
 .etransfer-ui-token-card-for-web {
   display: flex;
+  gap: 8px;
   padding: 16px 12px;
   align-items: center;
   border-bottom: 1px solid var(--etransfer-ui-dividers);
@@ -32,12 +31,10 @@
   .token-card-name {
     color: var(--etransfer-ui-primary-text);
     font-size: 16px;
-    .font-medium()
+    .font-medium();
   }
   .token-card-symbol {
     color: var(--etransfer-ui-secondary-text);
-    // line-height: 22px;
-    margin-left: 8px;
     .text-overflow(1);
     word-break: break-all;
   }

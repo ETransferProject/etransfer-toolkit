@@ -1,0 +1,41 @@
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-view-contract-address-modal {
+  .etransfer-ui-view-contract-address-modal-body {
+    .view-contract-address-modal-title {
+      color: var(--etransfer-ui-secondary-text);
+      font-size: 14px;
+      .font-regular();
+    }
+
+    .view-contract-address-modal-content {
+      margin-top: 16px;
+
+      .view-contract-address-modal-contract {
+        color: var(--etransfer-ui-primary-text);
+        font-size: 16px;
+        .font-regular();
+        overflow-wrap: anywhere;
+      }
+
+      .view-contract-address-modal-action {
+        margin-left: 16px;
+        gap: 16px;
+
+        .view-contract-address-modal-copy-icon {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+
+  .ant-modal-content {
+    .ant-modal-header {
+      display: none !important;
+    }
+    .ant-modal-body {
+      padding: 20px;
+    }
+  }
+}

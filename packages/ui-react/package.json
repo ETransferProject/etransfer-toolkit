@@ -43,6 +43,8 @@
     "@etransfer/core": "^1.0.0",
     "@etransfer/types": "^1.0.0",
     "@etransfer/utils": "^1.0.0",
+    "@portkey/utils": "2.6.6",
+    "@portkey/types": "2.6.6",
     "antd": "4.24.14",
     "bignumber.js": "^9.1.0",
     "clsx": "^1.2.1",
@@ -50,9 +52,11 @@
     "moment": "^2.29.4",
     "query-string": "^7.1.1",
     "react-qrcode-logo": "2.9.0",
-    "react-use": "^17.4.0"
+    "react-use": "^17.4.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/uuid": "^8.3.4",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "less": "^4.1.3",

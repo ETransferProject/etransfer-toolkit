@@ -1,0 +1,93 @@
+@import '../../assets/theme/constants.less';
+
+.etransfer-ui-common-button {
+  border-radius: 6px;
+  box-shadow: none;
+  span {
+    .font-medium();
+  }
+}
+
+.etransfer-ui-common-button-primary {
+  background: var(--etransfer-ui-brand);
+  border: 1px solid var(--etransfer-ui-brand);
+  color: var(--etransfer-ui-white-text);
+  &:hover {
+    background: var(--etransfer-ui-hover);
+    border-color: var(--etransfer-ui-hover);
+    color: var(--etransfer-ui-white-text);
+  }
+  &:checked {
+    background: var(--etransfer-ui-click);
+    border-color: var(--etransfer-ui-click);
+    color: var(--etransfer-ui-white-text);
+  }
+  &:disabled,
+  &[disabled]:hover {
+    background: var(--etransfer-ui-disable);
+    border-color: var(--etransfer-ui-disable);
+    color: var(--etransfer-ui-white-text);
+  }
+  &:focus {
+    background: var(--etransfer-ui-click);
+    border-color: var(--etransfer-ui-click);
+    color: var(--etransfer-ui-white-text);
+  }
+}
+
+.etransfer-ui-common-button-secondary {
+  background: var(--etransfer-ui-normal-bg);
+  border: 1px solid var(--etransfer-ui-normal-bg);
+  color: var(--etransfer-ui-primary-text);
+  &:hover {
+    background: var(--etransfer-ui-hover-bg);
+    border-color: var(--etransfer-ui-hover-bg);
+    color: var(--etransfer-ui-primary-text);
+  }
+  &:checked {
+    background: var(--etransfer-ui-click-bg);
+    border-color: var(--etransfer-ui-click-bg);
+    color: var(--etransfer-ui-primary-text);
+  }
+  &:disabled {
+    background: var(--etransfer-ui-hover-bg);
+    border-color: var(--etransfer-ui-hover-bg);
+    color: var(--etransfer-ui-primary-text);
+  }
+  &:focus {
+    background: var(--etransfer-ui-click-bg);
+    border-color: var(--etransfer-ui-click-bg);
+    color: var(--etransfer-ui-primary-text);
+  }
+}
+
+.etransfer-ui-common-button-small {
+  height: 40px;
+  padding: 0 20px;
+  span {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+.etransfer-ui-common-button-middle {
+  height: 48px;
+  padding: 0 28px;
+  span {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+.etransfer-ui-common-button-large {
+  height: 56px;
+  padding: 0 32px;
+  span {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+.etransfer-ui-common-button-stretched {
+  width: 100%;
+}

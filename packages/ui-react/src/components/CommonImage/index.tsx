@@ -3,8 +3,8 @@ import { ReactEventHandler } from 'react';
 
 export type TCommonImageProps = {
   src: HTMLImageElement['src'];
-  width: HTMLImageElement['width'];
-  height: HTMLImageElement['height'];
+  width?: HTMLImageElement['width'];
+  height?: HTMLImageElement['height'];
   className?: HTMLImageElement['className'];
   alt?: HTMLImageElement['alt'];
   loading?: HTMLImageElement['loading'];

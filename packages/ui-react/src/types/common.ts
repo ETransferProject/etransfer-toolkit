@@ -1,4 +1,4 @@
-export enum ComponentsStyles {
+export enum ComponentStyle {
   Web = 'Web',
   Mobile = 'Mobile',
 }

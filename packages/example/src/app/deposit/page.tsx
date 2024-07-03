@@ -160,7 +160,7 @@ export default function DepositPage() {
 
       <Divider plain>Second Step</Divider>
 
-      <Deposit />
+      <Deposit componentStyle={'Mobile'} />
 
       {/* <section>
         
