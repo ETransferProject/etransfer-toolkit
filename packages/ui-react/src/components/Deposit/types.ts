@@ -1,20 +1,21 @@
-import { TTokenOptionItem, TNetworkItem, TDepositInfo } from '@etransfer/types';
+import { TTokenOptionItem, TNetworkItem, TDepositInfo, TToTokenItem } from '@etransfer/types';
 import { IChainMenuItem } from '../../types/chain';
 import { ComponentStyle } from '../../types/common';
+import { ChainId } from '@portkey/types';
 
 export interface DepositSelectGroupProps {
   depositTokenList: TTokenOptionItem[];
-  depositTokenSelected: TTokenOptionItem;
+  depositTokenSelected?: TTokenOptionItem;
   depositTokenSelectCallback: (item: TTokenOptionItem) => void;
   networkList: TNetworkItem[];
-  networkSelected: TNetworkItem;
+  networkSelected?: TNetworkItem;
   isShowNetworkLoading: boolean;
   networkSelectCallback: (item: TNetworkItem) => Promise<void>;
   chainList: IChainMenuItem[];
-  chainSelected: IChainMenuItem;
+  chainSelected?: IChainMenuItem;
   chainChanged: (item: IChainMenuItem) => void;
   receiveTokenList: TTokenOptionItem[];
-  receiveTokenSelected: TTokenOptionItem;
+  receiveTokenSelected?: TTokenOptionItem;
   receiveTokenSelectCallback: (item: TTokenOptionItem) => void;
 }
 
@@ -23,7 +24,7 @@ export interface DepositProps {
 }
 
 export interface DepositDetailProps {
-  chainItem: IChainMenuItem;
+  chainItem?: IChainMenuItem;
   depositTokenSymbol: string;
   depositTokenDecimals: number;
   receiveTokenSymbol: string;
@@ -37,7 +38,7 @@ export interface DepositDetailProps {
 }
 
 export interface DepositDetailForMobileProps extends DepositDetailProps {
-  networkItem: TNetworkItem;
+  networkItem?: TNetworkItem;
   onNext: () => Promise<void>;
 }
 
@@ -49,3 +50,17 @@ export type TDepositForMobileProps = DepositSelectGroupProps &
 
 export type TDepositForWebProps = DepositSelectGroupProps &
   Omit<DepositDetailProps, 'chainItem' | 'depositTokenSymbol' | 'depositTokenDecimals' | 'receiveTokenSymbol'>;
+
+export type TGetNetworkData = {
+  chainId: ChainId;
+  symbol?: string;
+  toSymbol?: string;
+};
+
+export interface DepositTokenOptionItem extends TTokenOptionItem {
+  toTokenList?: Array<DepositReceiveTokenItem>;
+}
+
+export interface DepositReceiveTokenItem extends TToTokenItem {
+  chainList?: IChainMenuItem[];
+}

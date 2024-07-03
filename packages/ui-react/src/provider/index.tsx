@@ -3,5 +3,5 @@ import BaseConfigProvider from './BaseConfigProvider';
 
 const ConfigProvider = globalConfigProvider;
 
-export const PortkeyProvider = BaseConfigProvider;
+export const ETransferProvider = BaseConfigProvider;
 export default ConfigProvider;

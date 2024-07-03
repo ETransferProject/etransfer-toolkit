@@ -1,9 +1,28 @@
 import { ChainId } from '@portkey/types';
+import { IChainMenuItem } from '../types';
 
-export interface IChainNameItem {
-  key: ChainId;
-  label: string;
+export enum CHAIN_NAME_ENUM {
+  AELF = 'MainChain AELF',
+  tDVW = 'SideChain tDVW',
+  tDVV = 'SideChain tDVV',
 }
+
+export const CHAIN_MENU_DATA: {
+  [chainId in ChainId]: IChainMenuItem;
+} = {
+  AELF: {
+    key: 'AELF',
+    label: CHAIN_NAME_ENUM.AELF,
+  },
+  tDVV: {
+    key: 'tDVV',
+    label: CHAIN_NAME_ENUM.tDVV,
+  },
+  tDVW: {
+    key: 'tDVW',
+    label: CHAIN_NAME_ENUM.tDVW,
+  },
+};
 
 export enum TokenType {
   USDT = 'USDT',

@@ -4,7 +4,7 @@ import { TDynamicArrowSize } from '../DynamicArrow';
 
 type TSelectChainCommon = {
   menuItems: IChainMenuItem[];
-  selectedItem: IChainMenuItem;
+  selectedItem?: IChainMenuItem;
   getContainer: string;
   className?: string;
   childrenClassName?: string;

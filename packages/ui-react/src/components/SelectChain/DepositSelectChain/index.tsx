@@ -9,7 +9,7 @@ import { ComponentStyle } from '../../../types/common';
 
 interface DepositSelectChainProps {
   menuItems: IChainMenuItem[];
-  selectedItem: IChainMenuItem;
+  selectedItem?: IChainMenuItem;
   className?: string;
   mobileTitle?: string;
   mobileLabel?: string;
@@ -41,7 +41,7 @@ export default function DepositSelectChain({
       <CommonSpace direction={'horizontal'} size={isMobileStyle ? 6 : 8} />
 
       {isDisabled ? (
-        <div className={clsx('select-chain', !isMobileStyle && 'select-chain-web')}>{selectedItem.label}</div>
+        <div className={clsx('select-chain', !isMobileStyle && 'select-chain-web')}>{selectedItem?.label}</div>
       ) : (
         <SelectChain
           getContainer="etransferWebDepositChainWrapper"
@@ -54,6 +54,7 @@ export default function DepositSelectChain({
           childrenClassName={clsx('select-chain-content', !isMobileStyle && 'select-chain-content-web')}
           overlayClassName={'select-chain-overlay'}
           suffixArrowSize={isMobileStyle ? 'Small' : 'Normal'}
+          componentStyle={componentStyle}
         />
       )}
     </div>

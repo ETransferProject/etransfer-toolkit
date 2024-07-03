@@ -28,10 +28,11 @@ export default function SelectChain({
 
   const onClickChain = useCallback(
     async (item: IChainMenuItem) => {
-      if (item.key === selectedItem.key) return;
+      console.log('🌈 🌈 item', item);
+      if (item.key === selectedItem?.key) return;
       await clickCallback(item);
     },
-    [clickCallback, selectedItem.key],
+    [clickCallback, selectedItem?.key],
   );
   const dropdownProps: Omit<DeviceSelectChainProps, 'getContainer'> = useMemo(() => {
     return {

@@ -1,3 +1,4 @@
+import { DEFAULT_DECIMAL } from '../../../utils';
 import DepositDetailForWeb from '../DepositDetailForWeb';
 import { DepositSelectGroupForWeb } from '../DepositSelectGroupForWeb';
 import { TDepositForWebProps } from '../types';
@@ -46,9 +47,9 @@ export default function DepositForWeb({
       />
       <DepositDetailForWeb
         chainItem={chainSelected}
-        depositTokenSymbol={depositTokenSelected.symbol}
-        depositTokenDecimals={depositTokenSelected.decimals}
-        receiveTokenSymbol={receiveTokenSelected.symbol}
+        depositTokenSymbol={depositTokenSelected?.symbol || ''}
+        depositTokenDecimals={depositTokenSelected?.decimals || DEFAULT_DECIMAL}
+        receiveTokenSymbol={receiveTokenSelected?.symbol || ''}
         depositInfo={depositInfo}
         contractAddress={contractAddress}
         contractAddressLink={contractAddressLink}

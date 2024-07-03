@@ -28,13 +28,13 @@ export default function DepositDetailForWeb({
 }: DepositDetailProps) {
   return (
     <div className="etransfer-ui-deposit-detail-for-web">
-      {depositTokenSymbol && receiveTokenSymbol && chainItem.key && depositTokenSymbol !== receiveTokenSymbol && (
+      {depositTokenSymbol && receiveTokenSymbol && chainItem?.key && depositTokenSymbol !== receiveTokenSymbol && (
         <>
           <CommonSpace direction="vertical" size={12} />
           <ExchangeRate
             fromSymbol={depositTokenSymbol}
             toSymbol={receiveTokenSymbol}
-            toChainId={chainItem.key}
+            toChainId={chainItem?.key}
             slippage={depositInfo.extraInfo?.slippage}
           />
         </>

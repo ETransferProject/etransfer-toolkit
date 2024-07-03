@@ -22,8 +22,8 @@ const DEFAULT_PAY_AMOUNT = '100';
 export interface CalculatorProps {
   depositTokenSymbol: string;
   depositTokenDecimals: number;
-  chainItem: IChainMenuItem;
   receiveTokenSymbol: string;
+  chainItem?: IChainMenuItem;
   componentStyle?: ComponentStyle;
 }
 
@@ -43,7 +43,7 @@ export default function Calculator({
 
   const getCalculate = useCallback(async () => {
     try {
-      if (!amountRef.current || !chainItem.key || !depositTokenSymbol || !receiveTokenSymbol) return;
+      if (!amountRef.current || !chainItem?.key || !depositTokenSymbol || !receiveTokenSymbol) return;
       const { conversionRate } = await etransferCore.services.getDepositCalculate({
         toChainId: chainItem.key,
         fromSymbol: depositTokenSymbol,
@@ -61,7 +61,7 @@ export default function Calculator({
         singleMessage.error(handleErrorMessage(error));
       }
     }
-  }, [chainItem.key, depositTokenSymbol, receiveTokenSymbol]);
+  }, [chainItem?.key, depositTokenSymbol, receiveTokenSymbol]);
 
   const updateTimeRef = useRef(MAX_UPDATE_TIME);
   const updateTimerRef = useRef<NodeJS.Timeout>();

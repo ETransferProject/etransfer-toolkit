@@ -15,7 +15,7 @@ export interface DepositNetworkResultProps {
 export function DepositNetworkResultForWeb({ selected, isArrowDown = true, onClick }: DepositNetworkResultProps) {
   const renderNotSelected = useMemo(() => {
     return (
-      <div className={clsx('etransfer-ui-flex-row-center', 'select-network-not-selected')}>
+      <div className={clsx('etransfer-ui-flex-row-center', 'select-network-not-selected-for-web')}>
         <CommonSvg type="addMedium" className="etransfer-ui-flex-shrink-0" />
         <span className={'select-network-value-placeholder'}>Select Network</span>
       </div>

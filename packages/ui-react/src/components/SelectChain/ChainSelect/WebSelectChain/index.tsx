@@ -24,7 +24,7 @@ export default function WebSelectChain({
       isBorder={isBorder}
       menu={{
         items: menuItems,
-        selectedKeys: [selectedItem?.key],
+        selectedKeys: [selectedItem?.key || ''],
       }}
       handleMenuClick={(item) => {
         onClick?.(menuItems.find((chain) => chain?.key === item?.key) || menuItems[0]);

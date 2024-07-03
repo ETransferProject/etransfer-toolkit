@@ -34,8 +34,8 @@ export default function DepositDetailForMobile({
 }: DepositDetailForMobileProps) {
   const [isShowDepositInfo, setIsShowDepositInfo] = useState(false);
   const nextDisable = useMemo(
-    () => !depositTokenSymbol || !receiveTokenSymbol || !chainItem.key || !networkItem?.network,
-    [chainItem.key, depositTokenSymbol, networkItem?.network, receiveTokenSymbol],
+    () => !depositTokenSymbol || !receiveTokenSymbol || !chainItem?.key || !networkItem?.network,
+    [chainItem?.key, depositTokenSymbol, networkItem?.network, receiveTokenSymbol],
   );
 
   const renderDepositAddress = useMemo(() => {
@@ -81,14 +81,14 @@ export default function DepositDetailForMobile({
 
         <Space direction="vertical" size={16} />
 
-        {depositTokenSymbol && networkItem.network && renderDepositAddress}
+        {depositTokenSymbol && networkItem?.network && renderDepositAddress}
 
         <Space direction="vertical" size={12} />
 
-        {depositTokenSymbol && networkItem.network && depositInfo?.depositAddress && (
+        {depositTokenSymbol && networkItem?.network && depositInfo?.depositAddress && (
           <DepositInfo
             modalContainer={'#etransferMobileDepositDetailDrawer'}
-            networkName={networkItem.name}
+            networkName={networkItem?.name}
             minimumDeposit={depositInfo.minAmount}
             contractAddress={contractAddress}
             contractAddressLink={contractAddressLink}
@@ -103,8 +103,8 @@ export default function DepositDetailForMobile({
     isShowDepositInfo,
     depositTokenSymbol,
     receiveTokenSymbol,
-    networkItem.network,
-    networkItem.name,
+    networkItem?.network,
+    networkItem?.name,
     renderDepositAddress,
     depositInfo?.depositAddress,
     depositInfo.minAmount,
@@ -121,7 +121,7 @@ export default function DepositDetailForMobile({
 
   return (
     <div className="etransfer-ui-deposit-detail-for-mobile">
-      {depositTokenSymbol && receiveTokenSymbol && chainItem.key && depositTokenSymbol !== receiveTokenSymbol && (
+      {depositTokenSymbol && receiveTokenSymbol && chainItem?.key && depositTokenSymbol !== receiveTokenSymbol && (
         <>
           <CommonSpace direction="vertical" size={12} />
           <ExchangeRate

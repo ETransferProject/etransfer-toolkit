@@ -1,3 +1,4 @@
+import { DEFAULT_DECIMAL } from '../../../utils';
 import DepositDetailForMobile from '../DepositDetailForMobile';
 import { DepositSelectGroupForMobile } from '../DepositSelectGroupForMobile';
 import { TDepositForMobileProps } from '../types';
@@ -47,9 +48,9 @@ export default function DepositForMobile({
       />
       <DepositDetailForMobile
         chainItem={chainSelected}
-        depositTokenSymbol={depositTokenSelected.symbol}
-        depositTokenDecimals={depositTokenSelected.decimals}
-        receiveTokenSymbol={receiveTokenSelected.symbol}
+        depositTokenSymbol={depositTokenSelected?.symbol || ''}
+        depositTokenDecimals={depositTokenSelected?.decimals || DEFAULT_DECIMAL}
+        receiveTokenSymbol={receiveTokenSelected?.symbol || ''}
         networkItem={networkSelected}
         depositInfo={depositInfo}
         contractAddress={contractAddress}

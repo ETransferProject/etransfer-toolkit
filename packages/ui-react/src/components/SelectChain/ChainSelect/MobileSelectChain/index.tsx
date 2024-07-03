@@ -15,6 +15,7 @@ export default function MobileSelectChain({
   onClick,
 }: Omit<DeviceSelectChainProps, 'getContainer'> & { title: string }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
   return (
     <>
       <div

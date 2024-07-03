@@ -11,7 +11,7 @@ type TSelectTokenChain = {
   tokenList: TTokenOptionItem[];
   tokenSelected?: TTokenOptionItem;
   chainList: IChainMenuItem[];
-  chainSelected: IChainMenuItem;
+  chainSelected?: IChainMenuItem;
   chainChanged: (item: IChainMenuItem) => void;
   tokenSelectCallback: (item: TTokenOptionItem) => void;
 };
