@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react';
 import { basicETransferView, ETransferState } from './actions';
 import { BasicActions } from '../utils';
-import { ChainType } from '@portkey/types';
+import { NetworkType } from '../../types';
 
-const INITIAL_STATE = {
-  chainType: 'aelf',
+const INITIAL_STATE: ETransferState = {
+  networkType: 'MAINNET',
 };
 const ETransferContext = createContext<any>(INITIAL_STATE);
 
@@ -27,22 +27,22 @@ function reducer(state: any, { type, payload }: any) {
 }
 
 export interface ETransferProviderProps {
-  chainType?: ChainType;
+  networkType?: NetworkType;
   children: React.ReactNode;
 }
 
-export default function ETransferProvider({ chainType, children }: ETransferProviderProps) {
+export function ETransferProvider({ networkType, children }: ETransferProviderProps) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   // TODO
   //   useEffectOnce(() => {
   //     initConfig();
   //     if (etransferCore.storage) {
-  //       ConfigProvider.setGlobalConfig({});
+  //       ETransferConfig.setGlobalConfig({});
   //     }
   //   });
 
   return (
-    <ETransferContext.Provider value={useMemo(() => [{ ...state, chainType }, { dispatch }], [state, chainType])}>
+    <ETransferContext.Provider value={useMemo(() => [{ ...state, networkType }, { dispatch }], [state, networkType])}>
       {children}
     </ETransferContext.Provider>
   );

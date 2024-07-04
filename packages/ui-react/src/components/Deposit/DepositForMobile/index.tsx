@@ -1,9 +1,14 @@
+import clsx from 'clsx';
+import './index.less';
 import { DEFAULT_DECIMAL } from '../../../utils';
 import DepositDetailForMobile from '../DepositDetailForMobile';
-import { DepositSelectGroupForMobile } from '../DepositSelectGroupForMobile';
+import DepositSelectGroupForMobile from '../DepositSelectGroupForMobile';
 import { TDepositForMobileProps } from '../types';
 
 export default function DepositForMobile({
+  // common
+  className,
+
   // select
   depositTokenList,
   depositTokenSelected,
@@ -30,7 +35,7 @@ export default function DepositForMobile({
   onNext,
 }: TDepositForMobileProps) {
   return (
-    <div className="etransfer-ui-deposit-for-mobile">
+    <div className={clsx('etransfer-ui-deposit-for-mobile', className)}>
       <DepositSelectGroupForMobile
         depositTokenList={depositTokenList}
         depositTokenSelected={depositTokenSelected}

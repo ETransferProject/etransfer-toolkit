@@ -1,4 +1,4 @@
-// import './src/assets/theme/modified.antd.css';
+import './src/assets/theme/modified.antd.css';
 import './index.less';
 
 export * from './src/components';
@@ -9,3 +9,8 @@ export * from './src/types';
 // context
 export * from './src/context/ETransferProvider';
 export * from './src/context/ETransferDepositProvider';
+
+// provider
+export * from './src/provider/ETransferConfigProvider';
+export * from './src/provider/ETransferLayoutProvider';
+export * from './src/provider/ETransferStyleProvider';

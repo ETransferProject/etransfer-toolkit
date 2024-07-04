@@ -15,7 +15,12 @@ export interface DepositNetworkResultProps {
 export function DepositNetworkResultForWeb({ selected, isArrowDown = true, onClick }: DepositNetworkResultProps) {
   const renderNotSelected = useMemo(() => {
     return (
-      <div className={clsx('etransfer-ui-flex-row-center', 'select-network-not-selected-for-web')}>
+      <div
+        className={clsx(
+          'etransfer-ui-flex-row-center',
+          'etransfer-ui-select-network-not-selected',
+          'etransfer-ui-select-network-not-selected-for-web',
+        )}>
         <CommonSvg type="addMedium" className="etransfer-ui-flex-shrink-0" />
         <span className={'select-network-value-placeholder'}>Select Network</span>
       </div>
@@ -37,7 +42,7 @@ export function DepositNetworkResultForWeb({ selected, isArrowDown = true, onCli
   const renderSelected = useMemo(() => {
     return (
       selected?.network && (
-        <span className={clsx('etransfer-ui-flex-row-center', 'select-network-value-selected')}>
+        <span className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-select-network-value-selected')}>
           {renderNetworkLogo}
           <span className={'primary'}>{selected?.name}</span>
         </span>
@@ -68,7 +73,12 @@ export function DepositNetworkResultForMobile({
 }: DepositNetworkResultProps & { label?: string }) {
   const renderNotSelected = useMemo(() => {
     return (
-      <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-select-network-not-selected-for-mobile')}>
+      <div
+        className={clsx(
+          'etransfer-ui-flex-row-center',
+          'etransfer-ui-select-network-not-selected',
+          'etransfer-ui-select-network-not-selected-for-mobile',
+        )}>
         <CommonSvg type="add" className="etransfer-ui-flex-shrink-0" />
         <span className={'select-network-value-placeholder'}>Select Network</span>
       </div>
@@ -90,7 +100,7 @@ export function DepositNetworkResultForMobile({
   const renderSelected = useMemo(() => {
     return (
       selected?.network && (
-        <span className={clsx('etransfer-ui-flex-row-center', 'select-network-value-selected')}>
+        <span className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-select-network-value-selected')}>
           {renderNetworkLogo}
           <span className={'primary'}>{selected?.name}</span>
         </span>

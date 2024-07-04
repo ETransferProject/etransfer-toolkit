@@ -6,7 +6,7 @@ import { IChainMenuItem } from '../../../types/chain';
 import { ComponentStyle } from '../../../types/common';
 import SynchronizingChainModal from '../../Modal/SynchronizingChainModal';
 
-export default function SelectChain({
+export default function ChainSelect({
   title,
   className,
   childrenClassName,
@@ -28,7 +28,6 @@ export default function SelectChain({
 
   const onClickChain = useCallback(
     async (item: IChainMenuItem) => {
-      console.log('🌈 🌈 item', item);
       if (item.key === selectedItem?.key) return;
       await clickCallback(item);
     },

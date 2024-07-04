@@ -1,9 +1,14 @@
+import clsx from 'clsx';
 import { DEFAULT_DECIMAL } from '../../../utils';
 import DepositDetailForWeb from '../DepositDetailForWeb';
-import { DepositSelectGroupForWeb } from '../DepositSelectGroupForWeb';
+import DepositSelectGroupForWeb from '../DepositSelectGroupForWeb';
 import { TDepositForWebProps } from '../types';
+import './index.less';
 
 export default function DepositForWeb({
+  // common
+  className,
+
   // select
   depositTokenList,
   depositTokenSelected,
@@ -29,7 +34,8 @@ export default function DepositForWeb({
   onRetry,
 }: TDepositForWebProps) {
   return (
-    <div className="etransfer-ui-deposit-for-web">
+    <div className={clsx('etransfer-ui-deposit-for-web', className)}>
+      <div className={'etransfer-ui-deposit-title'}>Deposit Assets</div>
       <DepositSelectGroupForWeb
         depositTokenList={depositTokenList}
         depositTokenSelected={depositTokenSelected}

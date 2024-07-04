@@ -4,6 +4,7 @@ import { ComponentStyle } from '../../types/common';
 import { ChainId } from '@portkey/types';
 
 export interface DepositSelectGroupProps {
+  className?: string;
   depositTokenList: TTokenOptionItem[];
   depositTokenSelected?: TTokenOptionItem;
   depositTokenSelectCallback: (item: TTokenOptionItem) => void;

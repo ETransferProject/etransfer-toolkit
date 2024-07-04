@@ -35,8 +35,6 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
     { dispatch },
   ] = useETransferDeposit();
 
-  console.log('》〉》〉》〉》〉》〉》〉》 chainItem', chainItem);
-
   const depositTokenSelected = useMemo(() => {
     return depositTokenList?.find((item) => item.symbol === depositTokenSymbol) || depositTokenList?.[0];
   }, [depositTokenList, depositTokenSymbol]);

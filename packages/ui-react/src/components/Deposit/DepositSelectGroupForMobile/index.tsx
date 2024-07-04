@@ -3,7 +3,8 @@ import SelectTokenChain from '../SelectTokenChain';
 import CommonSpace from '../../CommonSpace';
 import { DepositSelectGroupProps } from '../types';
 
-export function DepositSelectGroupForMobile({
+export default function DepositSelectGroupForMobile({
+  className,
   depositTokenList,
   depositTokenSelected,
   depositTokenSelectCallback,
@@ -19,7 +20,7 @@ export function DepositSelectGroupForMobile({
   receiveTokenSelectCallback,
 }: DepositSelectGroupProps) {
   return (
-    <div>
+    <div className={className}>
       <SelectTokenNetwork
         label={'From'}
         tokenList={depositTokenList}

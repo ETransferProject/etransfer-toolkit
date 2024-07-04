@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import clsx from 'clsx';
 import './index.less';
 import CommonSvg from '../../CommonSvg';
-import SelectChain from '../ChainSelect';
+import ChainSelect from '../ChainSelect';
 import CommonSpace from '../../CommonSpace';
 import { IChainMenuItem } from '../../../types/chain';
 import { ComponentStyle } from '../../../types/common';
@@ -43,7 +43,7 @@ export default function DepositSelectChain({
       {isDisabled ? (
         <div className={clsx('select-chain', !isMobileStyle && 'select-chain-web')}>{selectedItem?.label}</div>
       ) : (
-        <SelectChain
+        <ChainSelect
           getContainer="etransferWebDepositChainWrapper"
           menuItems={menuItems}
           selectedItem={selectedItem}

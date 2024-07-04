@@ -1,12 +1,12 @@
-import { ChainType } from '@portkey/types';
 import { basicActions } from '../utils';
+import { NetworkType } from '../../types';
 
 const ETransferActions = {
   destroy: 'DESTROY',
 };
 
 export type ETransferState = {
-  chainType: ChainType;
+  networkType: NetworkType;
 };
 
 export const basicETransferView = {

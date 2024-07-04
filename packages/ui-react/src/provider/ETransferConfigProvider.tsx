@@ -1,10 +1,22 @@
-import { GlobalConfigProps } from './types';
+import { ConfigKey, ETransferConfigProps, ETransferConfigProviderProps } from './types';
 import { CHAIN_INFO as AELF_CHAIN_INFO } from '../constants/platform/AELF';
 import { CHAIN_INFO as tDVV_CHAIN_INFO } from '../constants/platform/tDVV';
 import { BaseAsyncStorage } from '../utils/BaseAsyncStorage';
 import { etransferCore } from '../utils/core';
+import { CHAIN_ID, DEFAULT_CHAIN_ID, TokenType } from '../constants';
 
-const defaultConfig: GlobalConfigProps = {
+const defaultConfig: ETransferConfigProps = {
+  depositConfig: {
+    defaultChainId: DEFAULT_CHAIN_ID,
+    supportChainId: [CHAIN_ID.AELF, CHAIN_ID.tDVV],
+    defaultDepositToken: TokenType.USDT,
+    defaultReceiveToken: TokenType.USDT,
+  },
+  withdrawConfig: {
+    defaultChainId: DEFAULT_CHAIN_ID,
+    supportChainId: [CHAIN_ID.AELF, CHAIN_ID.tDVV],
+    defaultToken: TokenType.USDT,
+  },
   aelfReact: {
     nodes: {
       AELF: {
@@ -19,16 +31,14 @@ const defaultConfig: GlobalConfigProps = {
   },
 };
 
-type ConfigKey = keyof GlobalConfigProps;
+class ETransferConfigProvider implements ETransferConfigProviderProps {
+  public config: ETransferConfigProps;
 
-class GlobalConfigProvider {
-  config: GlobalConfigProps;
-
-  constructor(config: GlobalConfigProps) {
+  constructor(config: ETransferConfigProps) {
     this.config = config;
   }
 
-  getGlobalConfig = () => {
+  getAllConfig = () => {
     return this.config;
   };
 
@@ -36,7 +46,7 @@ class GlobalConfigProvider {
     return this.config?.[key];
   };
 
-  setGlobalConfig = (_config: Partial<GlobalConfigProps>) => {
+  setConfig = (_config: Partial<ETransferConfigProps>) => {
     if (('storage' in _config && _config.storage) || !this.config.storage) {
       const storage = _config.storage || new BaseAsyncStorage();
 
@@ -51,8 +61,12 @@ class GlobalConfigProvider {
       etransferCore.setAuthUrl(_config['etransferAuthUrl']);
     }
 
+    if ('authorization' in _config && _config['authorization']?.jwt) {
+      etransferCore.services.setRequestHeaders('Authorization', _config['authorization'].jwt);
+    }
+
     this.config = { ...this.config, ..._config };
   };
 }
 
-export const globalConfigProvider = new GlobalConfigProvider(defaultConfig);
+export const ETransferConfig = new ETransferConfigProvider(defaultConfig);

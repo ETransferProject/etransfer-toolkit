@@ -1,19 +1,19 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
-import { ChainType } from '@portkey/types';
 import { ETRANSFER_ROOT_ID } from '../constants';
-import ETransferProvider from '../context/ETransferProvider';
+import { ETransferProvider } from '../context/ETransferProvider';
 import GlobalLoading from '../components/GlobalLoading';
+import { NetworkType } from '../types';
 
-export default function BaseConfigProvider({
-  chainType = 'aelf',
+export function ETransferLayoutProvider({
+  networkType = 'MAINNET',
   children,
 }: {
-  chainType?: ChainType;
+  networkType?: NetworkType;
   children: ReactNode;
 }) {
   return (
-    <ETransferProvider chainType={chainType}>
+    <ETransferProvider networkType={networkType}>
       <div id={ETRANSFER_ROOT_ID} className={clsx('etransfer-ui-wrapper')}>
         {children}
         <GlobalLoading />

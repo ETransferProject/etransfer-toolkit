@@ -7,7 +7,6 @@ import ExchangeRate from '../ExchangeRate';
 import { DepositDetailForMobileProps } from '../types';
 import { useCallback, useMemo, useState } from 'react';
 import CommonDrawer from '../../CommonDrawer';
-import { Space } from 'antd';
 import { qrCodePlaceholder } from '../../../assets/images';
 import { DEPOSIT_ADDRESS_LABEL } from '../../../constants/deposit';
 import CommonAddress from '../../CommonAddress';
@@ -41,12 +40,12 @@ export default function DepositDetailForMobile({
   const renderDepositAddress = useMemo(() => {
     return (
       <div className={'deposit-address'}>
-        <div className={clsx('flex-row-content-center')}>
+        <div className={clsx('etransfer-ui-flex-row-content-center')}>
           {qrCodeValue ? (
             <CommonQRCode value={qrCodeValue} logoUrl={tokenLogoUrl} />
           ) : (
             <CommonImage
-              className={clsx('flex-none')}
+              className={clsx('etransfer-ui-flex-none')}
               src={qrCodePlaceholder as unknown as string}
               width={164}
               height={164}
@@ -54,7 +53,7 @@ export default function DepositDetailForMobile({
             />
           )}
         </div>
-        <Space direction="vertical" size={16} />
+        <CommonSpace direction="vertical" size={16} />
         {showRetry && <DepositRetryForMobile onClick={onRetry} />}
         {!showRetry && depositInfo?.depositAddress && (
           <CommonAddress label={DEPOSIT_ADDRESS_LABEL} value={depositInfo.depositAddress} />
@@ -79,11 +78,11 @@ export default function DepositDetailForMobile({
           <DepositTip fromToken={depositTokenSymbol} toToken={receiveTokenSymbol} isShowIcon={false} />
         )}
 
-        <Space direction="vertical" size={16} />
+        <CommonSpace direction="vertical" size={16} />
 
         {depositTokenSymbol && networkItem?.network && renderDepositAddress}
 
-        <Space direction="vertical" size={12} />
+        <CommonSpace direction="vertical" size={12} />
 
         {depositTokenSymbol && networkItem?.network && depositInfo?.depositAddress && (
           <DepositInfo

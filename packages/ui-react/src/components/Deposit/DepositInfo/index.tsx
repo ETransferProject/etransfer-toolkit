@@ -41,7 +41,7 @@ export default function DepositInfo({
     return (
       <span className={clsx('etransfer-ui-text-right', 'info-value')} onClick={() => setOpenAddressModal(true)}>
         <span className={clsx('etransfer-ui-flex-row-center', 'address-ellipsis')}>
-          <span className="text-underline-none">{formatStr2Ellipsis(contractAddress, [6, 6])}</span>
+          <span className="etransfer-ui-text-underline-none">{formatStr2Ellipsis(contractAddress, [6, 6])}</span>
           <span className={clsx('question-mark-icon')}>
             <CommonSvg type="questionMark" />
           </span>
@@ -54,7 +54,7 @@ export default function DepositInfo({
     return (
       <span
         className={clsx('etransfer-ui-text-right', 'info-value', {
-          'text-link': !!contractAddressLink,
+          'etransfer-ui-text-link': !!contractAddressLink,
         })}
         onClick={() => openWithBlank(contractAddressLink)}>
         {contractAddress || '-'}
@@ -84,7 +84,7 @@ export default function DepositInfo({
       {!!contractAddress && (
         <div className={clsx('etransfer-ui-flex', 'info-line')}>
           <div className={clsx('etransfer-ui-flex-none', 'info-title')}>{CONTRACT_ADDRESS}</div>
-          <div className={clsx('etransfer-ui-flex-1', 'flex-row-content-end')}>
+          <div className={clsx('etransfer-ui-flex-1', 'etransfer-ui-flex-row-content-end')}>
             {componentStyle === ComponentStyle.Mobile ? renderContractLinkForMobile : renderContractLinkForWeb}
           </div>
         </div>

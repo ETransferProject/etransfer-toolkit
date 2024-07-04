@@ -2,12 +2,6 @@
 @import '../../../assets/theme/constants.less';
 
 .etransfer-ui-deposit-detail-for-mobile {
-  .deposit-address {
-    padding: 16px 12px;
-    border-radius: 6px;
-    border: 1px solid var(--etransfer-ui-dividers);
-  }
-
   .etransfer-ui-deposit-detail-for-mobile-next-button-wrapper {
     min-width: var(--etransfer-ui-page-min-width);
     @media @mediaMobile {
@@ -33,6 +27,14 @@
     height: 48px;
     font-size: 16px;
     line-height: 24px;
-   .font-medium();
+    .font-medium();
+  }
+}
+
+.etransfer-ui-deposit-detail-drawer {
+  .deposit-address {
+    padding: 16px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--etransfer-ui-dividers);
   }
 }

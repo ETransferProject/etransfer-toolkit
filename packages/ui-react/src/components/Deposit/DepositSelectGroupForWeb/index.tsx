@@ -7,7 +7,8 @@ import { DepositSelectNetworkForWeb } from '../../SelectNetwork/DepositSelectNet
 import { DepositSelectTokenForWeb } from '../../SelectToken/DepositSelectToken';
 import './index.less';
 
-export function DepositSelectGroupForWeb({
+export default function DepositSelectGroupForWeb({
+  className,
   depositTokenList,
   depositTokenSelected,
   depositTokenSelectCallback,
@@ -23,7 +24,7 @@ export function DepositSelectGroupForWeb({
   receiveTokenSelectCallback,
 }: DepositSelectGroupProps) {
   return (
-    <div>
+    <div className={className}>
       <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-selected-data-wrapper')}>
         <div className={clsx('etransfer-ui-selected-token-wrapper')}>
           <div className={'label'}>Deposit Token</div>

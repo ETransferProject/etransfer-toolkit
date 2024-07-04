@@ -1,14 +1,11 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react';
-
 import { BasicActions } from '../utils';
-
-import { CHAIN_MENU_DATA, TokenType } from '../../constants';
 import { ETransferDepositActions, ETransferDepositBaseState, ETransferDepositState } from './actions';
 
 const INITIAL_STATE = {
-  depositTokenSymbol: TokenType.USDT,
-  receiveTokenSymbol: TokenType.USDT,
-  chainItem: CHAIN_MENU_DATA['tDVV'],
+  // depositTokenSymbol: TokenType.USDT,
+  // receiveTokenSymbol: TokenType.USDT,
+  // chainItem: CHAIN_MENU_DATA['AELF'],
 };
 
 const ETransferDepositContext = createContext<any>(INITIAL_STATE);
@@ -57,10 +54,9 @@ function reducer(state: ETransferDepositState, { type, payload }: any) {
       return Object.assign({}, state, { receiveTokenList: list });
     }
     case ETransferDepositActions.setChainItem: {
-      console.log('🌈 🌹 🌹 payload', payload);
       const item = payload.chainItem;
       if (!item?.key) return state;
-      console.log('🌈 🌹 🌹 res', Object.assign({}, state, { chainItem: item }));
+
       return Object.assign({}, state, { chainItem: item });
     }
     case ETransferDepositActions.setChainList: {
@@ -86,10 +82,7 @@ export function ETransferDepositProvider({
   children: React.ReactNode;
 } & ETransferDepositBaseState) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const providerValue = useMemo(() => [{ ...props, ...state }, { dispatch }], [props, state]);
 
-  return (
-    <ETransferDepositContext.Provider value={useMemo(() => [{ ...props, ...state }, { dispatch }], [state, props])}>
-      {children}
-    </ETransferDepositContext.Provider>
-  );
+  return <ETransferDepositContext.Provider value={providerValue}>{children}</ETransferDepositContext.Provider>;
 }
