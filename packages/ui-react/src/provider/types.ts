@@ -1,5 +1,6 @@
 import { TETransferCoreOptions } from '@etransfer/core';
 import { ChainId } from '@portkey/types';
+import { NetworkType } from '../types';
 
 export interface ETransferConfigProviderProps {
   config: ETransferConfigProps;
@@ -24,7 +25,8 @@ export interface AelfReact {
 }
 
 export interface ETransferConfigProps extends TETransferCoreOptions {
-  aelfReact: AelfReact;
+  networkType: NetworkType;
+  aelfReact?: AelfReact;
   depositConfig?: ETransferDepositConfig;
   withdrawConfig?: ETransferWithdrawConfig;
   authorization?: ETransferAuthorizationConfig;
@@ -37,26 +39,31 @@ export interface ETransferAuthorizationConfig {
 export interface ETransferDepositConfig {
   // chain
   defaultChainId?: ChainId;
-  supportChainId?: ChainId[];
+  supportChainIds?: ChainId[];
   // deposit token
   defaultDepositToken?: string;
-  supportDepositToken?: string[];
+  supportDepositTokens?: string[];
   // receive token
   defaultReceiveToken?: string;
-  supportReceiveToken?: string[];
+  supportReceiveTokens?: string[];
   // network
   defaultNetwork?: string;
-  supportNetwork?: string[];
+  supportNetworks?: string[];
 }
 
 export interface ETransferWithdrawConfig {
   // chain
   defaultChainId?: ChainId;
-  supportChainId?: ChainId[];
+  supportChainIds?: ChainId[];
   //  token
   defaultToken?: string;
-  supportToken?: string[];
+  supportTokens?: string[];
   // network
   defaultNetwork?: string;
-  supportNetwork?: string[];
+  supportNetworks?: string[];
+}
+
+export interface SupportDataResult {
+  isLimit: boolean;
+  limits?: string[];
 }

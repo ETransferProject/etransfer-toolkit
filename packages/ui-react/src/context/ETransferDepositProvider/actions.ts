@@ -1,6 +1,7 @@
 import { basicActions } from '../utils';
-import { TNetworkItem, TToTokenItem, TTokenOptionItem } from '@etransfer/types';
+import { TNetworkItem } from '@etransfer/types';
 import { IChainMenuItem } from '../../types';
+import { DepositReceiveTokenItem, DepositTokenOptionItem } from '../../components/Deposit/types';
 
 export const ETransferDepositActions = {
   initialized: 'INITIALIZED',
@@ -15,24 +16,21 @@ export const ETransferDepositActions = {
   setChainList: 'setChainList',
 };
 
-export interface ETransferDepositBaseState {
-  depositTokenSymbol: string;
-  receiveTokenSymbol: string;
-  chainItem: IChainMenuItem;
-}
-
-export interface ETransferDepositState extends ETransferDepositBaseState {
+export interface ETransferDepositState {
   // deposit token
-  depositTokenList?: TTokenOptionItem[];
+  depositTokenSymbol: string;
+  depositTokenList?: DepositTokenOptionItem[];
 
   // network
   networkItem?: TNetworkItem;
   networkList?: TNetworkItem[];
 
   // receive token
-  receiveTokenList?: TToTokenItem[];
+  receiveTokenSymbol: string;
+  receiveTokenList?: DepositReceiveTokenItem[];
 
   // chain
+  chainItem: IChainMenuItem;
   chainList?: IChainMenuItem[];
 }
 
@@ -48,7 +46,7 @@ export const etransferDepositAction = {
   },
   setDepositTokenList: {
     type: ETransferDepositActions['setDepositTokenList'],
-    actions: (list: TTokenOptionItem[]) => basicActions(ETransferDepositActions['setDepositTokenList'], { list }),
+    actions: (list: DepositTokenOptionItem[]) => basicActions(ETransferDepositActions['setDepositTokenList'], { list }),
   },
   setNetworkItem: {
     type: ETransferDepositActions['setNetworkItem'],
@@ -64,7 +62,8 @@ export const etransferDepositAction = {
   },
   setReceiveTokenList: {
     type: ETransferDepositActions['setReceiveTokenList'],
-    actions: (list: TToTokenItem[]) => basicActions(ETransferDepositActions['setReceiveTokenList'], { list }),
+    actions: (list: DepositReceiveTokenItem[]) =>
+      basicActions(ETransferDepositActions['setReceiveTokenList'], { list }),
   },
   setChainItem: {
     type: ETransferDepositActions['setChainItem'],

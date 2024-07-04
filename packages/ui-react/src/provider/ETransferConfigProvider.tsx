@@ -8,13 +8,13 @@ import { CHAIN_ID, DEFAULT_CHAIN_ID, TokenType } from '../constants';
 const defaultConfig: ETransferConfigProps = {
   depositConfig: {
     defaultChainId: DEFAULT_CHAIN_ID,
-    supportChainId: [CHAIN_ID.AELF, CHAIN_ID.tDVV],
+    supportChainIds: [CHAIN_ID.tDVV, CHAIN_ID.AELF],
     defaultDepositToken: TokenType.USDT,
     defaultReceiveToken: TokenType.USDT,
   },
   withdrawConfig: {
     defaultChainId: DEFAULT_CHAIN_ID,
-    supportChainId: [CHAIN_ID.AELF, CHAIN_ID.tDVV],
+    supportChainIds: [CHAIN_ID.tDVV, CHAIN_ID.AELF],
     defaultToken: TokenType.USDT,
   },
   aelfReact: {
@@ -29,6 +29,7 @@ const defaultConfig: ETransferConfigProps = {
       },
     },
   },
+  networkType: 'MAINNET',
 };
 
 class ETransferConfigProvider implements ETransferConfigProviderProps {

@@ -8,12 +8,12 @@ import { InitDepositInfo } from '../../constants/deposit';
 import singleMessage from '../SingleMessage';
 import { etransferCore, setLoading } from '../../utils';
 import { ComponentStyle, IChainMenuItem } from '../../types';
-import { CHAIN_MENU_DATA } from '../../constants';
 import { useETransferDeposit } from '../../context/ETransferDepositProvider';
 import { etransferDepositAction } from '../../context/ETransferDepositProvider/actions';
 import { DepositProps, DepositReceiveTokenItem, DepositTokenOptionItem, TGetNetworkData } from './types';
 import DepositForMobile from './DepositForMobile';
 import DepositForWeb from './DepositForWeb';
+import { checkDepositSupportNetworkList, checkDepositSupportTokenAndChain } from './utils';
 
 export default function Deposit({ componentStyle = ComponentStyle.Web }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
@@ -51,22 +51,10 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
           type: BusinessType.Deposit,
         });
         // Format fromTokenList - add chainList for toTokenList
-        const fromTokenList: DepositTokenOptionItem[] = JSON.parse(JSON.stringify(tokenList));
-        fromTokenList.forEach((from) => {
-          from.toTokenList?.forEach((to) => {
-            const toChainList: IChainMenuItem[] = [];
-            to?.chainIdList?.forEach((item) => {
-              if (CHAIN_MENU_DATA[item]?.key) {
-                toChainList.push(CHAIN_MENU_DATA[item]);
-              }
-            });
-            to.chainList = toChainList;
-          });
-        });
+        const fromTokenList: DepositTokenOptionItem[] = checkDepositSupportTokenAndChain(tokenList);
 
         // Handle fromTokenList and fromToken
         dispatch(etransferDepositAction.setDepositTokenList.actions(fromTokenList));
-        // dispatch(setFromTokenList(fromTokenList));
         const isExitFromTokenSelected = fromTokenList?.find((item) => item.symbol === fromSymbol);
         const currentFromTokenSelected = isExitFromTokenSelected?.symbol || fromTokenList?.[0].symbol;
         const currentToTokenList: DepositReceiveTokenItem[] =
@@ -74,31 +62,24 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
 
         if (!isExitFromTokenSelected?.symbol) {
           dispatch(etransferDepositAction.setDepositTokenSymbol.actions(currentFromTokenSelected));
-          // dispatch(setFromTokenSymbol(currentFromTokenSelected));
         }
 
         // Handle toTokenList and toToken
         dispatch(etransferDepositAction.setReceiveTokenList.actions(currentToTokenList));
-        // dispatch(setToTokenList(currentToTokenList));
         const isExitToTokenSelected = currentToTokenList?.find((item) => item.symbol === toSymbol);
 
         if (isExitToTokenSelected?.symbol) {
           const isExitChain = isExitToTokenSelected?.chainList?.find((item) => item.key === chainId);
           if (!isExitChain && isExitToTokenSelected?.chainList?.[0]) {
             dispatch(etransferDepositAction.setChainItem.actions(isExitToTokenSelected.chainList[0]));
-            // dispatch(setToChainItem(isExitToTokenSelected?.chainList?.[0] || CHAIN_LIST[0]));
           }
           dispatch(etransferDepositAction.setChainList.actions(isExitToTokenSelected.chainList || []));
-          // dispatch(setToChainList(isExitToTokenSelected.chainList || []));
         } else {
           const toToken = currentToTokenList?.[0] || [];
           const tempChainList = toToken?.chainList;
           dispatch(etransferDepositAction.setReceiveTokenSymbol.actions(toToken?.symbol));
           dispatch(etransferDepositAction.setChainList.actions(tempChainList || []));
           tempChainList?.[0] && dispatch(etransferDepositAction.setChainItem.actions(tempChainList?.[0]));
-          // dispatch(setToTokenSymbol(toToken?.symbol));
-          // dispatch(setToChainList(tempChainList || []));
-          // dispatch(setToChainItem(tempChainList?.[0] || CHAIN_LIST[0]));
         }
       } catch (error) {
         console.log('getTokenList error', error);
@@ -122,7 +103,6 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
       setShowRetry(false);
       setLoading(false);
       setDepositInfo(res.depositInfo);
-      // dispatch(setDepositAddress(res.depositInfo.depositAddress));
     } catch (error: any) {
       if (error.name !== CommonErrorNameType.CANCEL && error.code === '50000') {
         setShowRetry(true);
@@ -131,7 +111,6 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
       }
       if (error.name !== CommonErrorNameType.CANCEL) {
         setDepositInfo(InitDepositInfo);
-        // dispatch(setDepositAddress(InitDepositInfo.depositAddress));
         setLoading(false);
       }
     }
@@ -148,23 +127,20 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
           chainId: chainId,
           symbol: symbol,
         });
-        dispatch(etransferDepositAction.setNetworkList.actions(networkList));
-        // dispatch(setFromNetworkList(networkList));
-        if (networkList?.length === 1 && networkList[0].status !== NetworkStatus.Offline) {
-          networkItemRef.current = networkList[0].network;
-          dispatch(etransferDepositAction.setNetworkItem.actions(networkList[0]));
-          // dispatch(setFromNetwork(networkList[0]));
+        const supportNetworkList = checkDepositSupportNetworkList(networkList);
+        dispatch(etransferDepositAction.setNetworkList.actions(supportNetworkList));
+        if (supportNetworkList?.length === 1 && supportNetworkList[0].status !== NetworkStatus.Offline) {
+          networkItemRef.current = supportNetworkList[0].network;
+          dispatch(etransferDepositAction.setNetworkItem.actions(supportNetworkList[0]));
         } else {
-          const exitNetwork = networkList.filter((item) => item.network === networkItemRef.current);
+          const exitNetwork = supportNetworkList.filter((item) => item.network === networkItemRef.current);
           if (exitNetwork?.length === 0) {
             networkItemRef.current = undefined;
             dispatch(etransferDepositAction.setNetworkItem.actions(undefined));
 
-            // dispatch(setFromNetwork(undefined));
             return;
           }
           dispatch(etransferDepositAction.setNetworkItem.actions(exitNetwork[0]));
-          // dispatch(setFromNetwork(exitNetwork[0]));
         }
         componentStyle === ComponentStyle.Web && (await getDepositData(chainId, lastSymbol, lastToSymbol));
       } catch (error: any) {
@@ -182,9 +158,7 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
   const handleDepositTokenChange = async (newItem: DepositTokenOptionItem) => {
     // Set fromToken
     dispatch(etransferDepositAction.setDepositTokenSymbol.actions(newItem.symbol));
-    // dispatch(setFromTokenSymbol(newItem.symbol));
     dispatch(etransferDepositAction.setReceiveTokenList.actions(newItem.toTokenList || []));
-    // dispatch(setToTokenList(newItem.toTokenList || []));
 
     let toSymbol = receiveTokenSymbol;
     let toChain = chainItem;
@@ -194,7 +168,6 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
     if (!isExitToToken) {
       toSymbol = newItem.symbol;
       dispatch(etransferDepositAction.setReceiveTokenSymbol.actions(newItem.symbol));
-      // dispatch(setToTokenSymbol(newItem.symbol));
       // Check 2 - toChain
       const isExitToChain = newItem?.toTokenList?.find((item) => item.chainIdList?.includes(chainItem.key));
       if (!isExitToChain && newItem?.toTokenList?.[0]?.chainList?.[0]) {
@@ -202,8 +175,6 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
       }
       dispatch(etransferDepositAction.setChainItem.actions(toChain));
       dispatch(etransferDepositAction.setChainList.actions(newItem?.toTokenList?.[0]?.chainList || []));
-      // dispatch(setToChainItem(toChain));
-      // dispatch(setToChainList(newItem?.toTokenList?.[0]?.chainList || []));
     }
     // toToken exist, next check
     if (isExitToToken) {
@@ -213,16 +184,13 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
       if (!isExitToChain && isExitToToken.chainList?.[0]) {
         toChain = isExitToToken.chainList[0];
         dispatch(etransferDepositAction.setChainItem.actions(toChain));
-        // dispatch(setToChainItem(toChain));
       }
       // toChain exist, set and toChainList
       dispatch(etransferDepositAction.setChainList.actions(isExitToToken.chainList || []));
-      // dispatch(setToChainList(isExitToToken.chainList || []));
     }
 
     // Reset other data
     setDepositInfo(InitDepositInfo);
-    // dispatch(setDepositAddress(InitDepositInfo.depositAddress));
     setShowRetry(false);
 
     // Refresh network and deposit info
@@ -237,18 +205,16 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
     async (item: TNetworkItem) => {
       networkItemRef.current = item.network;
       dispatch(etransferDepositAction.setNetworkItem.actions(item));
-      // dispatch(setFromNetwork(item));
       componentStyle === ComponentStyle.Web &&
         (await getDepositData(chainItem.key, depositTokenSymbol, receiveTokenSymbol));
     },
     [chainItem.key, componentStyle, depositTokenSymbol, dispatch, getDepositData, receiveTokenSymbol],
   );
+
   const handleReceiveTokenChange = useCallback(
     async (newItem: DepositReceiveTokenItem) => {
       dispatch(etransferDepositAction.setReceiveTokenSymbol.actions(newItem.symbol));
-      // dispatch(setToTokenSymbol(newItem.symbol));
       dispatch(etransferDepositAction.setChainList.actions(newItem.chainList || []));
-      // dispatch(setToChainList(newItem.chainList || []));
 
       // Check - to chain
       let optionChainId = chainItem.key;
@@ -256,7 +222,6 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
       if (!isExitChain && newItem?.chainList?.[0]) {
         const chainItem = newItem.chainList[0];
         dispatch(etransferDepositAction.setChainItem.actions(chainItem));
-        // dispatch(setToChainItem(chainItem));
         optionChainId = chainItem.key;
         // toChain changed, need refresh network and deposit info.
         return getNetworkData({
@@ -275,7 +240,6 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
     async (item: IChainMenuItem) => {
       // if currentSymbol is empty, don't send request
       dispatch(etransferDepositAction.setChainItem.actions(item));
-      // dispatch(setToChainItem(item));
       if (depositTokenSymbol) {
         await getNetworkData({
           chainId: item.key,
@@ -298,11 +262,19 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
     await getTokenList(chainItem?.key, depositTokenSymbol, receiveTokenSymbol);
 
     if (networkItem?.network && Array.isArray(networkList) && networkList?.length > 0) {
-      networkItemRef.current = networkItem.network;
+      networkItemRef.current = networkItem?.network;
     }
 
     // get new network data, when refresh page and switch side menu
     await getNetworkData({ chainId: chainItem?.key, symbol: depositTokenSymbol, toSymbol: receiveTokenSymbol });
+    // // read and write ETransferConfig
+    // const { chainId, network, depositToken, receiveToken } = getDepositDefaultConfig();
+    // networkItemRef.current = network;
+
+    // await getTokenList(chainId, depositToken, receiveToken);
+
+    // // get new network data, when refresh page and switch side menu
+    // await getNetworkData({ chainId, symbol: depositToken, toSymbol: receiveToken });
   }, [
     chainItem?.key,
     depositTokenSymbol,

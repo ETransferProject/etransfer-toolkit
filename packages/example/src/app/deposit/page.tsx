@@ -4,10 +4,7 @@ import { CommonSpace, ComponentStyle, Deposit, ETransferDepositProvider } from '
 
 export default function DepositPage() {
   return (
-    <ETransferDepositProvider
-      depositTokenSymbol={'USDT'}
-      receiveTokenSymbol={'SGR-1'}
-      chainItem={{ key: 'tDVW', label: 'sideChain tDVW' }}>
+    <ETransferDepositProvider>
       <CommonSpace direction={'vertical'} size={24} />
       <Deposit componentStyle={ComponentStyle.Mobile} />
     </ETransferDepositProvider>
