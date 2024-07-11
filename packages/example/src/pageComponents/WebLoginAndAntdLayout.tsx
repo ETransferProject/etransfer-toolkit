@@ -1,7 +1,6 @@
 import React from 'react';
 import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
-import Provider from '@/provider';
 import 'aelf-web-login/dist/assets/index.css';
 import '@etransfer/ui-react/dist/assets/index.css';
 import '../app/globals.css';
@@ -15,24 +14,22 @@ export const metadata: Metadata = {
 
 export default function WebLoginAndAntdLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Provider>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: '#285eff',
-            colorPrimaryActive: '#1e52f0',
-            colorPrimaryHover: '#3b6cff',
-            colorError: '#f53f3f',
-            colorText: '#1a1a1a',
-            colorTextSecondary: '#808080',
-            colorTextDisabled: '#d6d6d6',
-            colorBorder: '#e0e0e0',
-            colorSplit: '#f0f0f0',
-          },
-        }}>
-        <GetAuth />
-        {children}
-      </ConfigProvider>
-    </Provider>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#285eff',
+          colorPrimaryActive: '#1e52f0',
+          colorPrimaryHover: '#3b6cff',
+          colorError: '#f53f3f',
+          colorText: '#1a1a1a',
+          colorTextSecondary: '#808080',
+          colorTextDisabled: '#d6d6d6',
+          colorBorder: '#e0e0e0',
+          colorSplit: '#f0f0f0',
+        },
+      }}>
+      <GetAuth />
+      {children}
+    </ConfigProvider>
   );
 }
