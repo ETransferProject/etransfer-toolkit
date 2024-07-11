@@ -21,10 +21,13 @@ export interface DepositSelectGroupProps {
 }
 
 export interface DepositProps {
+  containerClassName?: string;
+  className?: string;
   componentStyle?: ComponentStyle;
 }
 
 export interface DepositDetailProps {
+  className?: string;
   chainItem?: IChainMenuItem;
   depositTokenSymbol: string;
   depositTokenDecimals: number;

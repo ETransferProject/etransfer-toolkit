@@ -37,7 +37,7 @@ export default function CommonImage({
       fetchPriority={priority}
       loading={loading}
       className={clsx(
-        'etransfer-ui-image',
+        'etransfer-ui-common-image',
         objectFit === 'fill' && 'etransfer-ui-object-fill',
         objectFit === 'contain' && 'etransfer-ui-object-contain',
         objectFit === 'cover' && 'etransfer-ui-object-cover',

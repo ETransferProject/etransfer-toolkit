@@ -15,7 +15,7 @@ import DepositForMobile from './DepositForMobile';
 import DepositForWeb from './DepositForWeb';
 import { checkDepositSupportNetworkList, checkDepositSupportTokenAndChain } from './utils';
 
-export default function Deposit({ componentStyle = ComponentStyle.Web }: DepositProps) {
+export default function Deposit({ containerClassName, className, componentStyle = ComponentStyle.Web }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
   const [depositInfo, setDepositInfo] = useState<TDepositInfo>(InitDepositInfo);
@@ -300,9 +300,10 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
   }, [init]);
 
   return (
-    <div>
+    <div className={containerClassName}>
       {componentStyle === ComponentStyle.Mobile ? (
         <DepositForMobile
+          className={className}
           // select
           depositTokenList={depositTokenList || []}
           depositTokenSelected={depositTokenSelected}
@@ -329,6 +330,7 @@ export default function Deposit({ componentStyle = ComponentStyle.Web }: Deposit
         />
       ) : (
         <DepositForWeb
+          className={className}
           // select
           depositTokenList={depositTokenList || []}
           depositTokenSelected={depositTokenSelected}

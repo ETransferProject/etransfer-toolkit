@@ -103,11 +103,16 @@ export function ETransferDepositProvider({ children }: { children: React.ReactNo
   }, []);
 
   const providerValue = useMemo<[ETransferDepositState, { dispatch: React.Dispatch<any> }]>(() => {
-    const { network, depositToken, receiveToken } = getDepositDefaultConfig();
+    const { chainId, network, depositToken, receiveToken } = getDepositDefaultConfig();
+    let currentChainItem: IChainMenuItem | undefined;
+    if (chainId) {
+      currentChainItem = chain.chainList?.find((chain) => chain.key === chainId);
+    }
+
     return [
       {
         chainList: chain.chainList,
-        chainItem: chain.chainItem,
+        chainItem: currentChainItem || chain.chainItem,
         networkItem: { network: network },
         depositTokenSymbol: depositToken,
         receiveTokenSymbol: receiveToken,

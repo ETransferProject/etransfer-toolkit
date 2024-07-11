@@ -25,6 +25,7 @@ export interface CalculatorProps {
   receiveTokenSymbol: string;
   chainItem?: IChainMenuItem;
   componentStyle?: ComponentStyle;
+  className?: string;
 }
 
 export default function Calculator({
@@ -33,6 +34,7 @@ export default function Calculator({
   chainItem,
   receiveTokenSymbol,
   componentStyle = ComponentStyle.Web,
+  className,
 }: CalculatorProps) {
   const searchParams = useSearchParams();
   const [payAmount, setPayAmount] = useState(searchParams.get('calculatePay') || DEFAULT_PAY_AMOUNT);
@@ -201,7 +203,7 @@ export default function Calculator({
   }, [minReceiveAmount, receiveAmount, receiveTokenSymbol]);
 
   return (
-    <div className={'etransfer-ui-calculator'}>
+    <div className={clsx('etransfer-ui-calculator', className)}>
       {renderHeader}
       {isExpand && (
         <>

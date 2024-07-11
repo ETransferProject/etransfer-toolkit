@@ -5,8 +5,10 @@ import { DepositSelectTokenForMobile } from '../../SelectToken/DepositSelectToke
 import CommonSpace from '../../CommonSpace';
 import { ComponentStyle } from '../../../types/common';
 import { IChainMenuItem } from '../../../types/chain';
+import clsx from 'clsx';
 
 type TSelectTokenChain = {
+  className?: string;
   label: string;
   tokenList: TTokenOptionItem[];
   tokenSelected?: TTokenOptionItem;
@@ -16,6 +18,7 @@ type TSelectTokenChain = {
   tokenSelectCallback: (item: TTokenOptionItem) => void;
 };
 export default function SelectTokenChain({
+  className,
   label,
   tokenList,
   tokenSelected,
@@ -25,7 +28,7 @@ export default function SelectTokenChain({
   tokenSelectCallback,
 }: TSelectTokenChain) {
   return (
-    <div className="etransfer-ui-deposit-select-token-chain">
+    <div className={clsx('etransfer-ui-deposit-select-token-chain', className)}>
       <DepositSelectChain
         menuItems={chainList}
         selectedItem={chainSelected}

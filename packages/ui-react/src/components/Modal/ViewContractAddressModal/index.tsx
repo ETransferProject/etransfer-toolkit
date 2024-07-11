@@ -6,9 +6,10 @@ import './index.less';
 import clsx from 'clsx';
 
 export type TViewContractAddressModal = {
-  open?: boolean;
+  className?: string;
   network: string;
   value: string;
+  open?: boolean;
   link?: string;
   getContainer?: CommonModalProps['getContainer'];
   onOk?: () => void;
@@ -17,6 +18,7 @@ export type TViewContractAddressModal = {
 const ViewContractAddressModalTitle = 'Contract Address on ';
 
 export default function ViewContractAddressModal({
+  className,
   open = false,
   network,
   value,
@@ -26,7 +28,7 @@ export default function ViewContractAddressModal({
 }: TViewContractAddressModal) {
   return (
     <CommonModalTips
-      className="etransfer-ui-view-contract-address-modal"
+      className={clsx('etransfer-ui-view-contract-address-modal', className)}
       footerClassName="etransfer-ui-view-contract-address-modal-footer"
       getContainer={getContainer}
       open={open}

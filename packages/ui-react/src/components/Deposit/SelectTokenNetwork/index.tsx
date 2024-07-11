@@ -3,8 +3,10 @@ import CommonSpace from '../../CommonSpace';
 import { DepositSelectNetworkForMobile } from '../../SelectNetwork/DepositSelectNetwork';
 import { DepositSelectTokenForMobile } from '../../SelectToken/DepositSelectToken';
 import './index.less';
+import clsx from 'clsx';
 
 type TSelectTokenNetwork = {
+  className?: string;
   label: string;
   networkList: TNetworkItem[];
   networkSelected?: TNetworkItem;
@@ -15,6 +17,7 @@ type TSelectTokenNetwork = {
   tokenSelectCallback: (item: TTokenOptionItem) => void;
 };
 export default function SelectTokenNetwork({
+  className,
   label,
   networkList,
   networkSelected,
@@ -25,7 +28,7 @@ export default function SelectTokenNetwork({
   tokenSelectCallback,
 }: TSelectTokenNetwork) {
   return (
-    <div className="etransfer-ui-deposit-select-token-network">
+    <div className={clsx('etransfer-ui-deposit-select-token-network', className)}>
       <DepositSelectNetworkForMobile
         label={label}
         networkList={networkList}

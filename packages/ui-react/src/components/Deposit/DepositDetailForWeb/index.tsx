@@ -14,6 +14,7 @@ import CommonAddress from '../../CommonAddress';
 import { DepositDetailProps } from '../types';
 
 export default function DepositDetailForWeb({
+  className,
   chainItem,
   depositTokenSymbol,
   depositTokenDecimals,
@@ -27,7 +28,7 @@ export default function DepositDetailForWeb({
   onRetry,
 }: DepositDetailProps) {
   return (
-    <div className="etransfer-ui-deposit-detail-for-web">
+    <div className={clsx('etransfer-ui-deposit-detail-for-web', className)}>
       {depositTokenSymbol && receiveTokenSymbol && chainItem?.key && depositTokenSymbol !== receiveTokenSymbol && (
         <>
           <CommonSpace direction="vertical" size={12} />

@@ -1,4 +1,4 @@
-import { QRCode } from 'react-qrcode-logo';
+import { QRCode, IProps } from 'react-qrcode-logo';
 
 export default function CommonQRCode({
   value,
@@ -6,12 +6,14 @@ export default function CommonQRCode({
   size = 120,
   logoSize = 26,
   logoPadding = 3,
+  errorCorrectionLevel = 'M',
 }: {
   value: string;
   logoUrl?: string;
   size?: number;
   logoSize?: number;
   logoPadding?: number;
+  errorCorrectionLevel?: IProps['ecLevel'];
 }) {
   return (
     <QRCode
@@ -25,7 +27,7 @@ export default function CommonQRCode({
       logoPaddingStyle="square"
       qrStyle={'squares'}
       eyeRadius={{ outer: 7, inner: 4 }}
-      ecLevel={'M'}
+      ecLevel={errorCorrectionLevel}
     />
   );
 }

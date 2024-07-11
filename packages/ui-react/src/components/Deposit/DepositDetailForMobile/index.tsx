@@ -17,6 +17,7 @@ import { DepositRetryForMobile } from '../DepositRetry';
 import DepositTip from '../DepositTip';
 
 export default function DepositDetailForMobile({
+  className,
   chainItem,
   depositTokenSymbol,
   depositTokenDecimals,
@@ -119,7 +120,7 @@ export default function DepositDetailForMobile({
   }, [onNext]);
 
   return (
-    <div className="etransfer-ui-deposit-detail-for-mobile">
+    <div className={clsx('etransfer-ui-deposit-detail-for-mobile', className)}>
       {depositTokenSymbol && receiveTokenSymbol && chainItem?.key && depositTokenSymbol !== receiveTokenSymbol && (
         <>
           <CommonSpace direction="vertical" size={12} />

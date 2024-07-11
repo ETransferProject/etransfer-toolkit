@@ -1,7 +1,9 @@
+import clsx from 'clsx';
 import CommonModalTips from '../../CommonModalTips';
 import './index.less';
 
 export type TSynchronizingChainModal = {
+  className?: string;
   open?: boolean;
   onOk?: () => void;
   onCancel?: () => void;
@@ -9,10 +11,10 @@ export type TSynchronizingChainModal = {
 
 const SynchronizingChainModalTitle = 'Data is synchronising on the blockchain. Please wait a minute and try again.';
 
-export default function SynchronizingChainModal({ open = false, onOk, onCancel }: TSynchronizingChainModal) {
+export default function SynchronizingChainModal({ className, open = false, onOk, onCancel }: TSynchronizingChainModal) {
   return (
     <CommonModalTips
-      className="etransfer-ui-synchronizing-chain-modal"
+      className={clsx('etransfer-ui-synchronizing-chain-modal', className)}
       footerClassName="etransfer-ui-synchronizing-chain-modal-footer"
       getContainer="body"
       open={open}

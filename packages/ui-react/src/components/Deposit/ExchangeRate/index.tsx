@@ -13,6 +13,7 @@ import singleMessage from '../../SingleMessage';
 import { etransferCore } from '../../../utils';
 
 type TExchangeRate = {
+  className?: string;
   fromSymbol: string;
   toSymbol: string;
   toChainId: ChainId;
@@ -21,7 +22,7 @@ type TExchangeRate = {
 
 const EXCHANGE_FROM_AMOUNT = '1';
 
-export default function ExchangeRate({ fromSymbol, toSymbol, toChainId, slippage }: TExchangeRate) {
+export default function ExchangeRate({ className, fromSymbol, toSymbol, toChainId, slippage }: TExchangeRate) {
   // const { fromTokenSymbol, toChainItem, toTokenSymbol } = useDepositState();
   const [exchange, setExchange] = useState(defaultNullValue);
   const [updateTime, setUpdateTime] = useState(MAX_UPDATE_TIME);
@@ -103,7 +104,7 @@ export default function ExchangeRate({ fromSymbol, toSymbol, toChainId, slippage
   });
 
   return (
-    <div className={clsx('etransfer-ui-flex-row-between', 'etransfer-ui-exchange-rate')}>
+    <div className={clsx('etransfer-ui-flex-row-between', 'etransfer-ui-exchange-rate', className)}>
       <div className="etransfer-ui-flex-row-center">
         <span className="value">{`1 ${fromSymbol} ≈ ${exchange} ${formatSymbolDisplay(toSymbol)}`}</span>
         <CommonSvg type="time" />

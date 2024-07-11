@@ -1,9 +1,9 @@
-type CommonSpaceProps = {
-  direction: 'vertical' | 'horizontal';
+interface CommonSpaceProps {
+  direction?: 'vertical' | 'horizontal';
   size: number;
-};
+}
 
-export default function CommonSpace({ direction, size }: CommonSpaceProps) {
+export default function CommonSpace({ direction = 'vertical', size }: CommonSpaceProps) {
   return (
     <div
       style={{

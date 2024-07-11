@@ -13,6 +13,7 @@ import CommonSpace from '../../CommonSpace';
 import DepositDescription from './DepositDescription';
 
 export interface DepositInfoProps {
+  className?: string;
   depositTokenSymbol: string;
   networkName?: string;
   minimumDeposit: string;
@@ -25,6 +26,7 @@ export interface DepositInfoProps {
 }
 
 export default function DepositInfo({
+  className,
   depositTokenSymbol,
   networkName,
   minimumDeposit,
@@ -67,7 +69,7 @@ export default function DepositInfo({
   }, [extraNotes]);
 
   return (
-    <div className="etransfer-ui-flex-column etransfer-ui-deposit-info">
+    <div className={clsx('etransfer-ui-flex-column etransfer-ui-deposit-info', className)}>
       {!!minimumDeposit && (
         <div className={clsx('etransfer-ui-flex', 'info-line')}>
           <div className={clsx('etransfer-ui-flex-none', 'info-title')}>{MINIMUM_DEPOSIT}</div>

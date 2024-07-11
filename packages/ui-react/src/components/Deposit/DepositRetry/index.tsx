@@ -6,17 +6,19 @@ import CommonButton, { CommonButtonSize } from '../../CommonButton';
 import CommonImage from '../../CommonImage';
 
 export type TDepositRetry = {
+  className?: string;
   isShowImage?: boolean;
   onClick?: () => void;
 };
 
-export function DepositRetryForWeb({ isShowImage = false, onClick }: TDepositRetry) {
+export function DepositRetryForWeb({ className, isShowImage = false, onClick }: TDepositRetry) {
   return (
     <div
       className={clsx(
         'etransfer-ui-flex-row-center',
         'etransfer-ui-deposit-retry',
         'etransfer-ui-deposit-retry-for-web',
+        className,
       )}>
       {isShowImage && (
         <CommonImage
@@ -36,9 +38,9 @@ export function DepositRetryForWeb({ isShowImage = false, onClick }: TDepositRet
   );
 }
 
-export function DepositRetryForMobile({ onClick }: TDepositRetry) {
+export function DepositRetryForMobile({ className, onClick }: TDepositRetry) {
   return (
-    <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-deposit-retry')}>
+    <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-deposit-retry', className)}>
       <span className="retry-text">{DepositRetryText}</span>
       <CommonButton className="retry-btn" size={CommonButtonSize.Small} onClick={onClick}>
         {DepositRetryBtnText}
