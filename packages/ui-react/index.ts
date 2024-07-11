@@ -7,7 +7,6 @@ export * from './src/types';
 // export * from './src/hooks';
 
 // context
-export * from './src/context/ETransferProvider';
 export * from './src/context/ETransferDepositProvider';
 
 // provider
