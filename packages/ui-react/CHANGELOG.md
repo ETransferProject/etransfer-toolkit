@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.0...v1.2.0-alpha.1) (2024-07-11)
+
+### Bug Fixes
+
+- 🐛 style and global config ([85fa1bf](https://github.com/ETransferProject/etransfer-toolkit/commit/85fa1bfe7c9838821183d33a5c8cf87152fa2ff2))
+
 ## [1.2.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.1.0-alpha.0...v1.2.0-alpha.0) (2024-07-11)
 
 ### Features
