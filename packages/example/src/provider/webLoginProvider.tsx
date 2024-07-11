@@ -75,7 +75,7 @@ export default function Providers({ children }: { children: ReactNode }) {
     <WebLoginPortkeyProvider networkType={NETWORK_TYPE_V1} networkTypeV2={NETWORK_TYPE_V2}>
       <WebLoginProviderDynamic
         nightElf={{
-          useMultiChain: false,
+          useMultiChain: true,
           connectEagerly: false,
         }}
         portkey={{
