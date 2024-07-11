@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.1.0-alpha.0...v1.2.0-alpha.0) (2024-07-11)
+
+### Features
+
+- 🎸 dev deposit components ([29a5082](https://github.com/ETransferProject/etransfer-toolkit/commit/29a50826a1878c29ade3bdd48c4645053fe2319a))
+
 ## [1.1.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0...v1.1.0-alpha.0) (2024-07-11)
 
 ### Features
