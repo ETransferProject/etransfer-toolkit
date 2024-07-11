@@ -5,15 +5,9 @@ import CircleLoading from '../CircleLoading';
 import { Modal } from 'antd';
 import clsx from 'clsx';
 import './index.less';
-import { ComponentStyle } from '../../types';
 
-export interface GlobalLoadingProps {
-  componentStyle?: ComponentStyle;
-}
-
-export default function GlobalLoading({ componentStyle = ComponentStyle.Web }: GlobalLoadingProps) {
+export default function GlobalLoading() {
   const [loadingInfo, setLoadingInfo] = useState<GlobalLoadingInfo>();
-  const defaultWidth = componentStyle === ComponentStyle.Mobile ? 240 : 360;
 
   const setLoadingHandler = useCallback((isLoading: boolean, loadingInfo?: GlobalLoadingInfo) => {
     const isHasText = typeof loadingInfo?.isHasText === 'boolean' ? loadingInfo?.isHasText : true;
@@ -39,7 +33,6 @@ export default function GlobalLoading({ componentStyle = ComponentStyle.Web }: G
   return (
     <Modal
       className={clsx('etransfer-ui-global-loading-modal', loadingInfo?.className)}
-      width={loadingInfo?.width || defaultWidth}
       closable={false}
       keyboard={false}
       maskClosable={false}

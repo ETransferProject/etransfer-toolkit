@@ -4,6 +4,7 @@ import { ETransferConfig } from './ETransferConfigProvider';
 import { ETransferDepositConfig, SupportDataResult } from './types';
 import { CHAIN_ID, TokenType } from '../constants';
 import { NetworkType } from '../types';
+import { handleErrorMessage } from '@etransfer/utils';
 
 export const getEtransferUrl = () => {
   if (!ETransferConfig.config.etransferUrl) throw Error('Please config etransferUrl');
@@ -86,30 +87,34 @@ export const getDepositSupportReceiveTokens = (): SupportDataResult => {
 
 export const getDepositDefaultConfig = () => {
   // read and write ETransferConfig
-  let chainId, network, depositToken, receiveToken;
-  const depositConfig = ETransferConfig.getConfig('depositConfig') as ETransferDepositConfig;
-  const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
-  if (depositConfig.defaultChainId) {
-    chainId = depositConfig.defaultChainId;
-  }
-  if (depositConfig.defaultDepositToken) {
-    depositToken = depositConfig.defaultDepositToken;
-  }
-  if (depositConfig.defaultNetwork) {
-    network = depositConfig.defaultNetwork;
-  }
-  if (depositConfig.defaultReceiveToken) {
-    receiveToken = depositConfig.defaultReceiveToken;
-  }
+  try {
+    let chainId, network, depositToken, receiveToken;
+    const depositConfig = ETransferConfig.getConfig('depositConfig') as ETransferDepositConfig | undefined;
+    const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
+    if (depositConfig?.defaultChainId) {
+      chainId = depositConfig.defaultChainId;
+    }
+    if (depositConfig?.defaultDepositToken) {
+      depositToken = depositConfig.defaultDepositToken;
+    }
+    if (depositConfig?.defaultNetwork) {
+      network = depositConfig.defaultNetwork;
+    }
+    if (depositConfig?.defaultReceiveToken) {
+      receiveToken = depositConfig.defaultReceiveToken;
+    }
 
-  const defaultNetworkType = networkType === 'TESTNET' ? CHAIN_ID.tDVW : CHAIN_ID.tDVV;
-  const defaultDepositToken = depositConfig?.supportDepositTokens?.[0] || TokenType.USDT;
-  const defaultReceiveToken = depositConfig?.supportReceiveTokens?.[0] || TokenType.USDT;
+    const defaultNetworkType = networkType === 'TESTNET' ? CHAIN_ID.tDVW : CHAIN_ID.tDVV;
+    const defaultDepositToken = depositConfig?.supportDepositTokens?.[0] || TokenType.USDT;
+    const defaultReceiveToken = depositConfig?.supportReceiveTokens?.[0] || TokenType.USDT;
 
-  return {
-    chainId: chainId || defaultNetworkType,
-    network,
-    depositToken: depositToken || defaultDepositToken,
-    receiveToken: receiveToken || defaultReceiveToken,
-  };
+    return {
+      chainId: chainId || defaultNetworkType,
+      network,
+      depositToken: depositToken || defaultDepositToken,
+      receiveToken: receiveToken || defaultReceiveToken,
+    };
+  } catch (error) {
+    throw new Error(handleErrorMessage(error));
+  }
 };

@@ -82,14 +82,14 @@ function reducer(state: ETransferDepositState, { type, payload }: any) {
 
 export function ETransferDepositProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const depositConfig = ETransferConfig.getConfig('depositConfig') as ETransferDepositConfig;
+  const depositConfig = ETransferConfig.getConfig('depositConfig') as ETransferDepositConfig | undefined;
   const depositConfigRef = useRef(depositConfig);
   depositConfigRef.current = depositConfig;
 
   const chain = useMemo(() => {
     const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
     const defaultChainIds = networkType === 'TESTNET' ? [CHAIN_ID.tDVW, CHAIN_ID.AELF] : [CHAIN_ID.tDVV, CHAIN_ID.AELF];
-    const supportChainIds = depositConfigRef.current.supportChainIds || defaultChainIds;
+    const supportChainIds = depositConfigRef.current?.supportChainIds || defaultChainIds;
     const chainList: IChainMenuItem[] = [];
     supportChainIds.forEach((item) => {
       if (CHAIN_MENU_DATA[item]?.key) {

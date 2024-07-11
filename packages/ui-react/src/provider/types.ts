@@ -11,10 +11,6 @@ export interface ETransferConfigProviderProps {
 
 export type ConfigKey = keyof ETransferConfigProps;
 
-export interface ETransferConfigProps {
-  children?: React.ReactNode;
-}
-
 export interface AelfReactNodesInfo {
   rpcUrl: string;
   exploreUrl: string;
