@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0...v1.1.0-alpha.0) (2024-07-11)
+
+### Features
+
+- 🎸 add recaptcha for auth and support nightElf for example ([46412de](https://github.com/ETransferProject/etransfer-toolkit/commit/46412de9fe5a8bf0a0935c3a73386905bc3b4ac8))
+- 🎸 support nightelf ([064acca](https://github.com/ETransferProject/etransfer-toolkit/commit/064accaa42fd2d312fbfa0ff6ed19956c9a024c3))
+
 ## [1.0.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.11...v1.0.0) (2024-06-17)
 
 **Note:** Version bump only for package @etransfer/types

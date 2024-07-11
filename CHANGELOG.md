@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0...v1.1.0-alpha.0) (2024-07-11)
+
+### Features
+
+- 🎸 add get recaptcha token example ([7ec307d](https://github.com/ETransferProject/etransfer-toolkit/commit/7ec307d73be5825d4832ef059a2c262b2800b7d2))
+- 🎸 add get user information feature for example ([59dcec1](https://github.com/ETransferProject/etransfer-toolkit/commit/59dcec19825f22e63cfb570648ccacbe3612f9e7))
+- 🎸 add logout for example ([bb423c0](https://github.com/ETransferProject/etransfer-toolkit/commit/bb423c0e6c1291b439f122f87d2a6e4831c98083))
+- 🎸 add recaptcha for auth and support nightElf for example ([46412de](https://github.com/ETransferProject/etransfer-toolkit/commit/46412de9fe5a8bf0a0935c3a73386905bc3b4ac8))
+- 🎸 dev connect token ([56f49c1](https://github.com/ETransferProject/etransfer-toolkit/commit/56f49c17560c2ff0f215974596f276a6ec908dc1))
+- 🎸 support nightelf ([064acca](https://github.com/ETransferProject/etransfer-toolkit/commit/064accaa42fd2d312fbfa0ff6ed19956c9a024c3))
+
+### Bug Fixes
+
+- 🐛 config nightelf ([d8834fc](https://github.com/ETransferProject/etransfer-toolkit/commit/d8834fcdb3ec881a3e8b90f2ba9ced343b5925ec))
+
 ## [1.0.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.11...v1.0.0) (2024-06-17)
 
 **Note:** Version bump only for package root
