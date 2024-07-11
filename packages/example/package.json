@@ -12,7 +12,7 @@
   "dependencies": {
     "@etransfer/core": "^1.1.0-alpha.0",
     "@etransfer/types": "^1.1.0-alpha.0",
-    "@etransfer/ui-react": "^1.0.0",
+    "@etransfer/ui-react": "^1.1.0-alpha.0",
     "@etransfer/utils": "^1.1.0-alpha.0",
     "@portkey-v1/contracts": "1.5.4-alpha.22",
     "@portkey-v1/did-ui-react": "1.5.4-alpha.22",

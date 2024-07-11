@@ -3,5 +3,5 @@ export const EVENT_LIST = [
   'AuthTokenSuccess',
   'UpdateNewRecordStatus',
   'LoginSuccess',
-  'setGlobalLoading',
+  'SetGlobalLoading',
 ] as const;

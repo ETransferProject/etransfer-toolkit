@@ -29,7 +29,7 @@ export default function GlobalLoading({ componentStyle = ComponentStyle.Web }: G
   }, []);
 
   useEffect(() => {
-    const { remove } = etransferEvents.setGlobalLoading.addListener(setLoadingHandler);
+    const { remove } = etransferEvents.SetGlobalLoading.addListener(setLoadingHandler);
 
     return () => {
       remove();

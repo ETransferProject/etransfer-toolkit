@@ -9,4 +9,4 @@ export interface GlobalLoadingInfo {
 }
 
 export const setLoading = (loading: boolean, loadingInfo?: GlobalLoadingInfo) =>
-  etransferEvents.setGlobalLoading.emit(loading, loadingInfo);
+  etransferEvents.SetGlobalLoading.emit(loading, loadingInfo);
