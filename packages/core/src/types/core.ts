@@ -33,11 +33,12 @@ export type TGetAuthParams = {
   pubkey: string;
   signature: string;
   plainText: string;
-  caHash?: string;
-  chainId?: string;
   managerAddress: string;
   version: PortkeyVersion;
   source?: AuthTokenSource;
+  caHash?: string; // for Portkey
+  chainId?: string; // for Portkey
+  recaptchaToken?: string; // for NightElf
 };
 
 export type TGetAuthFromStorageParams = {

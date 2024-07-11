@@ -2,7 +2,7 @@ import AElf from 'aelf-sdk';
 import { Accounts } from '@portkey/provider-types';
 import { useWebLogin, WebLoginState, WalletType } from 'aelf-web-login';
 import { SupportedChainId, AppName, ETRANSFER_URL } from '@/constants/index';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { recoverManagerAddressByPubkey, recoverPubKeyBySignature } from '@etransfer/utils';
 import { AuthTokenSource, PortkeyVersion } from '@etransfer/types';
 import { eTransferCore } from '@/utils/core';
@@ -94,14 +94,17 @@ export function useQueryAuthToken() {
         if (!isRegistered.result) {
           window.open(ETRANSFER_URL + '/recaptcha');
           window.onmessage = function (event) {
-            if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
-              resolve(event.data.data);
-            } else {
-              reject(event.data.data);
+            if (event.origin === ETRANSFER_URL) {
+              if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
+                resolve(event.data.data);
+              } else {
+                reject(event.data.data);
+              }
             }
           };
+        } else {
+          resolve(undefined);
         }
-        resolve(undefined);
       });
     }
   }, [wallet.address, walletType]);
@@ -153,7 +156,8 @@ export function useQueryAuthToken() {
     if (!wallet) throw new Error('Failed to obtain wallet information.');
     if (loginState !== WebLoginState.logined) throw new Error('You are not logged in.');
     try {
-      const { pubkey, signature, plainText, caHash, managerAddress, originChainId } = await getUserInfo();
+      const { pubkey, signature, plainText, caHash, managerAddress, originChainId, recaptchaToken } =
+        await getUserInfo();
       await eTransferCore.getAuthToken({
         pubkey,
         signature,
@@ -163,6 +167,7 @@ export function useQueryAuthToken() {
         managerAddress,
         version: PortkeyVersion.v2,
         source: walletType === WalletType.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey,
+        recaptchaToken: walletType === WalletType.elf ? recaptchaToken : undefined,
       });
 
       loginSuccessActive();

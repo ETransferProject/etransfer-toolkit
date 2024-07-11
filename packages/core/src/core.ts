@@ -88,6 +88,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       managerAddress: params.managerAddress,
       version: params.version,
       source: params.source || AuthTokenSource.Portkey,
+      recaptchaToken: params.recaptchaToken,
     });
   }
 
