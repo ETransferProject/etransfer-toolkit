@@ -22,7 +22,7 @@ export interface ETransferDepositState {
   depositTokenList?: DepositTokenOptionItem[];
 
   // network
-  networkItem?: TNetworkItem;
+  networkItem?: Partial<TNetworkItem>;
   networkList?: TNetworkItem[];
 
   // receive token
@@ -50,7 +50,7 @@ export const etransferDepositAction = {
   },
   setNetworkItem: {
     type: ETransferDepositActions['setNetworkItem'],
-    actions: (network?: TNetworkItem) => basicActions(ETransferDepositActions['setNetworkItem'], { network }),
+    actions: (network?: Partial<TNetworkItem>) => basicActions(ETransferDepositActions['setNetworkItem'], { network }),
   },
   setNetworkList: {
     type: ETransferDepositActions['setNetworkList'],

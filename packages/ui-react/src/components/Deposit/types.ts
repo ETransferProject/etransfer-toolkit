@@ -9,7 +9,7 @@ export interface DepositSelectGroupProps {
   depositTokenSelected?: TTokenOptionItem;
   depositTokenSelectCallback: (item: TTokenOptionItem) => void;
   networkList: TNetworkItem[];
-  networkSelected?: TNetworkItem;
+  networkSelected?: Partial<TNetworkItem>;
   isShowNetworkLoading: boolean;
   networkSelectCallback: (item: TNetworkItem) => Promise<void>;
   chainList: IChainMenuItem[];
@@ -42,7 +42,7 @@ export interface DepositDetailProps {
 }
 
 export interface DepositDetailForMobileProps extends DepositDetailProps {
-  networkItem?: TNetworkItem;
+  networkItem?: Partial<TNetworkItem>;
   onNext: () => Promise<void>;
 }
 

@@ -36,7 +36,7 @@ function reducer(state: ETransferDepositState, { type, payload }: any) {
     }
     case ETransferDepositActions.setNetworkItem: {
       const networkItem = payload.network;
-      if (!networkItem?.network) return state;
+      if (!networkItem) return state;
 
       return Object.assign({}, state, { networkItem });
     }

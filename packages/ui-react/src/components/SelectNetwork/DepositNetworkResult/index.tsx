@@ -7,7 +7,7 @@ import CommonSvg from '../../CommonSvg';
 import { TNetworkItem } from '@etransfer/types';
 
 export interface DepositNetworkResultProps {
-  selected?: TNetworkItem;
+  selected?: Partial<TNetworkItem>;
   isArrowDown?: boolean;
   onClick: () => void;
 }
@@ -118,6 +118,7 @@ export function DepositNetworkResultForMobile({
       )}
       onClick={onClick}>
       <div className={'select-network-label'}>{label}</div>
+      {selected?.network}
       {selected?.network ? renderSelected : renderNotSelected}
       <DynamicArrow size={'Small'} isExpand={!isArrowDown} />
     </div>

@@ -9,7 +9,7 @@ type TSelectTokenNetwork = {
   className?: string;
   label: string;
   networkList: TNetworkItem[];
-  networkSelected?: TNetworkItem;
+  networkSelected?: Partial<TNetworkItem>;
   tokenList: TTokenOptionItem[];
   tokenSelected?: TTokenOptionItem;
   isShowNetworkLoading?: boolean;

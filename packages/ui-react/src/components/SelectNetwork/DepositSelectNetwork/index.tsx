@@ -8,7 +8,7 @@ import { DepositNetworkResultForMobile, DepositNetworkResultForWeb } from '../De
 
 export interface DepositSelectNetworkProps {
   networkList: TNetworkItem[];
-  selected?: TNetworkItem;
+  selected?: Partial<TNetworkItem>;
   isDisabled?: boolean;
   isShowLoading?: boolean;
   className?: string;
