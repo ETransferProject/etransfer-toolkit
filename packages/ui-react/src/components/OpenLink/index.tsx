@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { openWithBlank } from '../../utils/common';
 import CommonSvg from '../CommonSvg';
+import './index.less';
 
 export type TOpenLink = {
   className?: string;
