@@ -20,6 +20,7 @@ const DEFAULT_AMOUNT = '0.00';
 const DEFAULT_PAY_AMOUNT = '100';
 
 export interface CalculatorProps {
+  isShowErrorTip?: boolean;
   depositTokenSymbol: string;
   depositTokenDecimals: number;
   receiveTokenSymbol: string;
@@ -29,6 +30,7 @@ export interface CalculatorProps {
 }
 
 export default function Calculator({
+  isShowErrorTip = true,
   depositTokenSymbol,
   depositTokenDecimals,
   chainItem,
@@ -47,7 +49,7 @@ export default function Calculator({
     try {
       if (!amountRef.current || !chainItem?.key || !depositTokenSymbol || !receiveTokenSymbol) return;
       const { conversionRate } = await etransferCore.services.getDepositCalculate({
-        toChainId: chainItem.key,
+        toChainId: chainItem?.key,
         fromSymbol: depositTokenSymbol,
         toSymbol: receiveTokenSymbol,
         fromAmount: amountRef.current,
@@ -60,10 +62,14 @@ export default function Calculator({
       if (isAuthTokenError(error)) {
         singleMessage.info(SIGNATURE_MISSING_TIP);
       } else {
-        singleMessage.error(handleErrorMessage(error));
+        if (isShowErrorTip) {
+          singleMessage.error(handleErrorMessage(error));
+        } else {
+          throw new Error(handleErrorMessage(error));
+        }
       }
     }
-  }, [chainItem?.key, depositTokenSymbol, receiveTokenSymbol]);
+  }, [chainItem?.key, depositTokenSymbol, isShowErrorTip, receiveTokenSymbol]);
 
   const updateTimeRef = useRef(MAX_UPDATE_TIME);
   const updateTimerRef = useRef<NodeJS.Timeout>();

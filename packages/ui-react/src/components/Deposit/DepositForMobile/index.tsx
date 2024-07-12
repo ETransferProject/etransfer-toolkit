@@ -8,6 +8,7 @@ import { TDepositForMobileProps } from '../types';
 export default function DepositForMobile({
   // common
   className,
+  isShowErrorTip,
 
   // select
   depositTokenList,
@@ -52,6 +53,7 @@ export default function DepositForMobile({
         receiveTokenSelectCallback={receiveTokenSelectCallback}
       />
       <DepositDetailForMobile
+        isShowErrorTip={isShowErrorTip}
         chainItem={chainSelected}
         depositTokenSymbol={depositTokenSelected?.symbol || ''}
         depositTokenDecimals={depositTokenSelected?.decimals || DEFAULT_DECIMAL}

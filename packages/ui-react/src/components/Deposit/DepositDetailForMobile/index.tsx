@@ -18,6 +18,7 @@ import DepositTip from '../DepositTip';
 
 export default function DepositDetailForMobile({
   className,
+  isShowErrorTip,
   chainItem,
   depositTokenSymbol,
   depositTokenDecimals,
@@ -125,6 +126,7 @@ export default function DepositDetailForMobile({
         <>
           <CommonSpace direction="vertical" size={12} />
           <ExchangeRate
+            isShowErrorTip={isShowErrorTip}
             fromSymbol={depositTokenSymbol}
             toSymbol={receiveTokenSymbol}
             toChainId={chainItem.key}
@@ -138,6 +140,7 @@ export default function DepositDetailForMobile({
           <CommonSpace direction="vertical" size={24} />
 
           <Calculator
+            isShowErrorTip={isShowErrorTip}
             depositTokenSymbol={depositTokenSymbol}
             depositTokenDecimals={depositTokenDecimals}
             chainItem={chainItem}

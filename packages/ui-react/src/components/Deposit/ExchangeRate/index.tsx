@@ -14,6 +14,7 @@ import { etransferCore } from '../../../utils';
 
 type TExchangeRate = {
   className?: string;
+  isShowErrorTip?: boolean;
   fromSymbol: string;
   toSymbol: string;
   toChainId: ChainId;
@@ -22,7 +23,14 @@ type TExchangeRate = {
 
 const EXCHANGE_FROM_AMOUNT = '1';
 
-export default function ExchangeRate({ className, fromSymbol, toSymbol, toChainId, slippage }: TExchangeRate) {
+export default function ExchangeRate({
+  className,
+  isShowErrorTip = true,
+  fromSymbol,
+  toSymbol,
+  toChainId,
+  slippage,
+}: TExchangeRate) {
   // const { fromTokenSymbol, toChainItem, toTokenSymbol } = useDepositState();
   const [exchange, setExchange] = useState(defaultNullValue);
   const [updateTime, setUpdateTime] = useState(MAX_UPDATE_TIME);
@@ -47,10 +55,14 @@ export default function ExchangeRate({ className, fromSymbol, toSymbol, toChainI
       if (isAuthTokenError(error)) {
         singleMessage.info(SIGNATURE_MISSING_TIP);
       } else {
-        singleMessage.error(handleErrorMessage(error));
+        if (isShowErrorTip) {
+          singleMessage.error(handleErrorMessage(error));
+        } else {
+          throw new Error(handleErrorMessage(error));
+        }
       }
     }
-  }, [fromSymbol, toChainId, toSymbol]);
+  }, [fromSymbol, isShowErrorTip, toChainId, toSymbol]);
 
   const handleSetTimer = useCallback(async () => {
     updateTimerRef.current = setInterval(() => {

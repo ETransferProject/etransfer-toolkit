@@ -15,7 +15,12 @@ import DepositForMobile from './DepositForMobile';
 import DepositForWeb from './DepositForWeb';
 import { checkDepositSupportNetworkList, checkDepositSupportTokenAndChain } from './utils';
 
-export default function Deposit({ containerClassName, className, componentStyle = ComponentStyle.Web }: DepositProps) {
+export default function Deposit({
+  containerClassName,
+  className,
+  componentStyle = ComponentStyle.Web,
+  isShowErrorTip = true,
+}: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
   const [depositInfo, setDepositInfo] = useState<TDepositInfo>(InitDepositInfo);
@@ -67,10 +72,12 @@ export default function Deposit({ containerClassName, className, componentStyle 
         // Handle toTokenList and toToken
         dispatch(etransferDepositAction.setReceiveTokenList.actions(currentToTokenList));
         const isExitToTokenSelected = currentToTokenList?.find((item) => item.symbol === toSymbol);
-
+        const currentToToken = isExitToTokenSelected?.symbol || currentToTokenList?.[0].symbol;
+        let currentChainId = chainId;
         if (isExitToTokenSelected?.symbol) {
           const isExitChain = isExitToTokenSelected?.chainList?.find((item) => item.key === chainId);
           if (!isExitChain && isExitToTokenSelected?.chainList?.[0]) {
+            currentChainId = isExitToTokenSelected.chainList[0].key;
             dispatch(etransferDepositAction.setChainItem.actions(isExitToTokenSelected.chainList[0]));
           }
           dispatch(etransferDepositAction.setChainList.actions(isExitToTokenSelected.chainList || []));
@@ -80,7 +87,11 @@ export default function Deposit({ containerClassName, className, componentStyle 
           dispatch(etransferDepositAction.setReceiveTokenSymbol.actions(toToken?.symbol));
           dispatch(etransferDepositAction.setChainList.actions(tempChainList || []));
           tempChainList?.[0] && dispatch(etransferDepositAction.setChainItem.actions(tempChainList?.[0]));
+          if (tempChainList?.[0]?.key) {
+            currentChainId = tempChainList[0].key;
+          }
         }
+        return { depositToken: currentFromTokenSelected, receiveToken: currentToToken, chainId: currentChainId };
       } catch (error) {
         console.log('getTokenList error', error);
       } finally {
@@ -151,13 +162,17 @@ export default function Deposit({ containerClassName, className, componentStyle 
       } catch (error: any) {
         setIsShowNetworkLoading(false);
         if (error.name !== CommonErrorNameType.CANCEL && !isAuthTokenError(error)) {
-          singleMessage.error(handleErrorMessage(error));
+          if (isShowErrorTip) {
+            singleMessage.error(handleErrorMessage(error));
+          } else {
+            throw new Error(handleErrorMessage(error));
+          }
         }
       } finally {
         setIsShowNetworkLoading(false);
       }
     },
-    [componentStyle, depositTokenSymbol, dispatch, getDepositData, receiveTokenSymbol],
+    [componentStyle, depositTokenSymbol, dispatch, getDepositData, isShowErrorTip, receiveTokenSymbol],
   );
 
   const handleDepositTokenChange = async (newItem: DepositTokenOptionItem) => {
@@ -264,13 +279,17 @@ export default function Deposit({ containerClassName, className, componentStyle 
   }, [chainItem.key, depositTokenSymbol, getDepositData, receiveTokenSymbol]);
 
   const init = useCallback(async () => {
-    await getTokenList(chainItem?.key, depositTokenSymbol, receiveTokenSymbol);
+    const currentSelected = await getTokenList(chainItem?.key, depositTokenSymbol, receiveTokenSymbol);
 
     if (networkItem?.network) {
       networkItemRef.current = networkItem?.network;
     }
 
-    await getNetworkData({ chainId: chainItem?.key, symbol: depositTokenSymbol, toSymbol: receiveTokenSymbol });
+    await getNetworkData({
+      chainId: currentSelected?.chainId || chainItem?.key,
+      symbol: currentSelected?.depositToken || depositTokenSymbol,
+      toSymbol: currentSelected?.receiveToken || receiveTokenSymbol,
+    });
   }, [chainItem?.key, depositTokenSymbol, getNetworkData, getTokenList, networkItem, receiveTokenSymbol]);
 
   useEffectOnce(() => {
@@ -292,6 +311,7 @@ export default function Deposit({ containerClassName, className, componentStyle 
       {componentStyle === ComponentStyle.Mobile ? (
         <DepositForMobile
           className={className}
+          isShowErrorTip={isShowErrorTip}
           // select
           depositTokenList={depositTokenList || []}
           depositTokenSelected={depositTokenSelected}
@@ -319,6 +339,7 @@ export default function Deposit({ containerClassName, className, componentStyle 
       ) : (
         <DepositForWeb
           className={className}
+          isShowErrorTip={isShowErrorTip}
           // select
           depositTokenList={depositTokenList || []}
           depositTokenSelected={depositTokenSelected}

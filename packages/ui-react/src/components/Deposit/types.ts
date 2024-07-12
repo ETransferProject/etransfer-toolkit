@@ -24,10 +24,12 @@ export interface DepositProps {
   containerClassName?: string;
   className?: string;
   componentStyle?: ComponentStyle;
+  isShowErrorTip?: boolean;
 }
 
 export interface DepositDetailProps {
   className?: string;
+  isShowErrorTip?: boolean;
   chainItem?: IChainMenuItem;
   depositTokenSymbol: string;
   depositTokenDecimals: number;

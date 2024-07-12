@@ -1,13 +1,16 @@
 import { message } from 'antd';
 import { MessageApi, ArgsProps, typeList, MessageInstance } from 'antd/lib/message';
+import { randomId } from '../../utils';
 import { renderToString } from 'react-dom/server';
+import { ETRANSFER_PREFIX_CLS, ETRANSFER_PREFIX_CLS_MESSAGE } from '../../constants';
 import './index.less';
-import { randomId } from '@portkey/utils';
-import CommonSvg from '../CommonSvg';
 
 const singleMessage = {} as Omit<MessageApi, 'useMessage'>;
 
-const defaultMessageArgs: Partial<ArgsProps> = { className: 'etransfer-ui-message ' };
+const defaultMessageArgs: Partial<ArgsProps> = {
+  prefixCls: ETRANSFER_PREFIX_CLS_MESSAGE,
+  rootPrefixCls: ETRANSFER_PREFIX_CLS,
+};
 
 function isArgsProps(content: Parameters<MessageInstance['success']>[0]): content is ArgsProps {
   return Object.prototype.toString.call(content) === '[object Object]' && !!(content as ArgsProps).content;
@@ -35,7 +38,7 @@ function setDefaultArgs(originalArgs: ArgsProps, defaultArgs: Partial<ArgsProps>
   return _originalArgs;
 }
 
-typeList?.forEach((type) => {
+typeList.forEach((type) => {
   singleMessage[type] = (...params) => {
     const _content = params[0];
     const content = isArgsProps(_content)
@@ -45,14 +48,7 @@ typeList?.forEach((type) => {
         };
     message.destroy(content.content as any);
 
-    return message[type](
-      setDefaultArgs(content, {
-        ...defaultMessageArgs,
-        icon: type === 'error' ? <CommonSvg type="exclamationFilledSmall" /> : null,
-      }),
-      params[1],
-      params[2],
-    );
+    return message[type](setDefaultArgs(content, defaultMessageArgs), params[1], params[2]);
   };
 });
 

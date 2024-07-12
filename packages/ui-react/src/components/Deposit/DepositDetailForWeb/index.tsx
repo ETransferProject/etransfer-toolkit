@@ -15,6 +15,7 @@ import { DepositDetailProps } from '../types';
 
 export default function DepositDetailForWeb({
   className,
+  isShowErrorTip,
   chainItem,
   depositTokenSymbol,
   depositTokenDecimals,
@@ -33,6 +34,7 @@ export default function DepositDetailForWeb({
         <>
           <CommonSpace direction="vertical" size={12} />
           <ExchangeRate
+            isShowErrorTip={isShowErrorTip}
             fromSymbol={depositTokenSymbol}
             toSymbol={receiveTokenSymbol}
             toChainId={chainItem?.key}
@@ -45,6 +47,7 @@ export default function DepositDetailForWeb({
         <>
           <CommonSpace direction="vertical" size={24} />
           <Calculator
+            isShowErrorTip={isShowErrorTip}
             depositTokenSymbol={depositTokenSymbol}
             depositTokenDecimals={depositTokenDecimals}
             chainItem={chainItem}
