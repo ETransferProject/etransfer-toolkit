@@ -133,14 +133,20 @@ export default function Deposit({ containerClassName, className, componentStyle 
           networkItemRef.current = supportNetworkList[0].network;
           dispatch(etransferDepositAction.setNetworkItem.actions(supportNetworkList[0]));
         } else {
-          const exitNetwork = supportNetworkList.filter((item) => item.network === networkItemRef.current);
-          if (exitNetwork?.length === 0) {
+          const exitNetwork = supportNetworkList.find((item) => item.network === networkItemRef.current);
+          if (!exitNetwork?.network) {
             networkItemRef.current = undefined;
             dispatch(etransferDepositAction.setNetworkItem.actions(undefined));
-
             return;
+          } else {
+            if (exitNetwork.status !== NetworkStatus.Offline) {
+              dispatch(etransferDepositAction.setNetworkItem.actions(exitNetwork));
+            } else {
+              networkItemRef.current = undefined;
+              dispatch(etransferDepositAction.setNetworkItem.actions(undefined));
+            }
           }
-          dispatch(etransferDepositAction.setNetworkItem.actions(exitNetwork[0]));
+          dispatch(etransferDepositAction.setNetworkItem.actions(exitNetwork));
         }
         componentStyle === ComponentStyle.Web && (await getDepositData(chainId, lastSymbol, lastToSymbol));
       } catch (error: any) {
