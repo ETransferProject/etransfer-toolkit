@@ -8,6 +8,7 @@ import { TDepositForMobileProps } from '../types';
 export default function DepositForMobile({
   // common
   className,
+  componentStyle,
   isShowErrorTip,
 
   // select
@@ -53,6 +54,7 @@ export default function DepositForMobile({
         receiveTokenSelectCallback={receiveTokenSelectCallback}
       />
       <DepositDetailForMobile
+        componentStyle={componentStyle}
         isShowErrorTip={isShowErrorTip}
         chainItem={chainSelected}
         depositTokenSymbol={depositTokenSelected?.symbol || ''}

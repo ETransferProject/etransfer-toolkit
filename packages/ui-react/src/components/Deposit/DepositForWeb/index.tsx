@@ -8,6 +8,7 @@ import './index.less';
 export default function DepositForWeb({
   // common
   className,
+  componentStyle,
   isShowErrorTip,
 
   // select
@@ -53,6 +54,7 @@ export default function DepositForWeb({
         receiveTokenSelectCallback={receiveTokenSelectCallback}
       />
       <DepositDetailForWeb
+        componentStyle={componentStyle}
         isShowErrorTip={isShowErrorTip}
         chainItem={chainSelected}
         depositTokenSymbol={depositTokenSelected?.symbol || ''}

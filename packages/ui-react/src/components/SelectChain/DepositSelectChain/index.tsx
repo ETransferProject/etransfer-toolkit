@@ -13,7 +13,7 @@ interface DepositSelectChainProps {
   className?: string;
   mobileTitle?: string;
   mobileLabel?: string;
-  componentStyle: ComponentStyle;
+  componentStyle?: ComponentStyle;
   chainChanged: (item: IChainMenuItem) => void;
 }
 

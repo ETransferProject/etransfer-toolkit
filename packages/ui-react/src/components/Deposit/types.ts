@@ -29,6 +29,7 @@ export interface DepositProps {
 
 export interface DepositDetailProps {
   className?: string;
+  componentStyle?: ComponentStyle;
   isShowErrorTip?: boolean;
   chainItem?: IChainMenuItem;
   depositTokenSymbol: string;

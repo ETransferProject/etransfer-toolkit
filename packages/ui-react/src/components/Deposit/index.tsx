@@ -311,6 +311,7 @@ export default function Deposit({
       {componentStyle === ComponentStyle.Mobile ? (
         <DepositForMobile
           className={className}
+          componentStyle={componentStyle}
           isShowErrorTip={isShowErrorTip}
           // select
           depositTokenList={depositTokenList || []}
@@ -339,6 +340,7 @@ export default function Deposit({
       ) : (
         <DepositForWeb
           className={className}
+          componentStyle={componentStyle}
           isShowErrorTip={isShowErrorTip}
           // select
           depositTokenList={depositTokenList || []}

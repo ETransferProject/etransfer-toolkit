@@ -15,6 +15,7 @@ import { DepositDetailProps } from '../types';
 
 export default function DepositDetailForWeb({
   className,
+  componentStyle,
   isShowErrorTip,
   chainItem,
   depositTokenSymbol,
@@ -76,10 +77,15 @@ export default function DepositDetailForWeb({
                 alt="qrCodePlaceholder"
               />
             )}
-            <CommonAddress label={DEPOSIT_ADDRESS_LABEL} value={depositInfo.depositAddress} />
+            <CommonAddress
+              label={DEPOSIT_ADDRESS_LABEL}
+              value={depositInfo.depositAddress}
+              componentStyle={componentStyle}
+            />
           </div>
           <CommonSpace direction="vertical" size={12} />
           <DepositInfo
+            componentStyle={componentStyle}
             minimumDeposit={depositInfo.minAmount}
             contractAddress={contractAddress}
             contractAddressLink={contractAddressLink}

@@ -18,6 +18,7 @@ import DepositTip from '../DepositTip';
 
 export default function DepositDetailForMobile({
   className,
+  componentStyle,
   isShowErrorTip,
   chainItem,
   depositTokenSymbol,
@@ -58,11 +59,15 @@ export default function DepositDetailForMobile({
         <CommonSpace direction="vertical" size={16} />
         {showRetry && <DepositRetryForMobile onClick={onRetry} />}
         {!showRetry && depositInfo?.depositAddress && (
-          <CommonAddress label={DEPOSIT_ADDRESS_LABEL} value={depositInfo.depositAddress} />
+          <CommonAddress
+            label={DEPOSIT_ADDRESS_LABEL}
+            value={depositInfo.depositAddress}
+            componentStyle={componentStyle}
+          />
         )}
       </div>
     );
-  }, [depositInfo.depositAddress, onRetry, qrCodeValue, showRetry, tokenLogoUrl]);
+  }, [componentStyle, depositInfo.depositAddress, onRetry, qrCodeValue, showRetry, tokenLogoUrl]);
 
   const renderDepositInfoDrawer = useMemo(() => {
     return (
@@ -96,6 +101,7 @@ export default function DepositDetailForMobile({
             minAmountUsd={depositInfo.minAmountUsd}
             depositTokenSymbol={depositTokenSymbol}
             extraNotes={depositInfo.extraNotes}
+            componentStyle={componentStyle}
           />
         )}
       </CommonDrawer>
@@ -113,6 +119,7 @@ export default function DepositDetailForMobile({
     depositInfo.extraNotes,
     contractAddress,
     contractAddressLink,
+    componentStyle,
   ]);
 
   const onClickNext = useCallback(async () => {

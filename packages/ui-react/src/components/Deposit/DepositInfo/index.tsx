@@ -96,6 +96,7 @@ export default function DepositInfo({
       {renderDepositDescription}
 
       <ViewContractAddressModal
+        componentStyle={componentStyle}
         open={openAddressModal}
         getContainer={modalContainer}
         network={networkName || ''}
