@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.1...v1.2.0-alpha.2) (2024-07-12)
+
+### Bug Fixes
+
+- 🐛 default network error for deposit ([bd0b977](https://github.com/ETransferProject/etransfer-toolkit/commit/bd0b9773ddab35c04fca4f5cbdc993cc6ed96615))
+
 ## [1.2.0-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.0...v1.2.0-alpha.1) (2024-07-11)
 
 ### Bug Fixes
