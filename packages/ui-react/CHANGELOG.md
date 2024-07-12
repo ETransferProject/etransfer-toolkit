@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.2...v1.2.0-alpha.3) (2024-07-12)
+
+### Features
+
+- 🎸 add componentStyle config ([4d6da55](https://github.com/ETransferProject/etransfer-toolkit/commit/4d6da55e02d4e2f4db9d82557c017aa1d1742d99))
+- 🎸 add isShowErrorTip config and fix fetch network logic ([0b7ef11](https://github.com/ETransferProject/etransfer-toolkit/commit/0b7ef11ae64018baeabaa1e25e95d2a002aed274))
+- 🎸 change network ts ([98e4d3d](https://github.com/ETransferProject/etransfer-toolkit/commit/98e4d3da56e740331aa8657dbdefa3a1e72b9dda))
+
+### Bug Fixes
+
+- 🐛 delete uneless display ([fe6d6c0](https://github.com/ETransferProject/etransfer-toolkit/commit/fe6d6c08c99b798e137d418202dfdf5b396c1525))
+- 🐛 icon size ([6fb1506](https://github.com/ETransferProject/etransfer-toolkit/commit/6fb150670e93c9e355d1485dbc68fa374236eb91))
+- 🐛 network status offline ([56e4f7f](https://github.com/ETransferProject/etransfer-toolkit/commit/56e4f7f7a98bc8a4de6be468589d9b5728e6ac9e))
+
 ## [1.2.0-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.1...v1.2.0-alpha.2) (2024-07-12)
 
 ### Bug Fixes
