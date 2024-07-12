@@ -261,29 +261,12 @@ export default function Deposit({ containerClassName, className, componentStyle 
   const init = useCallback(async () => {
     await getTokenList(chainItem?.key, depositTokenSymbol, receiveTokenSymbol);
 
-    if (networkItem?.network && Array.isArray(networkList) && networkList?.length > 0) {
+    if (networkItem?.network) {
       networkItemRef.current = networkItem?.network;
     }
 
-    // get new network data, when refresh page and switch side menu
     await getNetworkData({ chainId: chainItem?.key, symbol: depositTokenSymbol, toSymbol: receiveTokenSymbol });
-    // // read and write ETransferConfig
-    // const { chainId, network, depositToken, receiveToken } = getDepositDefaultConfig();
-    // networkItemRef.current = network;
-
-    // await getTokenList(chainId, depositToken, receiveToken);
-
-    // // get new network data, when refresh page and switch side menu
-    // await getNetworkData({ chainId, symbol: depositToken, toSymbol: receiveToken });
-  }, [
-    chainItem?.key,
-    depositTokenSymbol,
-    getNetworkData,
-    getTokenList,
-    networkItem?.network,
-    networkList,
-    receiveTokenSymbol,
-  ]);
+  }, [chainItem?.key, depositTokenSymbol, getNetworkData, getTokenList, networkItem, receiveTokenSymbol]);
 
   useEffectOnce(() => {
     init();
