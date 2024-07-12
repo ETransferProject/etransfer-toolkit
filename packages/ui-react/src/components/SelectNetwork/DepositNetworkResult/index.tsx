@@ -118,7 +118,6 @@ export function DepositNetworkResultForMobile({
       )}
       onClick={onClick}>
       <div className={'select-network-label'}>{label}</div>
-      {selected?.network}
       {selected?.network ? renderSelected : renderNotSelected}
       <DynamicArrow size={'Small'} isExpand={!isArrowDown} />
     </div>
