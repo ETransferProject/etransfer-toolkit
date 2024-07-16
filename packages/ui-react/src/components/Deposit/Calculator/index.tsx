@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useEffectOnce } from 'react-use';
 import { Input } from 'antd';
-import { useSearchParams } from 'next/navigation';
 import './index.less';
 import clsx from 'clsx';
 import { etransferEvents, handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
@@ -38,9 +37,8 @@ export default function Calculator({
   componentStyle = ComponentStyle.Web,
   className,
 }: CalculatorProps) {
-  const searchParams = useSearchParams();
-  const [payAmount, setPayAmount] = useState(searchParams.get('calculatePay') || DEFAULT_PAY_AMOUNT);
-  const amountRef = useRef(searchParams.get('calculatePay') || DEFAULT_PAY_AMOUNT);
+  const [payAmount, setPayAmount] = useState(DEFAULT_PAY_AMOUNT);
+  const amountRef = useRef(DEFAULT_PAY_AMOUNT);
   const [receiveAmount, setReceiveAmount] = useState(DEFAULT_AMOUNT);
   const [minReceiveAmount, setMinReceiveAmount] = useState(DEFAULT_AMOUNT);
   const [isExpand, setIsExpand] = useState(true);
