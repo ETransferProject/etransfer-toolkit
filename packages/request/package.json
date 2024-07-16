@@ -1,6 +1,6 @@
 {
   "name": "@etransfer/request",
-  "version": "1.2.0-alpha.3",
+  "version": "1.2.0",
   "description": "",
   "main": "./dist/commonjs/index.js",
   "module": "./dist/esm/index.js",
@@ -41,8 +41,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@etransfer/types": "^1.2.0-alpha.3",
-    "@etransfer/utils": "^1.2.0-alpha.3",
+    "@etransfer/types": "^1.2.0",
+    "@etransfer/utils": "^1.2.0",
     "axios": "^0.24.0"
   },
   "devDependencies": {
