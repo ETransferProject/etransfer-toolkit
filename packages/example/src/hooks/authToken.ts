@@ -1,7 +1,7 @@
 import AElf from 'aelf-sdk';
 import { Accounts } from '@portkey/provider-types';
 import { useWebLogin, WebLoginState, WalletType } from 'aelf-web-login';
-import { SupportedChainId, AppName, ETRANSFER_URL } from '@/constants/index';
+import { SupportedChainId, AppName } from '@/constants/index';
 import { useCallback } from 'react';
 import { recoverManagerAddressByPubkey, recoverPubKeyBySignature } from '@etransfer/utils';
 import { AuthTokenSource, PortkeyVersion } from '@etransfer/types';
@@ -13,6 +13,7 @@ import {
   ETRANSFER_USER_MANAGER_ADDRESS,
 } from '@/constants/storage';
 import { getCaHashAndOriginChainIdByWallet } from '@/utils/wallet';
+import { etransferCore } from '@etransfer/ui-react';
 
 export function useQueryAuthToken() {
   const { loginState, wallet, getSignature, walletType } = useWebLogin();
@@ -87,36 +88,14 @@ export function useQueryAuthToken() {
     return { signature: result?.signature || '', plainText };
   }, [getSignature, wallet.address, walletType]);
 
-  const handleReCaptcha = useCallback(async (): Promise<any> => {
-    if (walletType === WalletType.elf) {
-      const isRegistered = await eTransferCore.services.checkEOARegistration({ address: wallet.address });
-      return new Promise((resolve, reject) => {
-        if (!isRegistered.result) {
-          window.open(ETRANSFER_URL + '/recaptcha');
-          window.onmessage = function (event) {
-            if (event.origin === ETRANSFER_URL) {
-              if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
-                resolve(event.data.data);
-              } else {
-                reject(event.data.data);
-              }
-            }
-          };
-        } else {
-          resolve(undefined);
-        }
-      });
-    }
-  }, [wallet.address, walletType]);
-
   const getUserInfo = useCallback(
     async (isCheckReCaptcha: boolean = true) => {
       if (!wallet) throw new Error('Failed to obtain wallet information.');
       if (loginState !== WebLoginState.logined) throw new Error('You are not logged in.');
 
       let reCaptchaToken = undefined;
-      if (isCheckReCaptcha) {
-        reCaptchaToken = await handleReCaptcha();
+      if (isCheckReCaptcha && walletType === WalletType.elf) {
+        reCaptchaToken = await etransferCore.getReCaptcha(wallet.address);
       }
 
       const { caHash, originChainId } = await getCaHashAndOriginChainIdByWallet(wallet, walletType);
@@ -149,7 +128,7 @@ export function useQueryAuthToken() {
         throw new Error('Failed to obtain user information');
       }
     },
-    [handleGetSignature, handleReCaptcha, loginState, wallet, walletType],
+    [handleGetSignature, loginState, wallet, walletType],
   );
 
   const getAuthToken = useCallback(async () => {

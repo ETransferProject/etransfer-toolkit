@@ -109,6 +109,32 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     return undefined;
   }
 
+  async getReCaptcha(walletAddress: string, reCaptchaUrl?: string): Promise<string | undefined> {
+    const isRegistered = await this.services.checkEOARegistration({ address: walletAddress });
+    return new Promise((resolve, reject) => {
+      if (!isRegistered.result) {
+        const openUrl = reCaptchaUrl || this.baseUrl || '';
+        if (!openUrl) throw new Error('Please set reCaptchaUrl');
+        window.open(openUrl + '/recaptcha');
+
+        const handleData = function (event) {
+          if (event.origin === openUrl) {
+            if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
+              window.removeEventListener('message', handleData, true);
+              resolve(event.data.data);
+            } else {
+              window.removeEventListener('message', handleData, true);
+              reject(event.data.data);
+            }
+          }
+        };
+        window.addEventListener('message', handleData, true);
+      } else {
+        resolve(undefined);
+      }
+    });
+  }
+
   async getAuthTokenFromApi(params: TGetAuthRequest) {
     const res = await this.services.getAuthToken(params, { baseURL: this.authUrl || '' });
     const token_type = res.token_type;

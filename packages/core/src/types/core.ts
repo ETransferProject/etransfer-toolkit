@@ -18,6 +18,7 @@ export type TETransferCore = {
   setBaseUrl(url?: string): void;
   setAuthUrl(url?: string): void;
   getAuthToken(params: TGetAuthParams): Promise<string>;
+  getReCaptcha(walletAddress: string, reCaptchaUrl?: string): Promise<string | undefined>;
   getAuthTokenFromApi(params: TGetAuthRequest): Promise<string>;
   getAuthTokenFromStorage(params: TGetAuthFromStorageParams): Promise<string | undefined>;
   handleApproveToken(params: THandleApproveTokenParams): Promise<boolean>;

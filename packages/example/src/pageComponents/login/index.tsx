@@ -16,7 +16,7 @@ export default function GetAuth() {
 
   const fetchNewAuthToken = useCallback(async () => {
     // Please set freely.
-    eTransferCore.setAuthUrl('https://test.etransfer.exchange');
+    eTransferCore.setAuthUrl('https://test-app.etransfer.exchange');
     await eTransferCore.getAuthTokenFromApi({
       pubkey:
         '04671bfc20edb4cdc171bd7d20877aa64862e88dc9f52173673db9789e0dea71aca45472fd4841cad362cae8b5b6f05c55a350014f7917fe90870fd680c845edae',
