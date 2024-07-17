@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0...v1.2.1-alpha.0) (2024-07-17)
+
+### Features
+
+- 🎸 add getReCaptcha util ([e833ab1](https://github.com/ETransferProject/etransfer-toolkit/commit/e833ab1869ffd0afb11e2aa802e447aa281f7a6f))
+
 ## [1.2.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.3...v1.2.0) (2024-07-16)
 
 **Note:** Version bump only for package @etransfer/example
