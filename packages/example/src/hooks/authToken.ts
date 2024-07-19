@@ -13,7 +13,7 @@ import {
   ETRANSFER_USER_MANAGER_ADDRESS,
 } from '@/constants/storage';
 import { getCaHashAndOriginChainIdByWallet } from '@/utils/wallet';
-import { etransferCore } from '@etransfer/ui-react';
+import { getETransferReCaptcha } from '@etransfer/ui-react';
 
 export function useQueryAuthToken() {
   const { loginState, wallet, getSignature, walletType } = useWebLogin();
@@ -95,7 +95,8 @@ export function useQueryAuthToken() {
 
       let reCaptchaToken = undefined;
       if (isCheckReCaptcha && walletType === WalletType.elf) {
-        reCaptchaToken = await etransferCore.getReCaptcha(wallet.address);
+        reCaptchaToken = await getETransferReCaptcha(wallet.address);
+        // etransferCore.getReCaptcha(wallet.address);
       }
 
       const { caHash, originChainId } = await getCaHashAndOriginChainIdByWallet(wallet, walletType);

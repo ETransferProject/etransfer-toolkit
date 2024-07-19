@@ -4,4 +4,5 @@ export const EVENT_LIST = [
   'UpdateNewRecordStatus',
   'LoginSuccess',
   'SetGlobalLoading',
+  'GoogleReCaptcha',
 ] as const;

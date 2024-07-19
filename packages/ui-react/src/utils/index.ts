@@ -6,3 +6,4 @@ export * from './format';
 export * from './lib';
 export * from './loading';
 export * from './reg';
+export * from './login';

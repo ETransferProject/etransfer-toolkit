@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { CSSProperties } from 'react';
 import svgList from '../../assets/svgs';
-import './index.less';
 
 export type TSvgListType = keyof typeof svgList;
 
