@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.1...v1.2.1-alpha.2) (2024-08-05)
+
+### Features
+
+- 🎸 deposit mobile auto get info ([a5a4cb5](https://github.com/ETransferProject/etransfer-toolkit/commit/a5a4cb5111e2c80abc3eb2ed772082ba239d60ae))
+
 ## [1.2.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.0...v1.2.1-alpha.1) (2024-07-19)
 
 ### Features
