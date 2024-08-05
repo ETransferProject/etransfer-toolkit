@@ -1,0 +1,116 @@
+@import '../../../assets/theme/font.scss';
+@import '../../../assets/theme/constants.scss';
+@import '../../../assets/theme/breakpoint.scss';
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.etransfer-ui-withdraw-double-check-modal-label,
+.etransfer-ui-withdraw-double-check-modal-value {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.etransfer-ui-withdraw-double-check-modal-label {
+  color: var(--etransfer-ui-secondary-text);
+}
+
+.etransfer-ui-withdraw-double-check-modal-value {
+  .font-medium();
+  color: var(--etransfer-ui-primary-text);
+}
+.etransfer-ui-withdraw-double-check-modal-value-content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.etransfer-ui-withdraw-double-check-modal-value-symbol {
+  max-width: 60px;
+  margin-left: 4px;
+  display: inline-block;
+  .ellipsis();
+}
+
+.etransfer-ui-withdraw-double-check-modal-secondary-value {
+  color: var(--etransfer-ui-secondary-text);
+}
+.etransfer-ui-withdraw-double-check-modal {
+  .etransfer-ui-withdraw-double-check-modal-receive-amount-wrapper {
+    gap: 4px;
+    margin: 32px 0 24px;
+    @media @mediaMobileAndPad {
+      margin-top: 40px;
+    }
+    .etransfer-ui-withdraw-double-check-modal-value {
+      gap: 8px;
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    .etransfer-ui-withdraw-double-check-modal-receive-amount {
+      text-align: center;
+    }
+
+    .etransfer-ui-withdraw-double-check-modal-receive-amount-usd {
+      font-size: 14px;
+      text-align: center;
+      color: var(--etransfer-ui-secondary-text);
+    }
+  }
+
+  .etransfer-ui-withdraw-double-check-modal-detail-wrapper {
+    gap: 16px;
+    margin-top: 24px;
+    .etransfer-ui-withdraw-double-check-modal-label {
+      flex: none;
+      width: 140px;
+    }
+    .etransfer-ui-withdraw-double-check-modal-value {
+      flex: 1;
+      text-align: right;
+      word-break: break-all;
+    }
+  }
+
+  .etransfer-ui-withdraw-double-check-modal-transaction-fee-wrapper {
+    .etransfer-ui-withdraw-double-check-modal-value {
+      justify-content: flex-end;
+    }
+
+    .etransfer-ui-withdraw-double-check-modal-fee-value {
+      .etransfer-ui-text-overflow();
+    }
+  }
+
+  .etransfer-ui-withdraw-double-check-modal-withdrawal-network-wrapper {
+    .etransfer-ui-withdraw-double-check-modal-value {
+      justify-content: flex-end;
+      gap: 8px;
+    }
+  }
+
+  .etransfer-ui-withdraw-double-check-modal-fee-usd,
+  .etransfer-ui-withdraw-double-check-modal-amount-usd {
+    font-size: 12px;
+    text-align: right;
+    color: var(--etransfer-ui-secondary-text);
+  }
+
+  .etransfer-ui-withdraw-double-check-modal-fee-usd-box {
+    align-items: flex-end;
+    gap: 0px;
+  }
+
+  .etransfer-ui-withdraw-double-check-modal-detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .etransfer-ui-withdraw-double-check-modal-divider {
+    .etransfer-ui-divider();
+  }
+}

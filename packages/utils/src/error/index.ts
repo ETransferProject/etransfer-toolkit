@@ -50,3 +50,11 @@ export const isAuthTokenError = (error: any) => {
   }
   return false;
 };
+
+export const handleWebLoginErrorMessage = (error: any, errorText?: string) => {
+  if (error.nativeError && error.nativeError.message) {
+    error = error.nativeError;
+  }
+
+  return handleErrorMessage(error, errorText);
+};

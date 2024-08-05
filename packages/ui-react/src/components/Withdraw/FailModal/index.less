@@ -1,0 +1,35 @@
+@import '../../../assets/theme/font.scss';
+@import '../../../assets/theme/breakpoint.scss';
+
+.etransfer-ui-withdraw-fail-modal-container {
+  gap: 24px;
+
+  @media @mediaMobileAndPad {
+    padding-top: 24px;
+  }
+
+  .etransfer-ui-withdraw-fail-modal-title-wrapper {
+    gap: 16px;
+  }
+
+  .etransfer-ui-withdraw-fail-modal-title-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-color: var(--etransfer-ui-error-bg);
+  }
+
+  .etransfer-ui-withdraw-fail-modal-title {
+    .font-medium();
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--etransfer-ui-primary-text);
+  }
+
+  .etransfer-ui-withdraw-fail-modal-fail-reason {
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--etransfer-ui-secondary-text);
+    text-align: center;
+  }
+}

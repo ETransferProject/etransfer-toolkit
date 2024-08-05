@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import BN, { isBN } from 'bn.js';
 import { isEffectiveNumber, ZERO } from '../constants/calculate';
-import { defaultNullValue } from '../constants';
+import { DEFAULT_NULL_VALUE } from '../constants';
 
 export function timesDecimals(a?: BigNumber.Value, decimals: string | number = 18) {
   if (!a) return ZERO;
@@ -19,7 +19,7 @@ export function divDecimals(a?: BigNumber.Value, decimals: string | number = 18)
   return bigA.div(`1e${decimals}`);
 }
 
-export function divDecimalsStr(a?: BigNumber.Value, decimals: string | number = 8, defaultVal = defaultNullValue) {
+export function divDecimalsStr(a?: BigNumber.Value, decimals: string | number = 8, defaultVal = DEFAULT_NULL_VALUE) {
   const n = divDecimals(a, decimals);
   return isEffectiveNumber(n) ? n.toFormat() : defaultVal;
 }
@@ -45,7 +45,7 @@ export function zeroFill(str: string | BN) {
 export function valueFixed2LessThanMin(strValue: string, currency?: string): string {
   let valueBigNumber = new BigNumber(strValue);
   if (valueBigNumber.isNaN()) {
-    return defaultNullValue;
+    return DEFAULT_NULL_VALUE;
   }
 
   valueBigNumber = valueBigNumber.dp(2, BigNumber.ROUND_DOWN);
@@ -66,7 +66,7 @@ export function valueFixed2LessThanMin(strValue: string, currency?: string): str
 export function LargeNumberDisplay(strNumber: string, decimals: number) {
   let valueBigNumber = new BigNumber(strNumber);
   if (valueBigNumber.isNaN()) {
-    return defaultNullValue;
+    return DEFAULT_NULL_VALUE;
   }
 
   valueBigNumber = valueBigNumber.dp(decimals, BigNumber.ROUND_DOWN);

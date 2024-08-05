@@ -1,6 +1,7 @@
 export * from './BaseAsyncStorage';
 export * from './calculate';
 export * from './common';
+export * from './contract';
 export * from './core';
 export * from './format';
 export * from './lib';

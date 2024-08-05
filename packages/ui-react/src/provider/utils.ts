@@ -1,7 +1,7 @@
 import { ChainId } from '@portkey/types';
 import { dealURLLastChar } from '../utils';
 import { ETransferConfig } from './ETransferConfigProvider';
-import { ETransferDepositConfig, SupportDataResult } from './types';
+import { ETransferDepositConfig, ETransferWithdrawConfig, SupportDataResult } from './types';
 import { CHAIN_ID, TokenType } from '../constants';
 import { NetworkType } from '../types';
 import { handleErrorMessage } from '@etransfer/utils';
@@ -113,6 +113,35 @@ export const getDepositDefaultConfig = () => {
       network,
       depositToken: depositToken || defaultDepositToken,
       receiveToken: receiveToken || defaultReceiveToken,
+    };
+  } catch (error) {
+    throw new Error(handleErrorMessage(error));
+  }
+};
+
+export const getWithdrawDefaultConfig = () => {
+  // read and write ETransferConfig
+  try {
+    let chainId, network, token;
+    const withdrawConfig = ETransferConfig.getConfig('withdrawConfig') as ETransferWithdrawConfig | undefined;
+    const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
+    if (withdrawConfig?.defaultChainId) {
+      chainId = withdrawConfig.defaultChainId;
+    }
+    if (withdrawConfig?.defaultToken) {
+      token = withdrawConfig.defaultToken;
+    }
+    if (withdrawConfig?.defaultNetwork) {
+      network = withdrawConfig.defaultNetwork;
+    }
+
+    const defaultNetworkType = networkType === 'TESTNET' ? CHAIN_ID.tDVW : CHAIN_ID.tDVV;
+    const defaultToken = withdrawConfig?.supportTokens?.[0] || TokenType.USDT;
+
+    return {
+      chainId: chainId || defaultNetworkType,
+      network,
+      token: token || defaultToken,
     };
   } catch (error) {
     throw new Error(handleErrorMessage(error));
