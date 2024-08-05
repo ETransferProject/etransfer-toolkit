@@ -1,12 +1,10 @@
 import clsx from 'clsx';
 import './index.less';
-import CommonButton from '../../CommonButton';
 import CommonSpace from '../../CommonSpace';
 import Calculator from '../Calculator';
 import ExchangeRate from '../ExchangeRate';
 import { DepositDetailForMobileProps } from '../types';
-import { useCallback, useMemo, useState } from 'react';
-import CommonDrawer from '../../CommonDrawer';
+import { useMemo } from 'react';
 import { qrCodePlaceholder } from '../../../assets/images';
 import { DEPOSIT_ADDRESS_LABEL } from '../../../constants/deposit';
 import CommonAddress from '../../CommonAddress';
@@ -32,13 +30,48 @@ export default function DepositDetailForMobile({
   tokenLogoUrl,
   showRetry = false,
   onRetry,
-  onNext,
 }: DepositDetailForMobileProps) {
-  const [isShowDepositInfo, setIsShowDepositInfo] = useState(false);
-  const nextDisable = useMemo(
-    () => !depositTokenSymbol || !receiveTokenSymbol || !chainItem?.key || !networkItem?.network,
-    [chainItem?.key, depositTokenSymbol, networkItem?.network, receiveTokenSymbol],
-  );
+  const allSelected = useMemo(() => {
+    return !!depositTokenSymbol && !!receiveTokenSymbol && !!chainItem?.key && !!networkItem?.network;
+  }, [chainItem?.key, depositTokenSymbol, networkItem?.network, receiveTokenSymbol]);
+
+  const renderExchangeRate = useMemo(() => {
+    return (
+      depositTokenSymbol &&
+      receiveTokenSymbol &&
+      chainItem?.key &&
+      depositTokenSymbol !== receiveTokenSymbol && (
+        <>
+          <CommonSpace direction="vertical" size={12} />
+          <ExchangeRate
+            isShowErrorTip={isShowErrorTip}
+            fromSymbol={depositTokenSymbol}
+            toSymbol={receiveTokenSymbol}
+            toChainId={chainItem.key}
+            slippage={depositInfo.extraInfo?.slippage}
+          />
+        </>
+      )
+    );
+  }, [chainItem?.key, depositInfo.extraInfo?.slippage, depositTokenSymbol, isShowErrorTip, receiveTokenSymbol]);
+
+  const renderCalculator = useMemo(() => {
+    return (
+      depositTokenSymbol !== receiveTokenSymbol && (
+        <>
+          <CommonSpace direction="vertical" size={24} />
+
+          <Calculator
+            isShowErrorTip={isShowErrorTip}
+            depositTokenSymbol={depositTokenSymbol}
+            depositTokenDecimals={depositTokenDecimals}
+            chainItem={chainItem}
+            receiveTokenSymbol={receiveTokenSymbol}
+          />
+        </>
+      )
+    );
+  }, [chainItem, depositTokenDecimals, depositTokenSymbol, isShowErrorTip, receiveTokenSymbol]);
 
   const renderDepositAddress = useMemo(() => {
     return (
@@ -69,21 +102,10 @@ export default function DepositDetailForMobile({
     );
   }, [componentStyle, depositInfo.depositAddress, onRetry, qrCodeValue, showRetry, tokenLogoUrl]);
 
-  const renderDepositInfoDrawer = useMemo(() => {
+  const renderDepositInfo = useMemo(() => {
     return (
-      <CommonDrawer
-        id="etransferMobileDepositDetailDrawer"
-        className={'etransfer-ui-deposit-detail-drawer'}
-        open={isShowDepositInfo}
-        onClose={() => setIsShowDepositInfo(false)}
-        destroyOnClose
-        placement="bottom"
-        title="Deposit Address"
-        closable={true}
-        height="88%">
-        {depositTokenSymbol && receiveTokenSymbol && (
-          <DepositTip fromToken={depositTokenSymbol} toToken={receiveTokenSymbol} isShowIcon={false} />
-        )}
+      <>
+        {allSelected && <DepositTip fromToken={depositTokenSymbol} toToken={receiveTokenSymbol} isShowIcon={false} />}
 
         <CommonSpace direction="vertical" size={16} />
 
@@ -104,10 +126,10 @@ export default function DepositDetailForMobile({
             componentStyle={componentStyle}
           />
         )}
-      </CommonDrawer>
+      </>
     );
   }, [
-    isShowDepositInfo,
+    allSelected,
     depositTokenSymbol,
     receiveTokenSymbol,
     networkItem?.network,
@@ -122,55 +144,15 @@ export default function DepositDetailForMobile({
     componentStyle,
   ]);
 
-  const onClickNext = useCallback(async () => {
-    await onNext();
-    setIsShowDepositInfo(true);
-  }, [onNext]);
-
   return (
     <div className={clsx('etransfer-ui-deposit-detail-for-mobile', className)}>
-      {depositTokenSymbol && receiveTokenSymbol && chainItem?.key && depositTokenSymbol !== receiveTokenSymbol && (
-        <>
-          <CommonSpace direction="vertical" size={12} />
-          <ExchangeRate
-            isShowErrorTip={isShowErrorTip}
-            fromSymbol={depositTokenSymbol}
-            toSymbol={receiveTokenSymbol}
-            toChainId={chainItem.key}
-            slippage={depositInfo.extraInfo?.slippage}
-          />
-        </>
-      )}
+      {renderExchangeRate}
 
-      {depositTokenSymbol !== receiveTokenSymbol && (
-        <>
-          <CommonSpace direction="vertical" size={24} />
+      {renderCalculator}
 
-          <Calculator
-            isShowErrorTip={isShowErrorTip}
-            depositTokenSymbol={depositTokenSymbol}
-            depositTokenDecimals={depositTokenDecimals}
-            chainItem={chainItem}
-            receiveTokenSymbol={receiveTokenSymbol}
-          />
-        </>
-      )}
+      <CommonSpace size={24} />
 
-      <div
-        className={clsx(
-          'etransfer-ui-deposit-detail-for-mobile-next-button-wrapper',
-          'etransfer-ui-deposit-detail-for-mobile-next-button-wrapper-safe-area',
-        )}>
-        <CommonSpace direction="vertical" size={24} />
-        <CommonButton
-          className="etransfer-ui-deposit-detail-for-mobile-next-button"
-          onClick={onClickNext}
-          disabled={nextDisable}>
-          Next
-        </CommonButton>
-      </div>
-
-      {renderDepositInfoDrawer}
+      {renderDepositInfo}
     </div>
   );
 }

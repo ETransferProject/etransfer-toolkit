@@ -34,7 +34,6 @@ export default function DepositForMobile({
   tokenLogoUrl,
   showRetry,
   onRetry,
-  onNext,
 }: TDepositForMobileProps) {
   return (
     <div className={clsx('etransfer-ui-deposit-for-mobile', className)}>
@@ -68,7 +67,6 @@ export default function DepositForMobile({
         tokenLogoUrl={tokenLogoUrl}
         showRetry={showRetry}
         onRetry={onRetry}
-        onNext={onNext}
       />
     </div>
   );

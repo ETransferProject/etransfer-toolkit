@@ -158,7 +158,7 @@ export default function Deposit({
             }
           }
         }
-        componentStyle === ComponentStyle.Web && (await getDepositData(chainId, lastSymbol, lastToSymbol));
+        await getDepositData(chainId, lastSymbol, lastToSymbol);
       } catch (error: any) {
         setIsShowNetworkLoading(false);
         if (error.name !== CommonErrorNameType.CANCEL && !isAuthTokenError(error)) {
@@ -172,7 +172,7 @@ export default function Deposit({
         setIsShowNetworkLoading(false);
       }
     },
-    [componentStyle, depositTokenSymbol, dispatch, getDepositData, isShowErrorTip, receiveTokenSymbol],
+    [depositTokenSymbol, dispatch, getDepositData, isShowErrorTip, receiveTokenSymbol],
   );
 
   const handleDepositTokenChange = async (newItem: DepositTokenOptionItem) => {
@@ -225,10 +225,10 @@ export default function Deposit({
     async (item: TNetworkItem) => {
       networkItemRef.current = item.network;
       dispatch(etransferDepositAction.setNetworkItem.actions(item));
-      componentStyle === ComponentStyle.Web &&
-        (await getDepositData(chainItem.key, depositTokenSymbol, receiveTokenSymbol));
+
+      await getDepositData(chainItem.key, depositTokenSymbol, receiveTokenSymbol);
     },
-    [chainItem.key, componentStyle, depositTokenSymbol, dispatch, getDepositData, receiveTokenSymbol],
+    [chainItem.key, depositTokenSymbol, dispatch, getDepositData, receiveTokenSymbol],
   );
 
   const handleReceiveTokenChange = useCallback(
@@ -251,9 +251,9 @@ export default function Deposit({
         });
       }
       // toChain and fromToken not changed, refresh deposit info.
-      return componentStyle === ComponentStyle.Web && getDepositData(optionChainId, depositTokenSymbol, newItem.symbol);
+      return getDepositData(optionChainId, depositTokenSymbol, newItem.symbol);
     },
-    [chainItem.key, componentStyle, depositTokenSymbol, dispatch, getDepositData, getNetworkData],
+    [chainItem.key, depositTokenSymbol, dispatch, getDepositData, getNetworkData],
   );
 
   const handleChainChanged = useCallback(
@@ -269,10 +269,6 @@ export default function Deposit({
     },
     [depositTokenSymbol, dispatch, getNetworkData],
   );
-
-  const handleNext = useCallback(async () => {
-    await getDepositData(chainItem.key, depositTokenSymbol, receiveTokenSymbol);
-  }, [getDepositData, chainItem.key, depositTokenSymbol, receiveTokenSymbol]);
 
   const handleRetry = useCallback(async () => {
     await getDepositData(chainItem.key, depositTokenSymbol, receiveTokenSymbol);
@@ -335,7 +331,6 @@ export default function Deposit({
           tokenLogoUrl={depositTokenSelected?.icon}
           showRetry={showRetry}
           onRetry={handleRetry}
-          onNext={handleNext}
         />
       ) : (
         <DepositForWeb

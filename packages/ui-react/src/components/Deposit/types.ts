@@ -46,7 +46,6 @@ export interface DepositDetailProps {
 
 export interface DepositDetailForMobileProps extends DepositDetailProps {
   networkItem?: Partial<TNetworkItem>;
-  onNext: () => Promise<void>;
 }
 
 export type TDepositForMobileProps = DepositSelectGroupProps &
