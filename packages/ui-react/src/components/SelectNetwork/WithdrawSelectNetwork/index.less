@@ -1,0 +1,62 @@
+@import '../../../assets/theme/constants.less';
+@import '../../../assets/theme/font.scss';
+@import '../../../assets/theme/breakpoint.scss';
+
+.etransfer-ui-withdraw-select-network {
+  position: relative;
+  .etransfer-ui-withdraw-select-network-result {
+    display: flex;
+    padding: 24px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--etransfer-ui-dividers);
+    cursor: pointer;
+
+    @media @mediaMobileAndPad {
+      padding: 16px 12px;
+    }
+
+    &.etransfer-ui-withdraw-select-network-result-form-item {
+      .etransfer-ui-form-item-wrapper();
+      .etransfer-ui-withdraw-select-network-value-row
+        .etransfer-ui-withdraw-select-network-value
+        .etransfer-ui-withdraw-select-network-value-placeholder {
+        color: var(--etransfer-ui-disable-text);
+      }
+    }
+
+    .etransfer-ui-withdraw-select-network-value-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      .font-medium();
+
+      .etransfer-ui-withdraw-select-network-value {
+        .etransfer-ui-withdraw-select-network-value-selected {
+          .etransfer-ui-withdraw-select-network-primary {
+            color: var(--etransfer-ui-primary-text);
+            font-size: 16px;
+            line-height: 1.5;
+            .font-medium();
+            margin-right: 8px;
+          }
+          .etransfer-ui-withdraw-select-network-secondary {
+            color: var(--etransfer-ui-secondary-text);
+            font-size: 14px;
+            line-height: 22px;
+          }
+        }
+        .etransfer-ui-withdraw-select-network-value-placeholder {
+          color: var(--etransfer-ui-disable-text);
+          font-size: 16px;
+          line-height: 1.5;
+          user-select: none;
+        }
+      }
+    }
+  }
+}

@@ -3,14 +3,19 @@ import { TokenSelectForMobile, TokenSelectProps } from '../TokenSelect';
 import CommonDrawer from '../../CommonDrawer';
 
 export default function TokenSelectDrawer({
+  listClassName,
+  itemClassName,
   title,
   tokenList,
   selectedToken,
   isDisabled,
-  isShowLoading,
+  isShowBalance,
+  chainId,
+  networkType,
+  accountAddress,
   onSelect,
   ...props
-}: TokenSelectProps & DrawerProps) {
+}: TokenSelectProps & DrawerProps & { listClassName?: string; itemClassName?: string }) {
   return (
     <CommonDrawer
       destroyOnClose
@@ -23,12 +28,18 @@ export default function TokenSelectDrawer({
         padding: 0,
       }}>
       <TokenSelectForMobile
+        className={listClassName}
+        itemClassName={itemClassName}
+        open={props.open}
         tokenList={tokenList}
         selectedToken={selectedToken}
         onSelect={onSelect}
         isDisabled={isDisabled}
-        isShowLoading={isShowLoading}
         isShowImage={props.open}
+        isShowBalance={isShowBalance}
+        chainId={chainId}
+        networkType={networkType}
+        accountAddress={accountAddress}
       />
     </CommonDrawer>
   );

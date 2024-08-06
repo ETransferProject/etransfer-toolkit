@@ -11,7 +11,7 @@ export interface DoubleCheckModalProps {
   withdrawInfo: {
     receiveAmount: string;
     address?: string;
-    network?: TNetworkItem;
+    network?: Partial<TNetworkItem>;
     amount: string;
     transactionFee: TFeeItem;
     aelfTransactionFee: TFeeItem;

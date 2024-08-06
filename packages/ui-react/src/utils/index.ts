@@ -1,3 +1,4 @@
+export * from './telegram/TelegramPlatform';
 export * from './BaseAsyncStorage';
 export * from './calculate';
 export * from './common';

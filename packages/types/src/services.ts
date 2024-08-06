@@ -102,6 +102,19 @@ export type TToTokenItem = TTokenItem & {
   chainIdList?: ChainId[];
 };
 
+export type TGetTokenPricesRequest = {
+  symbols: string;
+};
+
+export type TGetTokenPricesResult = {
+  items: TTokenPriceItem[];
+};
+
+export type TTokenPriceItem = {
+  symbol: string;
+  priceUsd: number;
+};
+
 export type TGetDepositInfoRequest = {
   chainId: ChainId;
   network: string;

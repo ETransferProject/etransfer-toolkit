@@ -3,17 +3,24 @@ import './index.less';
 import { TokenSelectForWeb, TokenSelectProps } from '../TokenSelect';
 
 interface TokenSelectDropdownProps extends TokenSelectProps {
+  listClassName?: string;
+  itemClassName?: string;
   open: boolean;
   onClose: () => void;
 }
 
 export default function TokenSelectDropdown({
   className,
+  listClassName,
+  itemClassName,
   open = false,
   tokenList,
   selectedToken,
   isDisabled,
-  isShowLoading,
+  isShowBalance,
+  chainId,
+  networkType,
+  accountAddress,
   onSelect,
   onClose,
 }: TokenSelectDropdownProps) {
@@ -33,12 +40,18 @@ export default function TokenSelectDropdown({
           className,
         )}>
         <TokenSelectForWeb
+          className={listClassName}
+          itemClassName={itemClassName}
+          open={open}
           isShowImage={open}
           tokenList={tokenList}
           selectedToken={selectedToken}
           onSelect={onSelect}
           isDisabled={isDisabled}
-          isShowLoading={isShowLoading}
+          isShowBalance={isShowBalance}
+          chainId={chainId}
+          networkType={networkType}
+          accountAddress={accountAddress}
         />
       </div>
     </div>

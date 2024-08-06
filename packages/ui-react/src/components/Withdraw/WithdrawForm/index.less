@@ -1,0 +1,78 @@
+@import '../../assets/theme/breakpoint.less';
+@import '../../assets/theme/constants.less';
+@import '../../assets/theme/font.less';
+
+.etransfer-ui-withdraw-form {
+  .etransfer-ui-withdraw-form-item-wrapper {
+    margin-bottom: 24px;
+  }
+
+  .etransfer-ui-withdraw-form-item {
+    margin-bottom: 0;
+
+    .etransfer-ui-withdraw-form-label-wrapper {
+      width: 100%;
+      align-items: flex-end;
+
+      .etransfer-ui-withdraw-form-label {
+        font-size: 14px;
+        line-height: 22px;
+        color: var(--etransfer-ui-secondary-text);
+      }
+    }
+  }
+
+  .etransfer-ui-withdraw-form-amount-item-wrapper {
+    margin-bottom: 12px;
+  }
+
+  .etransfer-ui-withdraw-form-balance-wrapper {
+    gap: 8px;
+    margin-top: 12px;
+    @media @mediaMobileAndPad {
+      .etransfer-ui-withdraw-info-label,
+      .etransfer-ui-withdraw-info-value {
+        font-size: 12px;
+        line-height: 16px;
+      }
+    }
+
+    .etransfer-ui-withdraw-form-info-label,
+    .etransfer-ui-withdraw-form-info-value {
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    .etransfer-ui-withdraw-form-info-label {
+      color: var(--etransfer-ui-secondary-text);
+    }
+
+    .etransfer-ui-withdraw-form-info-value {
+      color: var(--etransfer-ui-primary-text);
+      .font-medium();
+    }
+  }
+
+  // etransfer ant
+  .etransfer-ant-form-item-label {
+    padding-bottom: 4px;
+    label {
+      width: 100%;
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--etransfer-ui-secondary-text);
+    }
+  }
+  .etransfer-ant-form-item-explain-error,
+  .etransfer-ant-form-item-explain-warning {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .etransfer-ant-form-item-explain-error {
+    color: var(--etransfer-ui-error);
+  }
+  .etransfer-ant-form-item-explain-warning {
+    color: var(--etransfer-ui-warning);
+  }
+}

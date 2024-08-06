@@ -24,10 +24,10 @@ import { useETransferWithdraw } from '../../../context/ETransferWithdrawProvider
 export interface WithdrawFooterProps {
   isTransactionFeeLoading: boolean;
   isSubmitDisabled: boolean;
-  currentNetwork?: TNetworkItem;
+  currentNetwork?: Partial<TNetworkItem>;
+  amount: string;
   receiveAmount: string;
   address: string;
-  balance: string;
   withdrawInfo: TWithdrawInfo;
   componentStyle: ComponentStyle;
   clickFailedOk: () => void;
@@ -37,9 +37,9 @@ export interface WithdrawFooterProps {
 export default function WithdrawFooter({
   isTransactionFeeLoading,
   currentNetwork,
+  amount,
   receiveAmount,
   address,
-  balance,
   withdrawInfo,
   isSubmitDisabled,
   componentStyle = ComponentStyle.Web,
@@ -120,10 +120,10 @@ export default function WithdrawFooter({
       <DoubleCheckModal
         componentStyle={componentStyle}
         withdrawInfo={{
+          amount,
           receiveAmount,
           address,
           network: currentNetwork,
-          amount: balance,
           transactionFee: {
             amount: withdrawInfo.transactionFee,
             currency: withdrawInfo.transactionUnit,
