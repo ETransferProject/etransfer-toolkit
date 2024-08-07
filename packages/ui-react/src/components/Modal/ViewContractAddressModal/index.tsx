@@ -1,3 +1,4 @@
+import { GOT_IT } from '../../../constants';
 import { ComponentStyle } from '../../../types';
 import { CommonModalProps } from '../../CommonModal';
 import CommonModalTips from '../../CommonModalTips';
@@ -36,7 +37,7 @@ export default function ViewContractAddressModal({
       getContainer={getContainer}
       open={open}
       closable={false}
-      okText="OK"
+      okText={GOT_IT}
       onOk={onOk}>
       <div className="etransfer-ui-view-contract-address-modal-body">
         <div className="view-contract-address-modal-title">

@@ -2,11 +2,14 @@ import { useCallback, useState } from 'react';
 import CommonSvg from '../../CommonSvg';
 import { ComponentStyle } from '../../../types';
 import CommonModalTips from '../../CommonModalTips';
+import { GOT_IT } from '../../../constants';
 
-export default function RemainingQuota({
+export default function SimpleTipAutoScreen({
+  title,
   content,
   componentStyle = ComponentStyle.Web,
 }: {
+  title?: string;
   content: string;
   componentStyle?: ComponentStyle;
 }) {
@@ -26,10 +29,10 @@ export default function RemainingQuota({
 
       <CommonModalTips
         getContainer="body"
-        title="24-Hour Limit"
+        title={title}
         open={openModal}
         closable={false}
-        okText="OK"
+        okText={GOT_IT}
         onOk={handleOk}>
         <div className="text-center">{content}</div>
       </CommonModalTips>

@@ -5,7 +5,6 @@ export const ETRANSFER_ICON_PREFIX_CLS = 'etransfer-ant-icon';
 
 export const DEFAULT_NULL_VALUE = '--';
 
-export * from './calculate';
 export * from './chain';
 export * from './deposit';
 export * from './misc';

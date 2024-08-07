@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import CommonModalTips from '../../CommonModalTips';
 import './index.less';
+import { GOT_IT } from '../../../constants';
 
 export type TSynchronizingChainModal = {
   className?: string;
@@ -20,7 +21,7 @@ export default function SynchronizingChainModal({ className, open = false, onOk,
       open={open}
       closable={true}
       title="Tips"
-      okText="OK"
+      okText={GOT_IT}
       onOk={onOk}
       onCancel={onCancel}>
       <div className="etransfer-ui-synchronizing-chain-modal-body">{SynchronizingChainModalTitle}</div>

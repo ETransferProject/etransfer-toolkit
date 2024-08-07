@@ -20,12 +20,12 @@ import {
   getTokenContract,
   getETransferJWT,
   setETransferJWT,
+  ZERO,
 } from '@etransfer/utils';
 import {
   INSUFFICIENT_ALLOWANCE_MESSAGE,
   WITHDRAW_ERROR_MESSAGE,
   WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
-  ZERO,
 } from './constants';
 import { divDecimals } from '@etransfer/utils';
 import { IStorageSuite, TWalletType } from '@etransfer/types';

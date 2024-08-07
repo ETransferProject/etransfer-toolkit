@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { GlobalLoadingInfo } from '../../utils/loading';
+import { GlobalLoadingInfo } from '../../utils';
 import { etransferEvents } from '@etransfer/utils';
 import CircleLoading from '../CircleLoading';
 import { Modal } from 'antd';

@@ -3,8 +3,8 @@ import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 import CommonSvg from '../../CommonSvg';
-import { DEFAULT_NULL_VALUE, REMAINING_WITHDRAWAL_QUOTA_TOOLTIP } from '../../../constants';
-import RemainingQuota from '../RemainingQuota';
+import { DEFAULT_NULL_VALUE, HOUR_LIMIT_24, REMAINING_WITHDRAWAL_QUOTA_TOOLTIP } from '../../../constants';
+import SimpleTipAutoScreen from '../../Modal/SimpleTipAutoScreen';
 import { ComponentStyle } from '../../../types';
 
 export interface RemainingLimitProps {
@@ -25,13 +25,13 @@ export default function RemainingLimit({
   const label = useMemo(() => {
     return (
       <span className={'etransfer-ui-withdraw-remaining-limit-label'}>
-        {isMobileStyle && '• 24-Hour Limit:'}
+        {isMobileStyle && `• ${HOUR_LIMIT_24}:`}
         {!isMobileStyle && (
           <Tooltip
             className={clsx('etransfer-ui-withdraw-question-label')}
             placement="top"
             title={REMAINING_WITHDRAWAL_QUOTA_TOOLTIP}>
-            24-Hour Limit <CommonSvg type="questionMark" />
+            {HOUR_LIMIT_24} <CommonSvg type="questionMark" />
           </Tooltip>
         )}
       </span>
@@ -50,7 +50,11 @@ export default function RemainingLimit({
         ) : (
           DEFAULT_NULL_VALUE
         )}
-        <RemainingQuota content={REMAINING_WITHDRAWAL_QUOTA_TOOLTIP} componentStyle={componentStyle}></RemainingQuota>
+        <SimpleTipAutoScreen
+          title={HOUR_LIMIT_24}
+          content={REMAINING_WITHDRAWAL_QUOTA_TOOLTIP}
+          componentStyle={componentStyle}
+        />
       </span>
     );
   }, [componentStyle, limitCurrency, remainingLimit, totalLimit]);

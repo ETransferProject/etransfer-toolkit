@@ -5,7 +5,7 @@ import CheckFilledIcon from 'assets/images/checkFilled.svg';
 import CommonSvg from '../../CommonSvg';
 import CommonModalAutoScreen, { CommonModalAutoScreenProps } from '../../CommonModalAutoScreen';
 import { ARRIVAL_TIME_CONFIG, DEFAULT_NULL_VALUE, TokenType } from '../../../constants';
-import { valueFixed2LessThanMin } from '../../../utils';
+import { valueFixed2LessThanMin } from '@etransfer/utils';
 import { ChainId } from '@portkey/types';
 import { TWithdrawInfoSuccess } from '../../../types';
 

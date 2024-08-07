@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { CommonModalProps } from '../../CommonModal';
 import CommonModalTips from '../../CommonModalTips';
 import './index.less';
+import { GOT_IT } from '../../../constants';
 
 export type TSimpleTipModalProps = {
   className?: string;
@@ -19,7 +20,7 @@ export default function SimpleTipModal({ className, open = false, content, getCo
       getContainer={getContainer}
       open={open}
       closable={false}
-      okText="OK"
+      okText={GOT_IT}
       onOk={onOk}>
       <div className="etransfer-ui-simple-modal-body">{content}</div>
     </CommonModalTips>

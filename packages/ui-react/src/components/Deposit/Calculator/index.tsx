@@ -9,7 +9,7 @@ import CommonSvg from '../../CommonSvg';
 import DynamicArrow from '../../DynamicArrow';
 import singleMessage from '../../SingleMessage';
 import { formatSymbolDisplay } from '../../../utils/format';
-import { MAX_UPDATE_TIME } from '../../../constants/calculate';
+import { MAX_UPDATE_TIME } from '../../../constants';
 import { SIGNATURE_MISSING_TIP } from '../../../constants/misc';
 import { IChainMenuItem } from '../../../types/chain';
 import { etransferCore } from '../../../utils';

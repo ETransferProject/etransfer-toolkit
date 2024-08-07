@@ -5,6 +5,8 @@ import { TArrivalTimeConfig, TWithdrawInfoSuccess } from '../types/withdraw';
 
 export const REMAINING_WITHDRAWAL_QUOTA_TOOLTIP = `Withdrawals are subject to a 24-hour limit, determined by the real-time USD value of the asset. You can withdraw assets up to the available withdrawal limit.`;
 
+export const HOUR_LIMIT_24 = '24-Hour Limit';
+
 export enum ERROR_NAME_TYPE {
   FAIL_MODAL_REASON = 'failModalReason',
 }

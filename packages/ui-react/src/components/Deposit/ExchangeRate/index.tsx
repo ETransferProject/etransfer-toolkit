@@ -5,7 +5,7 @@ import { etransferEvents, handleErrorMessage, isAuthTokenError } from '@etransfe
 import { ChainId } from '@portkey/types';
 import { DEFAULT_NULL_VALUE } from '../../../constants/index';
 import { formatSymbolDisplay } from '../../../utils/format';
-import { MAX_UPDATE_TIME } from '../../../constants/calculate';
+import { MAX_UPDATE_TIME } from '../../../constants';
 import { SIGNATURE_MISSING_TIP } from '../../../constants/misc';
 import { useEffectOnce } from 'react-use';
 import CommonSvg from '../../CommonSvg';

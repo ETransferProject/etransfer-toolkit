@@ -1,11 +1,11 @@
 import BigNumber from 'bignumber.js';
-import { divDecimals } from './calculate';
+import { divDecimals, ZERO } from '@etransfer/utils';
 
 /**
- * this function is to format address,just like "formatStr2EllipsisStr" ---> "for...Str"
- * @param address
- * @param digits [pre_count, suffix_count]
- * @param type
+ * this function is to format address,just like "formatStr2EllipsisStr" to "for...Str"
+ * @param address - format address
+ * @param digits - [pre_count, suffix_count]
+ * @param type - Ellipsis position
  * @returns
  */
 export const formatStr2Ellipsis = (address = '', digits = [10, 10], type: 'middle' | 'tail' = 'middle'): string => {
@@ -37,7 +37,7 @@ export interface IFormatWithCommasProps {
 export const DEFAULT_AMOUNT = 0;
 export const DEFAULT_DECIMAL = 6;
 export const DEFAULT_DIGITS = 6;
-export const ZERO = new BigNumber(0);
+
 /**
  * formatAmount with prefix and thousand mark, not unit
  * @example $11.1  +11.1  -11.1  9,999.9

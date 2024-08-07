@@ -4,7 +4,7 @@ import './index.less';
 import { CONTRACT_ADDRESS, MINIMUM_DEPOSIT } from '../../../constants/deposit';
 import { formatStr2Ellipsis, formatSymbolDisplay } from '../../../utils/format';
 import { openWithBlank } from '../../../utils/common';
-import { valueFixed2LessThanMin } from '../../../utils/calculate';
+import { valueFixed2LessThanMin } from '@etransfer/utils';
 import CommonSvg from '../../CommonSvg';
 import { CommonModalProps } from '../../CommonModal';
 import ViewContractAddressModal from '../../Modal/ViewContractAddressModal';
