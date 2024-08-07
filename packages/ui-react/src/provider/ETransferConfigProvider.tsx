@@ -30,6 +30,9 @@ const defaultConfig: ETransferConfigProps = {
   //   },
   // },
   networkType: 'MAINNET',
+  accountInfo: {
+    accounts: {},
+  },
 };
 
 class ETransferConfigProvider implements ETransferConfigProviderProps {

@@ -27,7 +27,7 @@ export interface WithdrawFormProps {
   isTransactionFeeLoading?: boolean;
   componentStyle?: ComponentStyle;
   onTokenChange: (item: TTokenItem) => Promise<void>;
-  onAddressChange: (value: string | null) => void;
+  onAddressChange?: (value: string | null) => void;
   onAddressBlur: () => Promise<void>;
   onNetworkChanged: (item: TNetworkItem) => Promise<void>;
   onClickMax: () => void;

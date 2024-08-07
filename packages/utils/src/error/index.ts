@@ -51,6 +51,13 @@ export const isAuthTokenError = (error: any) => {
   return false;
 };
 
+export const isWriteOperationError = (code: string | number, message: string) => {
+  if (String(code)?.substring(0, 1) === '5' && message.includes('A write operation resulted in an error')) {
+    return true;
+  }
+  return false;
+};
+
 export const handleWebLoginErrorMessage = (error: any, errorText?: string) => {
   if (error.nativeError && error.nativeError.message) {
     error = error.nativeError;

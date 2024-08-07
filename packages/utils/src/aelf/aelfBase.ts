@@ -130,3 +130,18 @@ export const removeDIDAddressSuffix = (address: string) => {
 
   return address;
 };
+
+export const isELFAddress = (value: string) => {
+  if (/[\u4e00-\u9fa5]/.test(value)) return false;
+  try {
+    return !!AElf.utils.decodeAddressRep(value);
+  } catch {
+    return false;
+  }
+};
+
+export const removeELFAddressSuffix = (address: string) => {
+  if (isELFAddress(address)) return removeAddressSuffix(address);
+
+  return address;
+};

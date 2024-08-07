@@ -6,6 +6,7 @@ import * as AELF_Mainnet from '../constants/platform/AELF';
 import * as tDVV_Mainnet from '../constants/platform/tDVV';
 import * as AELF_Testnet from '../constants/platform/AELF_Testnet';
 import * as tDVW_Testnet from '../constants/platform/tDVW_Testnet';
+import { ETransferConfig } from '../provider/ETransferConfigProvider';
 
 export const getAelfReact = (networkType: NetworkType, chainId: ChainId) => {
   if (networkType === 'TESTNET') {
@@ -75,4 +76,22 @@ export const getBalanceDivDecimals = async (
     singleMessage.error(handleWebLoginErrorMessage(error));
     throw new Error('Failed to get balance.');
   }
+};
+
+export const getBalanceDivDecimalsAdapt = async (
+  chainId: ChainId,
+  accountAddress: string,
+  symbol: string,
+  decimals: string | number,
+) => {
+  const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
+  const aelfReact = getAelfReact(networkType, chainId);
+
+  return await getBalanceDivDecimals(
+    aelfReact.endPoint,
+    aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
+    accountAddress,
+    symbol,
+    decimals,
+  );
 };

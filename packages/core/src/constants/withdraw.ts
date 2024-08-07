@@ -16,6 +16,8 @@ export const WITHDRAW_TRANSACTION_ERROR_CODE_LIST = [
   '40015',
 ];
 
+export const WITHDRAW_ADDRESS_ERROR_CODE_LIST = ['40100', '40101'];
+
 export const INSUFFICIENT_ALLOWANCE_MESSAGE =
   'Insufficient allowance. Please try again, ensuring that you approve an adequate amount as the allowance.';
 

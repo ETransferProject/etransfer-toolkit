@@ -22,11 +22,22 @@ export interface AelfReact {
 
 export interface ETransferConfigProps extends TETransferCoreOptions {
   networkType: NetworkType;
+  accountInfo: ETransferAccountConfig;
   aelfReact?: AelfReact;
   depositConfig?: ETransferDepositConfig;
   withdrawConfig?: ETransferWithdrawConfig;
   authorization?: ETransferAuthorizationConfig;
 }
+
+export interface ETransferAccountConfig {
+  accounts: TAelfAccounts; // account address
+}
+
+export type TAelfAccounts = {
+  AELF?: string;
+  tDVV?: string;
+  tDVW?: string;
+};
 
 export interface ETransferAuthorizationConfig {
   jwt: string;
