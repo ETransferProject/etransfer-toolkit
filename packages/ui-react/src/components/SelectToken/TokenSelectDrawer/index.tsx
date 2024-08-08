@@ -20,7 +20,7 @@ export default function TokenSelectDrawer({
     <CommonDrawer
       destroyOnClose
       placement="bottom"
-      title={title} //{type === SideMenuKey.Withdraw ? 'Withdraw Assets' : 'Deposit Assets'}
+      title={title}
       closable={true}
       height="88%"
       {...props}

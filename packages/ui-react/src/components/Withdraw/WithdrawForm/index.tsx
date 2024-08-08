@@ -19,7 +19,7 @@ import RemainingLimit from '../RemainingLimit';
 import FormAmountInput from '../../Form/FormAmountInput';
 import PartialLoading from '../../PartialLoading';
 
-export function WithdrawForm({
+export default function WithdrawForm({
   className,
   form,
   formValidateData,
@@ -72,11 +72,12 @@ export function WithdrawForm({
       <div className={'etransfer-ui-withdraw-form-item-wrapper'}>
         <Form.Item
           className={'etransfer-ui-withdraw-form-item'}
-          label="Withdrawal Assets"
+          label="Withdrawal Token"
           name={WithdrawFormKeys.TOKEN}
           validateStatus={formValidateData[WithdrawFormKeys.TOKEN].validateStatus}
           help={formValidateData[WithdrawFormKeys.TOKEN].errorMessage}>
           <WithdrawSelectToken
+            componentStyle={componentStyle}
             selected={currentToken}
             selectCallback={onTokenChange}
             tokenList={tokenList || []}
@@ -109,6 +110,7 @@ export function WithdrawForm({
           validateStatus={formValidateData[WithdrawFormKeys.NETWORK].validateStatus}
           help={formValidateData[WithdrawFormKeys.NETWORK].errorMessage}>
           <WithdrawSelectNetwork
+            componentStyle={componentStyle}
             networkList={networkList || []}
             selected={networkItem}
             isDisabled={isNetworkDisable}

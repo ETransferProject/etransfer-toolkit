@@ -1,5 +1,8 @@
+@import '../../../assets/theme/breakpoint.less';
+
 .etransfer-ui-withdraw-remaining-limit {
   gap: 8px;
+
   .etransfer-ui-withdraw-remaining-limit-value,
   .etransfer-ui-withdraw-remaining-limit-label {
     display: flex;
@@ -9,6 +12,7 @@
   .etransfer-ui-withdraw-remaining-limit-value {
     color: var(--etransfer-ui-primary-text);
     white-space: nowrap;
+    gap: 4px;
   }
   .etransfer-ui-withdraw-remaining-limit-value-limit-currency {
     margin-left: 2px;
@@ -59,7 +63,7 @@
     align-items: flex-start;
     &::before {
       left: -16px;
-      width: 100vw;
+      width: 100vw; // TODO
     }
     .etransfer-ui-withdraw-remaining-limit-value {
       margin-left: 7px;
@@ -72,4 +76,10 @@
   .etransfer-ui-withdraw-remaining-limit-value {
     color: var(--etransfer-ui-error);
   }
+}
+
+
+.etransfer-ui-withdraw-question-label {
+  gap: 4px;
+  cursor: pointer;
 }

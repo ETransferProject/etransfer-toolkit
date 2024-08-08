@@ -71,7 +71,7 @@ export function BalanceAndUSD({
 
   if (!balance)
     return (
-      <div className="flex-column-end">
+      <div className="etransfer-ui-flex-column-end">
         <CommonSpace direction="vertical" size={15} />
         <PartialLoading />
         <CommonSpace direction="vertical" size={15} />

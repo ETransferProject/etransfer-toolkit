@@ -1,9 +1,8 @@
-import { ChainId } from '@portkey/types';
-import { dealURLLastChar } from '../utils';
+// import { ChainId } from '@portkey/types';
+import { dealURLLastChar, getNetworkType } from '../utils';
 import { ETransferConfig } from './ETransferConfigProvider';
 import { ETransferDepositConfig, ETransferWithdrawConfig, SupportDataResult } from './types';
 import { CHAIN_ID, TokenType } from '../constants';
-import { NetworkType } from '../types';
 import { handleErrorMessage } from '@etransfer/utils';
 
 export const getEtransferUrl = () => {
@@ -16,20 +15,20 @@ export const getEtransferAuthUrl = () => {
   return dealURLLastChar(ETransferConfig.config.etransferUrl);
 };
 
-export const getAelfNode = (chainId: ChainId) => {
-  if (!ETransferConfig.config?.aelfReact?.nodes?.[chainId]) throw Error('Please config aelfReact');
-  return ETransferConfig.config.aelfReact.nodes[chainId];
-};
+// export const getAelfNode = (chainId: ChainId) => {
+//   if (!ETransferConfig.config?.aelfReact?.nodes?.[chainId]) throw Error('Please config aelfReact');
+//   return ETransferConfig.config.aelfReact.nodes[chainId];
+// };
 
-export const getAelfExploreUrl = (chainId: ChainId) => {
-  if (!ETransferConfig.config?.aelfReact?.nodes?.[chainId]?.exploreUrl) throw Error('Please config exploreUrl');
-  return ETransferConfig.config.aelfReact.nodes[chainId]?.exploreUrl || '';
-};
+// export const getAelfExploreUrl = (chainId: ChainId) => {
+//   if (!ETransferConfig.config?.aelfReact?.nodes?.[chainId]?.exploreUrl) throw Error('Please config exploreUrl');
+//   return ETransferConfig.config.aelfReact.nodes[chainId]?.exploreUrl || '';
+// };
 
-export const getAelfRpcUrl = (chainId: ChainId): string => {
-  if (!ETransferConfig.config?.aelfReact?.nodes?.[chainId]?.rpcUrl) throw Error('Please config rpcUrl');
-  return ETransferConfig.config.aelfReact.nodes[chainId]?.rpcUrl || '';
-};
+// export const getAelfRpcUrl = (chainId: ChainId): string => {
+//   if (!ETransferConfig.config?.aelfReact?.nodes?.[chainId]?.rpcUrl) throw Error('Please config rpcUrl');
+//   return ETransferConfig.config.aelfReact.nodes[chainId]?.rpcUrl || '';
+// };
 
 export const getDepositSupportChainIds = (): SupportDataResult => {
   const supportChainIds = ETransferConfig.config.depositConfig?.supportChainIds;
@@ -90,7 +89,7 @@ export const getDepositDefaultConfig = () => {
   try {
     let chainId, network, depositToken, receiveToken;
     const depositConfig = ETransferConfig.getConfig('depositConfig') as ETransferDepositConfig | undefined;
-    const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
+    const networkType = getNetworkType();
     if (depositConfig?.defaultChainId) {
       chainId = depositConfig.defaultChainId;
     }
@@ -124,7 +123,7 @@ export const getWithdrawDefaultConfig = () => {
   try {
     let chainId, network, token;
     const withdrawConfig = ETransferConfig.getConfig('withdrawConfig') as ETransferWithdrawConfig | undefined;
-    const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
+    const networkType = getNetworkType();
     if (withdrawConfig?.defaultChainId) {
       chainId = withdrawConfig.defaultChainId;
     }

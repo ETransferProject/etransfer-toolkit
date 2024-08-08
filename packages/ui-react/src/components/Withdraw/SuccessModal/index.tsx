@@ -1,17 +1,17 @@
 import clsx from 'clsx';
 import './index.less';
 import { useMemo } from 'react';
-import CheckFilledIcon from 'assets/images/checkFilled.svg';
 import CommonSvg from '../../CommonSvg';
 import CommonModalAutoScreen, { CommonModalAutoScreenProps } from '../../CommonModalAutoScreen';
 import { ARRIVAL_TIME_CONFIG, DEFAULT_NULL_VALUE, TokenType } from '../../../constants';
 import { valueFixed2LessThanMin } from '@etransfer/utils';
 import { ChainId } from '@portkey/types';
-import { TWithdrawInfoSuccess } from '../../../types';
+import { ComponentStyle, TWithdrawInfoSuccess } from '../../../types';
 
 interface SuccessModalProps {
   withdrawInfo: TWithdrawInfoSuccess;
   modalProps: CommonModalAutoScreenProps;
+  componentStyle?: ComponentStyle;
 }
 
 const isNeedQuota = (symbol: TokenType, chainId: ChainId) => {
@@ -21,7 +21,7 @@ const isNeedQuota = (symbol: TokenType, chainId: ChainId) => {
   return false;
 };
 
-export default function SuccessModal({ withdrawInfo, modalProps }: SuccessModalProps) {
+export default function SuccessModal({ componentStyle, withdrawInfo, modalProps }: SuccessModalProps) {
   const arrivalTime = useMemo(() => {
     const symbol = withdrawInfo.symbol as TokenType;
     const chainId = withdrawInfo.network.network as unknown as ChainId;
@@ -36,11 +36,10 @@ export default function SuccessModal({ withdrawInfo, modalProps }: SuccessModalP
   }, [withdrawInfo.amount, withdrawInfo.arriveTime, withdrawInfo.network.network, withdrawInfo.symbol]);
 
   return (
-    <CommonModalAutoScreen {...modalProps} hideCancelButton okText="Got it">
+    <CommonModalAutoScreen {...modalProps} componentStyle={componentStyle} hideCancelButton okText="Got it">
       <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-withdraw-success-modal-container')}>
         <div className={clsx('etransfer-ui-flex-column-center', 'etransfer-ui-withdraw-success-modal-title-wrapper')}>
           <div className={clsx('etransfer-ui-flex-center', 'etransfer-ui-withdraw-success-modal-title-icon')}>
-            <CheckFilledIcon />
             <CommonSvg type="checkFilled" />
           </div>
           <div className={'etransfer-ui-withdraw-success-modal-title'}>Withdrawal Request Submitted</div>

@@ -2,15 +2,17 @@ import clsx from 'clsx';
 import './index.less';
 import CommonModalAutoScreen, { CommonModalAutoScreenProps } from '../../CommonModalAutoScreen';
 import CommonSvg from '../../CommonSvg';
+import { ComponentStyle } from '../../../types';
 
 interface FailModalProps {
   failReason: string;
   modalProps: CommonModalAutoScreenProps;
+  componentStyle?: ComponentStyle;
 }
 
-export default function FailModal({ failReason, modalProps }: FailModalProps) {
+export default function FailModal({ componentStyle, failReason, modalProps }: FailModalProps) {
   return (
-    <CommonModalAutoScreen {...modalProps} hideCancelButton okText="Got it">
+    <CommonModalAutoScreen {...modalProps} componentStyle={componentStyle} hideCancelButton okText="Got it">
       <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-withdraw-fail-modal-container')}>
         <div className={clsx('etransfer-ui-flex-column-center', 'etransfer-ui-withdraw-fail-modal-title-wrapper')}>
           <div className={clsx('etransfer-ui-flex-center', 'etransfer-ui-withdraw-fail-modal-title-icon')}>

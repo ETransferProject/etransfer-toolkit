@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import 'index.less';
+import './index.less';
 import { ComponentStyle } from '../../types';
 import CommonDrawer from '../CommonDrawer';
 import CommonModal from '../CommonModal';

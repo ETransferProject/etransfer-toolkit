@@ -1,25 +1,37 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Form } from 'antd';
 import clsx from 'clsx';
 import './index.less';
-import { BusinessType, TNetworkItem, TWithdrawInfo } from '@etransfer/types';
+import { BusinessType, TNetworkItem, TWalletType, TWithdrawInfo } from '@etransfer/types';
 import PartialLoading from '../../PartialLoading';
 import {
   AelfExploreType,
   DEFAULT_NULL_VALUE,
+  DEFAULT_WITHDRAW_ERROR_MESSAGE,
   INITIAL_WITHDRAW_STATE,
   INITIAL_WITHDRAW_SUCCESS_CHECK,
 } from '../../../constants';
 import CommonButton from '../../CommonButton';
 import CommonLink from '../../CommonLink';
-import { getAelfExploreLink } from '../../../utils';
+import {
+  etransferCore,
+  getAccountAddress,
+  getAccountInfo,
+  getAelfExploreLink,
+  getAelfReact,
+  getNetworkType,
+  setLoading,
+} from '../../../utils';
 import SuccessModal from '../SuccessModal';
 import FailModal from '../FailModal';
 import DoubleCheckModal from '../DoubleCheckModal';
-import { ComponentStyle, TWithdrawInfoSuccess } from '../../../types';
+import { ComponentStyle, CONTRACT_TYPE, TWithdrawInfoSuccess } from '../../../types';
 import CommonSvg from '../../CommonSvg';
 import FeeInfo from '../FeeInfo';
 import { useETransferWithdraw } from '../../../context/ETransferWithdrawProvider';
+import { WithdrawErrorNameType } from '@etransfer/core';
+import { removeDIDAddressSuffix } from '@etransfer/utils';
+import { WalletTypeEnum } from '../../../provider/types';
 
 export interface WithdrawFooterProps {
   isTransactionFeeLoading: boolean;
@@ -49,8 +61,7 @@ export default function WithdrawFooter({
   // const { walletInfo, walletType, isLocking, callViewMethod, callSendMethod, getSignature } = useConnectWallet();
   // const accounts = useGetAccount();
 
-  const [{ tokenSymbol, tokenList, networkItem, networkList, chainItem, chainList }, { dispatch }] =
-    useETransferWithdraw();
+  const [{ tokenList, tokenSymbol, chainItem, networkItem }] = useETransferWithdraw();
 
   // DoubleCheckModal
   const [isDoubleCheckModalOpen, setIsDoubleCheckModalOpen] = useState(false);
@@ -77,22 +88,69 @@ export default function WithdrawFooter({
     setIsDoubleCheckModalOpen(true);
   }, [currentNetwork]);
 
+  const createTransactionOrder = useCallback(async () => {
+    try {
+      setLoading(false);
+
+      const aelfReact = getAelfReact(getNetworkType(), chainItem.key);
+      const accountAddress = getAccountAddress(chainItem.key);
+      const { walletType, caHash, managerAddress } = getAccountInfo();
+
+      if (walletType !== WalletTypeEnum.elf && (!caHash || !managerAddress))
+        throw new Error('User information is missing');
+      if (!accountAddress) throw new Error('User address is missing');
+
+      // const res = await etransferCore.sendWithdrawOrder({
+      //   tokenContractCallSendMethod: (params, sendOptions) => callSendMethod(chainItem.key, params, sendOptions),
+      //   tokenContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
+      //   endPoint: aelfReact.endPoint,
+      //   symbol: tokenSymbol,
+      //   decimals: currentTokenDecimal,
+      //   amount,
+      //   toAddress: address,
+      //   caContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.CA],
+      //   eTransferContractAddress: currentTokenAddress,
+      //   walletType: walletType === WalletTypeEnum.elf ? TWalletType.NightElf : TWalletType.Portkey,
+      //   caHash: caHash || undefined,
+      //   network: networkItem?.network || '',
+      //   chainId: chainItem.key,
+      //   managerAddress: managerAddress || removeDIDAddressSuffix(accountAddress),
+      //   accountAddress: removeDIDAddressSuffix(accountAddress),
+      //   getSignature: getSignature,
+      // });
+      // console.log('>>>>>> res', res);
+    } catch (error: any) {
+      setLoading(false);
+      if (error?.code == 4001) {
+        setFailModalReason('The request is rejected. ETransfer needs your permission to proceed.');
+      } else if (error.name === WithdrawErrorNameType.SHOW_FAILED_MODAL) {
+        setFailModalReason(error.message);
+      } else {
+        setFailModalReason(DEFAULT_WITHDRAW_ERROR_MESSAGE);
+      }
+      console.log('sendTransferTokenTransaction error:', error);
+      setIsFailModalOpen(true);
+    } finally {
+      setIsDoubleCheckModalOpen(false);
+    }
+  }, []);
+
   const onClickSuccess = useCallback(() => {
     setIsSuccessModalOpen(false);
     clickSuccessOk();
   }, [clickSuccessOk]);
 
   const onClickFailed = useCallback(() => {
-    setIsSuccessModalOpen(false);
+    setIsFailModalOpen(false);
     clickFailedOk();
   }, [clickFailedOk]);
 
   return (
     <div className={clsx('form-footer', 'form-footer-safe-area')}>
-      <div className={clsx('flex-1', 'flex-column', 'footer-info-wrapper')}>
-        <div className={clsx('flex-column', 'receive-amount-wrapper')}>
+      <div className={clsx('etransfer-ui-flex-1', 'etransfer-ui-flex-column', 'footer-info-wrapper')}>
+        <div className={clsx('etransfer-ui-flex-column', 'receive-amount-wrapper')}>
           <div className={'info-label'}>Amount to Be Received</div>
-          <div className={clsx('flex-row-center', 'info-value', 'info-value-big-font')}>
+          <div className={clsx('etransfer-ui-flex-row-center', 'info-value', 'info-value-big-font')}>
             {isTransactionFeeLoading && <PartialLoading />}
             {!isTransactionFeeLoading && `${(!isSuccessModalOpen && receiveAmount) || DEFAULT_NULL_VALUE} `}
             <span className={clsx('info-unit')}>{withdrawInfo.transactionUnit}</span>
@@ -107,7 +165,7 @@ export default function WithdrawFooter({
           aelfTransactionUnit={withdrawInfo.aelfTransactionUnit}
         />
       </div>
-      <Form.Item shouldUpdate className={clsx('flex-none', 'form-submit-button-wrapper')}>
+      <Form.Item shouldUpdate className={clsx('etransfer-ui-flex-none', 'form-submit-button-wrapper')}>
         <CommonButton
           className={'form-submit-button'}
           // htmlType="submit"
@@ -144,12 +202,13 @@ export default function WithdrawFooter({
           onClose: () => setIsDoubleCheckModalOpen(false),
           onOk: () => {
             setIsDoubleCheckModalOpen(false);
-            // sendTransferTokenTransaction();
+            createTransactionOrder();
           },
         }}
         isTransactionFeeLoading={isTransactionFeeLoading}
       />
       <SuccessModal
+        componentStyle={componentStyle}
         withdrawInfo={withdrawInfoSuccess}
         modalProps={{
           open: isSuccessModalOpen,
@@ -167,6 +226,7 @@ export default function WithdrawFooter({
         }}
       />
       <FailModal
+        componentStyle={componentStyle}
         failReason={failModalReason}
         modalProps={{
           open: isFailModalOpen,

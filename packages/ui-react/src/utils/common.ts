@@ -1,9 +1,17 @@
 import { AelfExploreType, OtherExploreType, ExploreUrlType } from '../constants/network';
 import { ChainId } from '@portkey/types';
-import { getAelfExploreUrl } from '../provider/utils';
+// import { getAelfExploreUrl } from '../provider/utils';
+import { getAelfReact } from './contract';
+import { getNetworkType } from './login';
 
 export function getAelfExploreLink(data: string, type: AelfExploreType, chainId: ChainId): string {
-  const prefix = getAelfExploreUrl(chainId);
+  // let prefix = getAelfExploreUrl(chainId);
+
+  // get exploreUrl from local constants
+  const networkType = getNetworkType();
+  const aelfReact = getAelfReact(networkType, chainId);
+  const prefix = aelfReact.exploreUrl;
+
   if (!prefix) throw new Error(`Please config ${chainId}'s exploreUrl`);
 
   switch (type) {

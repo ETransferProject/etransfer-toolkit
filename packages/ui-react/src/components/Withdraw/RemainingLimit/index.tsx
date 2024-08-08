@@ -1,6 +1,7 @@
 import { Tooltip } from 'antd';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
+import './index.less';
 import { useMemo } from 'react';
 import CommonSvg from '../../CommonSvg';
 import { DEFAULT_NULL_VALUE, HOUR_LIMIT_24, REMAINING_WITHDRAWAL_QUOTA_TOOLTIP } from '../../../constants';
@@ -28,7 +29,7 @@ export default function RemainingLimit({
         {isMobileStyle && `• ${HOUR_LIMIT_24}:`}
         {!isMobileStyle && (
           <Tooltip
-            className={clsx('etransfer-ui-withdraw-question-label')}
+            className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-withdraw-question-label')}
             placement="top"
             title={REMAINING_WITHDRAWAL_QUOTA_TOOLTIP}>
             {HOUR_LIMIT_24} <CommonSvg type="questionMark" />
@@ -40,7 +41,7 @@ export default function RemainingLimit({
 
   const value = useMemo(() => {
     return (
-      <span className={'etransfer-ui-withdraw-remaining-limit-value'}>
+      <span className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-withdraw-remaining-limit-value')}>
         {remainingLimit && totalLimit ? (
           <>
             {`${new BigNumber(remainingLimit).toFormat()} /
@@ -61,7 +62,7 @@ export default function RemainingLimit({
 
   return (
     <div
-      className={clsx('flex', 'etransfer-ui-withdraw-remaining-limit', {
+      className={clsx('etransfer-ui-flex', 'etransfer-ui-withdraw-remaining-limit', {
         ['etransfer-ui-withdraw-remaining-limit-error']:
           remainingLimit !== null &&
           remainingLimit !== undefined &&

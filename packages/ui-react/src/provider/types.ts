@@ -23,14 +23,24 @@ export interface AelfReact {
 export interface ETransferConfigProps extends TETransferCoreOptions {
   networkType: NetworkType;
   accountInfo: ETransferAccountConfig;
-  aelfReact?: AelfReact;
+  // aelfReact?: AelfReact;
   depositConfig?: ETransferDepositConfig;
   withdrawConfig?: ETransferWithdrawConfig;
   authorization?: ETransferAuthorizationConfig;
 }
 
+export enum WalletTypeEnum {
+  unknown = 'Unknown',
+  elf = 'NightElf',
+  aa = 'PortkeyAA',
+  discover = 'PortkeyDiscover',
+}
+
 export interface ETransferAccountConfig {
+  walletType: WalletTypeEnum;
   accounts: TAelfAccounts; // account address
+  caHash?: string; // for portkey wallet
+  managerAddress?: string; // for portkey wallet
 }
 
 export type TAelfAccounts = {

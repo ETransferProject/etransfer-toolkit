@@ -1,7 +1,8 @@
 import { Form } from 'antd';
+import './index.less';
 import { ComponentStyle, IChainMenuItem } from '../../types';
 import { TWithdrawFormValues, WithdrawFormKeys, WithdrawProps, WithdrawValidateStatus } from './types';
-import { WithdrawForm } from './WithdrawForm';
+import WithdrawForm from './WithdrawForm';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import WithdrawSelectChain from '../SelectChain/WithdrawSelectChain';
 import { useETransferWithdraw } from '../../context/ETransferWithdrawProvider';
@@ -31,6 +32,7 @@ import {
   setLoading,
 } from '../../utils';
 import {
+  etransferEvents,
   handleErrorMessage,
   isAuthTokenError,
   isDIDAddressSuffix,
@@ -46,6 +48,8 @@ import BigNumber from 'bignumber.js';
 import { useIsLogin } from '../../hooks/contract';
 import { ETransferConfig } from '../../provider/ETransferConfigProvider';
 import { ETransferAccountConfig } from '../../provider/types';
+import { useEffectOnce } from 'react-use';
+import clsx from 'clsx';
 
 export default function Withdraw({
   className,
@@ -68,7 +72,8 @@ export default function Withdraw({
     [WithdrawFormKeys.AMOUNT]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
   });
 
-  const [{ tokenSymbol, tokenList, networkItem, chainItem, chainList }, { dispatch }] = useETransferWithdraw();
+  const [{ tokenSymbol, tokenList, networkItem, networkList, chainItem, chainList }, { dispatch }] =
+    useETransferWithdraw();
   const currentNetworkRef = useRef<TNetworkItem>();
   const currentChainItemRef = useRef<IChainMenuItem>(chainItem);
   const [withdrawInfo, setWithdrawInfo] = useState<TWithdrawInfo>(INITIAL_WITHDRAW_INFO);
@@ -326,7 +331,7 @@ export default function Withdraw({
 
   const getWithdrawData = useCallback(
     async (optionSymbol?: string, newMaxBalance?: string) => {
-      console.log('getWithdrawData >>>>>> isLogin', isLoginRef.current);
+      console.log('getWithdrawData - isLogin', isLoginRef.current);
       if (!isLoginRef.current) return;
 
       const symbol = optionSymbol || tokenSymbol;
@@ -385,7 +390,7 @@ export default function Withdraw({
   const getAccountBalance = useCallback(
     async (isLoading: boolean, item?: TTokenItem) => {
       try {
-        console.log('>>>>>> getMaxBalance', item?.symbol);
+        console.log('getAccountBalance - symbol', item?.symbol);
         const accountInfo = ETransferConfig.getConfig('accountInfo') as ETransferAccountConfig;
         const caAddress = accountInfo.accounts?.[currentChainItemRef.current.key];
         if (!caAddress) return '';
@@ -425,10 +430,10 @@ export default function Withdraw({
 
   const getAccountBalanceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const getAccountBalanceInterval = useCallback(async (item?: TTokenItem) => {
-    console.log('>>>>>> getAccountBalanceInterval start', item?.symbol);
+    console.log('getAccountBalanceInterval start', item?.symbol);
     if (getAccountBalanceTimerRef.current) clearInterval(getAccountBalanceTimerRef.current);
     getAccountBalanceTimerRef.current = setInterval(async () => {
-      console.log('>>>>>> getAccountBalanceInterval interval', item?.symbol);
+      console.log('getAccountBalanceInterval interval', item?.symbol);
       await getAccountBalanceRef.current(false, item);
     }, 8000);
   }, []);
@@ -658,14 +663,78 @@ export default function Withdraw({
     };
   }, [getWithdrawData, withdrawInfo.expiredTimestamp, currentNetworkRef.current?.network]);
 
+  const init = useCallback(async () => {
+    try {
+      setLoading(true);
+
+      const newCurrentSymbol = tokenSymbol;
+      let newTokenList = tokenList;
+      newTokenList = await getToken(true);
+      const newCurrentToken = newTokenList.find((item) => item.symbol === newCurrentSymbol);
+
+      if (networkItem?.network && networkList && networkList?.length > 0) {
+        currentNetworkRef.current = networkItem as TNetworkItem;
+        form.setFieldValue(WithdrawFormKeys.NETWORK, networkItem);
+
+        // get new network data, when refresh page or switch side menu
+        await getNetworkData({ symbol: newCurrentSymbol });
+        getWithdrawData(newCurrentSymbol);
+      } else {
+        handleChainChanged(currentChainItemRef.current, newCurrentToken);
+      }
+
+      console.log('withdraw init', newCurrentToken?.symbol);
+      getAccountBalanceInterval(newCurrentToken);
+    } catch (error) {
+      console.log('withdraw init error', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [
+    form,
+    getAccountBalanceInterval,
+    getNetworkData,
+    getToken,
+    getWithdrawData,
+    handleChainChanged,
+    networkItem,
+    networkList,
+    tokenList,
+    tokenSymbol,
+  ]);
+  const initRef = useRef(init);
+  initRef.current = init;
+
+  useEffectOnce(() => {
+    initRef.current();
+
+    return () => {
+      if (getAccountBalanceTimerRef.current) {
+        clearInterval(getAccountBalanceTimerRef.current);
+        getAccountBalanceTimerRef.current = null;
+      }
+    };
+  });
+
+  useEffect(() => {
+    const { remove } = etransferEvents.AuthTokenSuccess.addListener(() => {
+      console.log('login success');
+      initRef.current();
+    });
+    return () => {
+      remove();
+    };
+  }, []);
+
   return (
-    <div className={className}>
+    <div className={clsx('etransfer-ui-withdraw', className)}>
       <WithdrawSelectChain
         className={chainClassName}
         mobileTitle="Withdraw from"
         mobileLabel="from"
         webLabel={'Withdraw Assets from'}
         menuItems={chainList || []}
+        selectedItem={chainItem}
         componentStyle={componentStyle}
         chainChanged={handleChainChanged}
       />

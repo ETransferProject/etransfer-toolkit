@@ -1,4 +1,4 @@
-import { ConfigKey, ETransferConfigProps, ETransferConfigProviderProps } from './types';
+import { ConfigKey, ETransferConfigProps, ETransferConfigProviderProps, WalletTypeEnum } from './types';
 // import { CHAIN_INFO as AELF_CHAIN_INFO } from '../constants/platform/AELF';
 // import { CHAIN_INFO as tDVV_CHAIN_INFO } from '../constants/platform/tDVV';
 import { BaseAsyncStorage } from '../utils/BaseAsyncStorage';
@@ -31,6 +31,7 @@ const defaultConfig: ETransferConfigProps = {
   // },
   networkType: 'MAINNET',
   accountInfo: {
+    walletType: WalletTypeEnum.unknown,
     accounts: {},
   },
 };

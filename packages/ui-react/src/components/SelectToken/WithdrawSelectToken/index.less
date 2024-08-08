@@ -1,5 +1,5 @@
 @import '../../../assets/theme/constants.less';
-@import '../../../assets/theme/breakpoint.scss';
+@import '../../../assets/theme/breakpoint.less';
 
 .etransfer-ui-withdraw-select-token {
   position: relative;
@@ -35,6 +35,9 @@
       .font-medium();
       .etransfer-ui-withdraw-select-token-value {
         .etransfer-ui-withdraw-select-token-value-selected {
+          .etransfer-ui-token-image-wrapper {
+            margin-right: 8px;
+          }
           .etransfer-ui-withdraw-select-token-primary {
             color: var(--etransfer-ui-primary-text);
             font-size: 16px;

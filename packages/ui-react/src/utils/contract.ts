@@ -6,7 +6,7 @@ import * as AELF_Mainnet from '../constants/platform/AELF';
 import * as tDVV_Mainnet from '../constants/platform/tDVV';
 import * as AELF_Testnet from '../constants/platform/AELF_Testnet';
 import * as tDVW_Testnet from '../constants/platform/tDVW_Testnet';
-import { ETransferConfig } from '../provider/ETransferConfigProvider';
+import { getNetworkType } from './login';
 
 export const getAelfReact = (networkType: NetworkType, chainId: ChainId) => {
   if (networkType === 'TESTNET') {
@@ -84,7 +84,7 @@ export const getBalanceDivDecimalsAdapt = async (
   symbol: string,
   decimals: string | number,
 ) => {
-  const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
+  const networkType = getNetworkType();
   const aelfReact = getAelfReact(networkType, chainId);
 
   return await getBalanceDivDecimals(

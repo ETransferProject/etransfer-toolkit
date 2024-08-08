@@ -105,7 +105,7 @@ export function DepositSelectTokenForWeb({
 }
 
 export function DepositSelectTokenForMobile({
-  title = 'Deposit Assets',
+  title = '',
   tokenList,
   selected,
   isDisabled,

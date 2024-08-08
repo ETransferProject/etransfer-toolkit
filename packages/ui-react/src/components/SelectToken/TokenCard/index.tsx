@@ -43,14 +43,13 @@ export function TokenCardForMobile({
   return (
     <div
       className={clsx(
-        'flex-row-center-between',
+        'etransfer-ui-flex-row-center-between',
         'etransfer-ui-token-card-for-mobile',
-        'etransfer-ui-token-card-for-web-hover',
         isDisabled && 'etransfer-ui-token-card-disabled',
         className,
       )}
       onClick={onClick}>
-      <div className="etransfer-ui-flex-row-center">
+      <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-token-card-for-mobile-left')}>
         <TokenImage src={src} isShowImage={isShowImage} symbol={formatSymbolDisplay(symbol)} />
         <span className={'token-card-name'}>{formatSymbolDisplay(symbol)}</span>
         <span className={'token-card-symbol'}>{name}</span>
@@ -94,7 +93,7 @@ export function TokenCardForWeb({
         className,
       )}
       onClick={onClick}>
-      <div className="etransfer-ui-flex-row-center">
+      <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-token-card-for-web-left')}>
         <TokenImage src={src} isShowImage={isShowImage} symbol={formatSymbolDisplay(symbol)} />
         <span className={'token-card-name'}>{formatSymbolDisplay(symbol)}</span>
         <span className={'token-card-symbol'}>{name}</span>

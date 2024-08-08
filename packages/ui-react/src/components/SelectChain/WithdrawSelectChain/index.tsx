@@ -30,6 +30,7 @@ export default function WithdrawSelectChain({
         {componentStyle === ComponentStyle.Mobile ? mobileLabel : webLabel}
       </span>
       <ChainSelect
+        componentStyle={componentStyle}
         getContainer="etransferWithdrawSelectChain"
         title={mobileTitle}
         clickCallback={chainChanged}

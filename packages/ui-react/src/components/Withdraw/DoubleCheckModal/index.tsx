@@ -48,7 +48,8 @@ export default function DoubleCheckModal({
     <CommonModalAutoScreen
       {...modalProps}
       title="Withdrawal Information"
-      isOkButtonDisabled={isTransactionFeeLoading || !withdrawInfo.receiveAmount}>
+      isOkButtonDisabled={isTransactionFeeLoading || !withdrawInfo.receiveAmount}
+      componentStyle={componentStyle}>
       <div className="etransfer-ui-withdraw-double-check-modal">
         <div
           className={clsx(

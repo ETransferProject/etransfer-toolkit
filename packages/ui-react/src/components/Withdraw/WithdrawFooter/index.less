@@ -1,5 +1,5 @@
-@import '../../assets/theme/breakpoint.less';
-@import '../../assets/theme/constants.less';
+@import '../../../assets/theme/breakpoint.less';
+@import '../../../assets/theme/constants.less';
 
 .info-label,
 .info-value {
@@ -23,7 +23,7 @@
 
 .info-unit {
   max-width: 70px;
-  .etransfer-ui-text-overflow();
+  .etransfer-ui-text-overflow(1);
   @media @mediaWeb {
     max-width: 106px;
   }
@@ -33,14 +33,15 @@
   min-width: var(--etransfer-ui-page-min-width);
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 12px;
+  width: 100%;
   @media @mediaMobile {
     position: fixed;
+    left: 0;
     bottom: 0;
     border-top: 1px solid var(--etransfer-ui-dividers);
     background-color: var(--etransfer-ui-page-bg);
-    width: 100vw;
-    margin-left: -16px;
     padding: 20px 16px;
     align-items: flex-end;
   }

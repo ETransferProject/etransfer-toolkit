@@ -3,9 +3,10 @@ import { BasicActions } from '../utils';
 import { ETransferWithdrawActions, ETransferWithdrawState } from './actions';
 import { ETransferConfig } from '../../provider/ETransferConfigProvider';
 import { ETransferWithdrawConfig } from '../../provider/types';
-import { IChainMenuItem, NetworkType } from '../../types';
+import { IChainMenuItem } from '../../types';
 import { CHAIN_ID, CHAIN_MENU_DATA } from '../../constants';
 import { getWithdrawDefaultConfig } from '../../provider/utils';
+import { getNetworkType } from '../../utils';
 
 const INITIAL_STATE = {
   // depositTokenSymbol: TokenType.USDT,
@@ -75,7 +76,7 @@ export function ETransferWithdrawProvider({ children }: { children: React.ReactN
   withdrawConfigRef.current = withdrawConfig;
 
   const chain = useMemo(() => {
-    const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
+    const networkType = getNetworkType();
     const defaultChainIds = networkType === 'TESTNET' ? [CHAIN_ID.tDVW, CHAIN_ID.AELF] : [CHAIN_ID.tDVV, CHAIN_ID.AELF];
     const supportChainIds = withdrawConfigRef.current?.supportChainIds || defaultChainIds;
     const chainList: IChainMenuItem[] = [];

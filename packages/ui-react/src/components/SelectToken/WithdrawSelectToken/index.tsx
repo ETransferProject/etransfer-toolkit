@@ -7,7 +7,7 @@ import { formatSymbolDisplay } from '../../../utils';
 import TokenImage from '../TokenImage';
 import { useCallback, useState } from 'react';
 import clsx from 'clsx';
-import 'index.less';
+import './index.less';
 
 export interface WithdrawSelectTokenProps {
   tokenList: TTokenItem[];
@@ -63,10 +63,7 @@ export default function WithdrawSelectToken({
           <div className={'etransfer-ui-withdraw-select-token-value'}>
             {selected?.symbol ? (
               <span
-                className={clsx(
-                  'etransfer-ui-withdraw-flex-row-center',
-                  'etransfer-ui-withdraw-select-token-value-selected',
-                )}>
+                className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-withdraw-select-token-value-selected')}>
                 <TokenImage
                   src={selected.icon}
                   isShowImage={true}
@@ -89,7 +86,7 @@ export default function WithdrawSelectToken({
       {componentStyle === ComponentStyle.Mobile ? (
         <TokenSelectDrawer
           itemClassName="etransfer-ui-withdraw-token-modal-token-item"
-          title="Withdraw Assets"
+          title="Withdraw Token"
           open={isShowTokenSelectModal}
           onClose={() => setIsShowTokenSelectModal(false)}
           tokenList={tokenList}

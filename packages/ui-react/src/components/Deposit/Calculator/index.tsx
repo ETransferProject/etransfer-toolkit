@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useEffectOnce } from 'react-use';
 import { Input } from 'antd';
 import './index.less';
 import clsx from 'clsx';
-import { etransferEvents, handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
+import { handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
 import CommonSpace from '../../CommonSpace';
 import CommonSvg from '../../CommonSvg';
 import DynamicArrow from '../../DynamicArrow';
@@ -146,17 +145,6 @@ export default function Calculator({
     getCalculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainItem, depositTokenSymbol, receiveTokenSymbol]);
-
-  // Listener login
-  const getCalculateRef = useRef(getCalculate);
-  getCalculateRef.current = getCalculate;
-  useEffectOnce(() => {
-    const { remove } = etransferEvents.LoginSuccess.addListener(getCalculateRef.current);
-
-    return () => {
-      remove();
-    };
-  });
 
   const renderHeader = useMemo(() => {
     return (

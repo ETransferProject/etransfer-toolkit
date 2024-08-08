@@ -3,6 +3,8 @@ import { DEFAULT_NULL_VALUE } from '.';
 import { CHAIN_ID, CHAIN_MENU_DATA, TOKEN_INFO_USDT, TokenType } from './chain';
 import { TArrivalTimeConfig, TWithdrawInfoSuccess } from '../types/withdraw';
 
+export const DEFAULT_WITHDRAW_ERROR_MESSAGE = 'Failed to initiate the transaction. Please try again later.';
+
 export const REMAINING_WITHDRAWAL_QUOTA_TOOLTIP = `Withdrawals are subject to a 24-hour limit, determined by the real-time USD value of the asset. You can withdraw assets up to the available withdrawal limit.`;
 
 export const AMOUNT_GREATER_THAN_BALANCE_TIP =
