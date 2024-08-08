@@ -26,6 +26,7 @@ import {
   INSUFFICIENT_ALLOWANCE_MESSAGE,
   WITHDRAW_ERROR_MESSAGE,
   WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
+  WithdrawErrorNameType,
 } from './constants';
 import { divDecimals } from '@etransfer/utils';
 import { IStorageSuite, TWalletType } from '@etransfer/types';
@@ -279,9 +280,11 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     const maxBalanceFormat = divDecimals(maxBalance, decimals).toFixed();
     console.log('>>>>>> maxBalance', maxBalanceFormat);
     if (ZERO.plus(maxBalanceFormat).isLessThan(ZERO.plus(amount))) {
-      throw new Error(
+      const error = new Error(
         `Insufficient ${symbol} balance in your account. Please consider transferring a smaller amount or topping up before you try again.`,
       );
+      error.name = WithdrawErrorNameType.SHOW_FAILED_MODAL;
+      throw error;
     }
 
     const checkRes = await checkTokenAllowanceAndApprove({

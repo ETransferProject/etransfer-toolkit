@@ -15,11 +15,20 @@ import BigNumber from 'bignumber.js';
 import { aelfInstance } from './aelfInstance';
 import { handleManagerForwardCall, getContractMethods } from '@portkey/contracts';
 
-export const getContract = async (endPoint: string, contractAddress: string, wallet?: any) => {
-  if (!wallet) wallet = AElf.wallet.getWalletByPrivateKey(COMMON_PRIVATE);
-  const aelf = getAElf(endPoint);
-  const contract = await aelf.chain.contractAt(contractAddress, wallet);
-  return contract;
+const CacheViewContracts: { [key: string]: TTokenContract } = {};
+
+export const getContract = async (endPoint: string, contractAddress: string, wallet?: any): Promise<TTokenContract> => {
+  const key = endPoint + contractAddress;
+
+  if (!CacheViewContracts[key]) {
+    if (!wallet) wallet = AElf.wallet.getWalletByPrivateKey(COMMON_PRIVATE);
+    const aelf = getAElf(endPoint);
+    const contract = await aelf.chain.contractAt(contractAddress, wallet);
+    CacheViewContracts[endPoint + contractAddress] = contract;
+    return contract;
+  }
+
+  return CacheViewContracts[key];
 };
 
 export const getTokenContract = async (endPoint: string, tokenContractAddress: string) => {

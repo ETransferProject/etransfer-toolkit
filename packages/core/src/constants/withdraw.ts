@@ -16,6 +16,10 @@ export const WITHDRAW_TRANSACTION_ERROR_CODE_LIST = [
   '40015',
 ];
 
+export enum WithdrawErrorNameType {
+  SHOW_FAILED_MODAL = 'ShowFailedModal',
+}
+
 export const WITHDRAW_ADDRESS_ERROR_CODE_LIST = ['40100', '40101'];
 
 export const INSUFFICIENT_ALLOWANCE_MESSAGE =
