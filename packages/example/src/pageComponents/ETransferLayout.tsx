@@ -2,13 +2,21 @@
 
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { ETransferConfig, ETransferLayoutProvider, ETransferStyleProvider } from '@etransfer/ui-react';
+import { ETransferConfig, ETransferLayoutProvider, ETransferStyleProvider, WalletTypeEnum } from '@etransfer/ui-react';
 const GetAuth = dynamic(() => import('@/pageComponents/login'), { ssr: false });
 
 export default function ETransferLayout({ children }: { children: React.ReactNode }) {
   ETransferConfig.setConfig({
+    accountInfo: {
+      walletType: WalletTypeEnum.elf,
+      accounts: {
+        AELF: 'ELF_HN43EB9vgNo7W4HAQgES2yETYHScPXU8qgMaaA8KYEnHEyomj_AELF',
+        tDVW: 'ELF_HN43EB9vgNo7W4HAQgES2yETYHScPXU8qgMaaA8KYEnHEyomj_tDVW',
+      },
+      managerAddress: 'HN43EB9vgNo7W4HAQgES2yETYHScPXU8qgMaaA8KYEnHEyomj',
+    },
     authorization: {
-      jwt: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkY1RTBDMjFCQTNDMEJGRjhFOEIzQjE5QTkzQUExRkE4NkMyRkY1NkQiLCJ4NXQiOiI5ZURDRzZQQXZfam9zN0dhazZvZnFHd3Y5VzAiLCJ0eXAiOiJhdCtqd3QifQ.eyJzdWIiOiI3ZWE0Y2JkMy1kMzg4LTQ0MjItODc0OS1jZmFkOWRlOWZlNGMiLCJvaV9wcnN0IjoiRVRyYW5zZmVyU2VydmVyX0FwcCIsImNsaWVudF9pZCI6IkVUcmFuc2ZlclNlcnZlcl9BcHAiLCJvaV90a25faWQiOiJmNjA2ZWU3YS1mYTcwLTQ3OTQtYzZjZC0zYTE0MjM4OWM4NjQiLCJhdWQiOiJFVHJhbnNmZXJTZXJ2ZXIiLCJzY29wZSI6IkVUcmFuc2ZlclNlcnZlciIsImp0aSI6Ijk5NzFlNmFhLTFhNWEtNDJmOC1hMDE0LTM3YmI0MjAzYzNiMiIsImV4cCI6MTcyMjc0NTk4OCwiaXNzIjoiaHR0cDovLzAuMC4wLjA6ODAxMS8iLCJpYXQiOjE3MjI1NzMxODl9.faaEeqbh8bQbSQHNP355_Bwrb93Qq_uNDrfMpBjcbPAapMbAk8jzrMENpCmbJCuixnxzu6zCf-Rv0rAm5HEIPyEn4HiUc5tQa3ks4PkmSkM5R9Zlxy4bPLE-nCiNn1aDTQtJVvW8AKxw9QJhS3nZOOak6si79FIVKDv6W93qIFqs1fe1x43zoYZJS0z6n93u7HofCtQJFAmIMgy3dXB8KCEVqJaW0vviUrQ3Q2v8HPZyhv09oehskpCL8sFLhDXxEWjCUSqMbxPvuh2p-aDQvMS1oY5n5aaFM0l6_E5zmbgWHLNkJHUeYFuszsDPoNFsjDXg_FFt-H9ANI4z-BhXVg',
+      jwt: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjYxN0Y0N0E4NzgwODlCNEYxOTRDRUU0NjNBNTM1MDM5OEFCMEQzMUQiLCJ4NXQiOiJZWDlIcUhnSW0wOFpUTzVHT2xOUU9ZcXcweDAiLCJ0eXAiOiJhdCtqd3QifQ.eyJzdWIiOiJlYTczM2E2Yi03ZWI4LTQ1ZDItYmM2NC1mMjEzZjk1MDBlYmQiLCJvaV9wcnN0IjoiRVRyYW5zZmVyU2VydmVyX0FwcCIsImNsaWVudF9pZCI6IkVUcmFuc2ZlclNlcnZlcl9BcHAiLCJvaV90a25faWQiOiI1ZGUwMGMyNi1iNzk2LTYxNTUtZTcxNS0zYTE0NDNlNzAzOWIiLCJhdWQiOiJFVHJhbnNmZXJTZXJ2ZXIiLCJzY29wZSI6IkVUcmFuc2ZlclNlcnZlciIsImp0aSI6IjE1NzhiMzdiLWM1ZjUtNDViNy1iMDljLTY3MGRiYWUyYjVhMCIsImV4cCI6MTcyMzI4ODk2OSwiaXNzIjoiaHR0cDovLzAuMC4wLjA6ODAxMS8iLCJpYXQiOjE3MjMxMTYxNzB9.OtEHQMSSW3XTmxMDbqLA2ACt4uOnC0AIp-qzSf1a2cFLRdUc3f9vaDxUrKXeXdJVL4Vr6ooHL3JJJFeuVkXzBwcWQatCn1jND-K_h6JQE9Vmdm1oO4qWBD8bn6OlPG3THBDJHhHaT-TMyQ7A_KUg4CWtoahj5M9INWwuel5wb2F0p-ydFoM5Rz_QGtL9blNYjgwgD0APGLoRVetD3ZljSObpGwIM605NYv8XYxUjdyxKW-zdBmTtgbStaWO4hAz7CFz4c_LDJK3jZ4KcQ809jjRzU1NqFmAbDFrGXG5ALBONUg_Srn8e6UCnYrLauZOBgWBeEXhR7jJRRKGA5BxpUA',
     },
     networkType: 'TESTNET',
   });
