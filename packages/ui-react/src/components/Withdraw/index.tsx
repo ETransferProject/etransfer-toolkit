@@ -480,6 +480,7 @@ export default function Withdraw({
 
   const handleTokenChange = useCallback(
     async (item: TTokenItem) => {
+      dispatch(etransferWithdrawAction.setTokenSymbol.actions(item.symbol));
       // when network failed, transactionUnit should show as symbol
       setWithdrawInfo({
         ...withdrawInfo,
