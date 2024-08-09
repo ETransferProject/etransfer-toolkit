@@ -1,9 +1,9 @@
 import { Form } from 'antd';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import clsx from 'clsx';
 import './index.less';
 import { WithdrawFormKeys, WithdrawFormProps } from '../types';
-import { sleep } from '@etransfer/utils';
+import { MEMO_REG, sleep } from '@etransfer/utils';
 import { devices } from '@portkey/utils';
 import {
   formatSymbolDisplay,
@@ -15,7 +15,7 @@ import {
 import WithdrawFooter from '../WithdrawFooter';
 import WithdrawSelectToken from '../../SelectToken/WithdrawSelectToken';
 import { useETransferWithdraw } from '../../../context/ETransferWithdrawProvider';
-import { CONTRACT_ADDRESS, INITIAL_WITHDRAW_STATE } from '../../../constants';
+import { BlockchainNetworkType, CONTRACT_ADDRESS, INITIAL_WITHDRAW_STATE } from '../../../constants';
 import FormTextarea from '../../Form/FormTextarea';
 import WithdrawSelectNetwork from '../../SelectNetwork/WithdrawSelectNetwork';
 import { ComponentStyle } from '../../../types';
@@ -24,6 +24,7 @@ import { ContractAddressForMobile, ContractAddressForWeb } from '../ContractAddr
 import RemainingLimit from '../RemainingLimit';
 import FormAmountInput from '../../Form/FormAmountInput';
 import PartialLoading from '../../PartialLoading';
+import CommentFormItemLabel from '../CommentFormItemLabel';
 
 export default function WithdrawForm({
   className,
@@ -44,7 +45,8 @@ export default function WithdrawForm({
   onTokenChange,
   onAddressChange,
   onAddressBlur,
-  onNetworkChanged,
+  onNetworkChange,
+  onCommentChange,
   onClickMax,
   onAmountChange,
   onAmountBlur,
@@ -72,6 +74,10 @@ export default function WithdrawForm({
       </div>
     );
   }, [balance, isBalanceLoading, tokenSymbol]);
+
+  const getCommentInput = useCallback(() => {
+    return form.getFieldValue(WithdrawFormKeys.COMMENT)?.trim();
+  }, [form]);
 
   return (
     <Form className={clsx('etransfer-ui-withdraw-form', className)} layout="vertical" requiredMark={false} form={form}>
@@ -123,7 +129,7 @@ export default function WithdrawForm({
             selected={networkItem}
             isDisabled={isNetworkDisable}
             isShowLoading={isShowNetworkLoading}
-            selectCallback={onNetworkChanged}
+            selectCallback={onNetworkChange}
           />
         </Form.Item>
         {!isMobileStyle && !!networkItem?.contractAddress && (
@@ -134,6 +140,41 @@ export default function WithdrawForm({
           />
         )}
       </div>
+
+      {networkItem?.network === BlockchainNetworkType.TON && (
+        <div className={'etransfer-ui-withdraw-form-item-wrapper'}>
+          <Form.Item
+            className={'etransfer-ui-withdraw-form-item'}
+            label={<CommentFormItemLabel componentStyle={componentStyle} />}
+            name={WithdrawFormKeys.COMMENT}
+            validateStatus={formValidateData[WithdrawFormKeys.COMMENT].validateStatus}
+            help={formValidateData[WithdrawFormKeys.COMMENT].errorMessage}>
+            <FormAmountInput
+              placeholder="Enter comment"
+              autoComplete="off"
+              onChange={(e) => onCommentChange?.(e.target.value)}
+              onInput={(event: any) => {
+                const value = event.target?.value?.trim();
+                const oldValue = form.getFieldValue(WithdrawFormKeys.COMMENT);
+
+                // CHECK1: not empty
+                if (!value) return (event.target.value = '');
+
+                // CHECK2: memo reg
+                const CheckMemoReg = new RegExp(MEMO_REG);
+                if (!CheckMemoReg.exec(value)) {
+                  event.target.value = oldValue;
+                  return;
+                } else {
+                  event.target.value = value;
+                  return;
+                }
+              }}
+            />
+          </Form.Item>
+        </div>
+      )}
+
       <div
         className={clsx('etransfer-ui-withdraw-form-item-wrapper', 'etransfer-ui-withdraw-form-amount-item-wrapper')}>
         <Form.Item
@@ -178,7 +219,7 @@ export default function WithdrawForm({
               // CHECK3: input number and decimal count
               const lastNumber = value.charAt(value.length - 1);
               const valueNotComma = parseWithStringCommas(value);
-              const stringReg = `^[0-9{1,9}((\\.\\d)|(\\.\\d{0,${currentTokenDecimal}}))?$`;
+              const stringReg = `^[0-9]{1,9}((\\.\\d)|(\\.\\d{0,${currentTokenDecimal}}))?$`;
               const CheckNumberReg = new RegExp(stringReg);
 
               if (!CheckNumberReg.exec(valueNotComma)) {
@@ -231,6 +272,7 @@ export default function WithdrawForm({
         currentNetwork={networkItem}
         receiveAmount={receiveAmount || ''}
         address={address || ''}
+        memo={getCommentInput()}
         amount={amount || ''}
         withdrawInfo={withdrawInfo}
         clickFailedOk={onClickFailedOk}

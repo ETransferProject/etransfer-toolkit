@@ -20,6 +20,7 @@ export type TApproveAllowanceParams = TTokenContractCallSendMethod & {
   symbol: string;
   amount: BigNumber | number | string;
   spender: string;
+  memo?: string;
 };
 
 export type TCheckTokenAllowanceAndApproveParams = TTokenContractCallSendMethod & {
@@ -29,6 +30,7 @@ export type TCheckTokenAllowanceAndApproveParams = TTokenContractCallSendMethod 
   amount: string;
   owner: string;
   spender: string;
+  memo?: string;
 };
 
 export type TContractGetBalance = {

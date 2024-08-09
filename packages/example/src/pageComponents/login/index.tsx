@@ -80,9 +80,9 @@ export default function GetAuth() {
       <Button className="mr-2" onClick={fetchAuthToken}>
         Get ETransfer Token
       </Button>
-      <Button className="mr-2" onClick={fetchNewAuthToken}>
+      {/* <Button className="mr-2" onClick={fetchNewAuthToken}>
         Get New ETransfer Token
-      </Button>
+      </Button> */}
       <Button className="mr-2" onClick={onGetUserInfo}>
         Get UserInfo
       </Button>

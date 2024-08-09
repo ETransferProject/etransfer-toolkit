@@ -88,6 +88,7 @@ export default function WithdrawSelectNetwork({
         />
       ) : (
         <NetworkSelectDropdown
+          className="etransfer-ui-withdraw-network-select-dropdown"
           open={isShowNetworkSelectModal}
           type={BusinessType.Withdraw}
           networkList={networkList}

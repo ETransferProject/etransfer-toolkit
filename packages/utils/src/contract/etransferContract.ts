@@ -15,6 +15,7 @@ export interface CreateTransferTokenTransactionParams {
   fromManagerAddress: string;
   walletType?: TWalletType;
   caHash?: string;
+  memo?: string;
   getSignature: TGetSignatureFunc;
 }
 
@@ -28,6 +29,7 @@ export const createTransferTokenTransaction = async ({
   endPoint,
   fromManagerAddress,
   walletType,
+  memo,
   getSignature,
 }: CreateTransferTokenTransactionParams) => {
   let transactionParams: any;
@@ -36,7 +38,7 @@ export const createTransferTokenTransaction = async ({
       contractAddress: eTransferContractAddress,
       endPoint,
       chainId,
-      args: { symbol, amount },
+      args: { symbol, amount, memo },
     });
   } else {
     if (!caHash) throw new Error('User caHash is missing');
@@ -45,7 +47,7 @@ export const createTransferTokenTransaction = async ({
       contractAddress: eTransferContractAddress,
       caHash,
       methodName: CONTRACT_METHOD_NAME.TransferToken,
-      args: { symbol, amount },
+      args: { symbol, amount, memo },
       chainId,
       endPoint,
     });

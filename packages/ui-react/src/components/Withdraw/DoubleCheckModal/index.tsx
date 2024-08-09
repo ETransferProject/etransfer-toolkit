@@ -12,6 +12,7 @@ export interface DoubleCheckModalProps {
   withdrawInfo: {
     receiveAmount: string;
     address?: string;
+    memo?: string;
     network?: Partial<TNetworkItem>;
     amount: string;
     transactionFee: TFeeItem;
@@ -72,6 +73,12 @@ export default function DoubleCheckModal({
               {withdrawInfo.address || DEFAULT_NULL_VALUE}
             </div>
           </div>
+          {withdrawInfo.memo && (
+            <div className={'etransfer-ui-withdraw-double-check-modal-detail-row'}>
+              <div className={'etransfer-ui-withdraw-double-check-modal-label'}>Comment</div>
+              <div className={'etransfer-ui-withdraw-double-check-modal-value'}>{withdrawInfo.memo}</div>
+            </div>
+          )}
           <div
             className={clsx(
               'etransfer-ui-withdraw-double-check-modal-detail-row',

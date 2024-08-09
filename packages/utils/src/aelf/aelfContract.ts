@@ -68,6 +68,7 @@ export const approveAllowance = async ({
   symbol,
   amount,
   spender,
+  memo,
 }: TApproveAllowanceParams) => {
   const approveResult = await tokenContractCallSendMethod({
     contractAddress: tokenContractAddress,
@@ -76,6 +77,7 @@ export const approveAllowance = async ({
       spender,
       symbol,
       amount: amount.toString(),
+      memo,
     },
   });
   if (!approveResult?.transactionId) throw new Error('Missing transactionId');
@@ -93,6 +95,7 @@ export const checkTokenAllowanceAndApprove = async ({
   amount,
   owner,
   spender,
+  memo,
 }: TCheckTokenAllowanceAndApproveParams) => {
   const tokenContractOrigin = await getTokenContract(endPoint, tokenContractAddress);
   const [allowance, tokenInfo] = await Promise.all([
@@ -112,6 +115,7 @@ export const checkTokenAllowanceAndApprove = async ({
       symbol,
       amount: bigA.toFixed(0),
       spender,
+      memo,
     });
 
     const allowanceNew = await getAllowance(tokenContractOrigin, symbol, owner, spender);

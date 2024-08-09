@@ -29,7 +29,8 @@ export interface WithdrawFormProps {
   onTokenChange: (item: TTokenItem) => Promise<void>;
   onAddressChange?: (value: string | null) => void;
   onAddressBlur: () => Promise<void>;
-  onNetworkChanged: (item: TNetworkItem) => Promise<void>;
+  onNetworkChange: (item: TNetworkItem) => Promise<void>;
+  onCommentChange?: (value: string | null) => void;
   onClickMax: () => void;
   onAmountChange: React.ChangeEventHandler<HTMLInputElement>;
   onAmountBlur: React.ChangeEventHandler<HTMLInputElement>;
@@ -52,6 +53,7 @@ export enum WithdrawFormKeys {
   ADDRESS = 'address',
   NETWORK = 'network',
   AMOUNT = 'amount',
+  COMMENT = 'comment',
 }
 
 export type TWithdrawFormValues = {

@@ -1,4 +1,3 @@
-import { Tooltip } from 'antd';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import './index.less';
@@ -7,6 +6,7 @@ import CommonSvg from '../../CommonSvg';
 import { DEFAULT_NULL_VALUE, HOUR_LIMIT_24, REMAINING_WITHDRAWAL_QUOTA_TOOLTIP } from '../../../constants';
 import SimpleTipAutoScreen from '../../Modal/SimpleTipAutoScreen';
 import { ComponentStyle } from '../../../types';
+import CommonTooltip from '../../CommonTooltip';
 
 export interface RemainingLimitProps {
   limitCurrency: string;
@@ -28,12 +28,12 @@ export default function RemainingLimit({
       <span className={'etransfer-ui-withdraw-remaining-limit-label'}>
         {isMobileStyle && `• ${HOUR_LIMIT_24}:`}
         {!isMobileStyle && (
-          <Tooltip
+          <CommonTooltip
             className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-withdraw-question-label')}
             placement="top"
             title={REMAINING_WITHDRAWAL_QUOTA_TOOLTIP}>
             {HOUR_LIMIT_24} <CommonSvg type="questionMark" />
-          </Tooltip>
+          </CommonTooltip>
         )}
       </span>
     );

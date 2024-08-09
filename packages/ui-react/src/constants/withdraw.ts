@@ -12,6 +12,11 @@ export const ETH_DELAY_WITHDRAWAL_TIP = `Due to Ethereum's high gas price, it's 
 
 export const HOUR_LIMIT_24 = '24-Hour Limit';
 
+export const WITHDRAWAL_COMMENT_TIP =
+  'Check if the receiving platform requires you to include a tag/memo. If required, ensure the tag/memo is correct to avoid losing your assets.';
+
+export const WITHDRAWAL_COMMENT_CHECK_TIP = 'Check that the Comment is correct, otherwise your funds will be lost.';
+
 export const INITIAL_WITHDRAW_STATE = {
   currentSymbol: TokenType.USDT,
   tokenList: [TOKEN_INFO_USDT],

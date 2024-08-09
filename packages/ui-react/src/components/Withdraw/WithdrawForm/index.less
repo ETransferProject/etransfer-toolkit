@@ -28,13 +28,6 @@
   .etransfer-ui-withdraw-form-balance-wrapper {
     gap: 8px;
     margin-top: 12px;
-    @media @mediaMobileAndPad {
-      .etransfer-ui-withdraw-info-label,
-      .etransfer-ui-withdraw-info-value {
-        font-size: 12px;
-        line-height: 16px;
-      }
-    }
 
     .etransfer-ui-withdraw-form-info-label,
     .etransfer-ui-withdraw-form-info-value {
@@ -49,6 +42,14 @@
     .etransfer-ui-withdraw-form-info-value {
       color: var(--etransfer-ui-primary-text);
       .font-medium();
+    }
+
+    @media @mediaMobileAndPad {
+      .etransfer-ui-withdraw-form-info-label,
+      .etransfer-ui-withdraw-form-info-value {
+        font-size: 12px;
+        line-height: 16px;
+      }
     }
   }
 

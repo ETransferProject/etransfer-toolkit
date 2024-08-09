@@ -41,6 +41,7 @@ export interface WithdrawFooterProps {
   amount: string;
   receiveAmount: string;
   address: string;
+  memo?: string;
   withdrawInfo: TWithdrawInfo;
   componentStyle: ComponentStyle;
   clickFailedOk: () => void;
@@ -53,15 +54,13 @@ export default function WithdrawFooter({
   amount,
   receiveAmount,
   address,
+  memo,
   withdrawInfo,
   isSubmitDisabled,
   componentStyle = ComponentStyle.Web,
   clickFailedOk,
   clickSuccessOk,
 }: WithdrawFooterProps) {
-  // const { walletInfo, walletType, isLocking, callViewMethod, callSendMethod, getSignature } = useConnectWallet();
-  // const accounts = useGetAccount();
-
   const [{ tokenList, tokenSymbol, chainItem, networkItem }] = useETransferWithdraw();
 
   // DoubleCheckModal
@@ -115,6 +114,7 @@ export default function WithdrawFooter({
         decimals: currentTokenDecimal,
         amount,
         toAddress: address,
+        memo,
         caContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.CA],
         eTransferContractAddress: currentTokenAddress,
         walletType: walletType === WalletTypeEnum.elf ? TWalletType.NightElf : TWalletType.Portkey,
@@ -161,6 +161,7 @@ export default function WithdrawFooter({
     } catch (error: any) {
       setLoading(false);
       if (error?.code == 4001) {
+        // contract error
         setFailModalReason('The request is rejected. ETransfer needs your permission to proceed.');
       } else if (error.name === WithdrawErrorNameType.SHOW_FAILED_MODAL) {
         setFailModalReason(error.message);
@@ -178,6 +179,7 @@ export default function WithdrawFooter({
     chainItem,
     currentTokenAddress,
     currentTokenDecimal,
+    memo,
     networkItem,
     receiveAmount,
     tokenSymbol,
@@ -195,9 +197,14 @@ export default function WithdrawFooter({
   }, [clickFailedOk]);
 
   return (
-    <div className={clsx('form-footer', 'form-footer-safe-area')}>
-      <div className={clsx('etransfer-ui-flex-1', 'etransfer-ui-flex-column', 'footer-info-wrapper')}>
-        <div className={clsx('etransfer-ui-flex-column', 'receive-amount-wrapper')}>
+    <div className={clsx('etransfer-ui-withdraw-form-footer', 'etransfer-ui-withdraw-form-footer-safe-area')}>
+      <div
+        className={clsx(
+          'etransfer-ui-flex-1',
+          'etransfer-ui-flex-column',
+          'etransfer-ui-withdraw-footer-info-wrapper',
+        )}>
+        <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-withdraw-receive-amount-wrapper')}>
           <div className={'info-label'}>Amount to Be Received</div>
           <div className={clsx('etransfer-ui-flex-row-center', 'info-value', 'info-value-big-font')}>
             {isTransactionFeeLoading && <PartialLoading />}
@@ -214,9 +221,11 @@ export default function WithdrawFooter({
           aelfTransactionUnit={withdrawInfo.aelfTransactionUnit}
         />
       </div>
-      <Form.Item shouldUpdate className={clsx('etransfer-ui-flex-none', 'form-submit-button-wrapper')}>
+      <Form.Item
+        shouldUpdate
+        className={clsx('etransfer-ui-flex-none', 'etransfer-ui-withdraw-form-submit-button-wrapper')}>
         <CommonButton
-          className={'form-submit-button'}
+          className={'etransfer-ui-withdraw-form-submit-button'}
           // htmlType="submit"
           onClick={onSubmit}
           disabled={isTransactionFeeLoading || !receiveAmount || isSubmitDisabled}>
@@ -230,6 +239,7 @@ export default function WithdrawFooter({
           amount,
           receiveAmount,
           address,
+          memo,
           network: currentNetwork,
           transactionFee: {
             amount: withdrawInfo.transactionFee,
@@ -269,11 +279,11 @@ export default function WithdrawFooter({
               <div
                 className={clsx(
                   'etransfer-ui-flex-center',
-                  'link-wrap',
+                  'etransfer-ui-withdraw-success-modal-link',
                   componentStyle === ComponentStyle.Web && 'linkToExplore',
                 )}>
-                <span className={'link-word'}>View on aelf Explorer</span>
-                <CommonSvg type="exploreLink" className={'link-explore-icon'} />
+                <span className={'etransfer-ui-withdraw-success-modal-link-word'}>View on aelf Explorer</span>
+                <CommonSvg type="exploreLink" className={'etransfer-ui-withdraw-success-modal-link-explore-icon'} />
               </div>
             ),
           }),

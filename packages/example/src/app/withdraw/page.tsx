@@ -36,7 +36,11 @@ export default function DepositPage() {
 
     ETransferConfig.setConfig({
       accountInfo: {
-        tokenContractCallSendMethod: params => callSendMethod(params),
+        tokenContractCallSendMethod: params => {
+          const paramsFormat: any = params;
+          paramsFormat.args['networkType'] = ETransferConfig.getConfig('networkType');
+          return callSendMethod(params);
+        },
         getSignature: signInfo =>
           getSignature({
             signInfo,

@@ -22,12 +22,14 @@ import {
   ETH_DELAY_WITHDRAWAL_TIP,
   INITIAL_WITHDRAW_INFO,
   INITIAL_WITHDRAW_STATE,
+  WITHDRAWAL_COMMENT_CHECK_TIP,
 } from '../../constants';
 import { etransferWithdrawAction } from '../../context/ETransferWithdrawProvider/actions';
 import {
   etransferCore,
   formatSymbolDisplay,
   getBalanceDivDecimalsAdapt,
+  isHaveTotalAccountInfo,
   parseWithCommas,
   setLoading,
 } from '../../utils';
@@ -45,11 +47,21 @@ import { WITHDRAW_ADDRESS_ERROR_CODE_LIST } from '@etransfer/core';
 import { CommonErrorNameType } from '@etransfer/request';
 import singleMessage from '../SingleMessage';
 import BigNumber from 'bignumber.js';
-import { useIsLogin } from '../../hooks/contract';
 import { ETransferConfig } from '../../provider/ETransferConfigProvider';
 import { ETransferAccountConfig } from '../../provider/types';
 import { useEffectOnce } from 'react-use';
 import clsx from 'clsx';
+
+const FORM_VALIDATE_DATA = {
+  [WithdrawFormKeys.TOKEN]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
+  [WithdrawFormKeys.ADDRESS]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
+  [WithdrawFormKeys.NETWORK]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
+  [WithdrawFormKeys.AMOUNT]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
+  [WithdrawFormKeys.COMMENT]: {
+    validateStatus: WithdrawValidateStatus.Warning,
+    errorMessage: WITHDRAWAL_COMMENT_CHECK_TIP,
+  },
+};
 
 export default function Withdraw({
   className,
@@ -58,19 +70,10 @@ export default function Withdraw({
   componentStyle = ComponentStyle.Web,
   isShowErrorTip = true,
 }: WithdrawProps) {
-  const isLogin = useIsLogin();
-  const isLoginRef = useRef(isLogin);
-  isLoginRef.current = isLogin;
-
   const [form] = Form.useForm<TWithdrawFormValues>();
   const [formValidateData, setFormValidateData] = useState<{
     [key in WithdrawFormKeys]: { validateStatus: WithdrawValidateStatus; errorMessage: string };
-  }>({
-    [WithdrawFormKeys.TOKEN]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
-    [WithdrawFormKeys.ADDRESS]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
-    [WithdrawFormKeys.NETWORK]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
-    [WithdrawFormKeys.AMOUNT]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
-  });
+  }>(JSON.parse(JSON.stringify(FORM_VALIDATE_DATA)));
 
   const [{ tokenSymbol, tokenList, networkItem, networkList, chainItem, chainList }, { dispatch }] =
     useETransferWithdraw();
@@ -113,6 +116,10 @@ export default function Withdraw({
 
   const getAddressInput = useCallback(() => {
     return form.getFieldValue(WithdrawFormKeys.ADDRESS)?.trim();
+  }, [form]);
+
+  const getCommentInput = useCallback(() => {
+    return form.getFieldValue(WithdrawFormKeys.COMMENT)?.trim();
   }, [form]);
 
   const judgeIsSubmitDisabled = useCallback(
@@ -275,7 +282,7 @@ export default function Withdraw({
 
   const handleAmountValidate = useCallback(
     (newMinAmount?: string, newTransactionUnit?: string, newMaxBalance?: string) => {
-      if (!isLoginRef.current) return;
+      if (!isHaveTotalAccountInfo()) return;
 
       const amount = form.getFieldValue(WithdrawFormKeys.AMOUNT);
       if (!amount) {
@@ -331,8 +338,8 @@ export default function Withdraw({
 
   const getWithdrawData = useCallback(
     async (optionSymbol?: string, newMaxBalance?: string) => {
-      console.log('getWithdrawData - isLogin', isLoginRef.current);
-      if (!isLoginRef.current) return;
+      console.log('getWithdrawData - isLogin', isHaveTotalAccountInfo());
+      if (!isHaveTotalAccountInfo()) return;
 
       const symbol = optionSymbol || tokenSymbol;
       const address = getAddressInput();
@@ -351,6 +358,11 @@ export default function Withdraw({
         const amount = form.getFieldValue(WithdrawFormKeys.AMOUNT);
         if (amount) {
           params.amount = amount;
+        }
+
+        // params add memo to check memo
+        if (getCommentInput()) {
+          params.memo = getCommentInput();
         }
 
         const res = await etransferCore.services.getWithdrawInfo(params);
@@ -385,7 +397,7 @@ export default function Withdraw({
         }
       }
     },
-    [form, getAddressInput, handleAmountValidate, isShowErrorTip, tokenSymbol],
+    [form, getAddressInput, getCommentInput, handleAmountValidate, isShowErrorTip, tokenSymbol],
   );
 
   const getAccountBalance = useCallback(
@@ -497,6 +509,7 @@ export default function Withdraw({
         form.setFieldValue(WithdrawFormKeys.AMOUNT, '');
         form.setFieldValue(WithdrawFormKeys.ADDRESS, '');
         form.setFieldValue(WithdrawFormKeys.NETWORK, '');
+        form.setFieldValue(WithdrawFormKeys.COMMENT, '');
         handleAmountValidate();
 
         currentNetworkRef.current = undefined;
@@ -745,7 +758,7 @@ export default function Withdraw({
         className={fromClassName}
         formValidateData={formValidateData}
         componentStyle={componentStyle}
-        address={getAddressInput()} // TODO
+        address={getAddressInput()}
         balance={balance}
         amount={amount}
         minAmount={minAmount}
@@ -758,7 +771,7 @@ export default function Withdraw({
         onTokenChange={handleTokenChange}
         onAddressBlur={handleAddressBlur}
         withdrawInfo={withdrawInfo}
-        onNetworkChanged={handleNetworkChanged}
+        onNetworkChange={handleNetworkChanged}
         onClickMax={handleClickMax}
         onAmountChange={handleAmountChange}
         onAmountBlur={handleAmountBlur}

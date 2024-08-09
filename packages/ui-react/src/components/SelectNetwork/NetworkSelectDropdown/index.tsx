@@ -31,7 +31,6 @@ export default function NetworkSelectDropdown({
       <div
         className={clsx(
           'network-select-dropdown',
-          // TODO { ['network-select-dropdown-form-item']: isFormItemStyle },
           open ? 'network-select-dropdown-show' : 'network-select-dropdown-hidden',
           className,
         )}>

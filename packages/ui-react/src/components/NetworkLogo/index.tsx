@@ -43,6 +43,10 @@ const NetworkLogoMap: Record<string, Record<TNetworkLogoSize, any>> = {
     normal: <CommonSvg type="tronMedium" />,
     small: <CommonSvg type="tron" />,
   },
+  [BlockchainNetworkType.TON]: {
+    normal: <CommonSvg type="tonMedium" />,
+    small: <CommonSvg type="ton" />,
+  },
 };
 
 export function NetworkLogoForWeb({

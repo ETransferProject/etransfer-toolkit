@@ -23,6 +23,7 @@ import {
   ZERO,
 } from '@etransfer/utils';
 import {
+  API_VERSION,
   INSUFFICIENT_ALLOWANCE_MESSAGE,
   WITHDRAW_ERROR_MESSAGE,
   WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
@@ -46,6 +47,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   public services: Services;
   public baseUrl?: string;
   public authUrl?: string;
+  public version?: string;
 
   constructor(options: TETransferCoreOptions) {
     super(options.storage);
@@ -53,9 +55,14 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     this.init(options);
   }
 
-  public init({ etransferUrl, etransferAuthUrl, storage }: TETransferCoreOptions) {
+  public init({ etransferUrl, etransferAuthUrl, storage, version }: TETransferCoreOptions) {
     etransferUrl && this.setBaseUrl(etransferUrl);
     etransferAuthUrl && this.setAuthUrl(etransferAuthUrl);
+
+    // version
+    const versionNew = version || API_VERSION;
+    this.setVersion(versionNew);
+
     storage && this.setStorage(storage);
   }
 
@@ -68,6 +75,12 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   public setAuthUrl(url?: string) {
     if (!url) return;
     this.authUrl = url;
+  }
+
+  public setVersion(version?: string) {
+    if (!version) return;
+    this.version = version;
+    this.services.setRequestHeaders('Version', version);
   }
 
   async getAuthToken(params: TGetAuthParams) {
@@ -162,6 +175,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       caContractAddress,
       eTransferContractAddress,
       toAddress,
+      memo,
       walletType,
       caHash,
       symbol,
@@ -183,6 +197,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       decimals,
       amount,
       accountAddress,
+      memo,
       eTransferContractAddress,
     });
     if (!approveRes) throw new Error(INSUFFICIENT_ALLOWANCE_MESSAGE);
@@ -202,6 +217,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
         decimals,
         network,
         toAddress,
+        memo,
         getSignature,
       });
     } else {
@@ -226,6 +242,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       getSignature,
       network,
       toAddress,
+      memo,
     } = params;
     const transaction = await createTransferTokenTransaction({
       caContractAddress,
@@ -237,6 +254,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       chainId,
       endPoint,
       fromManagerAddress: managerAddress,
+      memo,
       getSignature,
     });
     console.log(transaction, '=====transaction');
@@ -249,6 +267,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
         network,
         toAddress,
         amount,
+        memo,
         rawTransaction: transaction,
       });
       if (createOrderResult.orderId) {
@@ -273,6 +292,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     decimals,
     amount,
     accountAddress,
+    memo,
     eTransferContractAddress,
   }: THandleApproveTokenParams): Promise<boolean> {
     const tokenContractOrigin = await getTokenContract(endPoint, tokenContractAddress);
@@ -295,6 +315,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       amount,
       owner: accountAddress,
       spender: eTransferContractAddress,
+      memo,
     });
 
     return checkRes;
@@ -305,6 +326,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     symbol,
     network,
     toAddress,
+    memo,
     amount,
     rawTransaction,
   }: TCreateWithdrawOrderParams) {
@@ -315,6 +337,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
         amount,
         fromChainId: chainId,
         toAddress: isDIDAddressSuffix(toAddress) ? removeDIDAddressSuffix(toAddress) : toAddress,
+        memo,
         rawTransaction: rawTransaction,
       });
       console.log('>>>>>> handleCreateWithdrawOrder createWithdrawOrderRes', createWithdrawOrderRes);

@@ -1,35 +1,7 @@
 @import '../../../assets/theme/breakpoint.less';
 @import '../../../assets/theme/constants.less';
 
-.info-label,
-.info-value {
-  font-size: 14px;
-  line-height: 22px;
-}
-
-.info-label {
-  color: var(--etransfer-ui-secondary-text);
-}
-
-.info-value {
-  color: var(--etransfer-ui-primary-text);
-  .font-medium();
-}
-
-.info-value-big-font {
-  font-size: 24px;
-  line-height: 32px;
-}
-
-.info-unit {
-  max-width: 70px;
-  .etransfer-ui-text-overflow(1);
-  @media @mediaWeb {
-    max-width: 106px;
-  }
-}
-
-.form-footer {
+.etransfer-ui-withdraw-form-footer {
   min-width: var(--etransfer-ui-page-min-width);
   display: flex;
   align-items: flex-start;
@@ -57,24 +29,50 @@
 }
 
 // A separate class name is used here to avoid invalidation of the padding style by incorporating the padding property in the production css.
-.form-footer-safe-area {
+.etransfer-ui-withdraw-form-footer-safe-area {
   @media @mediaMobile {
     padding-bottom: calc(10px + constant(safe-area-inset-bottom));
     padding-bottom: calc(10px + env(safe-area-inset-bottom));
   }
 }
 
-.footer-info-wrapper {
+.etransfer-ui-withdraw-footer-info-wrapper {
   min-width: 0;
   .info-label {
     flex: none;
     margin-right: 8px;
   }
-  .receive-amount-wrapper {
+  .etransfer-ui-withdraw-receive-amount-wrapper {
+    .info-label,
+    .info-value {
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    .info-label {
+      color: var(--etransfer-ui-secondary-text);
+    }
+
     .info-value {
       gap: 8px;
+      color: var(--etransfer-ui-primary-text);
+      .font-medium();
+    }
+
+    .info-value-big-font {
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    .info-unit {
+      max-width: 70px;
+      .etransfer-ui-text-overflow(1);
+      @media @mediaWeb {
+        max-width: 106px;
+      }
     }
   }
+
   @media @mediaMobileAndPad {
     gap: 2px;
     .info-label,
@@ -92,12 +90,12 @@
   }
 }
 
-.form-submit-button-wrapper {
+.etransfer-ui-withdraw-form-submit-button-wrapper {
   margin-bottom: 0;
   margin-top: 10px;
 }
 
-.form-submit-button {
+.etransfer-ui-withdraw-form-submit-button {
   @media @mediaMobile {
     width: 108px;
     padding: 0 !important;
@@ -110,19 +108,19 @@
   }
 }
 
-.link-wrap {
+.etransfer-ui-withdraw-success-modal-link {
   margin-top: 16px;
 }
 
-.link-word {
+.etransfer-ui-withdraw-success-modal-link-word {
   vertical-align: middle;
   margin-right: 8px;
   color: var(--etransfer-ui-normal);
   font-size: 14px;
-  font-weight: var( --etransfer-ui-font-weight-medium);
+  font-weight: var(--etransfer-ui-font-weight-medium);
 }
 
-.linkToExplore {
+.etransfer-ui-withdraw-success-modal-linkToExplore {
   margin-top: 16px;
   text-align: center;
 }

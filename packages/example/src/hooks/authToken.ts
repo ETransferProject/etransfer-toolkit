@@ -64,10 +64,11 @@ export function useQueryAuthToken() {
         reCaptchaToken = await getETransferReCaptcha(walletInfo.address);
       }
 
-      const { caHash, originChainId } = await getCaHashAndOriginChainIdByWallet(walletInfo as WalletInfo, walletType);
-      localStorage.setItem(ETRANSFER_USER_CA_HASH, caHash);
-      localStorage.setItem(ETRANSFER_USER_ORIGIN_CHAIN_ID, originChainId);
       try {
+        const { caHash, originChainId } = await getCaHashAndOriginChainIdByWallet(walletInfo as WalletInfo, walletType);
+        localStorage.setItem(ETRANSFER_USER_CA_HASH, caHash);
+        localStorage.setItem(ETRANSFER_USER_ORIGIN_CHAIN_ID, originChainId);
+
         const signatureResult = await handleGetSignature();
         if (!signatureResult) throw Error('Signature error');
         const pubkey = recoverPubKeyBySignature(signatureResult.plainText, signatureResult.signature) + '';

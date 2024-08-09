@@ -100,6 +100,7 @@ export default function WithdrawSelectToken({
         />
       ) : (
         <TokenSelectDropdown
+          className="etransfer-ui-withdraw-token-select-dropdown"
           itemClassName="etransfer-ui-withdraw-token-modal-token-item"
           open={isShowTokenSelectModal}
           tokenList={tokenList}
