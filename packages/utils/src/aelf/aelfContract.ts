@@ -201,7 +201,7 @@ export const handleTransaction = async ({
   const ser = AElf.pbUtils.Transaction.encode(rawTx).finish();
 
   const signatureRes = await getSignature(ser);
-  const signatureStr = signatureRes.signature || '';
+  const signatureStr = signatureRes?.signature || '';
   if (!signatureStr) return;
 
   let tx = {

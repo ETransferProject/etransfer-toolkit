@@ -54,7 +54,7 @@
     "@portkey/contracts": "^2.6.6",
     "@portkey/types": "^2.6.6",
     "@portkey/utils": "^2.6.6",
-    "aelf-sdk": "^3.4.7",
+    "aelf-sdk": "^3.4.8",
     "bignumber.js": "^9.1.0",
     "query-string": "^7.1.1"
   }
