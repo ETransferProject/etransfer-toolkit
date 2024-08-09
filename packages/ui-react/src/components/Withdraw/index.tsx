@@ -335,13 +335,14 @@ export default function Withdraw({
       if (!isLoginRef.current) return;
 
       const symbol = optionSymbol || tokenSymbol;
+      const address = getAddressInput();
       try {
         setIsTransactionFeeLoading(true);
         const params: TGetWithdrawInfoRequest = {
           chainId: currentChainItemRef.current.key,
           symbol,
           version: PortkeyVersion.v2,
-          address: getAddressInput(),
+          address: isDIDAddressSuffix(address) ? removeELFAddressSuffix(address) : address,
         };
         if (currentNetworkRef.current?.network) {
           params.network = currentNetworkRef.current?.network;

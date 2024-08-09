@@ -5,7 +5,13 @@ import './index.less';
 import { WithdrawFormKeys, WithdrawFormProps } from '../types';
 import { sleep } from '@etransfer/utils';
 import { devices } from '@portkey/utils';
-import { formatSymbolDisplay, formatWithCommas, parseWithStringCommas } from '../../../utils';
+import {
+  formatSymbolDisplay,
+  formatWithCommas,
+  getAccountAddress,
+  getNetworkType,
+  parseWithStringCommas,
+} from '../../../utils';
 import WithdrawFooter from '../WithdrawFooter';
 import WithdrawSelectToken from '../../SelectToken/WithdrawSelectToken';
 import { useETransferWithdraw } from '../../../context/ETransferWithdrawProvider';
@@ -82,6 +88,8 @@ export default function WithdrawForm({
             selectCallback={onTokenChange}
             tokenList={tokenList || []}
             chainItem={chainItem}
+            networkType={getNetworkType()}
+            accountAddress={getAccountAddress(chainItem.key)}
           />
         </Form.Item>
       </div>

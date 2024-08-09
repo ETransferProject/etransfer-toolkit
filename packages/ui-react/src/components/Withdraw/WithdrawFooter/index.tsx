@@ -104,9 +104,11 @@ export default function WithdrawFooter({
       const tokenContractCallSendMethod = getAccountInfo().tokenContractCallSendMethod;
       const getSignature = getAccountInfo().getSignature;
 
+      if (!tokenContractCallSendMethod) throw new Error('Please config tokenContractCallSendMethod');
+      if (!getSignature) throw new Error('Please config getSignature');
+
       const res = await etransferCore.sendWithdrawOrder({
-        tokenContractCallSendMethod: (params, sendOptions) =>
-          tokenContractCallSendMethod(chainItem.key, params, sendOptions),
+        tokenContractCallSendMethod: (params) => tokenContractCallSendMethod?.({ chainId: chainItem.key, ...params }),
         tokenContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
         endPoint: aelfReact.endPoint,
         symbol: tokenSymbol,
@@ -135,7 +137,7 @@ export default function WithdrawFooter({
           }
 
           // signature
-          return await getSignature({ signInfo });
+          return await getSignature(signInfo);
         },
       });
       console.log('>>>>>> withdraw/order response', res);
@@ -264,7 +266,12 @@ export default function WithdrawFooter({
           footerSlot: CommonLink({
             href: getAelfExploreLink(withdrawInfoSuccess.transactionId, AelfExploreType.transaction, chainItem.key),
             children: (
-              <div className={clsx('link-wrap', componentStyle === ComponentStyle.Web && 'linkToExplore')}>
+              <div
+                className={clsx(
+                  'etransfer-ui-flex-center',
+                  'link-wrap',
+                  componentStyle === ComponentStyle.Web && 'linkToExplore',
+                )}>
                 <span className={'link-word'}>View on aelf Explorer</span>
                 <CommonSvg type="exploreLink" className={'link-explore-icon'} />
               </div>

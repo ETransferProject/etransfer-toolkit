@@ -5,8 +5,11 @@ import { handleWebLoginErrorMessage } from '@etransfer/utils';
 import { useMemo, useCallback } from 'react';
 
 export function useIsLogin() {
-  const { isConnected, walletInfo } = useConnectWallet();
-  return useMemo(() => isConnected && !!walletInfo, [isConnected, walletInfo]);
+  const { isConnected, walletInfo, isLocking } = useConnectWallet();
+  return useMemo(() => {
+    console.warn('>>>>>>', 'isConnected:', isConnected, 'isLocking:', isLocking, 'walletInfo:', walletInfo);
+    return isConnected && !!walletInfo;
+  }, [isConnected, isLocking, walletInfo]);
 }
 
 export function useLogin() {

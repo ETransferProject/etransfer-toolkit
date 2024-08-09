@@ -3,8 +3,6 @@ import { ConfigKey, ETransferConfigProps, ETransferConfigProviderProps, WalletTy
 // import { CHAIN_INFO as tDVV_CHAIN_INFO } from '../constants/platform/tDVV';
 import { BaseAsyncStorage } from '../utils/BaseAsyncStorage';
 import { etransferCore } from '../utils/core';
-import { CallContractParams, SignatureData } from '@etransfer/utils';
-import { ChainId, SendOptions } from '@portkey/types';
 // import { CHAIN_ID, DEFAULT_CHAIN_ID, TokenType } from '../constants';
 
 const defaultConfig: ETransferConfigProps = {
@@ -35,26 +33,6 @@ const defaultConfig: ETransferConfigProps = {
   accountInfo: {
     walletType: WalletTypeEnum.unknown,
     accounts: {},
-    tokenContractCallSendMethod: function <T, R>(
-      chainId: ChainId,
-      params: CallContractParams<T>,
-      sendOptions?: SendOptions,
-    ): Promise<R & { transactionId: string }> | undefined {
-      console.log(
-        'tokenContractCallSendMethod params - ',
-        'chainId',
-        chainId,
-        'params',
-        params,
-        'sendOptions',
-        sendOptions,
-      );
-      return undefined;
-    },
-    getSignature: function (params: any): Promise<SignatureData> {
-      console.log('getSignature params', params);
-      return Promise.resolve({ signature: '', error: 0, errorMessage: '', from: '' });
-    },
   },
 };
 

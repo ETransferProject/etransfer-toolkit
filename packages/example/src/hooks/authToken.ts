@@ -11,7 +11,7 @@ import {
   ETRANSFER_USER_MANAGER_ADDRESS,
 } from '@/constants/storage';
 import { getCaHashAndOriginChainIdByWallet } from '@/utils/wallet';
-import { getETransferReCaptcha, WalletTypeEnum } from '@etransfer/ui-react';
+import { ETransferConfig, getETransferReCaptcha, WalletTypeEnum } from '@etransfer/ui-react';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 import { useGetAccount, useIsLogin } from './wallet';
 import { WalletInfo } from '@/types/wallet';
@@ -104,7 +104,7 @@ export function useQueryAuthToken() {
     try {
       const { pubkey, signature, plainText, caHash, managerAddress, originChainId, recaptchaToken } =
         await getUserInfo();
-      await eTransferCore.getAuthToken({
+      const jwt = await eTransferCore.getAuthToken({
         pubkey,
         signature,
         plainText,
@@ -114,6 +114,12 @@ export function useQueryAuthToken() {
         version: PortkeyVersion.v2,
         source: walletType === WalletTypeEnum.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey,
         recaptchaToken: walletType === WalletTypeEnum.elf ? recaptchaToken : undefined,
+      });
+
+      ETransferConfig.setConfig({
+        authorization: {
+          jwt,
+        },
       });
 
       loginSuccessActive();
