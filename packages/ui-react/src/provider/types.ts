@@ -1,6 +1,7 @@
 import { TETransferCoreOptions } from '@etransfer/core';
-import { ChainId } from '@portkey/types';
+import { ChainId, SendOptions } from '@portkey/types';
 import { NetworkType } from '../types';
+import { CallContractParams, TGetSignatureFunc } from '@etransfer/utils';
 
 export interface ETransferConfigProviderProps {
   config: ETransferConfigProps;
@@ -41,6 +42,18 @@ export interface ETransferAccountConfig {
   accounts: TAelfAccounts; // account address
   caHash?: string; // for portkey wallet
   managerAddress?: string; // for portkey wallet
+  tokenContractCallSendMethod<T, R>(
+    chainId: ChainId,
+    params: CallContractParams<T>,
+    sendOptions?: SendOptions,
+  ):
+    | Promise<
+        R & {
+          transactionId: string;
+        }
+      >
+    | undefined;
+  getSignature: TGetSignatureFunc;
 }
 
 export type TAelfAccounts = {

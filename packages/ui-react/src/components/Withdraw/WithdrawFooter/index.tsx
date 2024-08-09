@@ -1,3 +1,4 @@
+import AElf from 'aelf-sdk';
 import { useState, useCallback, useMemo } from 'react';
 import { Form } from 'antd';
 import clsx from 'clsx';
@@ -7,7 +8,6 @@ import PartialLoading from '../../PartialLoading';
 import {
   AelfExploreType,
   DEFAULT_NULL_VALUE,
-  DEFAULT_WITHDRAW_ERROR_MESSAGE,
   INITIAL_WITHDRAW_STATE,
   INITIAL_WITHDRAW_SUCCESS_CHECK,
 } from '../../../constants';
@@ -15,6 +15,7 @@ import CommonButton from '../../CommonButton';
 import CommonLink from '../../CommonLink';
 import {
   etransferCore,
+  formatSymbolDisplay,
   getAccountAddress,
   getAccountInfo,
   getAelfExploreLink,
@@ -29,7 +30,7 @@ import { ComponentStyle, CONTRACT_TYPE, TWithdrawInfoSuccess } from '../../../ty
 import CommonSvg from '../../CommonSvg';
 import FeeInfo from '../FeeInfo';
 import { useETransferWithdraw } from '../../../context/ETransferWithdrawProvider';
-import { WithdrawErrorNameType } from '@etransfer/core';
+import { WITHDRAW_ERROR_MESSAGE, WithdrawErrorNameType } from '@etransfer/core';
 import { removeDIDAddressSuffix } from '@etransfer/utils';
 import { WalletTypeEnum } from '../../../provider/types';
 
@@ -100,25 +101,61 @@ export default function WithdrawFooter({
         throw new Error('User information is missing');
       if (!accountAddress) throw new Error('User address is missing');
 
-      // const res = await etransferCore.sendWithdrawOrder({
-      //   tokenContractCallSendMethod: (params, sendOptions) => callSendMethod(chainItem.key, params, sendOptions),
-      //   tokenContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
-      //   endPoint: aelfReact.endPoint,
-      //   symbol: tokenSymbol,
-      //   decimals: currentTokenDecimal,
-      //   amount,
-      //   toAddress: address,
-      //   caContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.CA],
-      //   eTransferContractAddress: currentTokenAddress,
-      //   walletType: walletType === WalletTypeEnum.elf ? TWalletType.NightElf : TWalletType.Portkey,
-      //   caHash: caHash || undefined,
-      //   network: networkItem?.network || '',
-      //   chainId: chainItem.key,
-      //   managerAddress: managerAddress || removeDIDAddressSuffix(accountAddress),
-      //   accountAddress: removeDIDAddressSuffix(accountAddress),
-      //   getSignature: getSignature,
-      // });
-      // console.log('>>>>>> res', res);
+      const tokenContractCallSendMethod = getAccountInfo().tokenContractCallSendMethod;
+      const getSignature = getAccountInfo().getSignature;
+
+      const res = await etransferCore.sendWithdrawOrder({
+        tokenContractCallSendMethod: (params, sendOptions) =>
+          tokenContractCallSendMethod(chainItem.key, params, sendOptions),
+        tokenContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
+        endPoint: aelfReact.endPoint,
+        symbol: tokenSymbol,
+        decimals: currentTokenDecimal,
+        amount,
+        toAddress: address,
+        caContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.CA],
+        eTransferContractAddress: currentTokenAddress,
+        walletType: walletType === WalletTypeEnum.elf ? TWalletType.NightElf : TWalletType.Portkey,
+        caHash: caHash || undefined,
+        network: networkItem?.network || '',
+        chainId: chainItem.key,
+        managerAddress: managerAddress || removeDIDAddressSuffix(accountAddress),
+        accountAddress: removeDIDAddressSuffix(accountAddress),
+        getSignature: async (ser: any) => {
+          if (!walletType || walletType === WalletTypeEnum.unknown) {
+            throw new Error('Please config walletType');
+          }
+          let signInfo: string;
+          if (walletType !== WalletTypeEnum.aa) {
+            // nightElf or discover
+            signInfo = AElf.utils.sha256(ser);
+          } else {
+            // portkey sdk
+            signInfo = Buffer.from(ser).toString('hex');
+          }
+
+          // signature
+          return await getSignature({ signInfo });
+        },
+      });
+      console.log('>>>>>> withdraw/order response', res);
+      const currentNetwork = networkItem as TNetworkItem;
+      if (res.orderId) {
+        setWithdrawInfoSuccess({
+          receiveAmount: receiveAmount,
+          network: currentNetwork,
+          amount,
+          symbol: formatSymbolDisplay(tokenSymbol),
+          chainItem,
+          arriveTime: currentNetwork.multiConfirmTime,
+          receiveAmountUsd: withdrawInfo.receiveAmountUsd,
+          transactionId: res.transactionId,
+        });
+        setIsSuccessModalOpen(true);
+      } else {
+        setFailModalReason(WITHDRAW_ERROR_MESSAGE);
+        setIsFailModalOpen(true);
+      }
     } catch (error: any) {
       setLoading(false);
       if (error?.code == 4001) {
@@ -126,14 +163,24 @@ export default function WithdrawFooter({
       } else if (error.name === WithdrawErrorNameType.SHOW_FAILED_MODAL) {
         setFailModalReason(error.message);
       } else {
-        setFailModalReason(DEFAULT_WITHDRAW_ERROR_MESSAGE);
+        setFailModalReason(WITHDRAW_ERROR_MESSAGE);
       }
       console.log('sendTransferTokenTransaction error:', error);
       setIsFailModalOpen(true);
     } finally {
       setIsDoubleCheckModalOpen(false);
     }
-  }, []);
+  }, [
+    address,
+    amount,
+    chainItem,
+    currentTokenAddress,
+    currentTokenDecimal,
+    networkItem,
+    receiveAmount,
+    tokenSymbol,
+    withdrawInfo.receiveAmountUsd,
+  ]);
 
   const onClickSuccess = useCallback(() => {
     setIsSuccessModalOpen(false);
