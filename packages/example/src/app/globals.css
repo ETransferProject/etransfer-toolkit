@@ -24,7 +24,7 @@ a:hover {
   text-decoration: none;
 }
 
-body{
+body {
   width: auto;
   height: 100vh;
   padding: 12px;
@@ -32,7 +32,7 @@ body{
   color: '#1a1a1a';
 }
 
-.page-title{
+.page-title {
   width: 100%;
   margin: 0 auto;
   font-size: 28px;
@@ -41,8 +41,12 @@ body{
   margin-bottom: 12px;
 }
 
-.form-label{
+.form-label {
   display: inline-block;
   width: 100px;
   margin-right: 4px;
+}
+
+.aelf-web-extra-wallets-wrapper-social > .social-design-wallets {
+  align-items: center;
 }

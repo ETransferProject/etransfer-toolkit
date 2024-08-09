@@ -7,12 +7,12 @@ import { Button, Divider, Input, Select } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
 import { BusinessType, PortkeyVersion, TNetworkItem, TTokenItem, TWalletType, TWithdrawInfo } from '@etransfer/types';
-import { removeDIDAddressSuffix } from '@etransfer/utils';
-import { useWalletContext } from '@/provider/walletProvider';
+import { removeDIDAddressSuffix, removeELFAddressSuffix } from '@etransfer/utils';
 import { ETRANSFER_USER_ACCOUNT, ETRANSFER_USER_CA_HASH, ETRANSFER_USER_MANAGER_ADDRESS } from '@/constants/storage';
-import { WalletType } from 'aelf-web-login';
-import { ADDRESS_MAP, AelfReact, SupportedELFChainId } from '@/constants';
+import { ADDRESS_MAP, AelfReact, APP_NAME, SupportedELFChainId } from '@/constants';
 import { ContractType } from '@/constants/chain';
+import { WalletTypeEnum } from '@etransfer/ui-react';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 
 type TTokenItemForSelect = TTokenItem & {
   value: string;
@@ -134,7 +134,7 @@ export default function WithdrawPage() {
     setAmount(value);
   }, []);
 
-  const [{ wallet }] = useWalletContext();
+  const { walletType, callSendMethod, getSignature } = useConnectWallet();
   const onSubmit = useCallback(async () => {
     try {
       const endPoint = AelfReact[currentChain as SupportedELFChainId].rpcUrl;
@@ -144,13 +144,17 @@ export default function WithdrawPage() {
       const caHash = localStorage.getItem(ETRANSFER_USER_CA_HASH);
       const managerAddress = localStorage.getItem(ETRANSFER_USER_MANAGER_ADDRESS);
       const account = JSON.parse(localStorage.getItem(ETRANSFER_USER_ACCOUNT) || '');
-      const ownerAddress = account?.[currentChain]?.[0] || '';
-      if (wallet?.walletType !== WalletType.elf && (!caHash || !managerAddress))
+      const ownerAddress = account?.[currentChain] || '';
+      if (walletType !== WalletTypeEnum.elf && (!caHash || !managerAddress))
         throw new Error('User information is missing');
       if (!ownerAddress) throw new Error('User address is missing');
 
       const res = await eTransferCore.sendWithdrawOrder({
-        tokenContractCallSendMethod: (params, sendOptions) => wallet?.callSendMethod(currentChain, params, sendOptions),
+        tokenContractCallSendMethod: params =>
+          callSendMethod({
+            chainId: currentChain,
+            ...params,
+          }),
         tokenContractAddress,
         endPoint: endPoint,
         symbol: currentToken,
@@ -159,16 +163,15 @@ export default function WithdrawPage() {
         toAddress: address,
         caContractAddress,
         eTransferContractAddress,
-        walletType: wallet?.walletType === WalletType.elf ? TWalletType.NightElf : TWalletType.Portkey,
+        walletType: walletType === WalletTypeEnum.elf ? TWalletType.NightElf : TWalletType.Portkey,
         caHash: caHash || undefined,
         network: currentNetwork,
         chainId: currentChain,
-        managerAddress: wallet?.walletType === WalletType.elf ? ownerAddress : managerAddress,
-        accountAddress: removeDIDAddressSuffix(account[currentChain][0]),
+        managerAddress: walletType === WalletTypeEnum.elf ? ownerAddress : managerAddress,
+        accountAddress: removeDIDAddressSuffix(ownerAddress),
         getSignature: async (ser: any) => {
-          if (!wallet) return '';
           let signInfo: string;
-          if (wallet.walletType !== WalletType.portkey) {
+          if (walletType !== WalletTypeEnum.aa) {
             // nightElf or discover
             signInfo = AElf.utils.sha256(ser);
           } else {
@@ -177,7 +180,11 @@ export default function WithdrawPage() {
           }
 
           // signature
-          return await wallet.getSignature({ signInfo });
+          return await getSignature({
+            signInfo,
+            appName: APP_NAME,
+            address: removeELFAddressSuffix(ownerAddress),
+          });
         },
       });
       console.log('>>>>>> res', res);
@@ -190,7 +197,17 @@ export default function WithdrawPage() {
     } catch (error) {
       setWithdrawResult(false);
     }
-  }, [address, amount, currentChain, currentDecimals, currentNetwork, currentToken, wallet]);
+  }, [
+    address,
+    amount,
+    callSendMethod,
+    currentChain,
+    currentDecimals,
+    currentNetwork,
+    currentToken,
+    getSignature,
+    walletType,
+  ]);
 
   return (
     <div>

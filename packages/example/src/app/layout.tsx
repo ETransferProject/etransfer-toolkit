@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Provider from '@/provider';
-import 'aelf-web-login/dist/assets/index.css';
 import '@etransfer/ui-react/dist/assets/index.css';
 import './globals.css';
 import dynamic from 'next/dynamic';

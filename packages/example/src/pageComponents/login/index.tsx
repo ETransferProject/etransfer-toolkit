@@ -2,13 +2,20 @@
 import { eTransferCore } from '@/utils/core';
 import { AuthTokenSource, PortkeyVersion } from '@etransfer/types';
 import { Button, message } from 'antd';
-import { useCallback } from 'react';
-import { WebLoginState, useWebLogin, WalletType } from 'aelf-web-login';
+import { useCallback, useRef } from 'react';
+
 import { useQueryAuthToken } from '@/hooks/authToken';
-import { ETRANSFER_URL } from '@/constants';
+import { ETransferAuthHost, ETransferHost } from '@/constants';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
+import { etransferCore, WalletTypeEnum } from '@etransfer/ui-react';
+import { etransferEvents } from '@etransfer/utils';
+import { useIsLogin } from '@/hooks/wallet';
 
 export default function GetAuth() {
-  const { login, loginState, logout, walletType } = useWebLogin();
+  const { walletType, connectWallet, disConnectWallet } = useConnectWallet();
+  const isLogin = useIsLogin();
+  const isLoginRef = useRef(isLogin);
+  isLoginRef.current = isLogin;
   const { getAuthToken, getUserInfo } = useQueryAuthToken();
   const fetchAuthToken = useCallback(async () => {
     await getAuthToken();
@@ -16,7 +23,7 @@ export default function GetAuth() {
 
   const fetchNewAuthToken = useCallback(async () => {
     // Please set freely.
-    eTransferCore.setAuthUrl('https://test-app.etransfer.exchange');
+    eTransferCore.setAuthUrl(ETransferAuthHost);
     await eTransferCore.getAuthTokenFromApi({
       pubkey:
         '04671bfc20edb4cdc171bd7d20877aa64862e88dc9f52173673db9789e0dea71aca45472fd4841cad362cae8b5b6f05c55a350014f7917fe90870fd680c845edae',
@@ -27,28 +34,30 @@ export default function GetAuth() {
       chain_id: 'tDVW',
       managerAddress: '7iC6EQtt4rKsqv9vFiwpUDvZVipSoKwvPLy7pRG189qJjyVT7',
       version: PortkeyVersion.v2,
-      source: walletType === WalletType.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey,
+      source: walletType === WalletTypeEnum.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey,
     });
   }, [walletType]);
 
   const onLogin = useCallback(() => {
-    if (loginState === WebLoginState.logining) return;
-    if (loginState === WebLoginState.logined) {
+    if (isLoginRef.current) {
       message.info('You are logged in.');
+    } else {
+      connectWallet();
     }
-    if (loginState === WebLoginState.initial || loginState === WebLoginState.lock) {
-      login();
-    }
-  }, [login, loginState]);
+  }, [connectWallet]);
 
   const handleLogout = useCallback(async () => {
-    await Promise.resolve(logout()).then(() => {
+    await Promise.resolve(disConnectWallet()).then(() => {
       localStorage.clear();
+      etransferCore.services.setRequestHeaders('Authorization', '');
+      eTransferCore.services.setRequestHeaders('Authorization', '');
+
+      etransferEvents.LogoutSuccess.emit();
     });
-  }, [logout]);
+  }, [disConnectWallet]);
 
   const getReCaptcha = useCallback(() => {
-    window.open(ETRANSFER_URL + '/recaptcha');
+    window.open(ETransferHost + '/recaptcha');
     window.onmessage = function (event) {
       if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
         console.log('Google reCaptcha response:', event.data.data);

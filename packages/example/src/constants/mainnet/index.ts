@@ -2,13 +2,13 @@ import { ContractType } from '@/constants/chain';
 import * as AELF from '../platform/AELF';
 import * as tDVV from '../platform/tDVV';
 import { NetworkName } from '@/constants/network';
-import { NetworkType } from '@portkey/provider-types';
-import { TNetworkTypeV1 } from '@/types';
+import { NetworkEnum } from '@aelf-web-login/wallet-adapter-base';
+
+export const TELEGRAM_BOT_ID = '7393968118';
 
 export const NETWORK_NAME = NetworkName.mainnet;
 
-export const NETWORK_TYPE_V1: TNetworkTypeV1 = 'MAIN';
-export const NETWORK_TYPE_V2: NetworkType = 'MAINNET';
+export const NETWORK_TYPE: NetworkEnum = NetworkEnum.MAINNET;
 
 export enum SupportedELFChainId {
   AELF = 'AELF',
@@ -69,17 +69,12 @@ export const AELF_NODES = {
   tDVV: tDVV.CHAIN_INFO,
 };
 
-export const ETRANSFER_URL = 'https://app.etransfer.exchange';
-export const ETRANSFER_AUTH_URL = 'https://app.etransfer.exchange';
-export const WEB_LOGIN_GRAPHQL_URL_V1 =
-  'https://dapp-portkey.portkey.finance/Portkey_DID/PortKeyIndexerCASchema/graphql';
-export const WEB_LOGIN_GRAPHQL_URL_V2 =
+export const ETransferHost = 'https://app.etransfer.exchange';
+export const ETransferAuthHost = 'https://app.etransfer.exchange';
+export const WebLoginGraphqlUrl =
   'https://dapp-aa-portkey.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql';
-export const WEB_LOGIN_REQUEST_URL_V1 = 'https://did-portkey.portkey.finance';
-export const WEB_LOGIN_REQUEST_URL_V2 = 'https://aa-portkey.portkey.finance';
-export const WEB_LOGIN_SERVICE_URL_V1 = 'https://did-portkey.portkey.finance';
-export const WEB_LOGIN_SERVICE_URL_V2 = 'https://aa-portkey.portkey.finance';
-export const WEB_LOGIN_CONNECT_URL_V2 = 'https://auth-aa-portkey.portkey.finance';
+export const WebLoginServiceUrl = 'https://aa-portkey.portkey.finance';
+export const WebLoginConnectUrl = 'https://auth-aa-portkey.portkey.finance';
 
 export const ADDRESS_MAP = {
   [SupportedELFChainId.AELF]: {
