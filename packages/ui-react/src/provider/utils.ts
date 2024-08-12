@@ -30,6 +30,7 @@ export const getEtransferAuthUrl = () => {
 //   return ETransferConfig.config.aelfReact.nodes[chainId]?.rpcUrl || '';
 // };
 
+// deposit
 export const getDepositSupportChainIds = (): SupportDataResult => {
   const supportChainIds = ETransferConfig.config.depositConfig?.supportChainIds;
   if (supportChainIds && Array.isArray(supportChainIds) && supportChainIds.length > 0) {
@@ -118,6 +119,47 @@ export const getDepositDefaultConfig = () => {
   }
 };
 
+// withdraw
+export const getWithdrawSupportChainIds = (): SupportDataResult => {
+  const supportChainIds = ETransferConfig.config.withdrawConfig?.supportChainIds;
+  if (supportChainIds && Array.isArray(supportChainIds) && supportChainIds.length > 0) {
+    return {
+      isLimit: true,
+      limits: supportChainIds,
+    };
+  }
+  return {
+    isLimit: false,
+  };
+};
+
+export const getWithdrawSupportTokens = (): SupportDataResult => {
+  const supportTokens = ETransferConfig.config.withdrawConfig?.supportTokens;
+  if (supportTokens && Array.isArray(supportTokens) && supportTokens.length > 0) {
+    return {
+      isLimit: true,
+      limits: supportTokens,
+    };
+  }
+
+  return {
+    isLimit: false,
+  };
+};
+
+export const getWithdrawSupportNetworks = (): SupportDataResult => {
+  const supportNetworks = ETransferConfig.config.withdrawConfig?.supportNetworks;
+  if (supportNetworks && Array.isArray(supportNetworks) && supportNetworks.length > 0) {
+    return {
+      isLimit: true,
+      limits: supportNetworks,
+    };
+  }
+
+  return {
+    isLimit: false,
+  };
+};
 export const getWithdrawDefaultConfig = () => {
   // read and write ETransferConfig
   try {

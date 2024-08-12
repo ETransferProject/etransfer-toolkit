@@ -51,6 +51,7 @@ import { ETransferConfig } from '../../provider/ETransferConfigProvider';
 import { ETransferAccountConfig } from '../../provider/types';
 import { useEffectOnce } from 'react-use';
 import clsx from 'clsx';
+import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
 
 const FORM_VALIDATE_DATA = {
   [WithdrawFormKeys.TOKEN]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
@@ -75,8 +76,7 @@ export default function Withdraw({
     [key in WithdrawFormKeys]: { validateStatus: WithdrawValidateStatus; errorMessage: string };
   }>(JSON.parse(JSON.stringify(FORM_VALIDATE_DATA)));
 
-  const [{ tokenSymbol, tokenList, networkItem, networkList, chainItem, chainList }, { dispatch }] =
-    useETransferWithdraw();
+  const [{ tokenSymbol, tokenList, networkItem, chainItem, chainList }, { dispatch }] = useETransferWithdraw();
   const currentNetworkRef = useRef<TNetworkItem>();
   const currentChainItemRef = useRef<IChainMenuItem>(chainItem);
   const [withdrawInfo, setWithdrawInfo] = useState<TWithdrawInfo>(INITIAL_WITHDRAW_INFO);
@@ -154,13 +154,13 @@ export default function Withdraw({
         type: BusinessType.Withdraw,
         chainId: currentChainItemRef.current.key,
       });
-
-      dispatch(etransferWithdrawAction.setTokenList.actions(res.tokenList));
+      const supportToken = checkWithdrawSupportTokenList(res.tokenList);
+      dispatch(etransferWithdrawAction.setTokenList.actions(supportToken));
 
       if (isInitCurrentSymbol && !tokenSymbol) {
-        dispatch(etransferWithdrawAction.setTokenSymbol.actions(res.tokenList[0].symbol));
+        dispatch(etransferWithdrawAction.setTokenSymbol.actions(supportToken[0].symbol));
       }
-      return res.tokenList;
+      return supportToken;
     },
     [dispatch, tokenSymbol],
   );
@@ -174,7 +174,8 @@ export default function Withdraw({
         chainId: currentChainItemRef.current.key,
         symbol: tokenSymbol,
       });
-      dispatch(etransferWithdrawAction.setNetworkList.actions(networkList));
+      const supportNetworkList = checkWithdrawSupportNetworkList(networkList);
+      dispatch(etransferWithdrawAction.setNetworkList.actions(supportNetworkList));
     } catch (error) {
       setIsShowNetworkLoading(false);
     } finally {
@@ -196,13 +197,14 @@ export default function Withdraw({
         }
 
         const { networkList } = await etransferCore.services.getNetworkList(params);
-        dispatch(etransferWithdrawAction.setNetworkList.actions(networkList));
+        const supportNetworkList = checkWithdrawSupportNetworkList(networkList);
+        dispatch(etransferWithdrawAction.setNetworkList.actions(supportNetworkList));
 
-        if (networkList?.length === 1 && networkList[0].status !== NetworkStatus.Offline) {
-          currentNetworkRef.current = networkList[0];
-          dispatch(etransferWithdrawAction.setNetworkItem.actions(networkList[0]));
+        if (supportNetworkList?.length === 1 && supportNetworkList[0].status !== NetworkStatus.Offline) {
+          currentNetworkRef.current = supportNetworkList[0];
+          dispatch(etransferWithdrawAction.setNetworkItem.actions(supportNetworkList[0]));
         } else {
-          const exitNetwork = networkList.find((item) => item.network === currentNetworkRef.current?.network);
+          const exitNetwork = supportNetworkList.find((item) => item.network === currentNetworkRef.current?.network);
           if (!exitNetwork?.network) {
             currentNetworkRef.current = undefined;
             dispatch(etransferWithdrawAction.setNetworkItem.actions(undefined));
@@ -215,7 +217,8 @@ export default function Withdraw({
             }
           }
         }
-        const isSolanaNetwork = networkList?.length === 1 && networkList[0].network === BlockchainNetworkType.Solana;
+        const isSolanaNetwork =
+          supportNetworkList?.length === 1 && supportNetworkList[0].network === BlockchainNetworkType.Solana;
         const isAddressShorterThanUsual = params.address && params.address.length >= 32 && params.address.length <= 39;
         if (isSolanaNetwork && isAddressShorterThanUsual) {
           // Only the Solana network has this warning
@@ -687,7 +690,7 @@ export default function Withdraw({
       newTokenList = await getToken(true);
       const newCurrentToken = newTokenList.find((item) => item.symbol === newCurrentSymbol);
 
-      if (networkItem?.network && networkList && networkList?.length > 0) {
+      if (networkItem?.network) {
         currentNetworkRef.current = networkItem as TNetworkItem;
         form.setFieldValue(WithdrawFormKeys.NETWORK, networkItem);
 
@@ -713,7 +716,6 @@ export default function Withdraw({
     getWithdrawData,
     handleChainChanged,
     networkItem,
-    networkList,
     tokenList,
     tokenSymbol,
   ]);
