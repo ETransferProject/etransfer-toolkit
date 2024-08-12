@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.1...v1.3.0-alpha.0) (2024-08-12)
+
+### Features
+
+- 🎸 add ton blockchain ([de8e149](https://github.com/ETransferProject/etransfer-toolkit/commit/de8e149d90e0192d44b2c1fec4fca716b04a8f56))
+- 🎸 cache contract and modify core approve error ([788738f](https://github.com/ETransferProject/etransfer-toolkit/commit/788738f74eb1f0a32c4ba776b3bc8ae7a569832c))
+- 🎸 dev withdraw footer ([c949e39](https://github.com/ETransferProject/etransfer-toolkit/commit/c949e3926cdb2ea330074e50dc14c4b43e480a11))
+- 🎸 dev withdrawal get data and ue logic ([9593355](https://github.com/ETransferProject/etransfer-toolkit/commit/9593355c020ca8cd2cc28f2917ecff306aca56c3))
+- 🎸 withdraw from ([e7bc40b](https://github.com/ETransferProject/etransfer-toolkit/commit/e7bc40b02cc53e144dcf31ef836bc5ab6c7522b7))
+
+### Bug Fixes
+
+- 🐛 style and example ([106bc36](https://github.com/ETransferProject/etransfer-toolkit/commit/106bc3657449b3f8ff166956b30a7d1359136f09))
+
 ## [1.2.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.0...v1.2.1-alpha.1) (2024-07-19)
 
 ### Features

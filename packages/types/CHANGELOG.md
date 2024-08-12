@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.1...v1.3.0-alpha.0) (2024-08-12)
+
+### Features
+
+- 🎸 add ton blockchain ([de8e149](https://github.com/ETransferProject/etransfer-toolkit/commit/de8e149d90e0192d44b2c1fec4fca716b04a8f56))
+- 🎸 withdraw from ([e7bc40b](https://github.com/ETransferProject/etransfer-toolkit/commit/e7bc40b02cc53e144dcf31ef836bc5ab6c7522b7))
+
 ## [1.2.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.0...v1.2.1-alpha.1) (2024-07-19)
 
 **Note:** Version bump only for package @etransfer/types
