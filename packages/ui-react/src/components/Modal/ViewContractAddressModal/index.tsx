@@ -22,7 +22,7 @@ const ViewContractAddressModalTitle = 'Contract Address on ';
 
 export default function ViewContractAddressModal({
   className,
-  componentStyle,
+  componentStyle = ComponentStyle.Web,
   open = false,
   network,
   value,

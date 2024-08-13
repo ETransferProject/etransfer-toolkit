@@ -43,7 +43,7 @@ export interface WithdrawFooterProps {
   address: string;
   memo?: string;
   withdrawInfo: TWithdrawInfo;
-  componentStyle: ComponentStyle;
+  componentStyle?: ComponentStyle;
   clickFailedOk: () => void;
   clickSuccessOk: () => void;
 }

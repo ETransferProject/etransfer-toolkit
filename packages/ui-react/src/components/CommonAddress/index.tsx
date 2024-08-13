@@ -18,7 +18,7 @@ export default function CommonAddress({
   labelClassName,
   valueClassName,
   valueWrapperClassName,
-  componentStyle,
+  componentStyle = ComponentStyle.Web,
   label,
   value,
   showCopy = true,
@@ -31,7 +31,7 @@ export default function CommonAddress({
         <div className={clsx('etransfer-ui-flex-1', 'address-text-content', valueClassName)}>{value}</div>
         {showCopy && !!value && (
           <Copy
-            className={'etransfer-ui-flex-none'}
+            className="etransfer-ui-flex-none"
             toCopy={value || ''}
             size={copySize}
             componentStyle={componentStyle}

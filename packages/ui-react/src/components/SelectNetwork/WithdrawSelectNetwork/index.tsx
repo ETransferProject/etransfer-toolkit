@@ -22,7 +22,7 @@ export default function WithdrawSelectNetwork({
   selected,
   isDisabled,
   isShowLoading,
-  componentStyle,
+  componentStyle = ComponentStyle.Web,
   onChange,
   selectCallback,
 }: TSelectNetworkProps) {
