@@ -17,7 +17,7 @@ export const WITHDRAW_TRANSACTION_ERROR_CODE_LIST = [
 ];
 
 export enum WithdrawErrorNameType {
-  SHOW_FAILED_MODAL = 'ShowFailedModal',
+  CUSTOMIZED_ERROR_MESSAGE = 'AccurateErrorMessage',
 }
 
 export const WITHDRAW_ADDRESS_ERROR_CODE_LIST = ['40100', '40101'];

@@ -200,7 +200,11 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       memo,
       eTransferContractAddress,
     });
-    if (!approveRes) throw new Error(INSUFFICIENT_ALLOWANCE_MESSAGE);
+    if (!approveRes) {
+      const error = new Error(INSUFFICIENT_ALLOWANCE_MESSAGE);
+      error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
+      throw error;
+    }
     console.log('>>>>>> sendTransferTokenTransaction approveRes', approveRes);
 
     if (approveRes) {
@@ -260,28 +264,17 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     console.log(transaction, '=====transaction');
     if (!transaction) throw new Error('Generate transaction raw failed.');
 
-    try {
-      const createOrderResult = await this.createWithdrawOrder({
-        chainId,
-        symbol,
-        network,
-        toAddress,
-        amount,
-        memo,
-        rawTransaction: transaction,
-      });
-      if (createOrderResult.orderId) {
-        return createOrderResult;
-      } else {
-        throw new Error(WITHDRAW_ERROR_MESSAGE);
-      }
-    } catch (error: any) {
-      if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
-        throw error;
-      } else {
-        throw new Error(WITHDRAW_ERROR_MESSAGE);
-      }
-    }
+    const createOrderResult = await this.createWithdrawOrder({
+      chainId,
+      symbol,
+      network,
+      toAddress,
+      amount,
+      memo,
+      rawTransaction: transaction,
+    });
+
+    return createOrderResult;
   }
 
   async handleApproveToken({
@@ -303,7 +296,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       const error = new Error(
         `Insufficient ${symbol} balance in your account. Please consider transferring a smaller amount or topping up before you try again.`,
       );
-      error.name = WithdrawErrorNameType.SHOW_FAILED_MODAL;
+      error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
       throw error;
     }
 
@@ -344,13 +337,18 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       if (createWithdrawOrderRes.orderId) {
         return createWithdrawOrderRes;
       } else {
-        throw new Error(WITHDRAW_ERROR_MESSAGE);
+        const error = new Error(WITHDRAW_ERROR_MESSAGE);
+        error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
+        throw error;
       }
     } catch (error: any) {
       if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
+        error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
         throw error;
       } else {
-        throw new Error(WITHDRAW_ERROR_MESSAGE);
+        const error = new Error(WITHDRAW_ERROR_MESSAGE);
+        error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
+        throw error;
       }
     } finally {
       await sleep(1000);

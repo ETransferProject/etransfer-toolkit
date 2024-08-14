@@ -15,7 +15,7 @@ import {
   ETransferConfig,
   WalletTypeEnum,
 } from '@etransfer/ui-react';
-import { removeELFAddressSuffix } from '@etransfer/utils';
+import { etransferEvents, removeELFAddressSuffix } from '@etransfer/utils';
 import { useCallback, useEffect, useRef } from 'react';
 
 export default function DepositPage() {
@@ -55,12 +55,14 @@ export default function DepositPage() {
     });
     console.log('>>>>>> ETransferConfig.getAllConfig', ETransferConfig.getAllConfig());
   }, [accounts, callSendMethod, getSignature, walletInfo, walletType]);
+  const setUserInfoRef = useRef(setUserInfo);
+  setUserInfoRef.current = setUserInfo;
 
   useEffect(() => {
-    console.log('>>>>>> isLogin', isLogin);
-    if (isLogin) {
-      setUserInfo();
-    }
+    const { remove } = etransferEvents.LoginSuccess.addListener(() => setUserInfoRef.current());
+    return () => {
+      remove();
+    };
   }, [accounts, isLogin, setUserInfo]);
 
   return (
