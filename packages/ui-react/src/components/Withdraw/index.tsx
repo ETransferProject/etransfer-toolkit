@@ -545,7 +545,7 @@ export default function Withdraw({
   );
 
   const handleClickMax = useCallback(async () => {
-    setBalance(balance);
+    setAmount(balance);
     form.setFieldValue(WithdrawFormKeys.AMOUNT, balance);
 
     if (handleAmountValidate()) {
