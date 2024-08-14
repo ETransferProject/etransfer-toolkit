@@ -48,7 +48,7 @@ export function BalanceAndUSD({
 
         const price = tokenPrices?.find((item) => item.symbol === symbol);
         if (!price || !price?.priceUsd) {
-          setBalanceUsd;
+          setBalanceUsd('');
         } else {
           setBalanceUsd(
             BigNumber(price?.priceUsd)

@@ -47,7 +47,9 @@ export default function GetAuth() {
   }, [connectWallet]);
 
   const handleLogout = useCallback(async () => {
-    await Promise.resolve(disConnectWallet()).then(() => {
+    console.log('>>>>>> click log out');
+    Promise.resolve(disConnectWallet()).then(() => {
+      console.log('>>>>>> disConnectWallet done');
       localStorage.clear();
       etransferCore.services.setRequestHeaders('Authorization', '');
       eTransferCore.services.setRequestHeaders('Authorization', '');

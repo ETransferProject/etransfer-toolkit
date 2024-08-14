@@ -163,7 +163,7 @@ export default function WithdrawFooter({
       if (error?.code == 4001) {
         // contract error
         setFailModalReason('The request is rejected. ETransfer needs your permission to proceed.');
-      } else if (error.name === WithdrawErrorNameType.SHOW_FAILED_MODAL) {
+      } else if (error.name === WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE) {
         setFailModalReason(error.message);
       } else {
         setFailModalReason(WITHDRAW_ERROR_MESSAGE);

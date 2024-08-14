@@ -37,7 +37,6 @@ function reducer(state: ETransferWithdrawState, { type, payload }: any) {
     }
     case ETransferWithdrawActions.setNetworkItem: {
       const networkItem = payload.network;
-      if (!networkItem) return state;
 
       return Object.assign({}, state, { networkItem });
     }

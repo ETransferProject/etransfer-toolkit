@@ -13,11 +13,15 @@ export default function CommentFormItemLabel({
   componentStyle?: ComponentStyle;
 }) {
   return (
-    <div className={clsx('flex-row-center')}>
+    <div className={clsx('etransfer-ui-flex-row-center')}>
       <span className={'etransfer-ui-comment-form-label'}>Comment</span>
       <CommonSpace direction={'horizontal'} size={4} />
       {componentStyle === ComponentStyle.Mobile ? (
-        <SimpleTipAutoScreen title="Please confirm the Memo/Tag" content={WITHDRAWAL_COMMENT_TIP} />
+        <SimpleTipAutoScreen
+          title="Please confirm the Memo/Tag"
+          content={WITHDRAWAL_COMMENT_TIP}
+          componentStyle={componentStyle}
+        />
       ) : (
         <CommonTooltip
           className={clsx('etransfer-ui-comment-question-label')}
