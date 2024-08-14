@@ -20,13 +20,6 @@ export default function AmountBox({
   status,
   componentStyle = ComponentStyle.Web,
 }: TAmountBoxProps) {
-  // const findToken = useFindToken();
-
-  // const amountDisplay = useMemo(() => {
-  //   const currentToken = findToken(token);
-  //   return LargeNumberDisplay(amount, Number(currentToken?.decimals));
-  // }, [amount, findToken, token]);
-
   return (
     <div
       className={clsx(

@@ -18,12 +18,18 @@ import {
   HistoryStatusOptions,
   START_TIME_FORMAT,
 } from '../../../constants';
-import { HistoryFilterProps } from '../types';
+import { HistoryMobileFilterProps } from '../types';
 
 const dateFormat = 'YYYY-MM-DD';
 
-export default function HistoryMobileFilter({ type, status, timestamp, onReset }: HistoryFilterProps) {
-  // const { type, status, timestamp } = useRecordsState();
+export default function HistoryMobileFilter({
+  type,
+  status,
+  timestamp,
+  onCloseItem,
+  onReset,
+  onApply,
+}: HistoryMobileFilterProps) {
   const [isShowFilterDrawer, setIsShowFilterDrawer] = useState(false);
   const [filterType, setFilterType] = useState<RecordsRequestType>(type);
   const [filterStatus, setFilterStatus] = useState<RecordsRequestStatus>(status);
@@ -54,34 +60,10 @@ export default function HistoryMobileFilter({ type, status, timestamp, onReset }
 
   const [openTipModal, setOpenTipModal] = useState(false);
 
-  const closeItem = useCallback((clickType: string) => {
-    switch (clickType) {
-      case 'type':
-        setFilterType(RecordsRequestType.All);
-        break;
-      case 'status':
-        setFilterStatus(RecordsRequestStatus.All);
-        break;
-      case 'timestamp':
-        setFilterTimestampStart(null);
-        setFilterTimestampEnd(null);
-        break;
-      default:
-        break;
-    }
-    // TODO
-    // dispatch(setSkipCount(1));
-    // dispatch(setRecordsList([]));
-    // requestRecordsList();
-  }, []);
-
   const handleResetFilter = useCallback(() => {
-    setFilterType(RecordsRequestType.All);
-    setFilterStatus(RecordsRequestStatus.All);
-    setFilterTimestampStart(null);
-    setFilterTimestampEnd(null);
-    // dispatch(setSkipCount(1));
-  }, []);
+    onReset();
+    setIsShowFilterDrawer(false);
+  }, [onReset]);
 
   const handleApplyFilter = useCallback(() => {
     const start = moment(filterTimestampStart).valueOf();
@@ -98,17 +80,14 @@ export default function HistoryMobileFilter({ type, status, timestamp, onReset }
     const startTimestampFormat = moment(moment(filterTimestampStart).format(START_TIME_FORMAT)).valueOf();
     const endTimestampFormat = moment(moment(filterTimestampEnd).format(END_TIME_FORMAT)).valueOf();
 
-    // TODO
-    // setFilter({
-    //   method: filterType,
-    //   status: filterStatus,
-    //   timeArray: timeIsNaN ? null : [startTimestampFormat, endTimestampFormat],
-    // });
-    // dispatch(setSkipCount(1));
-    // dispatch(setRecordsList([]));
+    onApply({
+      type: filterType,
+      status: filterStatus,
+      timeArray: timeIsNaN ? null : [startTimestampFormat, endTimestampFormat],
+    });
+
     setIsShowFilterDrawer(false);
-    // requestRecordsList();
-  }, [filterTimestampStart, filterTimestampEnd]);
+  }, [filterTimestampStart, filterTimestampEnd, onApply, filterType, filterStatus]);
 
   const handleOpenFilterDrawer = useCallback(() => {
     setFilterType(type);
@@ -130,7 +109,7 @@ export default function HistoryMobileFilter({ type, status, timestamp, onReset }
             <CommonSvg
               type="closeSmall"
               className="etransfer-ui-history-mobile-filter-close-icon"
-              onClick={() => closeItem('type')}
+              onClick={() => onCloseItem('type')}
             />
           </div>
         )}
@@ -142,7 +121,7 @@ export default function HistoryMobileFilter({ type, status, timestamp, onReset }
             <CommonSvg
               type="closeSmall"
               className="etransfer-ui-history-mobile-filter-close-icon"
-              onClick={() => closeItem('status')}
+              onClick={() => onCloseItem('status')}
             />
           </div>
         )}
@@ -154,12 +133,12 @@ export default function HistoryMobileFilter({ type, status, timestamp, onReset }
             <CommonSvg
               type="closeSmall"
               className="etransfer-ui-history-mobile-filter-close-icon"
-              onClick={() => closeItem('timestamp')}
+              onClick={() => onCloseItem('timestamp')}
             />
           </div>
         )}
         {isShowReset && (
-          <div className={clsx('etransfer-ui-history-mobile-filter-reset')} onClick={onReset}>
+          <div className={clsx('etransfer-ui-history-mobile-filter-reset')} onClick={handleResetFilter}>
             Reset
           </div>
         )}
@@ -168,7 +147,7 @@ export default function HistoryMobileFilter({ type, status, timestamp, onReset }
         open={isShowFilterDrawer}
         height={'100%'}
         title={<div className="etransfer-ui-history-mobile-filter-title">Filters</div>}
-        id="historyFilterDrawer"
+        id="etransferHistoryMobileFilterDrawer"
         className="etransfer-ui-history-mobile-filter-drawer-wrapper"
         destroyOnClose
         placement={'right'}
@@ -240,7 +219,7 @@ export default function HistoryMobileFilter({ type, status, timestamp, onReset }
 
       <SimpleTipModal
         open={openTipModal}
-        getContainer="#historyFilterDrawer"
+        getContainer="#etransferHistoryMobileFilterDrawer"
         content={'Please select another time!'}
         onOk={() => setOpenTipModal(false)}
       />

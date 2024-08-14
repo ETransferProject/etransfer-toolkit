@@ -43,11 +43,39 @@ export interface HistoryContentProps {
   skipCount: number;
 }
 
+export interface HistoryMobileContentProps extends HistoryContentProps {
+  onNextPage: () => void;
+}
+
+export interface HistoryWebContentProps extends HistoryContentProps {
+  onTableChange: (page: number, pageSize: number) => void;
+}
+
 export interface HistoryFilterProps {
   type: RecordsRequestType;
   status: RecordsRequestStatus;
   timestamp: number[] | null;
+
   onReset: () => void;
 }
+
+export interface HistoryMobileFilterProps extends HistoryFilterProps {
+  onCloseItem: (type: HistoryCloseItemParams) => void;
+  onApply: (params: HistoryFilterOnApplyParams) => void;
+}
+
+export interface HistoryWebFilterProps extends HistoryFilterProps {
+  onTypeChange: (type: RecordsRequestType) => void;
+  onStatusChange: (status: RecordsRequestStatus) => void;
+  onTimeStampChange: (timeArray: number[] | null) => void;
+}
+
+export type HistoryCloseItemParams = 'type' | 'status' | 'timestamp';
+
+export type HistoryFilterOnApplyParams = {
+  type: RecordsRequestType;
+  status: RecordsRequestStatus;
+  timeArray: number[] | null;
+};
 
 export type TRangeValue = [Moment | null, Moment | null] | null;

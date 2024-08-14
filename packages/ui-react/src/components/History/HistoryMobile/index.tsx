@@ -1,6 +1,6 @@
 import HistoryMobileFilter from '../HistoryMobileFilter';
 import HistoryMobileInfiniteList from '../HistoryMobileInfiniteList';
-import { HistoryContentProps, HistoryFilterProps } from '../types';
+import { HistoryMobileContentProps, HistoryMobileFilterProps } from '../types';
 import './index.less';
 
 export default function HistoryMobile({
@@ -12,17 +12,28 @@ export default function HistoryMobile({
   skipCount,
   maxResultCount,
   hasMore,
+  onCloseItem,
   onReset,
-}: HistoryFilterProps & HistoryContentProps) {
+  onApply,
+  onNextPage,
+}: HistoryMobileFilterProps & HistoryMobileContentProps) {
   return (
     <div className="etransfer-ui-history-mobile">
-      <HistoryMobileFilter type={type} status={status} timestamp={timestamp} onReset={onReset} />
+      <HistoryMobileFilter
+        type={type}
+        status={status}
+        timestamp={timestamp}
+        onCloseItem={onCloseItem}
+        onReset={onReset}
+        onApply={onApply}
+      />
       <HistoryMobileInfiniteList
         recordsList={recordsList}
         hasMore={hasMore}
         maxResultCount={maxResultCount}
         totalCount={totalCount}
         skipCount={skipCount}
+        onNextPage={onNextPage}
       />
     </div>
   );

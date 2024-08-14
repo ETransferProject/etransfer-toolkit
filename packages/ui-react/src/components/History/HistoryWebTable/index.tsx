@@ -7,7 +7,7 @@ import ArrivalTimeBox from '../ArrivalTimeBox';
 import FeeInfo from '../FeeInfo';
 import FromAndToBox from '../FromAndToBox';
 import StatusBox from '../StatusBox';
-import { HistoryContentProps, THistoryFeeInfo, THistoryItem } from '../types';
+import { HistoryWebContentProps, THistoryFeeInfo, THistoryItem } from '../types';
 import { ComponentStyle } from '../../../types';
 import { getAccountInfo } from '../../../utils';
 import { useMemo } from 'react';
@@ -141,7 +141,13 @@ const columns = [
   },
 ];
 
-export default function HistoryWebTable({ recordsList, totalCount, skipCount, maxResultCount }: HistoryContentProps) {
+export default function HistoryWebTable({
+  recordsList,
+  totalCount,
+  skipCount,
+  maxResultCount,
+  onTableChange,
+}: HistoryWebContentProps) {
   const isLogin = useMemo(() => {
     const accountInfo = getAccountInfo();
     return Object.keys(accountInfo?.accounts)?.length > 0;
@@ -182,19 +188,6 @@ export default function HistoryWebTable({ recordsList, totalCount, skipCount, ma
     return recordsTableList;
   };
 
-  const tableOnChange = (page: number, pageSize: number) => {
-    // TODO
-    // if (page !== skipCount) {
-    //   dispatch(setSkipCount(page));
-    // }
-    // if (maxResultCount !== pageSize) {
-    //   // pageSize change and skipCount need init 1
-    //   dispatch(setSkipCount(1));
-    //   dispatch(setMaxResultCount(pageSize));
-    // }
-    // requestRecordsList();
-  };
-
   return (
     <div className="etransfer-ui-history-web-table-web-records-table-wrapper">
       <Table
@@ -212,7 +205,7 @@ export default function HistoryWebTable({ recordsList, totalCount, skipCount, ma
                 current: skipCount,
                 pageSize: maxResultCount,
                 total: totalCount,
-                onChange: tableOnChange,
+                onChange: onTableChange,
                 showQuickJumper: true,
                 showSizeChanger: true,
                 showTitle: true,

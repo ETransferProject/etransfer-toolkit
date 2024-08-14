@@ -2,39 +2,32 @@ import './index.less';
 import { Select, DatePicker, Button } from 'antd';
 import { useCallback, useMemo } from 'react';
 import moment from 'moment';
-import { RecordsRequestStatus, RecordsRequestType } from '@etransfer/types';
-import { HistoryFilterProps, TRangeValue } from '../types';
+import { HistoryWebFilterProps, TRangeValue } from '../types';
 import { START_TIME_FORMAT, END_TIME_FORMAT, BusinessTypeOptions, HistoryStatusOptions } from '../../../constants';
 import CommonSvg from '../../CommonSvg';
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 
-export default function HistoryWebFilter({ type, status, timestamp, onReset }: HistoryFilterProps) {
-  const handleTypeChange = useCallback((type: RecordsRequestType) => {
-    // TODO
-    // setMethodFilter(type);
-    // dispatch(setSkipCount(1));
-    // requestRecordsList();
-  }, []);
-
-  const handleStatusChange = useCallback((status: RecordsRequestStatus) => {
-    // TODO
-    // setStatusFilter(status);
-    // dispatch(setSkipCount(1));
-    // requestRecordsList();
-  }, []);
-
-  const handleDateRangeChange = useCallback((timestamp: TRangeValue) => {
-    if (timestamp && timestamp[0] && timestamp[1]) {
-      const startTimestampFormat = moment(timestamp[0]).format(START_TIME_FORMAT);
-      const endTimestampFormat = moment(timestamp[1]).format(END_TIME_FORMAT);
-      // TODO
-      // setTimestampFilter([moment(startTimestampFormat).valueOf(), moment(endTimestampFormat).valueOf()]);
-      // dispatch(setSkipCount(1));
-      // requestRecordsList();
-    }
-  }, []);
+export default function HistoryWebFilter({
+  type,
+  status,
+  timestamp,
+  onTypeChange,
+  onStatusChange,
+  onTimeStampChange,
+  onReset,
+}: HistoryWebFilterProps) {
+  const handleDateRangeChange = useCallback(
+    (timestamp: TRangeValue) => {
+      if (timestamp && timestamp[0] && timestamp[1]) {
+        const startTimestampFormat = moment(timestamp[0]).format(START_TIME_FORMAT);
+        const endTimestampFormat = moment(timestamp[1]).format(END_TIME_FORMAT);
+        onTimeStampChange([moment(startTimestampFormat).valueOf(), moment(endTimestampFormat).valueOf()]);
+      }
+    },
+    [onTimeStampChange],
+  );
 
   const isShowReset = useCallback(() => {
     let isShow = false;
@@ -57,7 +50,7 @@ export default function HistoryWebFilter({ type, status, timestamp, onReset }: H
           size={'large'}
           value={type}
           className="etransfer-ui-history-web-filter-select-type"
-          onChange={handleTypeChange}
+          onChange={onTypeChange}
           popupClassName={'etransfer-ui-history-web-filter-drop-wrap'}
           options={BusinessTypeOptions}
         />
@@ -65,7 +58,7 @@ export default function HistoryWebFilter({ type, status, timestamp, onReset }: H
           size={'large'}
           value={status}
           className="etransfer-ui-history-web-filter-select-status"
-          onChange={handleStatusChange}
+          onChange={onStatusChange}
           popupClassName={'etransfer-ui-history-web-filter-drop-wrap'}
           options={HistoryStatusOptions}
         />

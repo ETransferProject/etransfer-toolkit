@@ -2,10 +2,9 @@ import clsx from 'clsx';
 import './index.less';
 import { Divider } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { HistoryContentProps } from '../types';
+import { HistoryMobileContentProps } from '../types';
 import { BusinessType, TRecordsListItem } from '@etransfer/types';
 import { THistoryItem } from '../types';
-import { useDebounceCallback } from '../../../hooks';
 import AddressBox from '../AddressBox';
 import AmountBox from '../AmountBox';
 import ArrivalTimeBox from '../ArrivalTimeBox';
@@ -23,7 +22,8 @@ export default function HistoryMobileInfiniteList({
   maxResultCount,
   totalCount,
   skipCount,
-}: HistoryContentProps) {
+  onNextPage,
+}: HistoryMobileContentProps) {
   const handleRecordListData = (recordsList: TRecordsListItem[]) => {
     if (recordsList.length === 0) {
       return [];
@@ -59,21 +59,11 @@ export default function HistoryMobileInfiniteList({
     return recordsTableList;
   };
 
-  const handleNextPage = useDebounceCallback(() => {
-    if (hasMore && skipCount <= Math.ceil(totalCount / maxResultCount)) {
-      // TODO
-      // dispatch(setSkipCount(skipCount + 1));
-      // requestRecordsList();
-    } else {
-      // dispatch(setHasMore(false));
-    }
-  }, []);
-
   return (
     <div className={clsx('etransfer-ui-history-mobile-infinite-list')} id={'etransferHistoryMobileInfiniteList'}>
       <InfiniteScroll
         dataLength={recordsList.length}
-        next={handleNextPage}
+        next={onNextPage}
         hasMore={skipCount <= Math.ceil(totalCount / maxResultCount)}
         scrollableTarget="etransferHistoryMobileInfiniteList"
         loader={
