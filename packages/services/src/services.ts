@@ -97,7 +97,6 @@ export class Services extends BaseService implements TServices {
     try {
       const res = await this._request.send(API_LIST.common.getTokenPrices, {
         params,
-        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_TOKEN_PRICES,
       });
       return res.data;
     } catch (error: any) {

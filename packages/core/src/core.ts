@@ -277,7 +277,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       }
     } catch (error: any) {
       if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
-        throw new Error(error?.message);
+        throw error;
       } else {
         throw new Error(WITHDRAW_ERROR_MESSAGE);
       }
@@ -348,7 +348,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       }
     } catch (error: any) {
       if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
-        throw new Error(error?.message);
+        throw error;
       } else {
         throw new Error(WITHDRAW_ERROR_MESSAGE);
       }

@@ -53,9 +53,11 @@ export default function DepositPage() {
         caHash: caHash,
       },
     });
+    console.log('>>>>>> ETransferConfig.getAllConfig', ETransferConfig.getAllConfig());
   }, [accounts, callSendMethod, getSignature, walletInfo, walletType]);
 
   useEffect(() => {
+    console.log('>>>>>> isLogin', isLogin);
     if (isLogin) {
       setUserInfo();
     }
