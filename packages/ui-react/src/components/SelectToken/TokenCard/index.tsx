@@ -86,7 +86,7 @@ export function TokenCardForWeb({
   return (
     <div
       className={clsx(
-        'etransfer-ui-flex',
+        'etransfer-ui-flex-row-center-between',
         'etransfer-ui-token-card-for-web',
         'etransfer-ui-token-card-for-web-hover',
         isDisabled && 'etransfer-ui-token-card-disabled',
