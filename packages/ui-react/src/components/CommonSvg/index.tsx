@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import { CSSProperties } from 'react';
 import svgList from '../../assets/svgs';
-
-export type TSvgListType = keyof typeof svgList;
+import { TSvgListType } from '../../types';
 
 export interface CommonSvgProps {
   type: TSvgListType;

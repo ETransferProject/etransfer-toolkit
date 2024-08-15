@@ -1,0 +1,24 @@
+@import '../../assets/theme/breakpoint.less';
+
+.etransfer-ui-content-layout {
+  height: unset;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100vh; // TODO
+}
+
+.etransfer-ui-content-layout-body {
+  position: relative;
+  flex-direction: row;
+  // height: 100%;
+  flex: 1;
+  background-color: var(--etransfer-ui-page-bg);
+
+  @media @mediaMobileAndPad {
+    margin-top: var(--etransfer-ui-mobile-header-height);
+  }
+  @media @mediaWeb {
+    margin-top: var(--etransfer-ui-web-header-height);
+  }
+}

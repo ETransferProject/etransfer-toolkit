@@ -63,3 +63,6 @@ export { default as Withdraw } from './Withdraw';
 
 // feature module - history
 export { default as History } from './History';
+
+// feature module - ETransferMain
+export { default as ETransferContent } from './ETransferContent';
