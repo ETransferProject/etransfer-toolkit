@@ -7,8 +7,8 @@ import './index.less';
 
 type TGoogleReCaptchaResult = { type: ReCaptchaType; data: string | any; error?: any };
 
-const RECAPTCHA_SITE_KEY_TESTNET = '6Lf-WvApAAAAAEmz8bha6UfBjuoX57dWYEIOjw2G';
-const RECAPTCHA_SITE_KEY_MAINNET = '6LdgSOwpAAAAABwDI184IDgOWBpS3BnLgCDsUPS3';
+const RECAPTCHA_SITE_KEY_TESTNET = '6LdgSOwpAAAAABwDI184IDgOWBpS3BnLgCDsUPS3';
+const RECAPTCHA_SITE_KEY_MAINNET = '6Lf-WvApAAAAAEmz8bha6UfBjuoX57dWYEIOjw2G';
 
 const googleReCaptchaModal = async (
   networkType?: NetworkType,
