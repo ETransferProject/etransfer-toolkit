@@ -1,18 +1,32 @@
-@import '/src/assets/theme/font.scss';
-@import '/src/assets/theme/color.scss';
+@import '../../../assets/theme/constants.less';
 
 .etransfer-ui-history-web-filter-title {
-  font-size: 24px;
-  font-weight: $font-family-medium-weight;
   height: 42px;
   line-height: 42px;
+  font-size: 24px;
+  .font-medium();
 }
 
 .etransfer-ui-history-web-filter-search-wrapper {
   padding: 16px 0;
 
-  .etransfer-ant-select-selector {
-    border-radius: 6px !important;
+  .etransfer-ant-select {
+    .etransfer-ant-select-selector {
+      display: flex;
+      align-items: center;
+      height: 42px;
+      border: 1px solid var(--etransfer-ui-border);
+      border-radius: 6px;
+
+      &:hover {
+        border: 1px solid var(--etransfer-ui-hover);
+      }
+
+      .ant-select-selection-item {
+        color: var(--etransfer-ui-primary-text);
+        font-size: 14px;
+      }
+    }
   }
 }
 
@@ -36,22 +50,23 @@
   margin-right: 12px;
   border: none;
   background: none;
-  color: $normal;
+  color: var(--etransfer-ui-normal);
   border-radius: 6px;
   box-shadow: none;
   &:hover {
-    color: $normal;
-    background: $hover-bg;
+    color: var(--etransfer-ui-normal);
+    background: var(--etransfer-ui-hover-bg);
   }
   &:active {
-    color: $normal;
-    background: $click-bg;
+    color: var(--etransfer-ui-normal);
+    background: var(--etransfer-ui-click-bg);
   }
 }
 
 .etransfer-ui-history-web-filter-reset-icon {
-  color: $normal;
+  color: var(--etransfer-ui-normal);
   vertical-align: middle;
+  display: inline-block;
 }
 
 .etransfer-ui-history-web-filter-reset-word {

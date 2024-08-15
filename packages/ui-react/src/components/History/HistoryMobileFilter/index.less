@@ -1,5 +1,5 @@
-@import '../../../assets/theme/font.scss';
-@import '../../../assets/theme/breakpoint.scss';
+@import '../../../assets/theme/constants.less';
+@import '../../../assets/theme/breakpoint.less';
 
 .etransfer-ui-history-mobile-filter-item-wrapper {
   position: relative;
@@ -41,6 +41,7 @@
   font-size: 12px;
   margin-left: 8px;
   vertical-align: middle;
+  display: inline-block;
 }
 
 .etransfer-ui-history-mobile-filter-title {
@@ -74,15 +75,15 @@
   }
 }
 
-.drawer-button-wrapper {
+.etransfer-ui-history-mobile-drawer-button-wrapper {
   display: flex;
   align-items: center;
-  .cancel-button {
+  .etransfer-ui-history-mobile-cancel-button {
     font-size: 16px;
     flex: 5;
     margin-right: 12px;
   }
-  .ok-button {
+  .etransfer-ui-history-mobile-ok-button {
     font-size: 16px;
     flex: 5;
   }

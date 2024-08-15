@@ -22,7 +22,7 @@ export default function SimpleTipModal({ className, open = false, content, getCo
       closable={false}
       okText={GOT_IT}
       onOk={onOk}>
-      <div className="etransfer-ui-simple-modal-body">{content}</div>
+      <div className="etransfer-ui-flex-center etransfer-ui-simple-modal-body">{content}</div>
     </CommonModalTips>
   );
 }

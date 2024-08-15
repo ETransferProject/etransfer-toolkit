@@ -62,6 +62,10 @@ export default function HistoryMobileFilter({
 
   const handleResetFilter = useCallback(() => {
     onReset();
+    setFilterType(RecordsRequestType.All);
+    setFilterStatus(RecordsRequestStatus.All);
+    setFilterTimestampStart(null);
+    setFilterTimestampEnd(null);
     setIsShowFilterDrawer(false);
   }, [onReset]);
 
@@ -175,7 +179,7 @@ export default function HistoryMobileFilter({
               'etransfer-ui-history-mobile-border-change',
             )}
             onChange={setFilterType}
-            popupClassName="etransfer-ui-history-mobile-drop-wrap"
+            popupClassName="etransfer-ui-drop-wrap"
             options={BusinessTypeOptions}
           />
           <div className="etransfer-ui-history-mobile-filter-drawer-label">Status</div>
@@ -187,7 +191,7 @@ export default function HistoryMobileFilter({
               'etransfer-ui-history-mobile-border-change',
             )}
             onChange={setFilterStatus}
-            popupClassName="etransfer-ui-history-mobile-drop-wrap"
+            popupClassName="etransfer-ui-drop-wrap"
             options={HistoryStatusOptions}
           />
           <div className="etransfer-ui-history-mobile-filter-drawer-label">Start time</div>

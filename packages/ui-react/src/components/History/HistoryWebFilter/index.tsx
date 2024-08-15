@@ -51,7 +51,7 @@ export default function HistoryWebFilter({
           value={type}
           className="etransfer-ui-history-web-filter-select-type"
           onChange={onTypeChange}
-          popupClassName={'etransfer-ui-history-web-filter-drop-wrap'}
+          popupClassName="etransfer-ui-drop-wrap"
           options={BusinessTypeOptions}
         />
         <Select
@@ -59,7 +59,7 @@ export default function HistoryWebFilter({
           value={status}
           className="etransfer-ui-history-web-filter-select-status"
           onChange={onStatusChange}
-          popupClassName={'etransfer-ui-history-web-filter-drop-wrap'}
+          popupClassName="etransfer-ui-drop-wrap"
           options={HistoryStatusOptions}
         />
         <RangePicker

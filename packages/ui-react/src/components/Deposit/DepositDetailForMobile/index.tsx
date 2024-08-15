@@ -15,6 +15,7 @@ import CommonQRCode from '../../CommonQRCode';
 import DepositInfo from '../DepositInfo';
 import { DepositRetryForMobile } from '../DepositRetry';
 import DepositTip from '../DepositTip';
+import { CopySize } from '../../Copy';
 
 export default function DepositDetailForMobile({
   className,
@@ -63,6 +64,7 @@ export default function DepositDetailForMobile({
             label={DEPOSIT_ADDRESS_LABEL}
             value={depositInfo.depositAddress}
             componentStyle={componentStyle}
+            copySize={CopySize.Big}
           />
         )}
       </div>

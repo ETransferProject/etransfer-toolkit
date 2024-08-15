@@ -60,3 +60,6 @@ export { default as ExchangeRate } from './Deposit/ExchangeRate';
 export { default as Withdraw } from './Withdraw';
 // export { default as WithdrawForm } from './Withdraw/WithdrawForm';
 // export { default as WithdrawFooter } from './Withdraw/WithdrawFooter';
+
+// feature module - history
+export { default as History } from './History';

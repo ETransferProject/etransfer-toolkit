@@ -189,7 +189,7 @@ export default function HistoryWebTable({
   };
 
   return (
-    <div className="etransfer-ui-history-web-table-web-records-table-wrapper">
+    <div className="etransfer-ui-history-web-table-wrapper">
       <Table
         size={'large'}
         rowKey={'key'}

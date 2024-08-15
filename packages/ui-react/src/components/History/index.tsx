@@ -9,6 +9,7 @@ import { etransferCore, getAuth, setLoading } from '../../utils';
 import moment from 'moment';
 import { END_TIME_FORMAT, START_TIME_FORMAT } from '../../constants';
 import { useDebounceCallback } from '../../hooks';
+import { HistoryFilterOnApplyParams } from './types';
 
 export default function History({
   componentStyle = ComponentStyle.Web,
@@ -25,7 +26,7 @@ export default function History({
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [maxResultCount, setMaxResultCount] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
-  const [skipCount, setSkipCount] = useState(0);
+  const [skipCount, setSkipCount] = useState(1);
 
   const requestRecordsList = useDebounceCallback(async (isLoading = false) => {
     try {
@@ -126,7 +127,11 @@ export default function History({
     requestRecordsListRef.current(true);
   }, [isMobileStyle]);
 
-  const handleApply = useCallback(() => {
+  const handleApply = useCallback((params: HistoryFilterOnApplyParams) => {
+    setType(params.type);
+    setStatus(params.status);
+    setTimestamp(params.timeArray);
+
     setSkipCount(1);
     setRecordsList([]);
     requestRecordsListRef.current();
@@ -175,24 +180,19 @@ export default function History({
     }
   }, []);
 
-  // Listener login
   const refreshData = useCallback(() => {
     requestRecordsListRef.current(true);
   }, []);
   useEffectOnce(() => {
-    const { remove } = etransferEvents.AuthTokenSuccess.addListener(() => refreshData());
+    // Listener login
+    const { remove: authTokenSuccessRemove } = etransferEvents.AuthTokenSuccess.addListener(() => refreshData());
+
+    // Listener unread records
+    const { remove: refreshHistoryDataRemove } = etransferEvents.RefreshHistoryData.addListener(() => handleReset());
 
     return () => {
-      remove();
-    };
-  });
-
-  // Listener unread records
-  useEffectOnce(() => {
-    const { remove } = etransferEvents.RefreshHistoryData.addListener(() => handleReset());
-
-    return () => {
-      remove();
+      authTokenSuccessRemove();
+      refreshHistoryDataRemove();
     };
   });
 
