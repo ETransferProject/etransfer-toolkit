@@ -9,8 +9,7 @@ import FromAndToBox from '../FromAndToBox';
 import StatusBox from '../StatusBox';
 import { HistoryWebContentProps, THistoryFeeInfo, THistoryItem } from '../types';
 import { ComponentStyle } from '../../../types';
-import { getAccountInfo } from '../../../utils';
-import { useMemo } from 'react';
+import { getAccountInfo, getAuth } from '../../../utils';
 import EmptyData from '../../EmptyData';
 
 const componentStyle = ComponentStyle.Web;
@@ -148,11 +147,6 @@ export default function HistoryWebTable({
   maxResultCount,
   onTableChange,
 }: HistoryWebContentProps) {
-  const isLogin = useMemo(() => {
-    const accountInfo = getAccountInfo();
-    return Object.keys(accountInfo?.accounts)?.length > 0;
-  }, []);
-
   const handleRecordListData = (recordsList: TRecordsListItem[]) => {
     if (recordsList.length === 0) {
       return;
@@ -197,7 +191,7 @@ export default function HistoryWebTable({
         columns={columns}
         scroll={{ x: 1020 }}
         locale={{
-          emptyText: <EmptyData emptyText={isLogin ? NO_HISTORY_FOUND : LOGIN_TO_VIEW_HISTORY} />,
+          emptyText: <EmptyData emptyText={!getAuth() ? LOGIN_TO_VIEW_HISTORY : NO_HISTORY_FOUND} />,
         }}
         pagination={
           totalCount > maxResultCount
