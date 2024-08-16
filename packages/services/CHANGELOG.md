@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.5...v1.3.0) (2024-08-16)
+
+### Bug Fixes
+
+- 🐛 style and add mark and update sdk ([a95d03c](https://github.com/ETransferProject/etransfer-toolkit/commit/a95d03cc044b413fcda3634efb4fb3fd83583f9c))
+
+## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.2...v1.3.0-alpha.0) (2024-08-12)
+
+### Features
+
+- 🎸 withdraw from ([e7bc40b](https://github.com/ETransferProject/etransfer-toolkit/commit/e7bc40b02cc53e144dcf31ef836bc5ab6c7522b7))
+
 ## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.1...v1.3.0-alpha.0) (2024-08-12)
 
 ### Features

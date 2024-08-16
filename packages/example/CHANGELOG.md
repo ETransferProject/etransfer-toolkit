@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.5...v1.3.0) (2024-08-16)
+
+### Bug Fixes
+
+- 🐛 style and add mark and update sdk ([a95d03c](https://github.com/ETransferProject/etransfer-toolkit/commit/a95d03cc044b413fcda3634efb4fb3fd83583f9c))
+- 🐛 withdraw error tip ([2efe5b9](https://github.com/ETransferProject/etransfer-toolkit/commit/2efe5b98981733c4840b161b8cf9dfc1f10c38ce))
+
+## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.2...v1.3.0-alpha.0) (2024-08-12)
+
+### Features
+
+- 🎸 add ton blockchain ([de8e149](https://github.com/ETransferProject/etransfer-toolkit/commit/de8e149d90e0192d44b2c1fec4fca716b04a8f56))
+- 🎸 dev withdraw config ([06a9d81](https://github.com/ETransferProject/etransfer-toolkit/commit/06a9d8158d5bf6142c8cff05d44d925243a38ce6))
+- 🎸 dev withdraw footer ([c949e39](https://github.com/ETransferProject/etransfer-toolkit/commit/c949e3926cdb2ea330074e50dc14c4b43e480a11))
+- 🎸 update weblogin to v2 ([1c913b5](https://github.com/ETransferProject/etransfer-toolkit/commit/1c913b590e051348c0d045791c4f55a48e524778))
+
+### Bug Fixes
+
+- 🐛 style and example ([106bc36](https://github.com/ETransferProject/etransfer-toolkit/commit/106bc3657449b3f8ff166956b30a7d1359136f09))
+
 ## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.1...v1.3.0-alpha.0) (2024-08-12)
 
 ### Features

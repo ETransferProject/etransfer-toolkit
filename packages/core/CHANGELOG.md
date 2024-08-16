@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.5...v1.3.0) (2024-08-16)
+
+### Features
+
+- 🎸 add base chain and fix withdraw context ([17a15dd](https://github.com/ETransferProject/etransfer-toolkit/commit/17a15dd6e73fff72f7a57f8abca343255dec0894))
+
+### Bug Fixes
+
+- 🐛 style and add mark and update sdk ([a95d03c](https://github.com/ETransferProject/etransfer-toolkit/commit/a95d03cc044b413fcda3634efb4fb3fd83583f9c))
+- 🐛 withdraw error tip ([2efe5b9](https://github.com/ETransferProject/etransfer-toolkit/commit/2efe5b98981733c4840b161b8cf9dfc1f10c38ce))
+
+## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.2...v1.3.0-alpha.0) (2024-08-12)
+
+### Features
+
+- 🎸 add ton blockchain ([de8e149](https://github.com/ETransferProject/etransfer-toolkit/commit/de8e149d90e0192d44b2c1fec4fca716b04a8f56))
+- 🎸 cache contract and modify core approve error ([788738f](https://github.com/ETransferProject/etransfer-toolkit/commit/788738f74eb1f0a32c4ba776b3bc8ae7a569832c))
+- 🎸 dev withdrawal get data and ue logic ([9593355](https://github.com/ETransferProject/etransfer-toolkit/commit/9593355c020ca8cd2cc28f2917ecff306aca56c3))
+
 ## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.1...v1.3.0-alpha.0) (2024-08-12)
 
 ### Features
