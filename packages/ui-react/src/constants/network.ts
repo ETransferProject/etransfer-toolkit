@@ -25,7 +25,7 @@ export enum ExploreUrlType {
   TRX = 'https://tronscan.io',
   BSC = 'https://bscscan.com',
   AVAXC = 'https://subnets.avax.network/c-chain',
-  TBinance = 'https://bscscan.com',
+  TBSC = 'https://bscscan.com',
   TON = 'https://tonscan.org',
   BASE = 'https://basescan.org',
 }
