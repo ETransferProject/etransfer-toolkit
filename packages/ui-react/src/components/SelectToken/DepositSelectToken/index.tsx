@@ -14,7 +14,6 @@ type TSelectTokenProps = {
   tokenList?: TTokenOptionItem[];
   selected?: TTokenOptionItem;
   isDisabled?: boolean;
-  isShowLoading?: boolean;
   className?: string;
   onChange?: (item: TTokenOptionItem) => void;
   selectCallback: (item: TTokenOptionItem) => void;
@@ -64,7 +63,6 @@ export function DepositSelectTokenForWeb({
   tokenList,
   selected,
   isDisabled,
-  isShowLoading,
   className,
   onChange,
   selectCallback,
@@ -99,7 +97,6 @@ export function DepositSelectTokenForWeb({
         tokenList={tokenList}
         selectedToken={selected?.symbol}
         isDisabled={isDisabled}
-        isShowLoading={isShowLoading}
         onSelect={onSelectToken}
         onClose={() => setIsShowTokenSelectDropdown(false)}
       />
@@ -108,11 +105,10 @@ export function DepositSelectTokenForWeb({
 }
 
 export function DepositSelectTokenForMobile({
-  title = 'Deposit Assets',
+  title = '',
   tokenList,
   selected,
   isDisabled,
-  isShowLoading,
   className,
   onChange,
   selectCallback,
@@ -149,7 +145,6 @@ export function DepositSelectTokenForMobile({
         tokenList={tokenList}
         selectedToken={selected?.symbol}
         isDisabled={isDisabled}
-        isShowLoading={isShowLoading}
         onSelect={onSelectToken}
       />
     </div>

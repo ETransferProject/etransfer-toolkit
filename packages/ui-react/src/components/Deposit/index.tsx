@@ -287,6 +287,8 @@ export default function Deposit({
       toSymbol: currentSelected?.receiveToken || receiveTokenSymbol,
     });
   }, [chainItem?.key, depositTokenSymbol, getNetworkData, getTokenList, networkItem, receiveTokenSymbol]);
+  const initRef = useRef(init);
+  initRef.current = init;
 
   useEffectOnce(() => {
     init();
@@ -295,12 +297,12 @@ export default function Deposit({
   useEffect(() => {
     const { remove } = etransferEvents.AuthTokenSuccess.addListener(() => {
       console.log('login success');
-      init();
+      initRef.current();
     });
     return () => {
       remove();
     };
-  }, [init]);
+  }, []);
 
   return (
     <div className={containerClassName}>

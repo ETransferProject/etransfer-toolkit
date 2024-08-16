@@ -1,6 +1,7 @@
 import { TETransferCoreOptions } from '@etransfer/core';
 import { ChainId } from '@portkey/types';
 import { NetworkType } from '../types';
+import { ICallContractParamsV2, TGetSignatureFunc } from '@etransfer/utils';
 
 export interface ETransferConfigProviderProps {
   config: ETransferConfigProps;
@@ -22,11 +23,34 @@ export interface AelfReact {
 
 export interface ETransferConfigProps extends TETransferCoreOptions {
   networkType: NetworkType;
-  aelfReact?: AelfReact;
+  accountInfo: ETransferAccountConfig;
+  // aelfReact?: AelfReact;
   depositConfig?: ETransferDepositConfig;
   withdrawConfig?: ETransferWithdrawConfig;
   authorization?: ETransferAuthorizationConfig;
 }
+
+export enum WalletTypeEnum {
+  unknown = 'Unknown',
+  elf = 'NightElf',
+  aa = 'PortkeyAA',
+  discover = 'PortkeyDiscover',
+}
+
+export interface ETransferAccountConfig {
+  walletType: WalletTypeEnum;
+  accounts: TAelfAccounts; // account address
+  caHash?: string; // for portkey wallet
+  managerAddress?: string; // for portkey wallet
+  tokenContractCallSendMethod?: <T, R>(props: ICallContractParamsV2<T>) => Promise<R & { transactionId?: string }>;
+  getSignature?: TGetSignatureFunc;
+}
+
+export type TAelfAccounts = {
+  AELF?: string;
+  tDVV?: string;
+  tDVW?: string;
+};
 
 export interface ETransferAuthorizationConfig {
   jwt: string;

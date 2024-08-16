@@ -4,7 +4,7 @@ import './index.less';
 import { CONTRACT_ADDRESS, MINIMUM_DEPOSIT } from '../../../constants/deposit';
 import { formatStr2Ellipsis, formatSymbolDisplay } from '../../../utils/format';
 import { openWithBlank } from '../../../utils/common';
-import { valueFixed2LessThanMin } from '../../../utils/calculate';
+import { valueFixed2LessThanMin } from '@etransfer/utils';
 import CommonSvg from '../../CommonSvg';
 import { CommonModalProps } from '../../CommonModal';
 import ViewContractAddressModal from '../../Modal/ViewContractAddressModal';
@@ -41,12 +41,12 @@ export default function DepositInfo({
 
   const renderContractLinkForMobile = useMemo(() => {
     return (
-      <span className={clsx('etransfer-ui-text-right', 'info-value')} onClick={() => setOpenAddressModal(true)}>
-        <span className={clsx('etransfer-ui-flex-row-center', 'address-ellipsis')}>
-          <span className="etransfer-ui-text-underline-none">{formatStr2Ellipsis(contractAddress, [6, 6])}</span>
-          <span className={clsx('question-mark-icon')}>
-            <CommonSvg type="questionMark" />
-          </span>
+      <span
+        className={clsx('etransfer-ui-text-right', 'etransfer-ui-flex-row-center-end', 'address-ellipsis')}
+        onClick={() => setOpenAddressModal(true)}>
+        <span className="etransfer-ui-text-underline-none">{formatStr2Ellipsis(contractAddress, [6, 6])}</span>
+        <span className={clsx('question-mark-icon')}>
+          <CommonSvg type="questionMark" />
         </span>
       </span>
     );

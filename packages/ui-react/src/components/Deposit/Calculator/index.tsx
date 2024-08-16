@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useEffectOnce } from 'react-use';
 import { Input } from 'antd';
 import './index.less';
 import clsx from 'clsx';
-import { etransferEvents, handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
+import { handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
 import CommonSpace from '../../CommonSpace';
 import CommonSvg from '../../CommonSvg';
 import DynamicArrow from '../../DynamicArrow';
 import singleMessage from '../../SingleMessage';
 import { formatSymbolDisplay } from '../../../utils/format';
-import { MAX_UPDATE_TIME } from '../../../constants/calculate';
+import { MAX_UPDATE_TIME } from '../../../constants';
 import { SIGNATURE_MISSING_TIP } from '../../../constants/misc';
 import { IChainMenuItem } from '../../../types/chain';
 import { etransferCore } from '../../../utils';
@@ -146,17 +145,6 @@ export default function Calculator({
     getCalculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainItem, depositTokenSymbol, receiveTokenSymbol]);
-
-  // Listener login
-  const getCalculateRef = useRef(getCalculate);
-  getCalculateRef.current = getCalculate;
-  useEffectOnce(() => {
-    const { remove } = etransferEvents.LoginSuccess.addListener(getCalculateRef.current);
-
-    return () => {
-      remove();
-    };
-  });
 
   const renderHeader = useMemo(() => {
     return (

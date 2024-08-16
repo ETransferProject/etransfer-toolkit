@@ -26,7 +26,12 @@ export type TETransferCore = {
   createWithdrawOrder(params: TCreateWithdrawOrderParams): Promise<TCreateWithdrawOrderResult>;
 };
 
-export type TETransferCoreInitParams = { etransferUrl: string; etransferAuthUrl: string; storage?: IStorageSuite };
+export type TETransferCoreInitParams = {
+  etransferUrl: string;
+  etransferAuthUrl: string;
+  storage?: IStorageSuite;
+  version: string;
+};
 
 export type TETransferCoreOptions = Partial<TETransferCoreInitParams>;
 
@@ -66,6 +71,7 @@ export type THandleApproveTokenParams = TTokenContractCallSendMethod & {
   decimals: string | number;
   amount: string;
   accountAddress: string;
+  memo?: string;
   eTransferContractAddress: string;
 };
 
@@ -74,6 +80,7 @@ export type TCreateWithdrawOrderParams = {
   symbol: string;
   network: string;
   toAddress: string;
+  memo?: string;
   amount: string;
   rawTransaction: string;
 };

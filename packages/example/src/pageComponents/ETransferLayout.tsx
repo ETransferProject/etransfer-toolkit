@@ -7,19 +7,17 @@ const GetAuth = dynamic(() => import('@/pageComponents/login'), { ssr: false });
 
 export default function ETransferLayout({ children }: { children: React.ReactNode }) {
   ETransferConfig.setConfig({
-    depositConfig: {
-      defaultDepositToken: 'ELF',
-      supportDepositTokens: ['USDT', 'ELF'],
-      defaultReceiveToken: 'ELF',
-      supportReceiveTokens: ['USDT', 'ELF'],
-      defaultChainId: 'tDVW',
-      supportChainIds: ['tDVW'],
-      defaultNetwork: 'SETH',
-      supportNetworks: ['SETH'],
-    },
-    authorization: {
-      jwt: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ2RDhDN0NDNzM4QUEyQjlBRjBFNzhBNENCNEI2RDNEQzkwMzI1QzciLCJ4NXQiOiJSdGpIekhPS29ybXZEbmlreTB0dFBja0RKY2MiLCJ0eXAiOiJhdCtqd3QifQ.eyJzdWIiOiJlYTczM2E2Yi03ZWI4LTQ1ZDItYmM2NC1mMjEzZjk1MDBlYmQiLCJvaV9wcnN0IjoiRVRyYW5zZmVyU2VydmVyX0FwcCIsImNsaWVudF9pZCI6IkVUcmFuc2ZlclNlcnZlcl9BcHAiLCJvaV90a25faWQiOiIxNTZmZDdlNC05NjQ2LWI1Y2UtZGVkNy0zYTEzYjM3OTExOTAiLCJhdWQiOiJFVHJhbnNmZXJTZXJ2ZXIiLCJzY29wZSI6IkVUcmFuc2ZlclNlcnZlciIsImp0aSI6ImI3NzAxMjMyLTc2NzktNGRmNy05MGY2LTQ4Zjg3YTQ1MTM0ZCIsImV4cCI6MTcyMDg2NTg0NCwiaXNzIjoiaHR0cDovLzE3Mi4zMS41LjI0NDo4MDExLyIsImlhdCI6MTcyMDY5MzA0NX0.F2ToZlzNRaZDuq3YGfRavrEg-OdrWdWlGoNTtLwaJZ8xOTgiSOxUF3VNtkIJFrBCCx91t5YBhomL3YpXoUSBg5xjnfHJBqIDTQeXEvvJ8BQZZHhmy2cHHjR3Mvo_drv2dcKG_hPrRcTBLanGprb00c4UpKAwXjIU2QcsGCHXhtVm2Cpn9WHz0Z1JNbTaNxmge4yOQmUN0K3h80b3FQuRrVSLaVloAGVYL25c7q8afGEHe8ZQxXsUUCTxWFZR3tASx_Jtk7Ma0FYPlnSveuJU1q9VaAb8T9LViTzNav4-6tUautl_1xu4-6B4XnNWyH9j2WybBTOK8HUbGWmVw71Z7Q',
-    },
+    // withdrawConfig: {
+    //   defaultChainId: 'AELF',
+    //   supportChainIds: ['tDVW', 'AELF'],
+    //   defaultNetwork: 'TBSC',
+    //   supportNetworks: ['SETH', 'TBSC'],
+    //   defaultToken: 'ELF',
+    //   supportTokens: ['ELF', 'USDT'],
+    // },
+    // authorization: {
+    //   jwt: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjYxN0Y0N0E4NzgwODlCNEYxOTRDRUU0NjNBNTM1MDM5OEFCMEQzMUQiLCJ4NXQiOiJZWDlIcUhnSW0wOFpUTzVHT2xOUU9ZcXcweDAiLCJ0eXAiOiJhdCtqd3QifQ.eyJzdWIiOiJlYTczM2E2Yi03ZWI4LTQ1ZDItYmM2NC1mMjEzZjk1MDBlYmQiLCJvaV9wcnN0IjoiRVRyYW5zZmVyU2VydmVyX0FwcCIsImNsaWVudF9pZCI6IkVUcmFuc2ZlclNlcnZlcl9BcHAiLCJvaV90a25faWQiOiI1ZGUwMGMyNi1iNzk2LTYxNTUtZTcxNS0zYTE0NDNlNzAzOWIiLCJhdWQiOiJFVHJhbnNmZXJTZXJ2ZXIiLCJzY29wZSI6IkVUcmFuc2ZlclNlcnZlciIsImp0aSI6IjE1NzhiMzdiLWM1ZjUtNDViNy1iMDljLTY3MGRiYWUyYjVhMCIsImV4cCI6MTcyMzI4ODk2OSwiaXNzIjoiaHR0cDovLzAuMC4wLjA6ODAxMS8iLCJpYXQiOjE3MjMxMTYxNzB9.OtEHQMSSW3XTmxMDbqLA2ACt4uOnC0AIp-qzSf1a2cFLRdUc3f9vaDxUrKXeXdJVL4Vr6ooHL3JJJFeuVkXzBwcWQatCn1jND-K_h6JQE9Vmdm1oO4qWBD8bn6OlPG3THBDJHhHaT-TMyQ7A_KUg4CWtoahj5M9INWwuel5wb2F0p-ydFoM5Rz_QGtL9blNYjgwgD0APGLoRVetD3ZljSObpGwIM605NYv8XYxUjdyxKW-zdBmTtgbStaWO4hAz7CFz4c_LDJK3jZ4KcQ809jjRzU1NqFmAbDFrGXG5ALBONUg_Srn8e6UCnYrLauZOBgWBeEXhR7jJRRKGA5BxpUA',
+    // },
     networkType: 'TESTNET',
   });
 

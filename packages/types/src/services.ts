@@ -102,6 +102,19 @@ export type TToTokenItem = TTokenItem & {
   chainIdList?: ChainId[];
 };
 
+export type TGetTokenPricesRequest = {
+  symbols: string;
+};
+
+export type TGetTokenPricesResult = {
+  items: TTokenPriceItem[];
+};
+
+export type TTokenPriceItem = {
+  symbol: string;
+  priceUsd: number;
+};
+
 export type TGetDepositInfoRequest = {
   chainId: ChainId;
   network: string;
@@ -150,6 +163,7 @@ export type TGetWithdrawInfoRequest = {
   symbol?: string;
   amount?: string;
   address?: string;
+  memo?: string;
   version?: PortkeyVersion;
 };
 
@@ -192,6 +206,7 @@ export type TCreateWithdrawOrderRequest = {
   amount: string;
   fromChainId: ChainId;
   toAddress: string;
+  memo?: string;
   rawTransaction: string;
 };
 

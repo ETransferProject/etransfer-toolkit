@@ -1,0 +1,38 @@
+@import '../../../assets/theme/constants.less';
+@import '../../../assets/theme/breakpoint.less';
+
+.etransfer-ui-withdraw-contract-address-mobile {
+  margin-top: 8px;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--etransfer-ui-secondary-text);
+
+  .etransfer-ui-withdraw-contract-address-value {
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .etransfer-ui-withdraw-contract-address-icon {
+    position: relative;
+    top: 2px;
+  }
+}
+
+.etransfer-ui-withdraw-contract-address-web {
+  gap: 16px;
+  margin-top: 12px;
+
+  .etransfer-ui-withdraw-contract-address-label {
+    color: var(--etransfer-ui-secondary-text);
+    width: 120px;
+  }
+
+  @media @mediaMobileAndPad {
+    .etransfer-ui-withdraw-contract-address-label,
+    .etransfer-ui-withdraw-contract-address-value {
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+}

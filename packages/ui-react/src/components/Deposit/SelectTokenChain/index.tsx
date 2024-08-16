@@ -39,6 +39,7 @@ export default function SelectTokenChain({
       />
       <CommonSpace direction="vertical" size={20} />
       <DepositSelectTokenForMobile
+        title="Receive Token"
         tokenList={tokenList}
         selected={tokenSelected}
         selectCallback={tokenSelectCallback}

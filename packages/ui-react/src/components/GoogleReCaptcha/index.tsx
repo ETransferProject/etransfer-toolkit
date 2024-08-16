@@ -15,7 +15,6 @@ import { FC, useEffect, useState } from 'react';
 import { nanoid } from 'nanoid/non-secure';
 import { GoogleReCaptchaProps } from './types';
 import { etransferEvents } from '@etransfer/utils';
-// import myEvents from 'utils/myEvent';
 
 /** ID assigned to the main reCAPTCHA script. */
 const MAIN_SCRIPT_ID = 'recaptcha';

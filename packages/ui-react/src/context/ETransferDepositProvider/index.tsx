@@ -3,9 +3,10 @@ import { BasicActions } from '../utils';
 import { ETransferDepositActions, ETransferDepositState } from './actions';
 import { ETransferConfig } from '../../provider/ETransferConfigProvider';
 import { ETransferDepositConfig } from '../../provider/types';
-import { IChainMenuItem, NetworkType } from '../../types';
+import { IChainMenuItem } from '../../types';
 import { CHAIN_ID, CHAIN_MENU_DATA } from '../../constants';
 import { getDepositDefaultConfig } from '../../provider/utils';
+import { getNetworkType } from '../../utils';
 
 const INITIAL_STATE = {
   // depositTokenSymbol: TokenType.USDT,
@@ -87,7 +88,7 @@ export function ETransferDepositProvider({ children }: { children: React.ReactNo
   depositConfigRef.current = depositConfig;
 
   const chain = useMemo(() => {
-    const networkType = ETransferConfig.getConfig('networkType') as NetworkType;
+    const networkType = getNetworkType();
     const defaultChainIds = networkType === 'TESTNET' ? [CHAIN_ID.tDVW, CHAIN_ID.AELF] : [CHAIN_ID.tDVV, CHAIN_ID.AELF];
     const supportChainIds = depositConfigRef.current?.supportChainIds || defaultChainIds;
     const chainList: IChainMenuItem[] = [];

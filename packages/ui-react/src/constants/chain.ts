@@ -45,7 +45,7 @@ export const USDT_DECIMAL = 6;
 export const TOKEN_INFO_USDT = {
   name: 'Tether USD',
   symbol: TokenType.USDT,
-  icon: '',
+  icon: 'https://d.cobo.com/public/logos/USDT%403x.png',
   contractAddress: '',
   decimals: USDT_DECIMAL,
 };

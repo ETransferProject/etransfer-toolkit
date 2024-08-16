@@ -8,10 +8,10 @@ export type TTokenContract = {
 };
 
 export type TTokenContractCallSendMethod = {
-  tokenContractCallSendMethod<T, R>(
+  tokenContractCallSendMethod: <T, R>(
     params: CallContractParams<T>,
     sendOptions?: SendOptions,
-  ): Promise<R & { transactionId: string }> | undefined;
+  ) => Promise<R & { transactionId: string }> | undefined;
 };
 
 export type TApproveAllowanceParams = TTokenContractCallSendMethod & {
@@ -20,6 +20,7 @@ export type TApproveAllowanceParams = TTokenContractCallSendMethod & {
   symbol: string;
   amount: BigNumber | number | string;
   spender: string;
+  memo?: string;
 };
 
 export type TCheckTokenAllowanceAndApproveParams = TTokenContractCallSendMethod & {
@@ -29,6 +30,7 @@ export type TCheckTokenAllowanceAndApproveParams = TTokenContractCallSendMethod 
   amount: string;
   owner: string;
   spender: string;
+  memo?: string;
 };
 
 export type TContractGetBalance = {
@@ -73,6 +75,14 @@ export interface CallContractParams<T> {
   contractAddress: string;
   methodName: string;
   args: T;
+}
+
+export interface ICallContractParamsV2<T> {
+  contractAddress: string;
+  methodName: string;
+  args: T;
+  chainId?: ChainId;
+  sendOptions?: SendOptions;
 }
 
 export type TCreateHandleManagerForwardCall = {

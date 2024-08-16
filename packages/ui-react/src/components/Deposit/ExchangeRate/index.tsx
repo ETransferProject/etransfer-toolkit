@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './index.less';
 import clsx from 'clsx';
-import { etransferEvents, handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
+import { handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
 import { ChainId } from '@portkey/types';
-import { defaultNullValue } from '../../../constants/index';
+import { DEFAULT_NULL_VALUE } from '../../../constants/index';
 import { formatSymbolDisplay } from '../../../utils/format';
-import { MAX_UPDATE_TIME } from '../../../constants/calculate';
+import { MAX_UPDATE_TIME } from '../../../constants';
 import { SIGNATURE_MISSING_TIP } from '../../../constants/misc';
-import { useEffectOnce } from 'react-use';
 import CommonSvg from '../../CommonSvg';
 import singleMessage from '../../SingleMessage';
 import { etransferCore } from '../../../utils';
@@ -32,7 +31,7 @@ export default function ExchangeRate({
   slippage,
 }: TExchangeRate) {
   // const { fromTokenSymbol, toChainItem, toTokenSymbol } = useDepositState();
-  const [exchange, setExchange] = useState(defaultNullValue);
+  const [exchange, setExchange] = useState(DEFAULT_NULL_VALUE);
   const [updateTime, setUpdateTime] = useState(MAX_UPDATE_TIME);
   const updateTimeRef = useRef(MAX_UPDATE_TIME);
   const updateTimerRef = useRef<NodeJS.Timeout>();
@@ -50,7 +49,7 @@ export default function ExchangeRate({
         toSymbol,
         fromAmount: EXCHANGE_FROM_AMOUNT,
       });
-      setExchange(conversionRate?.toAmount || defaultNullValue);
+      setExchange(conversionRate?.toAmount || DEFAULT_NULL_VALUE);
     } catch (error) {
       if (isAuthTokenError(error)) {
         singleMessage.info(SIGNATURE_MISSING_TIP);
@@ -80,7 +79,7 @@ export default function ExchangeRate({
   const stopInterval = useCallback(() => {
     clearInterval(updateTimerRef.current);
     updateTimerRef.current = undefined;
-    setExchange(defaultNullValue);
+    setExchange(DEFAULT_NULL_VALUE);
   }, []);
 
   const resetTimer = useCallback(() => {
@@ -103,17 +102,6 @@ export default function ExchangeRate({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromSymbol, toSymbol, toChainId]);
-
-  // Listener login
-  const getCalculateRef = useRef(getCalculate);
-  getCalculateRef.current = getCalculate;
-  useEffectOnce(() => {
-    const { remove } = etransferEvents.LoginSuccess.addListener(getCalculateRef.current);
-
-    return () => {
-      remove();
-    };
-  });
 
   return (
     <div className={clsx('etransfer-ui-flex-row-between', 'etransfer-ui-exchange-rate', className)}>

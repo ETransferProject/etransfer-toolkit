@@ -1,0 +1,60 @@
+@import '../../../assets/theme/constants.less';
+@import '../../../assets/theme/breakpoint.less';
+
+.etransfer-ui-from-amount-input-wrapper {
+  gap: 12px;
+  .etransfer-ui-form-item-wrapper();
+
+  input {
+    height: 24px;
+    padding: 0;
+    .etransfer-ui-form-item-value();
+  }
+
+  .etransfer-ui-from-amount-input {
+    width: 100%;
+  }
+
+  .etransfer-ui-from-amount-input-addon-after {
+    @media @mediaMobileAndPad {
+      gap: 8px;
+    }
+    @media @mediaWeb {
+      gap: 16px;
+    }
+
+    .etransfer-ui-from-amount-input-unit {
+      color: var(--etransfer-ui-primary-text);
+    }
+
+    .etransfer-ui-from-amount-input-max {
+      color: var(--etransfer-ui-normal);
+      &:hover {
+        color: var(--etransfer-ui-hover);
+      }
+      &:checked {
+        color: var(--etransfer-ui-click);
+      }
+      &:focus {
+        color: var(--etransfer-ui-click);
+      }
+    }
+
+    .etransfer-ui-from-amount-input-unit,
+    .etransfer-ui-from-amount-input-max {
+      .font-medium();
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .etransfer-ui-from-amount-input-unit-mobile,
+    .etransfer-ui-from-amount-input-max-mobile {
+      font-size: 14px;
+    }
+
+    .etransfer-ui-from-amount-input-dividing-line {
+      height: 16px;
+      border-left: 1px solid var(--etransfer-ui-border);
+    }
+  }
+}

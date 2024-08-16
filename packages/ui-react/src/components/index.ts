@@ -45,7 +45,7 @@ export { TokenSelectForMobile, TokenSelectForWeb } from './SelectToken/TokenSele
 export { default as TokenSelectDrawer } from './SelectToken/TokenSelectDrawer';
 export { default as TokenSelectDropdown } from './SelectToken/TokenSelectDropdown';
 
-// feature module
+// feature module - deposit
 export { default as Deposit } from './Deposit';
 export { default as Calculator } from './Deposit/Calculator';
 export { default as DepositDetailForMobile } from './Deposit/DepositDetailForMobile';
@@ -55,3 +55,8 @@ export { default as DepositForWeb } from './Deposit/DepositForWeb';
 export { default as DepositSelectGroupForMobile } from './Deposit/DepositSelectGroupForMobile';
 export { default as DepositSelectGroupForWeb } from './Deposit/DepositSelectGroupForWeb';
 export { default as ExchangeRate } from './Deposit/ExchangeRate';
+
+// feature module - withdraw
+export { default as Withdraw } from './Withdraw';
+// export { default as WithdrawForm } from './Withdraw/WithdrawForm';
+// export { default as WithdrawFooter } from './Withdraw/WithdrawFooter';

@@ -1,11 +1,8 @@
 import React from 'react';
 import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
-import 'aelf-web-login/dist/assets/index.css';
 import '@etransfer/ui-react/dist/assets/index.css';
 import '../app/globals.css';
-import dynamic from 'next/dynamic';
-const GetAuth = dynamic(() => import('@/pageComponents/login'), { ssr: false });
 
 export const metadata: Metadata = {
   title: 'ETransfer toolkit example',
@@ -28,7 +25,6 @@ export default function WebLoginAndAntdLayout({ children }: { children: React.Re
           colorSplit: '#f0f0f0',
         },
       }}>
-      <GetAuth />
       {children}
     </ConfigProvider>
   );

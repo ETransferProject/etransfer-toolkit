@@ -1,8 +1,10 @@
+import { ChainId } from '@portkey/types';
 import googleReCaptchaModal from '../components/GoogleReCaptcha/googleReCaptchaModal';
 import { ReCaptchaType } from '../components/GoogleReCaptcha/types';
 import { ETransferConfig } from '../provider/ETransferConfigProvider';
-import { NetworkType } from '../types';
+import { ETransferAccountConfig, ETransferAuthorizationConfig, WalletTypeEnum } from '../provider/types';
 import { etransferCore } from './core';
+import { NetworkType } from '../types';
 
 export async function getETransferReCaptcha(
   walletAddress: string,
@@ -23,4 +25,23 @@ export async function getETransferReCaptcha(
 
 export function getNetworkType() {
   return ETransferConfig.getConfig('networkType') as NetworkType;
+}
+
+export function getAccountInfo() {
+  return ETransferConfig.getConfig('accountInfo') as ETransferAccountConfig;
+}
+
+export function getAccountAddress(chainId: ChainId) {
+  const accountInfo = ETransferConfig.getConfig('accountInfo') as ETransferAccountConfig;
+  return accountInfo.accounts?.[chainId];
+}
+
+export function isHaveTotalAccountInfo() {
+  const accountInfo = getAccountInfo();
+  const hasAccountAddress = Object.keys(accountInfo.accounts).length > 0;
+  const hasConnectWallet = accountInfo.walletType !== WalletTypeEnum.unknown;
+
+  const authorization = ETransferConfig.getConfig('authorization') as ETransferAuthorizationConfig;
+
+  return hasAccountAddress && hasConnectWallet && !!authorization?.jwt;
 }
