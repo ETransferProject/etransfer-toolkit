@@ -3,13 +3,16 @@ import clsx from 'clsx';
 import './index.less';
 import CommonSvg from '../../CommonSvg';
 import { ETRANSFER_WEBSITE_URL } from '../../../constants';
+import WebUserProfile from '../UserProfile/WebUserProfile';
+import { AccountAddressProps } from '../UserProfile/AccountAddress';
 
 export interface WebHeaderProps {
   isCanClickLogo: boolean;
+  accountList: AccountAddressProps['accountList'];
   onClickLogo?: () => void;
 }
 
-export default function WebHeader({ isCanClickLogo, onClickLogo }: WebHeaderProps) {
+export default function WebHeader({ isCanClickLogo, onClickLogo, accountList }: WebHeaderProps) {
   const goWebsite = useCallback(() => {
     if (onClickLogo) {
       onClickLogo();
@@ -27,10 +30,8 @@ export default function WebHeader({ isCanClickLogo, onClickLogo }: WebHeaderProp
       ) : (
         <CommonSvg type="logo" />
       )}
-
       <div className={'etransfer-ui-web-right-wrapper'}>
-        {/* TODO */}
-        {/* <LoginAndProfileEntry /> */}
+        <WebUserProfile accountList={accountList} />
       </div>
     </div>
   );

@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import './index.less';
-import Address from '../Address';
+import AccountAddress, { AccountAddressProps } from '../AccountAddress';
 import { TelegramPlatform } from '../../../../utils';
 import CommonDrawer from '../../../CommonDrawer';
 import CommonSvg from '../../../CommonSvg';
 
-export default function MobileUserProfile() {
+export interface MobileUserProfileProps {
+  accountList: AccountAddressProps['accountList'];
+}
+
+export default function MobileUserProfile({ accountList }: MobileUserProfileProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [isShowAddress, setIsShowAddress] = useState<boolean>(true);
 
@@ -32,7 +36,7 @@ export default function MobileUserProfile() {
         <CommonSvg type="user" className={'etransfer-ui-flex-none'} />
       </div>
       <CommonDrawer
-        className={clsx('etransfer-ui-mobile-user-profile-drawer', 'etransfer-ui-mobile-user-profile-drawer-weight')}
+        className={clsx('etransfer-ui-mobile-user-profile-drawer')}
         title={
           <div className={'etransfer-ui-mobile-user-profile-drawer-title-wrapper'}>
             <span className={'etransfer-ui-mobile-user-profile-drawer-title'}>My</span>
@@ -66,7 +70,7 @@ export default function MobileUserProfile() {
                   'etransfer-ui-mobile-user-profile-drawer-address-content',
                   !isTelegramPlatform && 'etransfer-ui-mobile-user-profile-drawer-address-content-border',
                 )}>
-                <Address hideBorder={true} />
+                <AccountAddress hideBorder={true} accountList={accountList} />
               </div>
             )}
           </div>

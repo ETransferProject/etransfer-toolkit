@@ -4,33 +4,66 @@ import './index.less';
 import { Layout as AntdLayout } from 'antd';
 import Header from '../Header';
 import GlobalLoading from '../GlobalLoading';
-import { Suspense, useCallback, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { ETransferDepositProvider } from '../../context/ETransferDepositProvider';
-import CommonSpace from '../CommonSpace';
 import Deposit from '../Deposit';
 import { ETransferWithdrawProvider } from '../../context/ETransferWithdrawProvider';
-import { TelegramPlatform } from '../../utils';
+import { getAccountInfo, TelegramPlatform } from '../../utils';
 import WebSider from './WebSider';
+import Withdraw from '../Withdraw';
+import History from '../History';
+import { AccountAddressProps } from '../Header/UserProfile/AccountAddress';
+import { etransferEvents } from '@etransfer/utils';
 
 export default function ETransferContent({
   componentStyle,
   isCanClickHeaderLogo = true,
   isShowHeader = true,
   isShowSider = true,
+  isShowMobileFooter,
   onClickHeaderLogo,
 }: {
   componentStyle: ComponentStyle;
   isCanClickHeaderLogo?: boolean;
   isShowHeader?: boolean;
   isShowSider?: boolean;
+  isShowMobileFooter?: boolean;
   onClickHeaderLogo?: () => void;
 }) {
   const [activeMenuKey, setActiveMenuKey] = useState(SideMenuKey.Deposit);
+  const [accountList, setAccountList] = useState<AccountAddressProps['accountList']>([]);
   const [isUnreadHistory, setIsUnreadHistory] = useState<boolean>(false);
   const isTelegramPlatform = TelegramPlatform.isTelegramPlatform();
 
   const handleMenuChange = useCallback((key: SideMenuKey) => {
     setActiveMenuKey(key);
+  }, []);
+
+  const getAccountList = useCallback(() => {
+    const accountInfo = getAccountInfo();
+    const accounts: any = accountInfo.accounts;
+    const temp: AccountAddressProps['accountList'] = [];
+    Object.keys(accounts)?.forEach((key) => {
+      if (accounts?.[key]) {
+        temp.push({
+          label: key,
+          value: accounts?.[key],
+        });
+      }
+    }, []);
+    setAccountList(temp);
+  }, []);
+  const getAccountListRef = useRef(getAccountList);
+  getAccountListRef.current = getAccountList;
+
+  useEffect(() => {
+    const { remove } = etransferEvents.ETransferConfigUpdated.addListener(() => {
+      console.log('update userInfo');
+      getAccountListRef.current();
+    });
+    return () => {
+      remove();
+    };
   }, []);
 
   return (
@@ -39,7 +72,9 @@ export default function ETransferContent({
         <Header
           componentStyle={componentStyle}
           activeMenuKey={activeMenuKey}
+          accountList={accountList}
           isUnreadHistory={isUnreadHistory}
+          isShowMobileFooter={isShowMobileFooter}
           onChange={handleMenuChange}
           isCanClickLogo={isCanClickHeaderLogo}
           onClickLogo={onClickHeaderLogo}
@@ -53,21 +88,16 @@ export default function ETransferContent({
           <Suspense fallback={<GlobalLoading />}>
             {activeMenuKey === SideMenuKey.Deposit && (
               <ETransferDepositProvider>
-                <CommonSpace direction={'vertical'} size={24} />
                 <Deposit componentStyle={componentStyle} />
               </ETransferDepositProvider>
             )}
             {activeMenuKey === SideMenuKey.Withdraw && (
               <ETransferWithdrawProvider>
-                <CommonSpace direction={'vertical'} size={24} />
-                <Deposit componentStyle={componentStyle} />
+                <Withdraw componentStyle={componentStyle} />
               </ETransferWithdrawProvider>
             )}
             {activeMenuKey === SideMenuKey.History && (
-              <div>
-                <CommonSpace direction={'vertical'} size={24} />
-                <Deposit componentStyle={componentStyle} />
-              </div>
+              <History componentStyle={componentStyle} isUnreadHistory={isUnreadHistory} />
             )}
           </Suspense>
         </div>

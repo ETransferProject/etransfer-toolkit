@@ -2,7 +2,6 @@ import { Space } from 'antd';
 import clsx from 'clsx';
 import './index.less';
 import { SideMenuKey } from '../../../types';
-import { TelegramPlatform } from '../../../utils';
 import { etransferEvents } from '@etransfer/utils';
 import { MENU_ITEMS } from '../../../constants';
 import CommonSvg from '../../CommonSvg';
@@ -14,15 +13,8 @@ export interface WebSiderProps {
 }
 
 export default function WebSider({ activeMenuKey, isUnreadHistory, onChange }: WebSiderProps) {
-  const isTelegramPlatform = TelegramPlatform.isTelegramPlatform();
-
   return (
-    <div
-      className={clsx(
-        'etransfer-ui-flex-column-between',
-        'etransfer-ui-web-sider',
-        !isTelegramPlatform && 'etransfer-ui-web-sider-not-tg',
-      )}>
+    <div className={clsx('etransfer-ui-flex-column-between', 'etransfer-ui-web-sider')}>
       <Space className={'etransfer-ui-web-sider-menu'} direction="vertical">
         {MENU_ITEMS.map((item) => {
           return (

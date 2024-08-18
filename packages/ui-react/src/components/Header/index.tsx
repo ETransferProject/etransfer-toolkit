@@ -1,20 +1,30 @@
 import { ComponentStyle } from '../../types';
 import MobileHeader, { MobileHeaderProps } from './MobileHeader';
 import WebHeader, { WebHeaderProps } from './WebHeader';
+import './index.less';
 
 export default function Header({
   activeMenuKey,
+  accountList,
   componentStyle,
   isCanClickLogo,
+  isUnreadHistory,
+  isShowMobileFooter,
   onClickLogo,
   onChange,
 }: { componentStyle: ComponentStyle } & MobileHeaderProps & WebHeaderProps) {
   return (
     <div className="etransfer-ui-header-wrapper">
       {componentStyle === ComponentStyle.Mobile ? (
-        <MobileHeader activeMenuKey={activeMenuKey} isUnreadHistory={false} onChange={onChange} />
+        <MobileHeader
+          activeMenuKey={activeMenuKey}
+          accountList={accountList}
+          isUnreadHistory={isUnreadHistory}
+          isShowMobileFooter={isShowMobileFooter}
+          onChange={onChange}
+        />
       ) : (
-        <WebHeader isCanClickLogo={isCanClickLogo} onClickLogo={onClickLogo} />
+        <WebHeader accountList={accountList} isCanClickLogo={isCanClickLogo} onClickLogo={onClickLogo} />
       )}
     </div>
   );

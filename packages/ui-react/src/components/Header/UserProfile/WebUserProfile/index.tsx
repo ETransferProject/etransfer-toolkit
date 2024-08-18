@@ -1,11 +1,15 @@
 import { useCallback, useState } from 'react';
 import clsx from 'clsx';
 import './index.less';
-import Address from '../Address';
+import AccountAddress, { AccountAddressProps } from '../AccountAddress';
 import { Popover } from 'antd';
 import CommonSvg from '../../../CommonSvg';
 
-export default function WebUserProfile() {
+export interface WebUserProfileProps {
+  accountList: AccountAddressProps['accountList'];
+}
+
+export default function WebUserProfile({ accountList }: WebUserProfileProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClickChange = useCallback((open: boolean) => {
@@ -16,11 +20,7 @@ export default function WebUserProfile() {
     <Popover
       overlayClassName={'etransfer-ui-web-user-profile'}
       placement="bottomRight"
-      content={
-        <>
-          <Address hideBorder={false} />
-        </>
-      }
+      content={<AccountAddress hideBorder={false} accountList={accountList} />}
       trigger="click"
       open={isOpen}
       onOpenChange={handleClickChange}>

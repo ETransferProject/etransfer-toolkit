@@ -19608,7 +19608,7 @@ textarea.etransfer-ant-input {
   flex-direction: column;
   /* fix firefox can't set height smaller than content on flex item */
   min-height: 0;
-  background: #f0f2f5;
+  background: var(--etransfer-ui-page-bg);
 }
 .etransfer-ant-layout,
 .etransfer-ant-layout * {

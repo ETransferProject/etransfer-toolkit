@@ -10,12 +10,12 @@
   border: none;
 }
 
-.etransfer-ui-mobile-user-profile-drawer.etransfer-ui-mobile-user-profile-drawer-weight {
-  .etransfer-ui-ant-drawer-content {
+.etransfer-ui-mobile-user-profile-drawer {
+  .etransfer-ant-drawer-content {
     border-radius: 0;
   }
-  .etransfer-ui-ant-drawer-body {
-    padding: 0;
+  .etransfer-ant-drawer-body {
+    padding: 0 0 16px 0;
   }
 }
 
@@ -42,13 +42,19 @@
   width: 100%;
 }
 
-.etransfer-ui-mobile-user-profile-drawer-assets-wrapper,
 .etransfer-ui-mobile-user-profile-drawer-address-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
   border-bottom: 1px solid var(--etransfer-ui-dividers);
+}
+
+.etransfer-ui-mobile-user-profile-drawer-address {
+  font-size: 16px;
+  height: 24px;
+  line-height: 24px;
+  .font-medium();
 }
 
 .etransfer-ui-mobile-user-profile-drawer-address-show {

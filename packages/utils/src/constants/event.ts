@@ -7,4 +7,5 @@ export const EVENT_LIST = [
   'SetGlobalLoading',
   'GoogleReCaptcha',
   'RefreshHistoryData',
+  'ETransferConfigUpdated',
 ] as const;
