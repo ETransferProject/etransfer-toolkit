@@ -1,3 +1,4 @@
+@import '~antd/dist/antd.variable.min.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -29,7 +30,7 @@ body {
   height: 100vh;
   padding: 12px;
   font-size: 14px;
-  color: '#1a1a1a';
+  color: #1a1a1a;
 }
 
 .page-title {

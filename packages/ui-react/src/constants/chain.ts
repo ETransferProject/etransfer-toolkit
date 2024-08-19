@@ -49,3 +49,5 @@ export const TOKEN_INFO_USDT = {
   contractAddress: '',
   decimals: USDT_DECIMAL,
 };
+
+export const SYNCHRONIZING_ADDRESS = 'Synchronising data on the blockchain…';

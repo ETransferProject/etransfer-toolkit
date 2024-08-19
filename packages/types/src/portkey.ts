@@ -7,9 +7,3 @@ export enum PortkeyNameVersion {
   v1 = 'portkey',
   v2 = 'Portkey',
 }
-
-export enum SupportedChainId {
-  AELF = 'AELF',
-  tDVV = 'tDVV',
-  tDVW = 'tDVW',
-}

@@ -12,6 +12,7 @@ import ExchangeRate from '../ExchangeRate';
 import CommonQRCode from '../../CommonQRCode';
 import CommonAddress from '../../CommonAddress';
 import { DepositDetailProps } from '../types';
+import { CopySize } from '../../Copy';
 
 export default function DepositDetailForWeb({
   className,
@@ -81,6 +82,7 @@ export default function DepositDetailForWeb({
               label={DEPOSIT_ADDRESS_LABEL}
               value={depositInfo.depositAddress}
               componentStyle={componentStyle}
+              copySize={CopySize.Big}
             />
           </div>
           <CommonSpace direction="vertical" size={12} />

@@ -18,8 +18,16 @@ export default function QuickRouter() {
           <Button>Go to deposit</Button>
         </a>
 
-        <a href="withdraw">
+        <a href="withdraw" className="mr-2">
           <Button>Go to withdraw</Button>
+        </a>
+
+        <a href="history" className="mr-2">
+          <Button>Go to history</Button>
+        </a>
+
+        <a href="etransfer">
+          <Button>Go to etransfer</Button>
         </a>
       </div>
     </div>

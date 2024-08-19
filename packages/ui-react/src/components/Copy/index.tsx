@@ -9,6 +9,7 @@ import { ComponentStyle } from '../../types/common';
 export enum CopySize {
   Small = 'small',
   Normal = 'normal',
+  Big = 'big',
 }
 
 export default function Copy({
@@ -32,8 +33,14 @@ export default function Copy({
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const CopyIcon = useMemo(() => <CommonSvg type={size === CopySize.Small ? 'copySmall' : 'copy'} />, [size]);
-  const CheckIcon = useMemo(() => <CommonSvg type={size === CopySize.Small ? 'checkSmall' : 'check'} />, [size]);
+  const CopyIcon = useMemo(
+    () => <CommonSvg type={size === CopySize.Small ? 'copySmall' : size === CopySize.Big ? 'copyBig' : 'copy'} />,
+    [size],
+  );
+  const CheckIcon = useMemo(
+    () => <CommonSvg type={size === CopySize.Small ? 'checkSmall' : size === CopySize.Big ? 'checkBig' : 'check'} />,
+    [size],
+  );
 
   const tooltipTitle = useMemo(() => {
     if (isShowCopyIcon || isMobileStyle) {

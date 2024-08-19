@@ -1,0 +1,57 @@
+@import '../../../../assets/theme/constants.less';
+
+.etransfer-ui-web-user-profile-main-content {
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid var(--etransfer-ui-border);
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--etransfer-ui-hover);
+  }
+}
+
+.etransfer-ui-web-user-profile-wallet-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+}
+
+.etransfer-ui-web-user-profile-wallet-text {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--etransfer-ui-primary-text);
+  .font-medium();
+}
+
+.dropdown {
+  width: 320px;
+  padding-top: 12px;
+  background-color: var(--etransfer-ui-page-bg);
+  border-radius: 6px;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.12);
+}
+
+.button-wrapper {
+  padding: 12px 24px;
+}
+
+.etransfer-ui-web-user-profile {
+  padding-top: 8px !important;
+
+  .etransfer-ant-popover-content {
+    .etransfer-ant-popover-arrow {
+      display: none !important;
+    }
+    .etransfer-ant-popover-inner {
+      width: 320px;
+      background-color: var(--etransfer-ui-page-bg);
+      border-radius: 6px;
+      box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.12);
+      .etransfer-ant-popover-inner-content {
+        padding: 12px 0 !important;
+      }
+    }
+  }
+}

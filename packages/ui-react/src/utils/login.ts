@@ -36,12 +36,16 @@ export function getAccountAddress(chainId: ChainId) {
   return accountInfo.accounts?.[chainId];
 }
 
+export function getAuth() {
+  const authorization = ETransferConfig.getConfig('authorization') as ETransferAuthorizationConfig;
+  return authorization?.jwt;
+}
+
 export function isHaveTotalAccountInfo() {
   const accountInfo = getAccountInfo();
   const hasAccountAddress = Object.keys(accountInfo.accounts).length > 0;
   const hasConnectWallet = accountInfo.walletType !== WalletTypeEnum.unknown;
+  const jwt = getAuth();
 
-  const authorization = ETransferConfig.getConfig('authorization') as ETransferAuthorizationConfig;
-
-  return hasAccountAddress && hasConnectWallet && !!authorization?.jwt;
+  return hasAccountAddress && hasConnectWallet && !!jwt;
 }

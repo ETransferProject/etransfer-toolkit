@@ -5,6 +5,7 @@ import { CONTRACT_ADDRESS } from '../../../constants';
 import { formatStr2Ellipsis } from '../../../utils';
 import ViewContractAddressModal from '../../Modal/ViewContractAddressModal';
 import CommonSvg from '../../CommonSvg';
+import { ComponentStyle } from '../../../types';
 
 export function ContractAddressForMobile({
   label = CONTRACT_ADDRESS,
@@ -36,6 +37,7 @@ export function ContractAddressForMobile({
       </div>
 
       <ViewContractAddressModal
+        componentStyle={ComponentStyle.Mobile}
         open={openModal}
         network={networkName}
         value={address}

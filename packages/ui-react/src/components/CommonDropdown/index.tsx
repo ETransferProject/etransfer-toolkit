@@ -50,7 +50,7 @@ export default function CommonDropdown({
           childrenClassName,
         )}>
         {children}
-        {!props.hideDownArrow && <DynamicArrow isExpand={isOpen} className={'children-icon'} size={suffixArrowSize} />}
+        {!props.hideDownArrow && <DynamicArrow isExpand={isOpen} className="children-icon" size={suffixArrowSize} />}
       </div>
     </Dropdown>
   );

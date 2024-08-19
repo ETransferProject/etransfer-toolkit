@@ -2,7 +2,7 @@ import { GOT_IT } from '../../../constants';
 import { ComponentStyle } from '../../../types';
 import { CommonModalProps } from '../../CommonModal';
 import CommonModalTips from '../../CommonModalTips';
-import Copy from '../../Copy';
+import Copy, { CopySize } from '../../Copy';
 import OpenLink from '../../OpenLink';
 import './index.less';
 import clsx from 'clsx';
@@ -22,7 +22,7 @@ const ViewContractAddressModalTitle = 'Contract Address on ';
 
 export default function ViewContractAddressModal({
   className,
-  componentStyle,
+  componentStyle = ComponentStyle.Web,
   open = false,
   network,
   value,
@@ -52,6 +52,7 @@ export default function ViewContractAddressModal({
                 className={clsx('etransfer-ui-flex-none', 'view-contract-address-modal-copy-icon')}
                 toCopy={value}
                 componentStyle={componentStyle}
+                size={CopySize.Big}
               />
             )}
             {!!link && <OpenLink className="etransfer-ui-flex-none etransfer-ui-cursor-pointer" href={link} />}

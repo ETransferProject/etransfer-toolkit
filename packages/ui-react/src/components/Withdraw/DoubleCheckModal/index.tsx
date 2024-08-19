@@ -28,7 +28,7 @@ export interface DoubleCheckModalProps {
 }
 
 export default function DoubleCheckModal({
-  componentStyle,
+  componentStyle = ComponentStyle.Web,
   withdrawInfo,
   modalProps,
   isTransactionFeeLoading,

@@ -21,7 +21,11 @@ const isNeedQuota = (symbol: TokenType, chainId: ChainId) => {
   return false;
 };
 
-export default function SuccessModal({ componentStyle, withdrawInfo, modalProps }: SuccessModalProps) {
+export default function SuccessModal({
+  componentStyle = ComponentStyle.Web,
+  withdrawInfo,
+  modalProps,
+}: SuccessModalProps) {
   const arrivalTime = useMemo(() => {
     const symbol = withdrawInfo.symbol as TokenType;
     const chainId = withdrawInfo.network.network as unknown as ChainId;

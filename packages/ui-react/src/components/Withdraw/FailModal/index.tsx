@@ -10,7 +10,7 @@ interface FailModalProps {
   componentStyle?: ComponentStyle;
 }
 
-export default function FailModal({ componentStyle, failReason, modalProps }: FailModalProps) {
+export default function FailModal({ componentStyle = ComponentStyle.Web, failReason, modalProps }: FailModalProps) {
   return (
     <CommonModalAutoScreen {...modalProps} componentStyle={componentStyle} hideCancelButton okText="Got it">
       <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-withdraw-fail-modal-container')}>

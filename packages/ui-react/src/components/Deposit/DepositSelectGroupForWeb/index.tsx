@@ -6,6 +6,7 @@ import DepositSelectChain from '../../SelectChain/DepositSelectChain';
 import { DepositSelectNetworkForWeb } from '../../SelectNetwork/DepositSelectNetwork';
 import { DepositSelectTokenForWeb } from '../../SelectToken/DepositSelectToken';
 import './index.less';
+import { useIsHaveJWT } from '../../../hooks/login';
 
 export default function DepositSelectGroupForWeb({
   className,
@@ -23,6 +24,7 @@ export default function DepositSelectGroupForWeb({
   receiveTokenSelected,
   receiveTokenSelectCallback,
 }: DepositSelectGroupProps) {
+  const isHaveJWT = useIsHaveJWT();
   return (
     <div className={className}>
       <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-selected-data-wrapper')}>
@@ -73,10 +75,12 @@ export default function DepositSelectGroupForWeb({
           id="etransferWebDepositChainWrapper">
           <div className={clsx('etransfer-ui-flex-row-center-between', 'label')}>
             <span>To</span>
-            <div className="etransfer-ui-flex-row-center">
-              <div className={'circle'} />
-              <span className={'connected'}>Connected</span>
-            </div>
+            {isHaveJWT && (
+              <div className="etransfer-ui-flex-row-center">
+                <div className={'circle'} />
+                <span className={'connected'}>Connected</span>
+              </div>
+            )}
           </div>
 
           <DepositSelectChain
