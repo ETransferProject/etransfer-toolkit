@@ -1,0 +1,48 @@
+@import '../../assets/theme/breakpoint.less';
+
+.etransfer-ui-copy-icon-wrapper {
+  border-radius: 4px;
+  path {
+    fill: var(--etransfer-ui-secondary-text);
+  }
+}
+
+.etransfer-ui-copy-icon-wrapper-small {
+  width: 18px;
+  height: 18px;
+}
+
+.etransfer-ui-copy-icon-wrapper-normal {
+  width: 24px;
+  height: 24px;
+}
+
+.etransfer-ui-copy-icon-wrapper-big {
+  width: 32px;
+  height: 32px;
+
+  @media @mediaMobileAndPad {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.etransfer-ui-copy-icon-wrapper-background-color {
+  @media @mediaMobileAndPad {
+    &:active {
+      background-color: var(--etransfer-ui-brand-bg);
+      path {
+        fill: var(--etransfer-ui-hover);
+      }
+    }
+  }
+
+  @media @mediaWeb {
+    &:hover {
+      background-color: var(--etransfer-ui-brand-bg);
+      path {
+        fill: var(--etransfer-ui-hover);
+      }
+    }
+  }
+}

@@ -30,7 +30,7 @@ export type SignatureData = {
   from: string;
 };
 
-export type TGetSignatureFunc = (params: any) => Promise<SignatureData>; // WalletHookInterface['getSignature']
+export type TGetSignatureFunc = (params: any) => Promise<SignatureData | null>;
 
 export type TSignatureParams = Omit<SignatureParams, 'appName' | 'address'>;
 

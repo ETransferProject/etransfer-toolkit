@@ -1,0 +1,85 @@
+@import '../../../assets/theme/breakpoint.less';
+
+.etransfer-ui-withdraw-remaining-limit {
+  gap: 8px;
+
+  .etransfer-ui-withdraw-remaining-limit-value,
+  .etransfer-ui-withdraw-remaining-limit-label {
+    display: flex;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .etransfer-ui-withdraw-remaining-limit-value {
+    color: var(--etransfer-ui-primary-text);
+    white-space: nowrap;
+    gap: 4px;
+  }
+  .etransfer-ui-withdraw-remaining-limit-value-limit-currency {
+    margin-left: 2px;
+    max-width: 57px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .etransfer-ui-withdraw-remaining-limit-label {
+    color: var(--etransfer-ui-secondary-text);
+  }
+  @media @mediaWeb {
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0;
+    .etransfer-ui-withdraw-remaining-limit-label {
+      margin-left: 8px;
+    }
+  }
+  @media @mediaPad {
+    flex-direction: row;
+    &::before {
+      width: var(--etransfer-ui-content-width);
+    }
+  }
+  @media @mediaMobileAndPad {
+    justify-content: flex-start;
+    position: relative;
+    margin-top: 48px;
+    .etransfer-ui-withdraw-remaining-limit-value {
+      color: var(--etransfer-ui-secondary-text);
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: -24px;
+      height: 1px;
+      background-color: var(--etransfer-ui-dividers);
+    }
+  }
+
+  @media @mediaMobile {
+    flex-direction: column;
+    align-items: flex-start;
+    &::before {
+      left: -16px;
+      width: 100vw;
+    }
+    .etransfer-ui-withdraw-remaining-limit-value {
+      margin-left: 7px;
+    }
+  }
+}
+
+.etransfer-ui-withdraw-remaining-limit-error {
+  .etransfer-ui-withdraw-remaining-limit-label,
+  .etransfer-ui-withdraw-remaining-limit-value {
+    color: var(--etransfer-ui-error);
+  }
+}
+
+
+.etransfer-ui-withdraw-question-label {
+  gap: 4px;
+  cursor: pointer;
+}

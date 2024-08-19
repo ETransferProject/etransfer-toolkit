@@ -1,0 +1,39 @@
+@import '../../assets/theme/constants.less';
+
+.etransfer-ui-common-drawer {
+  min-width: var(--etransfer-ui-page-min-width);
+
+  .etransfer-ant-drawer-content-wrapper {
+    border-radius: 8px 8px 0px 0px;
+    background-color: var(--etransfer-ui-page-bg);
+  }
+  .etransfer-ant-drawer-content {
+    border-radius: 8px 8px 0px 0px;
+    background-color: var(--etransfer-ui-page-bg);
+  }
+  .etransfer-ant-drawer-header {
+    flex: none;
+    height: 56px;
+    padding: 15px 16px;
+    border: none;
+    .etransfer-ant-drawer-header-title {
+      text-align: center;
+      position: relative;
+      .etransfer-ant-drawer-title {
+        color: var(--etransfer-ui-primary-text);
+        font-size: 16px;
+        line-height: 24px;
+        .font-medium();
+      }
+      .etransfer-ant-drawer-close {
+        position: absolute;
+        right: 0;
+        margin: 0;
+      }
+    }
+  }
+  .etransfer-ant-drawer-body {
+    overflow-y: auto;
+    padding: 0 16px 16px;
+  }
+}

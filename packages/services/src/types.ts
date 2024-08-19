@@ -1,4 +1,8 @@
 import {
+  TCheckEOARegistrationRequest,
+  TCheckEOARegistrationResult,
+  TCreateWithdrawOrderRequest,
+  TCreateWithdrawOrderResult,
   TGetAuthRequest,
   TGetAuthResult,
   TGetTokenListRequest,
@@ -13,11 +17,11 @@ import {
   TGetDepositCalculateResult,
   TGetWithdrawInfoRequest,
   TGetWithdrawInfoResult,
-  TCreateWithdrawOrderRequest,
-  TCreateWithdrawOrderResult,
   TGetRecordStatusResult,
   TGetRecordsListRequest,
   TGetRecordsListResult,
+  TGetTokenPricesRequest,
+  TGetTokenPricesResult,
 } from '@etransfer/types';
 
 export type TServices = {
@@ -25,10 +29,12 @@ export type TServices = {
   getTokenList(params: TGetTokenListRequest): Promise<TGetTokenListResult>;
   getTokenOption(params: TGetTokenOptionRequest): Promise<TGetTokenOptionResult>;
   getNetworkList(params: TGetNetworkListRequest): Promise<TGetNetworkListResult>;
+  getTokenPrices(params: TGetTokenPricesRequest): Promise<TGetTokenPricesResult>;
   getDepositInfo(params: TGetDepositInfoRequest): Promise<TGetDepositInfoResult>;
   getDepositCalculate(params: TGetDepositCalculateRequest): Promise<TGetDepositCalculateResult>;
   getWithdrawInfo(params: TGetWithdrawInfoRequest): Promise<TGetWithdrawInfoResult>;
   createWithdrawOrder(params: TCreateWithdrawOrderRequest): Promise<TCreateWithdrawOrderResult>;
   getRecordsList(params: TGetRecordsListRequest): Promise<TGetRecordsListResult>;
   getRecordStatus(): Promise<TGetRecordStatusResult>;
+  checkEOARegistration(params: TCheckEOARegistrationRequest): Promise<TCheckEOARegistrationResult>;
 };

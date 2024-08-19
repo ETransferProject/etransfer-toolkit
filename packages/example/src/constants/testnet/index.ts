@@ -1,14 +1,14 @@
 import { ContractType } from '@/constants/chain';
 import * as AELF_Test from '../platform/AELF_Test';
 import * as tDVW_Test from '../platform/tDVW_Test';
-import { NetworkType } from '@portkey/provider-types';
 import { NetworkName } from '@/constants/network';
-import { TNetworkTypeV1 } from '@/types';
+import { NetworkEnum } from '@aelf-web-login/wallet-adapter-base';
+
+export const TELEGRAM_BOT_ID = '7057631599';
 
 export const NETWORK_NAME: NetworkName = NetworkName.testnet;
 
-export const NETWORK_TYPE_V1: TNetworkTypeV1 = 'MAIN';
-export const NETWORK_TYPE_V2: NetworkType = 'TESTNET';
+export const NETWORK_TYPE: NetworkEnum = NetworkEnum.TESTNET;
 
 export enum SupportedELFChainId {
   AELF = 'AELF',
@@ -70,17 +70,13 @@ export const AELF_NODES = {
 };
 
 // testnet-jenkins
-export const ETRANSFER_URL = 'https://test.etransfer.exchange';
-export const ETRANSFER_AUTH_URL = 'https://test.etransfer.exchange';
-export const WEB_LOGIN_GRAPHQL_URL_V1 =
-  'https://dapp-portkey-test.portkey.finance/Portkey_DID/PortKeyIndexerCASchema/graphql';
-export const WEB_LOGIN_GRAPHQL_URL_V2 =
+export const ETransferHost = 'https://test-app.etransfer.exchange';
+export const ETransferAuthHost = 'https://test-app.etransfer.exchange';
+export const WebLoginGraphqlUrl =
   'https://dapp-aa-portkey-test.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql';
-export const WEB_LOGIN_REQUEST_URL_V1 = 'https://did-portkey-test.portkey.finance';
-export const WEB_LOGIN_REQUEST_URL_V2 = 'https://aa-portkey-test.portkey.finance';
-export const WEB_LOGIN_SERVICE_URL_V1 = 'https://did-portkey-test.portkey.finance';
-export const WEB_LOGIN_SERVICE_URL_V2 = 'https://aa-portkey-test.portkey.finance';
-export const WEB_LOGIN_CONNECT_URL_V2 = 'https://auth-aa-portkey-test.portkey.finance';
+// 'https://dapp-aa-portkey-test.portkey.finance/Portkey_DID/PortKeyIndexerCASchema/graphql';
+export const WebLoginServiceUrl = 'https://aa-portkey-test.portkey.finance';
+export const WebLoginConnectUrl = 'https://auth-aa-portkey-test.portkey.finance';
 
 export const ADDRESS_MAP = {
   [SupportedELFChainId.AELF]: {

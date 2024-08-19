@@ -1,0 +1,60 @@
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-token-card-for-mobile {
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--etransfer-ui-dividers);
+  background: var(--etransfer-ui-page-bg);
+  cursor: pointer;
+
+  .etransfer-ui-token-card-for-mobile-left {
+    gap: 8px;
+    .token-card-name {
+      color: var(--etransfer-ui-primary-text);
+      font-size: 14px;
+      .font-medium();
+    }
+    .token-card-symbol {
+      color: var(--etransfer-ui-secondary-text);
+    }
+  }
+}
+
+.etransfer-ui-token-card-for-web {
+  display: flex;
+  gap: 8px;
+  padding: 16px 12px;
+  align-items: center;
+  border-bottom: 1px solid var(--etransfer-ui-dividers);
+  background: var(--etransfer-ui-page-bg);
+  cursor: pointer;
+
+  .etransfer-ui-token-card-for-web-left {
+    gap: 8px;
+  }
+
+  .token-card-name {
+    color: var(--etransfer-ui-primary-text);
+    font-size: 16px;
+    .font-medium();
+  }
+  .token-card-symbol {
+    color: var(--etransfer-ui-secondary-text);
+    .etransfer-ui-text-overflow(1);
+    word-break: break-all;
+  }
+}
+
+.etransfer-ui-token-card-for-web-hover {
+  &:hover {
+    background: var(--etransfer-ui-hover-bg);
+  }
+}
+
+.etransfer-ui-token-card-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}

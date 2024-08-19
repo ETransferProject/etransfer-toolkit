@@ -3,6 +3,7 @@ import {
   TCreateWithdrawOrderParams,
   TETransferCore,
   TETransferCoreOptions,
+  TGetAuthFromStorageParams,
   TGetAuthParams,
   THandleApproveTokenParams,
   TSendWithdrawOrderParams,
@@ -19,24 +20,26 @@ import {
   getTokenContract,
   getETransferJWT,
   setETransferJWT,
+  ZERO,
 } from '@etransfer/utils';
 import {
+  API_VERSION,
   INSUFFICIENT_ALLOWANCE_MESSAGE,
   WITHDRAW_ERROR_MESSAGE,
   WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
-  ZERO,
+  WithdrawErrorNameType,
 } from './constants';
 import { divDecimals } from '@etransfer/utils';
-import { IStorageSuite } from '@etransfer/types';
-import { TGetAuthRequest } from '@etransfer/types';
+import { IStorageSuite, TWalletType } from '@etransfer/types';
+import { AuthTokenSource, TGetAuthRequest } from '@etransfer/types';
 
 export abstract class BaseETransferCore {
-  protected _storage?: IStorageSuite;
+  public storage?: IStorageSuite;
   constructor(storage?: IStorageSuite) {
-    this._storage = storage;
+    this.storage = storage;
   }
   setStorage(storage: IStorageSuite) {
-    this._storage = storage;
+    this.storage = storage;
   }
 }
 
@@ -44,6 +47,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   public services: Services;
   public baseUrl?: string;
   public authUrl?: string;
+  public version?: string;
 
   constructor(options: TETransferCoreOptions) {
     super(options.storage);
@@ -51,9 +55,14 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     this.init(options);
   }
 
-  public init({ etransferUrl, etransferAuthUrl, storage }: TETransferCoreOptions) {
+  public init({ etransferUrl, etransferAuthUrl, storage, version }: TETransferCoreOptions) {
     etransferUrl && this.setBaseUrl(etransferUrl);
     etransferAuthUrl && this.setAuthUrl(etransferAuthUrl);
+
+    // version
+    const versionNew = version || API_VERSION;
+    this.setVersion(versionNew);
+
     storage && this.setStorage(storage);
   }
 
@@ -68,27 +77,76 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     this.authUrl = url;
   }
 
+  public setVersion(version?: string) {
+    if (!version) return;
+    this.version = version;
+    this.services.setRequestHeaders('Version', version);
+  }
+
   async getAuthToken(params: TGetAuthParams) {
-    const key = params.caHash + params.managerAddress;
-    if (!this._storage) throw new Error('Please set up the storage suite first');
-    const data = await getETransferJWT(this._storage, key);
     // 1: local storage has JWT token
+    const data = await this.getAuthTokenFromStorage({
+      walletType: (params?.source as unknown as TWalletType) || TWalletType.Portkey,
+      caHash: params.caHash,
+      managerAddress: params.managerAddress,
+    });
+    if (data) return data;
+
+    // 2: local storage don not has JWT token
+    return await this.getAuthTokenFromApi({
+      pubkey: params.pubkey,
+      signature: params.signature,
+      plain_text: params.plainText,
+      ca_hash: params?.caHash || undefined,
+      chain_id: params?.chainId || undefined,
+      managerAddress: params.managerAddress,
+      version: params.version,
+      source: params.source || AuthTokenSource.Portkey,
+      recaptchaToken: params.recaptchaToken,
+    });
+  }
+
+  async getAuthTokenFromStorage(params: TGetAuthFromStorageParams) {
+    // Portkey key = caHash + managerAddress
+    // NightElf key = AuthTokenSource.NightElf + managerAddress
+    const frontPartKey = params.walletType === TWalletType.NightElf ? AuthTokenSource.NightElf : params.caHash;
+    const key = frontPartKey + params.managerAddress;
+
+    if (!this.storage) throw new Error('Please set up the storage suite first');
+
+    const data = await getETransferJWT(this.storage, key);
     if (data) {
       this.services.setRequestHeaders('Authorization', `${data.token_type} ${data.access_token}`);
       etransferEvents.AuthTokenSuccess.emit();
       return `${data.token_type} ${data.access_token}`;
-    } else {
-      // 2: local storage don not has JWT token
-      return await this.getAuthTokenFromApi({
-        pubkey: params.pubkey,
-        signature: params.signature,
-        plain_text: params.plainText,
-        ca_hash: params.caHash,
-        chain_id: params.chainId,
-        managerAddress: params.managerAddress,
-        version: params.version,
-      });
     }
+    return undefined;
+  }
+
+  async getReCaptcha(walletAddress: string, reCaptchaUrl?: string): Promise<string | undefined> {
+    const isRegistered = await this.services.checkEOARegistration({ address: walletAddress });
+    return new Promise((resolve, reject) => {
+      if (!isRegistered.result) {
+        const openUrl = reCaptchaUrl || this.baseUrl || '';
+        if (!openUrl) throw new Error('Please set reCaptchaUrl');
+        window.open(openUrl + '/recaptcha');
+
+        const handleData = function (event) {
+          if (event.origin === openUrl) {
+            if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
+              window.removeEventListener('message', handleData, true);
+              resolve(event.data.data);
+            } else {
+              window.removeEventListener('message', handleData, true);
+              reject(event.data.data);
+            }
+          }
+        };
+        window.addEventListener('message', handleData, true);
+      } else {
+        resolve(undefined);
+      }
+    });
   }
 
   async getAuthTokenFromApi(params: TGetAuthRequest) {
@@ -99,8 +157,11 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     this.services.setRequestHeaders('Authorization', `${token_type} ${access_token}`);
     etransferEvents.AuthTokenSuccess.emit();
 
-    if (this._storage) {
-      await setETransferJWT(this._storage, params.ca_hash + params.managerAddress, res);
+    if (this.storage) {
+      const frontPartKey =
+        params?.source === AuthTokenSource.NightElf ? AuthTokenSource.NightElf : params?.ca_hash || '';
+      const key = frontPartKey + params.managerAddress;
+      await setETransferJWT(this.storage, key, res);
     }
 
     return `${token_type} ${access_token}`;
@@ -114,6 +175,8 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       caContractAddress,
       eTransferContractAddress,
       toAddress,
+      memo,
+      walletType,
       caHash,
       symbol,
       decimals,
@@ -134,9 +197,14 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       decimals,
       amount,
       accountAddress,
+      memo,
       eTransferContractAddress,
     });
-    if (!approveRes) throw new Error(INSUFFICIENT_ALLOWANCE_MESSAGE);
+    if (!approveRes) {
+      const error = new Error(INSUFFICIENT_ALLOWANCE_MESSAGE);
+      error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
+      throw error;
+    }
     console.log('>>>>>> sendTransferTokenTransaction approveRes', approveRes);
 
     if (approveRes) {
@@ -146,13 +214,15 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
         caHash,
         symbol,
         amount,
+        walletType,
         chainId,
         endPoint,
         managerAddress,
         decimals,
-        getSignature,
         network,
         toAddress,
+        memo,
+        getSignature,
       });
     } else {
       throw new Error('Approve Failed');
@@ -168,6 +238,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       caHash,
       symbol,
       amount,
+      walletType,
       chainId,
       endPoint,
       managerAddress,
@@ -175,42 +246,35 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       getSignature,
       network,
       toAddress,
+      memo,
     } = params;
     const transaction = await createTransferTokenTransaction({
       caContractAddress,
       eTransferContractAddress,
+      walletType,
       caHash,
       symbol,
       amount: timesDecimals(amount, decimals).toFixed(),
       chainId,
       endPoint,
       fromManagerAddress: managerAddress,
+      memo,
       getSignature,
     });
     console.log(transaction, '=====transaction');
     if (!transaction) throw new Error('Generate transaction raw failed.');
 
-    try {
-      const createOrderResult = await this.createWithdrawOrder({
-        chainId,
-        symbol,
-        network,
-        toAddress,
-        amount,
-        rawTransaction: transaction,
-      });
-      if (createOrderResult.orderId) {
-        return createOrderResult;
-      } else {
-        throw new Error(WITHDRAW_ERROR_MESSAGE);
-      }
-    } catch (error: any) {
-      if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
-        throw new Error(error?.message);
-      } else {
-        throw new Error(WITHDRAW_ERROR_MESSAGE);
-      }
-    }
+    const createOrderResult = await this.createWithdrawOrder({
+      chainId,
+      symbol,
+      network,
+      toAddress,
+      amount,
+      memo,
+      rawTransaction: transaction,
+    });
+
+    return createOrderResult;
   }
 
   async handleApproveToken({
@@ -221,6 +285,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     decimals,
     amount,
     accountAddress,
+    memo,
     eTransferContractAddress,
   }: THandleApproveTokenParams): Promise<boolean> {
     const tokenContractOrigin = await getTokenContract(endPoint, tokenContractAddress);
@@ -228,9 +293,11 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     const maxBalanceFormat = divDecimals(maxBalance, decimals).toFixed();
     console.log('>>>>>> maxBalance', maxBalanceFormat);
     if (ZERO.plus(maxBalanceFormat).isLessThan(ZERO.plus(amount))) {
-      throw new Error(
+      const error = new Error(
         `Insufficient ${symbol} balance in your account. Please consider transferring a smaller amount or topping up before you try again.`,
       );
+      error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
+      throw error;
     }
 
     const checkRes = await checkTokenAllowanceAndApprove({
@@ -241,6 +308,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       amount,
       owner: accountAddress,
       spender: eTransferContractAddress,
+      memo,
     });
 
     return checkRes;
@@ -251,6 +319,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     symbol,
     network,
     toAddress,
+    memo,
     amount,
     rawTransaction,
   }: TCreateWithdrawOrderParams) {
@@ -261,19 +330,25 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
         amount,
         fromChainId: chainId,
         toAddress: isDIDAddressSuffix(toAddress) ? removeDIDAddressSuffix(toAddress) : toAddress,
+        memo,
         rawTransaction: rawTransaction,
       });
       console.log('>>>>>> handleCreateWithdrawOrder createWithdrawOrderRes', createWithdrawOrderRes);
       if (createWithdrawOrderRes.orderId) {
         return createWithdrawOrderRes;
       } else {
-        throw new Error(WITHDRAW_ERROR_MESSAGE);
+        const error = new Error(WITHDRAW_ERROR_MESSAGE);
+        error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
+        throw error;
       }
     } catch (error: any) {
       if (WITHDRAW_TRANSACTION_ERROR_CODE_LIST.includes(error?.code)) {
-        throw new Error(error?.message);
+        error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
+        throw error;
       } else {
-        throw new Error(WITHDRAW_ERROR_MESSAGE);
+        const error = new Error(WITHDRAW_ERROR_MESSAGE);
+        error.name = WithdrawErrorNameType.CUSTOMIZED_ERROR_MESSAGE;
+        throw error;
       }
     } finally {
       await sleep(1000);

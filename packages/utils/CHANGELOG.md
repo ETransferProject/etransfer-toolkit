@@ -3,6 +3,102 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.3.0...v1.4.0) (2024-08-19)
+
+### Features
+
+- 🎸 dev history ([0355be0](https://github.com/ETransferProject/etransfer-toolkit/commit/0355be05893dc74e3da291cf9f3fbae77d478e13))
+- 🎸 history logic ([7fb712e](https://github.com/ETransferProject/etransfer-toolkit/commit/7fb712ea9e26dac9a08ea4c9b1649d15ec9b3b17))
+
+## [1.3.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.5...v1.3.0) (2024-08-16)
+
+## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.2...v1.3.0-alpha.0) (2024-08-12)
+
+### Features
+
+- 🎸 add ton blockchain ([de8e149](https://github.com/ETransferProject/etransfer-toolkit/commit/de8e149d90e0192d44b2c1fec4fca716b04a8f56))
+- 🎸 cache contract and modify core approve error ([788738f](https://github.com/ETransferProject/etransfer-toolkit/commit/788738f74eb1f0a32c4ba776b3bc8ae7a569832c))
+- 🎸 dev withdraw footer ([c949e39](https://github.com/ETransferProject/etransfer-toolkit/commit/c949e3926cdb2ea330074e50dc14c4b43e480a11))
+- 🎸 dev withdrawal get data and ue logic ([9593355](https://github.com/ETransferProject/etransfer-toolkit/commit/9593355c020ca8cd2cc28f2917ecff306aca56c3))
+- 🎸 withdraw from ([e7bc40b](https://github.com/ETransferProject/etransfer-toolkit/commit/e7bc40b02cc53e144dcf31ef836bc5ab6c7522b7))
+
+### Bug Fixes
+
+- 🐛 style and example ([106bc36](https://github.com/ETransferProject/etransfer-toolkit/commit/106bc3657449b3f8ff166956b30a7d1359136f09))
+
+## [1.3.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.1...v1.3.0-alpha.0) (2024-08-12)
+
+### Features
+
+- 🎸 add ton blockchain ([de8e149](https://github.com/ETransferProject/etransfer-toolkit/commit/de8e149d90e0192d44b2c1fec4fca716b04a8f56))
+- 🎸 cache contract and modify core approve error ([788738f](https://github.com/ETransferProject/etransfer-toolkit/commit/788738f74eb1f0a32c4ba776b3bc8ae7a569832c))
+- 🎸 dev withdraw footer ([c949e39](https://github.com/ETransferProject/etransfer-toolkit/commit/c949e3926cdb2ea330074e50dc14c4b43e480a11))
+- 🎸 dev withdrawal get data and ue logic ([9593355](https://github.com/ETransferProject/etransfer-toolkit/commit/9593355c020ca8cd2cc28f2917ecff306aca56c3))
+- 🎸 withdraw from ([e7bc40b](https://github.com/ETransferProject/etransfer-toolkit/commit/e7bc40b02cc53e144dcf31ef836bc5ab6c7522b7))
+
+### Bug Fixes
+
+- 🐛 style and example ([106bc36](https://github.com/ETransferProject/etransfer-toolkit/commit/106bc3657449b3f8ff166956b30a7d1359136f09))
+
+## [1.2.1-alpha.5](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.3...v1.2.1-alpha.5) (2024-08-15)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.1-alpha.4](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.3...v1.2.1-alpha.4) (2024-08-15)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.1-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.2...v1.2.1-alpha.3) (2024-08-15)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.1-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.1...v1.2.1-alpha.2) (2024-08-05)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.0...v1.2.1-alpha.1) (2024-07-19)
+
+### Features
+
+- 🎸 add recaptcha modal ([e0fe0a6](https://github.com/ETransferProject/etransfer-toolkit/commit/e0fe0a6683d95baf8ce6e1658d491fa892ac4ea8))
+
+## [1.2.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0...v1.2.1-alpha.0) (2024-07-17)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.3...v1.2.0) (2024-07-16)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.0-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.2...v1.2.0-alpha.3) (2024-07-12)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.0-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.1...v1.2.0-alpha.2) (2024-07-12)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.0-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.0-alpha.0...v1.2.0-alpha.1) (2024-07-11)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.2.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.1.0-alpha.0...v1.2.0-alpha.0) (2024-07-11)
+
+### Features
+
+- 🎸 dev deposit components ([29a5082](https://github.com/ETransferProject/etransfer-toolkit/commit/29a50826a1878c29ade3bdd48c4645053fe2319a))
+- 🎸 dev deposit logic ([0dd3836](https://github.com/ETransferProject/etransfer-toolkit/commit/0dd3836a5e6f79f9fa1adbe85e646b65d8a89413))
+
+### Bug Fixes
+
+- 🐛 version and name ([c36c60c](https://github.com/ETransferProject/etransfer-toolkit/commit/c36c60c8f553b213e914249b09d5074cd88bc6ab))
+
+## [1.1.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0...v1.1.0-alpha.0) (2024-07-11)
+
+### Features
+
+- 🎸 support nightelf ([064acca](https://github.com/ETransferProject/etransfer-toolkit/commit/064accaa42fd2d312fbfa0ff6ed19956c9a024c3))
+
 ## [1.0.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.0.0-alpha.11...v1.0.0) (2024-06-17)
 
 **Note:** Version bump only for package @etransfer/utils

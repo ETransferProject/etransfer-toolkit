@@ -1,20 +1,29 @@
 'use client';
 import { eTransferCore } from '@/utils/core';
-import { PortkeyVersion } from '@etransfer/types';
+import { AuthTokenSource, PortkeyVersion } from '@etransfer/types';
 import { Button, message } from 'antd';
-import { useCallback } from 'react';
-import { WebLoginState, useWebLogin } from 'aelf-web-login';
+import { useCallback, useRef } from 'react';
+
 import { useQueryAuthToken } from '@/hooks/authToken';
+import { ETransferAuthHost, ETransferHost } from '@/constants';
+import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
+import { etransferCore, WalletTypeEnum } from '@etransfer/ui-react';
+import { etransferEvents } from '@etransfer/utils';
+import { useIsLogin } from '@/hooks/wallet';
 
 export default function GetAuth() {
-  const { getAuthToken } = useQueryAuthToken();
+  const { walletType, connectWallet, disConnectWallet } = useConnectWallet();
+  const isLogin = useIsLogin();
+  const isLoginRef = useRef(isLogin);
+  isLoginRef.current = isLogin;
+  const { getAuthToken, getUserInfo } = useQueryAuthToken();
   const fetchAuthToken = useCallback(async () => {
     await getAuthToken();
   }, [getAuthToken]);
 
   const fetchNewAuthToken = useCallback(async () => {
     // Please set freely.
-    eTransferCore.setAuthUrl('https://test.etransfer.exchange');
+    eTransferCore.setAuthUrl(ETransferAuthHost);
     await eTransferCore.getAuthTokenFromApi({
       pubkey:
         '04671bfc20edb4cdc171bd7d20877aa64862e88dc9f52173673db9789e0dea71aca45472fd4841cad362cae8b5b6f05c55a350014f7917fe90870fd680c845edae',
@@ -25,29 +34,61 @@ export default function GetAuth() {
       chain_id: 'tDVW',
       managerAddress: '7iC6EQtt4rKsqv9vFiwpUDvZVipSoKwvPLy7pRG189qJjyVT7',
       version: PortkeyVersion.v2,
+      source: walletType === WalletTypeEnum.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey,
     });
+  }, [walletType]);
+
+  const onLogin = useCallback(() => {
+    if (isLoginRef.current) {
+      message.info('You are logged in.');
+    } else {
+      connectWallet();
+    }
+  }, [connectWallet]);
+
+  const handleLogout = useCallback(async () => {
+    console.log('>>>>>> click log out');
+    Promise.resolve(disConnectWallet()).then(() => {
+      console.log('>>>>>> disConnectWallet done');
+      localStorage.clear();
+      etransferCore.services.setRequestHeaders('Authorization', '');
+      eTransferCore.services.setRequestHeaders('Authorization', '');
+
+      etransferEvents.LogoutSuccess.emit();
+    });
+  }, [disConnectWallet]);
+
+  const getReCaptcha = useCallback(() => {
+    window.open(ETransferHost + '/recaptcha');
+    window.onmessage = function (event) {
+      if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
+        console.log('Google reCaptcha response:', event.data.data);
+      }
+    };
   }, []);
 
-  const { login, loginState } = useWebLogin();
-  const onLogin = useCallback(() => {
-    if (loginState === WebLoginState.logining) return;
-    if (loginState === WebLoginState.logined) {
-      message.info('You are logged in.');
-    }
-    if (loginState === WebLoginState.initial || loginState === WebLoginState.lock) {
-      login();
-    }
-  }, [login, loginState]);
+  const onGetUserInfo = useCallback(async () => {
+    await getUserInfo(false);
+  }, [getUserInfo]);
 
   return (
     <div>
       <Button className="mr-2" onClick={onLogin}>
         Log in
       </Button>
+      <Button className="mr-2" onClick={handleLogout}>
+        Log out
+      </Button>
       <Button className="mr-2" onClick={fetchAuthToken}>
         Get ETransfer Token
       </Button>
-      <Button onClick={fetchNewAuthToken}>Get New ETransfer Token</Button>
+      {/* <Button className="mr-2" onClick={fetchNewAuthToken}>
+        Get New ETransfer Token
+      </Button> */}
+      <Button className="mr-2" onClick={onGetUserInfo}>
+        Get UserInfo
+      </Button>
+      <Button onClick={getReCaptcha}>Google reCaptcha</Button>
     </div>
   );
 }

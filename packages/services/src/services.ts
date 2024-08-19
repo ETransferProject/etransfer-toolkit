@@ -1,6 +1,10 @@
 import { AxiosRequestConfig } from 'axios';
 import { stringify } from 'query-string';
 import {
+  TCheckEOARegistrationRequest,
+  TCheckEOARegistrationResult,
+  TCreateWithdrawOrderRequest,
+  TCreateWithdrawOrderResult,
   TGetAuthRequest,
   TGetAuthResult,
   TGetTokenListRequest,
@@ -15,15 +19,15 @@ import {
   TGetDepositCalculateResult,
   TGetWithdrawInfoRequest,
   TGetWithdrawInfoResult,
-  TCreateWithdrawOrderRequest,
-  TCreateWithdrawOrderResult,
   TGetRecordsListRequest,
   TGetRecordsListResult,
   TGetRecordStatusResult,
+  TGetTokenPricesRequest,
+  TGetTokenPricesResult,
 } from '@etransfer/types';
 import { TServices } from './types';
 import { formatApiError } from './utils';
-import { API_LIST, AUTH_API_BASE_PARAMS, CancelTokenSourceKey } from './constants';
+import { API_LIST, AUTH_API_BASE_PARAMS, CANCEL_TOKEN_SOURCE_KEY } from './constants';
 import { TRequestConfig, EtransferRequest } from '@etransfer/request';
 
 export abstract class BaseService {
@@ -81,7 +85,7 @@ export class Services extends BaseService implements TServices {
     try {
       const res = await this._request.send(API_LIST.common.getNetworkList, {
         params,
-        cancelTokenSourceKey: CancelTokenSourceKey.GET_NETWORK_LIST,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_NETWORK_LIST,
       });
       return res.data;
     } catch (error: any) {
@@ -89,11 +93,22 @@ export class Services extends BaseService implements TServices {
     }
   }
 
+  async getTokenPrices(params: TGetTokenPricesRequest): Promise<TGetTokenPricesResult> {
+    try {
+      const res = await this._request.send(API_LIST.common.getTokenPrices, {
+        params,
+      });
+      return res.data;
+    } catch (error: any) {
+      throw formatApiError(error, 'getTokenPrices error', true);
+    }
+  }
+
   async getDepositInfo(params: TGetDepositInfoRequest): Promise<TGetDepositInfoResult> {
     try {
       const res = await this._request.send(API_LIST.deposit.getDepositInfo, {
         params,
-        cancelTokenSourceKey: CancelTokenSourceKey.GET_DEPOSIT_INFO,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_DEPOSIT_INFO,
       });
       return res.data;
     } catch (error: any) {
@@ -116,7 +131,7 @@ export class Services extends BaseService implements TServices {
     try {
       const res = await this._request.send(API_LIST.withdraw.getWithdrawInfo, {
         params,
-        cancelTokenSourceKey: CancelTokenSourceKey.GET_WITHDRAW_INFO,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_WITHDRAW_INFO,
       });
       return res.data;
     } catch (error: any) {
@@ -150,6 +165,15 @@ export class Services extends BaseService implements TServices {
       return res.data;
     } catch (error: any) {
       throw formatApiError(error, 'getRecordStatus error', false);
+    }
+  }
+
+  async checkEOARegistration(params: TCheckEOARegistrationRequest): Promise<TCheckEOARegistrationResult> {
+    try {
+      const res = await this._request.send(API_LIST.user.checkEOARegistration, { params });
+      return res.data;
+    } catch (error: any) {
+      throw formatApiError(error, 'checkEOARegistration error', false);
     }
   }
 }

@@ -1,9 +1,10 @@
 import AElf from 'aelf-sdk';
 import { sleep } from '../common';
-import { SupportedChainId } from '@etransfer/types';
+import { SupportedChainId, TChainType } from '@etransfer/types';
 import { isValidBase58 } from '../reg';
 import { TGetRawTx } from '../types';
 import { handleContractErrorMessage } from '../error';
+import { ChainId } from '@portkey/types';
 
 const httpProviders: any = {};
 export function getAElf(rpc: string) {
@@ -129,4 +130,38 @@ export const removeDIDAddressSuffix = (address: string) => {
   if (isDIDAddressSuffix(address)) return removeAddressSuffix(address);
 
   return address;
+};
+
+export const isELFAddress = (value: string) => {
+  if (/[\u4e00-\u9fa5]/.test(value)) return false;
+  try {
+    return !!AElf.utils.decodeAddressRep(value);
+  } catch {
+    return false;
+  }
+};
+
+export const removeELFAddressSuffix = (address: string) => {
+  if (isELFAddress(address)) return removeAddressSuffix(address);
+
+  return address;
+};
+
+/**
+ * format address like "aaa...bbb" to "ELF_aaa...bbb_AELF"
+ * @param address
+ * @param chainId
+ * @param chainType
+ * @returns
+ */
+export const formatDIDAddress = (
+  address: string,
+  chainId: ChainId = SupportedChainId.AELF,
+  chainType: TChainType = 'aelf',
+): string => {
+  if (chainType !== 'aelf') return address;
+  const arr = address.split('_');
+  if (address.includes('_') && arr.length < 3) return address;
+  if (address.includes('_')) return `ELF_${arr[1]}_${chainId}`;
+  return `ELF_${address}_${chainId}`;
 };

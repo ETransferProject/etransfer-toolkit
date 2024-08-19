@@ -5,6 +5,7 @@ import {
   TApproveAllowanceParams,
   TCheckTokenAllowanceAndApproveParams,
   TCreateHandleManagerForwardCall,
+  TCreateTransferToken,
   TGetRawTx,
   TGetSignatureFunc,
   TTokenContract,
@@ -14,11 +15,20 @@ import BigNumber from 'bignumber.js';
 import { aelfInstance } from './aelfInstance';
 import { handleManagerForwardCall, getContractMethods } from '@portkey/contracts';
 
-export const getContract = async (endPoint: string, contractAddress: string, wallet?: any) => {
-  if (!wallet) wallet = AElf.wallet.getWalletByPrivateKey(COMMON_PRIVATE);
-  const aelf = getAElf(endPoint);
-  const contract = await aelf.chain.contractAt(contractAddress, wallet);
-  return contract;
+const CacheViewContracts: { [key: string]: TTokenContract } = {};
+
+export const getContract = async (endPoint: string, contractAddress: string, wallet?: any): Promise<TTokenContract> => {
+  const key = endPoint + contractAddress;
+
+  if (!CacheViewContracts[key]) {
+    if (!wallet) wallet = AElf.wallet.getWalletByPrivateKey(COMMON_PRIVATE);
+    const aelf = getAElf(endPoint);
+    const contract = await aelf.chain.contractAt(contractAddress, wallet);
+    CacheViewContracts[endPoint + contractAddress] = contract;
+    return contract;
+  }
+
+  return CacheViewContracts[key];
 };
 
 export const getTokenContract = async (endPoint: string, tokenContractAddress: string) => {
@@ -58,6 +68,7 @@ export const approveAllowance = async ({
   symbol,
   amount,
   spender,
+  memo,
 }: TApproveAllowanceParams) => {
   const approveResult = await tokenContractCallSendMethod({
     contractAddress: tokenContractAddress,
@@ -66,6 +77,7 @@ export const approveAllowance = async ({
       spender,
       symbol,
       amount: amount.toString(),
+      memo,
     },
   });
   if (!approveResult?.transactionId) throw new Error('Missing transactionId');
@@ -83,6 +95,7 @@ export const checkTokenAllowanceAndApprove = async ({
   amount,
   owner,
   spender,
+  memo,
 }: TCheckTokenAllowanceAndApproveParams) => {
   const tokenContractOrigin = await getTokenContract(endPoint, tokenContractAddress);
   const [allowance, tokenInfo] = await Promise.all([
@@ -102,6 +115,7 @@ export const checkTokenAllowanceAndApprove = async ({
       symbol,
       amount: bigA.toFixed(0),
       spender,
+      memo,
     });
 
     const allowanceNew = await getAllowance(tokenContractOrigin, symbol, owner, spender);
@@ -149,6 +163,23 @@ export const createManagerForwardCall = async ({
   return protoInputType.encode(message).finish();
 };
 
+export const createTransferToken = async ({ contractAddress, chainId, endPoint, args }: TCreateTransferToken) => {
+  let instance: any, methods: { [x: string]: any };
+
+  instance = aelfInstance.getInstance(chainId, endPoint);
+  methods = await getContractMethods(instance, contractAddress);
+
+  const protoInputType = methods[CONTRACT_METHOD_NAME.TransferToken];
+
+  let input = AElf.utils.transform.transformMapToArray(protoInputType, args);
+
+  input = AElf.utils.transform.transform(protoInputType, input, AElf.utils.transform.INPUT_TRANSFORMERS);
+
+  const message = protoInputType.fromObject(input);
+
+  return protoInputType.encode(message).finish();
+};
+
 export const handleTransaction = async ({
   blockHeightInput,
   blockHashInput,
@@ -174,7 +205,7 @@ export const handleTransaction = async ({
   const ser = AElf.pbUtils.Transaction.encode(rawTx).finish();
 
   const signatureRes = await getSignature(ser);
-  const signatureStr = signatureRes.signature || '';
+  const signatureStr = signatureRes?.signature || '';
   if (!signatureStr) return;
 
   let tx = {
