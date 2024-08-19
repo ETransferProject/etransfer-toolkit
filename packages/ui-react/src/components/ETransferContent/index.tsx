@@ -14,11 +14,13 @@ import Withdraw from '../Withdraw';
 import History from '../History';
 import { AccountAddressProps } from '../Header/UserProfile/AccountAddress';
 import { etransferEvents } from '@etransfer/utils';
+import { useUpdateRecord } from '../../hooks/updateRecord';
 
 export default function ETransferContent({
   componentStyle,
   isCanClickHeaderLogo = true,
   isShowHeader = true,
+  isShowHeaderUserProfile = true,
   isShowSider = true,
   isShowMobileFooter,
   onClickHeaderLogo,
@@ -26,13 +28,13 @@ export default function ETransferContent({
   componentStyle: ComponentStyle;
   isCanClickHeaderLogo?: boolean;
   isShowHeader?: boolean;
+  isShowHeaderUserProfile?: boolean;
   isShowSider?: boolean;
   isShowMobileFooter?: boolean;
   onClickHeaderLogo?: () => void;
 }) {
   const [activeMenuKey, setActiveMenuKey] = useState(SideMenuKey.Deposit);
   const [accountList, setAccountList] = useState<AccountAddressProps['accountList']>([]);
-  const [isUnreadHistory, setIsUnreadHistory] = useState<boolean>(false);
   const isTelegramPlatform = TelegramPlatform.isTelegramPlatform();
 
   const handleMenuChange = useCallback((key: SideMenuKey) => {
@@ -66,6 +68,8 @@ export default function ETransferContent({
     };
   }, []);
 
+  const isUnreadHistory = useUpdateRecord();
+
   return (
     <AntdLayout id="etransferContentLayout" className={clsx('etransfer-ui-content-layout')}>
       {isShowHeader && (
@@ -77,6 +81,7 @@ export default function ETransferContent({
           isShowMobileFooter={isShowMobileFooter}
           onChange={handleMenuChange}
           isCanClickLogo={isCanClickHeaderLogo}
+          isShowUserProfile={isShowHeaderUserProfile}
           onClickLogo={onClickHeaderLogo}
         />
       )}

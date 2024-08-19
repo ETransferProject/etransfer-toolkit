@@ -40,3 +40,5 @@ export const LOGIN_TO_VIEW_HISTORY = 'Log in to view transaction history';
 export const NO_DATA_TEXT = '-- No Data --';
 
 export const LOADING_TEXT = ' Loading... ';
+
+export const UPDATE_UN_READE_RECORD_TIME = 6;

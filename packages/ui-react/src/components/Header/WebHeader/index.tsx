@@ -7,12 +7,18 @@ import WebUserProfile from '../UserProfile/WebUserProfile';
 import { AccountAddressProps } from '../UserProfile/AccountAddress';
 
 export interface WebHeaderProps {
-  isCanClickLogo: boolean;
+  isCanClickLogo?: boolean;
   accountList: AccountAddressProps['accountList'];
+  isShowUserProfile?: boolean;
   onClickLogo?: () => void;
 }
 
-export default function WebHeader({ isCanClickLogo, onClickLogo, accountList }: WebHeaderProps) {
+export default function WebHeader({
+  isCanClickLogo = true,
+  onClickLogo,
+  accountList,
+  isShowUserProfile,
+}: WebHeaderProps) {
   const goWebsite = useCallback(() => {
     if (onClickLogo) {
       onClickLogo();
@@ -30,9 +36,11 @@ export default function WebHeader({ isCanClickLogo, onClickLogo, accountList }: 
       ) : (
         <CommonSvg type="logo" />
       )}
-      <div className={'etransfer-ui-web-right-wrapper'}>
-        <WebUserProfile accountList={accountList} />
-      </div>
+      {isShowUserProfile && (
+        <div className={'etransfer-ui-web-right-wrapper'}>
+          <WebUserProfile accountList={accountList} />
+        </div>
+      )}
     </div>
   );
 }

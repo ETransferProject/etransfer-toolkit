@@ -9,6 +9,7 @@ export interface MobileHeaderProps {
   activeMenuKey: SideMenuKey;
   accountList: AccountAddressProps['accountList'];
   isUnreadHistory: boolean;
+  isShowUserProfile?: boolean;
   isShowMobileFooter?: boolean;
   onChange: (key: SideMenuKey) => void;
 }
@@ -17,6 +18,7 @@ export default function MobileHeader({
   activeMenuKey,
   accountList,
   isUnreadHistory,
+  isShowUserProfile,
   isShowMobileFooter,
   onChange,
 }: MobileHeaderProps) {
@@ -33,7 +35,7 @@ export default function MobileHeader({
         {activeMenuKey === SideMenuKey.Withdraw && 'Withdraw Assets'}
         {activeMenuKey === SideMenuKey.History && 'History'}
       </span>
-      <MobileUserProfile accountList={accountList} />
+      {isShowUserProfile && <MobileUserProfile accountList={accountList} />}
     </div>
   );
 }

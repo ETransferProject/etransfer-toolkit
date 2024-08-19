@@ -9,6 +9,7 @@ export default function Header({
   componentStyle,
   isCanClickLogo,
   isUnreadHistory,
+  isShowUserProfile,
   isShowMobileFooter,
   onClickLogo,
   onChange,
@@ -20,11 +21,17 @@ export default function Header({
           activeMenuKey={activeMenuKey}
           accountList={accountList}
           isUnreadHistory={isUnreadHistory}
+          isShowUserProfile={isShowUserProfile}
           isShowMobileFooter={isShowMobileFooter}
           onChange={onChange}
         />
       ) : (
-        <WebHeader accountList={accountList} isCanClickLogo={isCanClickLogo} onClickLogo={onClickLogo} />
+        <WebHeader
+          accountList={accountList}
+          isCanClickLogo={isCanClickLogo}
+          isShowUserProfile={isShowUserProfile}
+          onClickLogo={onClickLogo}
+        />
       )}
     </div>
   );
