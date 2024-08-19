@@ -20,6 +20,7 @@ export default function Deposit({
   className,
   componentStyle = ComponentStyle.Web,
   isShowErrorTip = true,
+  isShowMobilePoweredBy,
 }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
@@ -311,6 +312,7 @@ export default function Deposit({
           className={className}
           componentStyle={componentStyle}
           isShowErrorTip={isShowErrorTip}
+          isShowPoweredBy={isShowMobilePoweredBy}
           // select
           depositTokenList={depositTokenList || []}
           depositTokenSelected={depositTokenSelected}

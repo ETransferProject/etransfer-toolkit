@@ -15,10 +15,12 @@ export default function History({
   className,
   componentStyle = ComponentStyle.Web,
   isUnreadHistory,
+  isShowMobilePoweredBy,
 }: {
   className?: string;
   isUnreadHistory: boolean;
   componentStyle?: ComponentStyle;
+  isShowMobilePoweredBy?: boolean;
 }) {
   const isMobileStyle = useMemo(() => componentStyle === ComponentStyle.Mobile, [componentStyle]);
   const [type, setType] = useState(RecordsRequestType.All);
@@ -201,6 +203,7 @@ export default function History({
   return isMobileStyle ? (
     <HistoryMobile
       className={className}
+      isShowPoweredBy={isShowMobilePoweredBy}
       type={type}
       status={status}
       timestamp={timestamp}

@@ -43,6 +43,7 @@ export interface WithdrawFooterProps {
   address: string;
   memo?: string;
   withdrawInfo: TWithdrawInfo;
+  isShowMobilePoweredBy?: boolean;
   componentStyle?: ComponentStyle;
   clickFailedOk: () => void;
   clickSuccessOk: () => void;
@@ -57,6 +58,7 @@ export default function WithdrawFooter({
   memo,
   withdrawInfo,
   isSubmitDisabled,
+  isShowMobilePoweredBy = false,
   componentStyle = ComponentStyle.Web,
   clickFailedOk,
   clickSuccessOk,
@@ -234,7 +236,7 @@ export default function WithdrawFooter({
           </CommonButton>
         </Form.Item>
       </div>
-      {componentStyle === ComponentStyle.Mobile && (
+      {isShowMobilePoweredBy && componentStyle === ComponentStyle.Mobile && (
         <CommonSvg type="poweredBy" className="etransfer-ui-flex-center etransfer-ui-mobile-bottom-powered-by" />
       )}
 

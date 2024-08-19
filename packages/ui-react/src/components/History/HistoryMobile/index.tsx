@@ -21,11 +21,13 @@ export default function HistoryMobile({
   skipCount,
   maxResultCount,
   hasMore,
+  isShowPoweredBy = false,
   onCloseItem,
   onReset,
   onApply,
   onNextPage,
-}: HistoryMobileFilterProps & HistoryMobileContentProps & { filterClassName?: string; contentClassName?: string }) {
+}: HistoryMobileFilterProps &
+  HistoryMobileContentProps & { filterClassName?: string; contentClassName?: string; isShowPoweredBy?: boolean }) {
   return (
     <div className={clsx('etransfer-ui-history-mobile', className)}>
       <HistoryMobileFilter
@@ -52,7 +54,9 @@ export default function HistoryMobile({
         <EmptyData emptyText={!getAuth() ? LOGIN_TO_VIEW_HISTORY : NO_HISTORY_FOUND} />
       )}
 
-      <CommonSvg type="poweredBy" className="etransfer-ui-flex-center etransfer-ui-mobile-bottom-powered-by" />
+      {isShowPoweredBy && (
+        <CommonSvg type="poweredBy" className="etransfer-ui-flex-center etransfer-ui-mobile-bottom-powered-by" />
+      )}
     </div>
   );
 }

@@ -69,6 +69,7 @@ export default function Withdraw({
   chainClassName,
   fromClassName,
   componentStyle = ComponentStyle.Web,
+  isShowMobilePoweredBy,
   isShowErrorTip = true,
 }: WithdrawProps) {
   const [form] = Form.useForm<TWithdrawFormValues>();
@@ -760,6 +761,7 @@ export default function Withdraw({
         className={fromClassName}
         formValidateData={formValidateData}
         componentStyle={componentStyle}
+        isShowMobilePoweredBy={isShowMobilePoweredBy}
         address={getAddressInput()}
         balance={balance}
         amount={amount}

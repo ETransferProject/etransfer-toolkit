@@ -23,7 +23,8 @@ export default function ETransferContent({
   isShowHeader = true,
   isShowHeaderUserProfile = true,
   isShowSider = true,
-  isShowMobileFooter,
+  isShowMobileFooter = false,
+  isShowErrorTip = true,
   onClickHeaderLogo,
 }: {
   className?: string;
@@ -33,6 +34,7 @@ export default function ETransferContent({
   isShowHeaderUserProfile?: boolean;
   isShowSider?: boolean;
   isShowMobileFooter?: boolean;
+  isShowErrorTip?: boolean;
   onClickHeaderLogo?: () => void;
 }) {
   const [activeMenuKey, setActiveMenuKey] = useState(SideMenuKey.Deposit);
@@ -95,16 +97,20 @@ export default function ETransferContent({
           <Suspense fallback={<GlobalLoading />}>
             {activeMenuKey === SideMenuKey.Deposit && (
               <ETransferDepositProvider>
-                <Deposit componentStyle={componentStyle} />
+                <Deposit componentStyle={componentStyle} isShowErrorTip={isShowErrorTip} isShowMobilePoweredBy={true} />
               </ETransferDepositProvider>
             )}
             {activeMenuKey === SideMenuKey.Withdraw && (
               <ETransferWithdrawProvider>
-                <Withdraw componentStyle={componentStyle} />
+                <Withdraw
+                  componentStyle={componentStyle}
+                  isShowMobilePoweredBy={true}
+                  isShowErrorTip={isShowErrorTip}
+                />
               </ETransferWithdrawProvider>
             )}
             {activeMenuKey === SideMenuKey.History && (
-              <History componentStyle={componentStyle} isUnreadHistory={isUnreadHistory} />
+              <History componentStyle={componentStyle} isUnreadHistory={isUnreadHistory} isShowMobilePoweredBy={true} />
             )}
           </Suspense>
         </div>

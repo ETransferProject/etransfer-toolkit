@@ -41,6 +41,7 @@ export default function WithdrawForm({
   isSubmitDisabled = false,
   isTransactionFeeLoading = false,
   isBalanceLoading = false,
+  isShowMobilePoweredBy,
   componentStyle = ComponentStyle.Web,
   onTokenChange,
   onAddressChange,
@@ -278,6 +279,7 @@ export default function WithdrawForm({
         clickFailedOk={onClickFailedOk}
         clickSuccessOk={onClickSuccessOk}
         componentStyle={componentStyle}
+        isShowMobilePoweredBy={isShowMobilePoweredBy}
       />
     </Form>
   );

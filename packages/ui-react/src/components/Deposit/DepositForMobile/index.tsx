@@ -12,6 +12,7 @@ export default function DepositForMobile({
   className,
   componentStyle,
   isShowErrorTip,
+  isShowPoweredBy = false,
 
   // select
   depositTokenList,
@@ -70,7 +71,7 @@ export default function DepositForMobile({
         showRetry={showRetry}
         onRetry={onRetry}
       />
-      {componentStyle === ComponentStyle.Mobile && (
+      {isShowPoweredBy && componentStyle === ComponentStyle.Mobile && (
         <CommonSvg type="poweredBy" className="etransfer-ui-flex-center etransfer-ui-mobile-bottom-powered-by" />
       )}
     </div>
