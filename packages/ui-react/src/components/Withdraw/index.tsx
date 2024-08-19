@@ -77,7 +77,7 @@ export default function Withdraw({
     [key in WithdrawFormKeys]: { validateStatus: WithdrawValidateStatus; errorMessage: string };
   }>(JSON.parse(JSON.stringify(FORM_VALIDATE_DATA)));
 
-  const [{ tokenSymbol, tokenList, networkItem, chainItem, chainList }, { dispatch }] = useETransferWithdraw();
+  const [{ tokenSymbol, tokenList, networkItem, chainItem, chainList, address }, { dispatch }] = useETransferWithdraw();
   const currentNetworkRef = useRef<TNetworkItem>();
   const currentChainItemRef = useRef<IChainMenuItem>(chainItem);
   const [withdrawInfo, setWithdrawInfo] = useState<TWithdrawInfo>(INITIAL_WITHDRAW_INFO);
@@ -604,6 +604,13 @@ export default function Withdraw({
     tokenSymbol,
   ]);
 
+  const handleAddressChange = useCallback(
+    async (value: string | null) => {
+      dispatch(etransferWithdrawAction.setAddress.actions(value));
+    },
+    [dispatch],
+  );
+
   const handleNetworkChanged = useCallback(
     async (item: TNetworkItem) => {
       currentNetworkRef.current = item;
@@ -686,6 +693,10 @@ export default function Withdraw({
     try {
       setLoading(true);
 
+      if (address) {
+        form.setFieldValue(WithdrawFormKeys.ADDRESS, address);
+      }
+
       const newCurrentSymbol = tokenSymbol;
       let newTokenList = tokenList;
       newTokenList = await getToken(true);
@@ -696,7 +707,7 @@ export default function Withdraw({
         form.setFieldValue(WithdrawFormKeys.NETWORK, networkItem);
 
         // get new network data, when refresh page or switch side menu
-        await getNetworkData({ symbol: newCurrentSymbol });
+        await getNetworkData({ symbol: newCurrentSymbol, address });
         getWithdrawData(newCurrentSymbol);
       } else {
         handleChainChanged(currentChainItemRef.current, newCurrentToken);
@@ -710,6 +721,7 @@ export default function Withdraw({
       setLoading(false);
     }
   }, [
+    address,
     form,
     getAccountBalanceInterval,
     getNetworkData,
@@ -774,6 +786,7 @@ export default function Withdraw({
         isTransactionFeeLoading={isTransactionFeeLoading}
         onTokenChange={handleTokenChange}
         onAddressBlur={handleAddressBlur}
+        onAddressChange={handleAddressChange}
         withdrawInfo={withdrawInfo}
         onNetworkChange={handleNetworkChanged}
         onClickMax={handleClickMax}

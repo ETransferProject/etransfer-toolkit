@@ -35,7 +35,9 @@ export default function MobileHeader({
         {activeMenuKey === SideMenuKey.Withdraw && 'Withdraw Assets'}
         {activeMenuKey === SideMenuKey.History && 'History'}
       </span>
-      {isShowUserProfile && <MobileUserProfile accountList={accountList} />}
+      {isShowUserProfile && Array.isArray(accountList) && accountList.length > 0 && (
+        <MobileUserProfile accountList={accountList} />
+      )}
     </div>
   );
 }

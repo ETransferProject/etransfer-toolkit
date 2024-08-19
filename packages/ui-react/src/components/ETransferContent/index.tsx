@@ -95,23 +95,31 @@ export default function ETransferContent({
         )}
         <div className={clsx('etransfer-web-content', !isTelegramPlatform && 'etransfer-web-content-not-tg')}>
           <Suspense fallback={<GlobalLoading />}>
-            {activeMenuKey === SideMenuKey.Deposit && (
-              <ETransferDepositProvider>
-                <Deposit componentStyle={componentStyle} isShowErrorTip={isShowErrorTip} isShowMobilePoweredBy={true} />
-              </ETransferDepositProvider>
-            )}
-            {activeMenuKey === SideMenuKey.Withdraw && (
+            <ETransferDepositProvider>
               <ETransferWithdrawProvider>
-                <Withdraw
-                  componentStyle={componentStyle}
-                  isShowMobilePoweredBy={true}
-                  isShowErrorTip={isShowErrorTip}
-                />
+                {activeMenuKey === SideMenuKey.Deposit && (
+                  <Deposit
+                    componentStyle={componentStyle}
+                    isShowErrorTip={isShowErrorTip}
+                    isShowMobilePoweredBy={true}
+                  />
+                )}
+                {activeMenuKey === SideMenuKey.Withdraw && (
+                  <Withdraw
+                    componentStyle={componentStyle}
+                    isShowMobilePoweredBy={true}
+                    isShowErrorTip={isShowErrorTip}
+                  />
+                )}
+                {activeMenuKey === SideMenuKey.History && (
+                  <History
+                    componentStyle={componentStyle}
+                    isUnreadHistory={isUnreadHistory}
+                    isShowMobilePoweredBy={true}
+                  />
+                )}
               </ETransferWithdrawProvider>
-            )}
-            {activeMenuKey === SideMenuKey.History && (
-              <History componentStyle={componentStyle} isUnreadHistory={isUnreadHistory} isShowMobilePoweredBy={true} />
-            )}
+            </ETransferDepositProvider>
           </Suspense>
         </div>
       </div>
