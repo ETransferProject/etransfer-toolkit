@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.4.0...v1.4.1) (2024-08-19)
+
+### Features
+
+- 🎸 add powered, className and modify style ([29aae29](https://github.com/ETransferProject/etransfer-toolkit/commit/29aae2955458d2837ea4c643b52d9ed5e7a3c205))
+- 🎸 add show poweredBy logo control ([40eed54](https://github.com/ETransferProject/etransfer-toolkit/commit/40eed541ffb101fb193ce1a5a1475f0765e3bbaf))
+
 ## [1.4.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.3.0...v1.4.0) (2024-08-19)
 
 ### Features
