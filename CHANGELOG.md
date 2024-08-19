@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.3.0...v1.4.0) (2024-08-19)
+
+### Features
+
+- 🎸 add TBSC ([a544c6d](https://github.com/ETransferProject/etransfer-toolkit/commit/a544c6dbc93175adfdf363a33d9f657afba7e9a9))
+- 🎸 dev header and menu ([1745774](https://github.com/ETransferProject/etransfer-toolkit/commit/17457743e547297b177400c70803ce31f09f6809))
+- 🎸 dev history ([0355be0](https://github.com/ETransferProject/etransfer-toolkit/commit/0355be05893dc74e3da291cf9f3fbae77d478e13))
+- 🎸 dev unread history ([d4d40da](https://github.com/ETransferProject/etransfer-toolkit/commit/d4d40dad9e42ad39a3fb3e3eaea2479d60aa83ff))
+- 🎸 history logic ([7fb712e](https://github.com/ETransferProject/etransfer-toolkit/commit/7fb712ea9e26dac9a08ea4c9b1649d15ec9b3b17))
+
+### Bug Fixes
+
+- 🐛 add TBSC ([e8d47b9](https://github.com/ETransferProject/etransfer-toolkit/commit/e8d47b95c2e2a21813c4c4b3b664b5474362945c))
+- 🐛 history login tip ([a59dd80](https://github.com/ETransferProject/etransfer-toolkit/commit/a59dd80a7c94781d5da8627301e395a0e97144c2))
+- 🐛 UserProfile props ([9d5c627](https://github.com/ETransferProject/etransfer-toolkit/commit/9d5c62759c557307f500948e95474c9978056d77))
+
 ## [1.3.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.5...v1.3.0) (2024-08-16)
 
 ### Features

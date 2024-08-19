@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.3.0...v1.4.0) (2024-08-19)
+
+### Features
+
+- 🎸 dev header and menu ([1745774](https://github.com/ETransferProject/etransfer-toolkit/commit/17457743e547297b177400c70803ce31f09f6809))
+- 🎸 dev unread history ([d4d40da](https://github.com/ETransferProject/etransfer-toolkit/commit/d4d40dad9e42ad39a3fb3e3eaea2479d60aa83ff))
+
 ## [1.3.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.2.1-alpha.5...v1.3.0) (2024-08-16)
 
 ### Bug Fixes
