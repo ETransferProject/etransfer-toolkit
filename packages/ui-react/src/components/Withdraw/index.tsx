@@ -585,6 +585,7 @@ export default function Withdraw({
 
     if (isDIDAddressSuffix(addressInput)) {
       form.setFieldValue(WithdrawFormKeys.ADDRESS, removeELFAddressSuffix(addressInput));
+      dispatch(etransferWithdrawAction.setAddress.actions(removeELFAddressSuffix(addressInput)));
     }
 
     await getNetworkData({
