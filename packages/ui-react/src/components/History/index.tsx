@@ -12,9 +12,11 @@ import { useDebounceCallback } from '../../hooks';
 import { HistoryFilterOnApplyParams } from './types';
 
 export default function History({
+  className,
   componentStyle = ComponentStyle.Web,
   isUnreadHistory,
 }: {
+  className?: string;
   isUnreadHistory: boolean;
   componentStyle?: ComponentStyle;
 }) {
@@ -198,6 +200,7 @@ export default function History({
 
   return isMobileStyle ? (
     <HistoryMobile
+      className={className}
       type={type}
       status={status}
       timestamp={timestamp}
@@ -213,6 +216,7 @@ export default function History({
     />
   ) : (
     <HistoryWeb
+      className={className}
       type={type}
       status={status}
       timestamp={timestamp}

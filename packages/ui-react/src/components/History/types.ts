@@ -36,6 +36,7 @@ export type THistoryFeeInfo = {
 };
 
 export interface HistoryContentProps {
+  className?: string;
   recordsList: TRecordsListItem[];
   hasMore: boolean;
   maxResultCount: number;
@@ -52,6 +53,7 @@ export interface HistoryWebContentProps extends HistoryContentProps {
 }
 
 export interface HistoryFilterProps {
+  className?: string;
   type: RecordsRequestType;
   status: RecordsRequestStatus;
   timestamp: number[] | null;

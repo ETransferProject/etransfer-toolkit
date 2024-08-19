@@ -198,40 +198,45 @@ export default function WithdrawFooter({
 
   return (
     <div className={clsx('etransfer-ui-withdraw-form-footer', 'etransfer-ui-withdraw-form-footer-safe-area')}>
-      <div
-        className={clsx(
-          'etransfer-ui-flex-1',
-          'etransfer-ui-flex-column',
-          'etransfer-ui-withdraw-footer-info-wrapper',
-        )}>
-        <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-withdraw-receive-amount-wrapper')}>
-          <div className={'info-label'}>Amount to Be Received</div>
-          <div className={clsx('etransfer-ui-flex-row-center', 'info-value', 'info-value-big-font')}>
-            {isTransactionFeeLoading && <PartialLoading />}
-            {!isTransactionFeeLoading && `${(!isSuccessModalOpen && receiveAmount) || DEFAULT_NULL_VALUE} `}
-            <span className={clsx('info-unit')}>{withdrawInfo.transactionUnit}</span>
+      <div className="etransfer-ui-withdraw-form-footer-main">
+        <div
+          className={clsx(
+            'etransfer-ui-flex-1',
+            'etransfer-ui-flex-column',
+            'etransfer-ui-withdraw-footer-info-wrapper',
+          )}>
+          <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-withdraw-receive-amount-wrapper')}>
+            <div className={'info-label'}>Amount to Be Received</div>
+            <div className={clsx('etransfer-ui-flex-row-center', 'info-value', 'info-value-big-font')}>
+              {isTransactionFeeLoading && <PartialLoading />}
+              {!isTransactionFeeLoading && `${(!isSuccessModalOpen && receiveAmount) || DEFAULT_NULL_VALUE} `}
+              <span className={clsx('info-unit')}>{withdrawInfo.transactionUnit}</span>
+            </div>
           </div>
+          <FeeInfo
+            isTransactionFeeLoading={isTransactionFeeLoading}
+            isSuccessModalOpen={isSuccessModalOpen}
+            transactionFee={withdrawInfo.transactionFee}
+            transactionUnit={withdrawInfo.transactionUnit}
+            aelfTransactionFee={withdrawInfo.aelfTransactionFee}
+            aelfTransactionUnit={withdrawInfo.aelfTransactionUnit}
+          />
         </div>
-        <FeeInfo
-          isTransactionFeeLoading={isTransactionFeeLoading}
-          isSuccessModalOpen={isSuccessModalOpen}
-          transactionFee={withdrawInfo.transactionFee}
-          transactionUnit={withdrawInfo.transactionUnit}
-          aelfTransactionFee={withdrawInfo.aelfTransactionFee}
-          aelfTransactionUnit={withdrawInfo.aelfTransactionUnit}
-        />
+        <Form.Item
+          shouldUpdate
+          className={clsx('etransfer-ui-flex-none', 'etransfer-ui-withdraw-form-submit-button-wrapper')}>
+          <CommonButton
+            className={'etransfer-ui-withdraw-form-submit-button'}
+            // htmlType="submit"
+            onClick={onSubmit}
+            disabled={isTransactionFeeLoading || !receiveAmount || isSubmitDisabled}>
+            {BusinessType.Withdraw}
+          </CommonButton>
+        </Form.Item>
       </div>
-      <Form.Item
-        shouldUpdate
-        className={clsx('etransfer-ui-flex-none', 'etransfer-ui-withdraw-form-submit-button-wrapper')}>
-        <CommonButton
-          className={'etransfer-ui-withdraw-form-submit-button'}
-          // htmlType="submit"
-          onClick={onSubmit}
-          disabled={isTransactionFeeLoading || !receiveAmount || isSubmitDisabled}>
-          {BusinessType.Withdraw}
-        </CommonButton>
-      </Form.Item>
+      {componentStyle === ComponentStyle.Mobile && (
+        <CommonSvg type="poweredBy" className="etransfer-ui-flex-center etransfer-ui-mobile-bottom-powered-by" />
+      )}
 
       <DoubleCheckModal
         componentStyle={componentStyle}

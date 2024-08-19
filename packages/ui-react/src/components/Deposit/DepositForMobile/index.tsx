@@ -4,6 +4,8 @@ import { DEFAULT_DECIMAL } from '../../../utils';
 import DepositDetailForMobile from '../DepositDetailForMobile';
 import DepositSelectGroupForMobile from '../DepositSelectGroupForMobile';
 import { TDepositForMobileProps } from '../types';
+import CommonSvg from '../../CommonSvg';
+import { ComponentStyle } from '../../../types';
 
 export default function DepositForMobile({
   // common
@@ -68,6 +70,9 @@ export default function DepositForMobile({
         showRetry={showRetry}
         onRetry={onRetry}
       />
+      {componentStyle === ComponentStyle.Mobile && (
+        <CommonSvg type="poweredBy" className="etransfer-ui-flex-center etransfer-ui-mobile-bottom-powered-by" />
+      )}
     </div>
   );
 }

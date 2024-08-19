@@ -3,10 +3,6 @@
 
 .etransfer-ui-withdraw-form-footer {
   min-width: var(--etransfer-ui-page-min-width);
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
   width: 100%;
   @media @mediaMobile {
     position: fixed;
@@ -18,13 +14,19 @@
     align-items: flex-end;
   }
   @media @mediaPad {
-    width: 100%;
     margin-top: 64px;
     align-items: flex-end;
   }
   @media @mediaWeb {
-    width: 100%;
     margin-top: 64px;
+  }
+
+  .etransfer-ui-withdraw-form-footer-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
   }
 }
 

@@ -17,6 +17,7 @@ import { etransferEvents } from '@etransfer/utils';
 import { useUpdateRecord } from '../../hooks/updateRecord';
 
 export default function ETransferContent({
+  className,
   componentStyle,
   isCanClickHeaderLogo = true,
   isShowHeader = true,
@@ -25,6 +26,7 @@ export default function ETransferContent({
   isShowMobileFooter,
   onClickHeaderLogo,
 }: {
+  className?: string;
   componentStyle: ComponentStyle;
   isCanClickHeaderLogo?: boolean;
   isShowHeader?: boolean;
@@ -71,7 +73,7 @@ export default function ETransferContent({
   const isUnreadHistory = useUpdateRecord();
 
   return (
-    <AntdLayout id="etransferContentLayout" className={clsx('etransfer-ui-content-layout')}>
+    <AntdLayout id="etransferContentLayout" className={clsx('etransfer-ui-content-layout', className)}>
       {isShowHeader && (
         <Header
           componentStyle={componentStyle}

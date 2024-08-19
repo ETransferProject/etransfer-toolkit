@@ -23,6 +23,7 @@ import { HistoryMobileFilterProps } from '../types';
 const dateFormat = 'YYYY-MM-DD';
 
 export default function HistoryMobileFilter({
+  className,
   type,
   status,
   timestamp,
@@ -103,7 +104,7 @@ export default function HistoryMobileFilter({
   }, [type, status, timestamp]);
 
   return (
-    <div className={clsx('etransfer-ui-history-mobile-filter-wrapper')}>
+    <div className={clsx('etransfer-ui-history-mobile-filter-wrapper', className)}>
       <div className="etransfer-ui-history-mobile-filter-item-wrapper">
         <CommonSvg type="filter" className="etransfer-ui-history-mobile-filter-icon" onClick={handleOpenFilterDrawer} />
         {type !== RecordsRequestType.All && (
