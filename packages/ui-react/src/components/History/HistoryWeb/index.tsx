@@ -1,9 +1,13 @@
+import clsx from 'clsx';
 import HistoryWebFilter from '../HistoryWebFilter';
 import HistoryWebTable from '../HistoryWebTable';
 import { HistoryWebContentProps, HistoryWebFilterProps } from '../types';
 import './index.less';
 
 export default function HistoryWeb({
+  className,
+  filterClassName,
+  contentClassName,
   type,
   status,
   timestamp,
@@ -17,10 +21,11 @@ export default function HistoryWeb({
   onTimeStampChange,
   onReset,
   onTableChange,
-}: HistoryWebFilterProps & HistoryWebContentProps) {
+}: HistoryWebFilterProps & HistoryWebContentProps & { filterClassName?: string; contentClassName?: string }) {
   return (
-    <div className="etransfer-ui-history-web">
+    <div className={clsx('etransfer-ui-history-web', className)}>
       <HistoryWebFilter
+        className={filterClassName}
         type={type}
         status={status}
         timestamp={timestamp}
@@ -30,6 +35,7 @@ export default function HistoryWeb({
         onTimeStampChange={onTimeStampChange}
       />
       <HistoryWebTable
+        className={contentClassName}
         recordsList={recordsList}
         hasMore={hasMore}
         maxResultCount={maxResultCount}

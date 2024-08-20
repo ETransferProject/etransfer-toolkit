@@ -36,7 +36,7 @@ export default function WebHeader({
       ) : (
         <CommonSvg type="logo" />
       )}
-      {isShowUserProfile && (
+      {isShowUserProfile && Array.isArray(accountList) && accountList.length > 0 && (
         <div className={'etransfer-ui-web-right-wrapper'}>
           <WebUserProfile accountList={accountList} />
         </div>

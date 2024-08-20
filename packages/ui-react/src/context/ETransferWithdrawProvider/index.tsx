@@ -58,7 +58,9 @@ function reducer(state: ETransferWithdrawState, { type, payload }: any) {
 
       return Object.assign({}, state, { chainList: list });
     }
-
+    case ETransferWithdrawActions.setAddress: {
+      return Object.assign({}, state, { address: payload.address });
+    }
     case ETransferWithdrawActions.destroy: {
       return INITIAL_STATE;
     }

@@ -14,12 +14,15 @@ import { DepositProps, DepositReceiveTokenItem, DepositTokenOptionItem, TGetNetw
 import DepositForMobile from './DepositForMobile';
 import DepositForWeb from './DepositForWeb';
 import { checkDepositSupportNetworkList, checkDepositSupportTokenAndChain } from './utils';
+import clsx from 'clsx';
+import './index.less';
 
 export default function Deposit({
   containerClassName,
   className,
   componentStyle = ComponentStyle.Web,
   isShowErrorTip = true,
+  isShowMobilePoweredBy,
 }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
@@ -305,12 +308,13 @@ export default function Deposit({
   }, []);
 
   return (
-    <div className={containerClassName}>
+    <div className={clsx('etransfer-ui-deposit', containerClassName)}>
       {componentStyle === ComponentStyle.Mobile ? (
         <DepositForMobile
           className={className}
           componentStyle={componentStyle}
           isShowErrorTip={isShowErrorTip}
+          isShowPoweredBy={isShowMobilePoweredBy}
           // select
           depositTokenList={depositTokenList || []}
           depositTokenSelected={depositTokenSelected}

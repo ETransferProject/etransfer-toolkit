@@ -1,3 +1,17 @@
+@import '../../../assets/theme/breakpoint.less';
+
 .etransfer-ui-deposit-for-mobile {
-  padding: 24px 16px 106px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
+  @media @mediaPad {
+    padding-bottom: 40px;
+  }
+  @media @mediaMobile {
+    padding-bottom: 106px;
+  }
 }

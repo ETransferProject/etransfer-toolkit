@@ -1,11 +1,10 @@
 @import '../../assets/theme/breakpoint.less';
 
 .etransfer-ui-content-layout {
-  height: unset;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  height: 100vh; // TODO
+  height: 100%;
 }
 
 .etransfer-ui-content-layout-body {
@@ -37,8 +36,10 @@
         padding-top: 16px;
         padding-left: 0;
         padding-right: 0;
+        padding-bottom: 0;
       }
       @media @mediaMobile {
+        margin-bottom: var(--etransfer-ui-mobile-content-padding-bottom);
         padding: 0 16px;
       }
     }
@@ -47,12 +48,15 @@
       @media @mediaPad {
         width: var(--etransfer-ui-content-width);
         margin: auto;
-        margin-bottom: var(--etransfer-ui-mobile-content-padding-bottom);
-        padding-left: 0px;
-        padding-right: 0px;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+        height: 100%;
       }
       @media @mediaMobile {
-        padding: 0 16px;
+        .etransfer-ui-mobile-bottom-powered-by {
+          margin-bottom: 2px;
+        }
       }
       @media @mediaWeb {
         padding-left: 40px;
@@ -75,6 +79,10 @@
     @media @mediaWeb {
       padding: 40px 80px 0;
       margin-bottom: var(--etransfer-ui-web-content-padding-bottom);
+    }
+
+    .etransfer-ui-mobile-bottom-powered-by {
+      margin: 16px auto 12px;
     }
   }
 }

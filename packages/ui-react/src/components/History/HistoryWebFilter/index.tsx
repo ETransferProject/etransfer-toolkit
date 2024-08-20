@@ -5,11 +5,13 @@ import moment from 'moment';
 import { HistoryWebFilterProps, TRangeValue } from '../types';
 import { START_TIME_FORMAT, END_TIME_FORMAT, BusinessTypeOptions, HistoryStatusOptions } from '../../../constants';
 import CommonSvg from '../../CommonSvg';
+import clsx from 'clsx';
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 
 export default function HistoryWebFilter({
+  className,
   type,
   status,
   timestamp,
@@ -43,7 +45,7 @@ export default function HistoryWebFilter({
   );
 
   return (
-    <div className="etransfer-ui-history-web-filter">
+    <div className={clsx('etransfer-ui-history-web-filter', className)}>
       <div className="etransfer-ui-history-web-filter-title">History</div>
       <div className="etransfer-ui-history-web-filter-search-wrapper">
         <Select

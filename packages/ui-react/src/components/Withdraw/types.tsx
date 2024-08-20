@@ -7,6 +7,7 @@ export interface WithdrawProps {
   chainClassName?: string;
   fromClassName?: string;
   componentStyle?: ComponentStyle;
+  isShowMobilePoweredBy?: boolean;
   isShowErrorTip?: boolean;
 }
 
@@ -26,6 +27,7 @@ export interface WithdrawFormProps {
   isBalanceLoading?: boolean;
   isTransactionFeeLoading?: boolean;
   componentStyle?: ComponentStyle;
+  isShowMobilePoweredBy?: boolean;
   onTokenChange: (item: TTokenItem) => Promise<void>;
   onAddressChange?: (value: string | null) => void;
   onAddressBlur: () => Promise<void>;

@@ -25,6 +25,7 @@ export interface DepositProps {
   className?: string;
   componentStyle?: ComponentStyle;
   isShowErrorTip?: boolean;
+  isShowMobilePoweredBy?: boolean;
 }
 
 export interface DepositDetailProps {
@@ -48,8 +49,7 @@ export interface DepositDetailForMobileProps extends DepositDetailProps {
   networkItem?: Partial<TNetworkItem>;
 }
 
-export type TDepositForMobileProps = DepositSelectGroupProps &
-  Omit<
+export type TDepositForMobileProps = DepositSelectGroupProps & { isShowPoweredBy?: boolean } & Omit<
     DepositDetailForMobileProps,
     'chainItem' | 'depositTokenSymbol' | 'depositTokenDecimals' | 'receiveTokenSymbol' | 'networkItem'
   >;

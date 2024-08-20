@@ -11,6 +11,7 @@ import { HistoryWebContentProps, THistoryFeeInfo, THistoryItem } from '../types'
 import { ComponentStyle } from '../../../types';
 import { getAccountInfo, getAuth } from '../../../utils';
 import EmptyData from '../../EmptyData';
+import clsx from 'clsx';
 
 const componentStyle = ComponentStyle.Web;
 
@@ -141,6 +142,7 @@ const columns = [
 ];
 
 export default function HistoryWebTable({
+  className,
   recordsList,
   totalCount,
   skipCount,
@@ -183,7 +185,7 @@ export default function HistoryWebTable({
   };
 
   return (
-    <div className="etransfer-ui-history-web-table-wrapper">
+    <div className={clsx('etransfer-ui-history-web-table-wrapper', className)}>
       <Table
         size={'large'}
         rowKey={'key'}

@@ -17,20 +17,24 @@ import { etransferEvents } from '@etransfer/utils';
 import { useUpdateRecord } from '../../hooks/updateRecord';
 
 export default function ETransferContent({
+  className,
   componentStyle,
   isCanClickHeaderLogo = true,
   isShowHeader = true,
   isShowHeaderUserProfile = true,
   isShowSider = true,
-  isShowMobileFooter,
+  isShowMobileFooter = false,
+  isShowErrorTip = true,
   onClickHeaderLogo,
 }: {
+  className?: string;
   componentStyle: ComponentStyle;
   isCanClickHeaderLogo?: boolean;
   isShowHeader?: boolean;
   isShowHeaderUserProfile?: boolean;
   isShowSider?: boolean;
   isShowMobileFooter?: boolean;
+  isShowErrorTip?: boolean;
   onClickHeaderLogo?: () => void;
 }) {
   const [activeMenuKey, setActiveMenuKey] = useState(SideMenuKey.Deposit);
@@ -71,7 +75,7 @@ export default function ETransferContent({
   const isUnreadHistory = useUpdateRecord();
 
   return (
-    <AntdLayout id="etransferContentLayout" className={clsx('etransfer-ui-content-layout')}>
+    <AntdLayout id="etransferContentLayout" className={clsx('etransfer-ui-content-layout', className)}>
       {isShowHeader && (
         <Header
           componentStyle={componentStyle}
@@ -91,19 +95,31 @@ export default function ETransferContent({
         )}
         <div className={clsx('etransfer-web-content', !isTelegramPlatform && 'etransfer-web-content-not-tg')}>
           <Suspense fallback={<GlobalLoading />}>
-            {activeMenuKey === SideMenuKey.Deposit && (
-              <ETransferDepositProvider>
-                <Deposit componentStyle={componentStyle} />
-              </ETransferDepositProvider>
-            )}
-            {activeMenuKey === SideMenuKey.Withdraw && (
+            <ETransferDepositProvider>
               <ETransferWithdrawProvider>
-                <Withdraw componentStyle={componentStyle} />
+                {activeMenuKey === SideMenuKey.Deposit && (
+                  <Deposit
+                    componentStyle={componentStyle}
+                    isShowErrorTip={isShowErrorTip}
+                    isShowMobilePoweredBy={true}
+                  />
+                )}
+                {activeMenuKey === SideMenuKey.Withdraw && (
+                  <Withdraw
+                    componentStyle={componentStyle}
+                    isShowMobilePoweredBy={true}
+                    isShowErrorTip={isShowErrorTip}
+                  />
+                )}
+                {activeMenuKey === SideMenuKey.History && (
+                  <History
+                    componentStyle={componentStyle}
+                    isUnreadHistory={isUnreadHistory}
+                    isShowMobilePoweredBy={true}
+                  />
+                )}
               </ETransferWithdrawProvider>
-            )}
-            {activeMenuKey === SideMenuKey.History && (
-              <History componentStyle={componentStyle} isUnreadHistory={isUnreadHistory} />
-            )}
+            </ETransferDepositProvider>
           </Suspense>
         </div>
       </div>

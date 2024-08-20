@@ -46,6 +46,8 @@ export default function WebSider({ activeMenuKey, isUnreadHistory, onChange }: W
           );
         })}
       </Space>
+
+      <CommonSvg type="poweredBy" className="etransfer-ui-web-sider-powered-by" />
     </div>
   );
 }

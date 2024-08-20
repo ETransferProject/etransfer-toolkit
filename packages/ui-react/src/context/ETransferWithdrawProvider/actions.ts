@@ -11,6 +11,7 @@ export const ETransferWithdrawActions = {
   setNetworkList: 'setNetworkList',
   setChainItem: 'setChainItem',
   setChainList: 'setChainList',
+  setAddress: 'setAddress',
 };
 
 export interface ETransferWithdrawState {
@@ -25,6 +26,8 @@ export interface ETransferWithdrawState {
   // chain
   chainItem: IChainMenuItem;
   chainList?: IChainMenuItem[];
+
+  address?: string;
 }
 
 export const etransferWithdrawAction = {
@@ -56,6 +59,10 @@ export const etransferWithdrawAction = {
   setChainList: {
     type: ETransferWithdrawActions['setChainList'],
     actions: (list: IChainMenuItem[]) => basicActions(ETransferWithdrawActions['setChainList'], { list }),
+  },
+  setAddress: {
+    type: ETransferWithdrawActions['setAddress'],
+    actions: (address: string | null) => basicActions(ETransferWithdrawActions['setAddress'], { address }),
   },
   destroy: {
     type: ETransferWithdrawActions['destroy'],
