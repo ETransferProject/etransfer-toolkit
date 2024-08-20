@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.4.1...v1.5.0) (2024-08-20)
+
+### Features
+
+- 🎸 cache data ([7100296](https://github.com/ETransferProject/etransfer-toolkit/commit/71002963ae4db8d53ece51cbfc3076df8e19bb2a))
+- 🎸 format withdrawal address ([0b28808](https://github.com/ETransferProject/etransfer-toolkit/commit/0b28808d14056700d6588c176726a493f341dce8))
+
 ## [1.4.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.4.0...v1.4.1) (2024-08-19)
 
 ### Features
