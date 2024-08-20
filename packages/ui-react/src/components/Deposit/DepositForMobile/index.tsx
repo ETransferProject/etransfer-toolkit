@@ -40,37 +40,39 @@ export default function DepositForMobile({
 }: TDepositForMobileProps) {
   return (
     <div className={clsx('etransfer-ui-deposit-for-mobile', className)}>
-      <DepositSelectGroupForMobile
-        depositTokenList={depositTokenList}
-        depositTokenSelected={depositTokenSelected}
-        depositTokenSelectCallback={depositTokenSelectCallback}
-        networkList={networkList}
-        networkSelected={networkSelected}
-        isShowNetworkLoading={isShowNetworkLoading}
-        networkSelectCallback={networkSelectCallback}
-        chainList={chainList}
-        chainSelected={chainSelected}
-        chainChanged={chainChanged}
-        receiveTokenList={receiveTokenList}
-        receiveTokenSelected={receiveTokenSelected}
-        receiveTokenSelectCallback={receiveTokenSelectCallback}
-      />
-      <DepositDetailForMobile
-        componentStyle={componentStyle}
-        isShowErrorTip={isShowErrorTip}
-        chainItem={chainSelected}
-        depositTokenSymbol={depositTokenSelected?.symbol || ''}
-        depositTokenDecimals={depositTokenSelected?.decimals || DEFAULT_DECIMAL}
-        receiveTokenSymbol={receiveTokenSelected?.symbol || ''}
-        networkItem={networkSelected}
-        depositInfo={depositInfo}
-        contractAddress={contractAddress}
-        contractAddressLink={contractAddressLink}
-        qrCodeValue={qrCodeValue}
-        tokenLogoUrl={tokenLogoUrl}
-        showRetry={showRetry}
-        onRetry={onRetry}
-      />
+      <div>
+        <DepositSelectGroupForMobile
+          depositTokenList={depositTokenList}
+          depositTokenSelected={depositTokenSelected}
+          depositTokenSelectCallback={depositTokenSelectCallback}
+          networkList={networkList}
+          networkSelected={networkSelected}
+          isShowNetworkLoading={isShowNetworkLoading}
+          networkSelectCallback={networkSelectCallback}
+          chainList={chainList}
+          chainSelected={chainSelected}
+          chainChanged={chainChanged}
+          receiveTokenList={receiveTokenList}
+          receiveTokenSelected={receiveTokenSelected}
+          receiveTokenSelectCallback={receiveTokenSelectCallback}
+        />
+        <DepositDetailForMobile
+          componentStyle={componentStyle}
+          isShowErrorTip={isShowErrorTip}
+          chainItem={chainSelected}
+          depositTokenSymbol={depositTokenSelected?.symbol || ''}
+          depositTokenDecimals={depositTokenSelected?.decimals || DEFAULT_DECIMAL}
+          receiveTokenSymbol={receiveTokenSelected?.symbol || ''}
+          networkItem={networkSelected}
+          depositInfo={depositInfo}
+          contractAddress={contractAddress}
+          contractAddressLink={contractAddressLink}
+          qrCodeValue={qrCodeValue}
+          tokenLogoUrl={tokenLogoUrl}
+          showRetry={showRetry}
+          onRetry={onRetry}
+        />
+      </div>
       {isShowPoweredBy && componentStyle === ComponentStyle.Mobile && (
         <CommonSvg type="poweredBy" className="etransfer-ui-flex-center etransfer-ui-mobile-bottom-powered-by" />
       )}
