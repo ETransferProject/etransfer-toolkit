@@ -14,8 +14,8 @@ export type TOrderRecordsNoticeResponse = {
 export type TRecordsNoticeDetail = {
   depositCount: number;
   withdrawCount: number;
-  deposit: TDepositRecordsNoticeDetailItem;
-  withdraw: TWithdrawRecordsNoticeDetailItem;
+  deposit: TDepositRecordsNoticeDetailItem[];
+  withdraw: TWithdrawRecordsNoticeDetailItem[];
 };
 
 export type TDepositRecordsNoticeDetailItem = {
