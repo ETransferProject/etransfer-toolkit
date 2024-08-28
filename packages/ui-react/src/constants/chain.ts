@@ -8,6 +8,7 @@ export enum CHAIN_ID {
 }
 
 export const DEFAULT_CHAIN_ID_LIST = [CHAIN_ID.AELF, CHAIN_ID.tDVV];
+export const CHAIN_ID_LIST: ChainId[] = [CHAIN_ID.AELF, CHAIN_ID.tDVV, CHAIN_ID.tDVW];
 
 export const DEFAULT_CHAIN_ID = CHAIN_ID.tDVV;
 

@@ -29,6 +29,7 @@ export type TETransferCore = {
 export type TETransferCoreInitParams = {
   etransferUrl: string;
   etransferAuthUrl: string;
+  etransferSocketUrl?: string;
   storage?: IStorageSuite;
   version: string;
 };

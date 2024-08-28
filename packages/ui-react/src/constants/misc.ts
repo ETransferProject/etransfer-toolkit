@@ -3,3 +3,7 @@ export const SIGNATURE_MISSING_TIP = 'Signature missing/expired, please log in a
 export const MAX_UPDATE_TIME = 15;
 
 export const GOT_IT = 'Got it';
+
+export const MIN_AMOUNT_DISPLAY = '0.0001';
+
+export const MIN_AMOUNT_USD_DISPLAY = '0.01';

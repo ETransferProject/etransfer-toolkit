@@ -63,6 +63,10 @@ export { default as Withdraw } from './Withdraw';
 
 // feature module - history
 export { default as History } from './History';
+export { default as HistoryWebFilter } from './History/HistoryWebFilter';
+export { default as HistoryMobileFilter } from './History/HistoryMobileFilter';
+export { default as HistoryWebTable } from './History/HistoryWebTable';
+export { default as HistoryMobileInfiniteList } from './History/HistoryMobileInfiniteList';
 
 // feature module - ETransferMain
 export { default as ETransferContent } from './ETransferContent';

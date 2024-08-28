@@ -13,3 +13,5 @@ export const InitDepositInfo = {
   minAmount: '',
   minAmountUsd: '--',
 };
+
+export const SWAPPING = 'Swapping';

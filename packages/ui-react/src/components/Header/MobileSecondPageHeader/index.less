@@ -1,0 +1,28 @@
+@import '../../../assets/theme/breakpoint.less';
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-mobile-second-page-header {
+  min-width: var(--etransfer-ui-page-min-width);
+  width: 100%;
+  height: var(--etransfer-ui-mobile-header-height);
+  background-color: var(--etransfer-ui-page-bg);
+
+  @media @mediaMobile {
+    padding: 12px 10px 12px 16px;
+  }
+  @media @mediaPad {
+    padding: 16px 24px 8px;
+  }
+}
+
+.etransfer-ui-mobile-second-page-header-back {
+  transform: rotate(90deg);
+  path {
+    fill: var(--etransfer-ui-primary-text);
+  }
+}
+
+.etransfer-ui-mobile-second-page-header-title {
+  font-size: 16px;
+  .font-medium();
+}

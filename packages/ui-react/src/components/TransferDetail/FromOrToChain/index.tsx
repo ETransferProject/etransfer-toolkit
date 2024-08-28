@@ -1,0 +1,42 @@
+import { TChainId } from '@aelf-web-login/wallet-adapter-base';
+import { useMemo } from 'react';
+import clsx from 'clsx';
+import './index.less';
+import { BlockchainNetworkType, CHAIN_NAME_ENUM } from '../../../constants';
+import { SupportedChainId } from '@etransfer/types';
+import { NetworkLogoForMobile } from '../../NetworkLogo';
+
+export default function FromOrToChain({
+  network,
+  chainId,
+  className,
+}: {
+  network: string;
+  chainId?: TChainId;
+  className?: string;
+}) {
+  const renderNetworkLogo = useMemo(() => {
+    const currentNetwork = network === BlockchainNetworkType.AELF ? chainId : network;
+    if (!currentNetwork) return null;
+    return <NetworkLogoForMobile network={currentNetwork} size="small" />;
+  }, [chainId, network]);
+
+  const renderNetworkName = useMemo(() => {
+    if (!chainId) return '';
+
+    const currentNetworkName =
+      network === BlockchainNetworkType.AELF
+        ? chainId === SupportedChainId.AELF
+          ? CHAIN_NAME_ENUM.AELF
+          : CHAIN_NAME_ENUM[chainId]
+        : network;
+    return <span className={'etransfer-ui-from-or-to-chain-network-name'}>{currentNetworkName}</span>;
+  }, [chainId, network]);
+
+  return (
+    <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-from-or-to-chain', className)}>
+      {renderNetworkLogo}
+      {renderNetworkName}
+    </div>
+  );
+}

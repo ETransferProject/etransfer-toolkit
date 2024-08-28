@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import './index.less';
 import { ComponentStyle } from '../../../types';
 import { OrderStatusEnum } from '@etransfer/types';
-import { DEFAULT_NULL_VALUE } from '../../../constants';
+import { DEFAULT_NULL_VALUE, SWAPPING } from '../../../constants';
 import { formatSymbolDisplay } from '../../../utils';
 
 type TAmountBoxProps = {
@@ -30,7 +30,7 @@ export default function AmountBox({
       )}>
       {status !== OrderStatusEnum.Failed &&
         (fromToken && fromToken !== token && status === OrderStatusEnum.Processing ? (
-          <span className="etransfer-ui-history-amount-second">Swapping</span>
+          <span className="etransfer-ui-history-amount-second">{SWAPPING}</span>
         ) : (
           <span>{`${amount} ${formatSymbolDisplay(token)}`}</span>
         ))}
