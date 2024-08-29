@@ -49,8 +49,11 @@ export default function TransferDetailStep({
         title: `${toTransfer.chainId} Chain in progress`,
       },
       {
-        title: 'Received',
-        description: `${toTransfer.amount} ${formatSymbolDisplay(toTransfer.symbol)}`,
+        title: orderType === BusinessType.Deposit ? 'Received' : 'Sent',
+        description:
+          fromTransfer.symbol !== toTransfer.symbol
+            ? `You will receive ${toTransfer.symbol}`
+            : `${toTransfer.amount} ${formatSymbolDisplay(toTransfer.symbol)}`,
       },
     ];
     items.forEach((item: any, index) => {

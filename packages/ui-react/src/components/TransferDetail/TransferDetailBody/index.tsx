@@ -130,7 +130,7 @@ export default function TransferDetailBody({
       </div>
 
       <div className={'etransfer-ui-transfer-detail-item'}>
-        <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.Receive}</div>
+        <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.ReceiveAmount}</div>
         <TokenAmount
           status={data.toStatus}
           amount={data.toAmount}

@@ -9,8 +9,14 @@ export enum TRANSFER_DETAIL_LABEL {
   Status = 'Status',
   DestinationTxHash = 'Destination Tx Hash',
   DestinationChain = 'Destination Chain',
-  Receive = 'Receive',
+  ReceiveAmount = 'Receive Amount',
   ReceiveAddress = 'Receive Address',
 }
 
 export const TRANSFER_DETAIL = 'Transfer Detail';
+
+export enum TransferStatusType {
+  Pending = 'Pending',
+  Success = 'Success',
+  Failed = 'Failed',
+}

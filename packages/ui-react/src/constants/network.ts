@@ -14,8 +14,7 @@ export enum BlockchainNetworkType {
   BASE = 'BASE',
 }
 
-export enum ExploreUrlType {
-  AELF = 'https://explorer.aelf.io',
+export enum ExploreUrlNotAelf {
   SETH = 'https://sepolia.etherscan.io',
   ETH = 'https://etherscan.io',
   MATIC = 'https://polygonscan.com',

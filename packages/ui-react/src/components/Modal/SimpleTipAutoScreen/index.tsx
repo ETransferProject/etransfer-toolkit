@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import CommonSvg from '../../CommonSvg';
 import { ComponentStyle } from '../../../types';
-import CommonModalTips from '../../CommonModalTips';
+import CommonModalTip from '../../CommonTips/CommonModalTip';
 import { GOT_IT } from '../../../constants';
 
 export default function SimpleTipAutoScreen({
@@ -27,7 +27,7 @@ export default function SimpleTipAutoScreen({
     <>
       {componentStyle === ComponentStyle.Mobile && <CommonSvg type="questionMark" onClick={handleView} />}
 
-      <CommonModalTips
+      <CommonModalTip
         getContainer="body"
         title={title}
         open={openModal}
@@ -35,7 +35,7 @@ export default function SimpleTipAutoScreen({
         okText={GOT_IT}
         onOk={handleOk}>
         <div className="text-center">{content}</div>
-      </CommonModalTips>
+      </CommonModalTip>
     </>
   );
 }

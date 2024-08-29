@@ -7,7 +7,7 @@ export { default as CommonDropdown } from './CommonDropdown';
 export { default as CommonImage } from './CommonImage';
 export { default as CommonLink } from './CommonLink';
 export { default as CommonModal } from './CommonModal';
-export { default as CommonModalTips } from './CommonModalTips';
+export { default as CommonModalTip } from './CommonTips/CommonModalTip';
 export { default as CommonQRCode } from './CommonQRCode';
 export { default as CommonSpace } from './CommonSpace';
 export { default as CommonSvg } from './CommonSvg';

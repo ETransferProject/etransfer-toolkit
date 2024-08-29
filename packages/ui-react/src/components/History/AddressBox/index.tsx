@@ -8,7 +8,7 @@ import {
   BlockchainNetworkType,
   AelfExploreType,
   OtherExploreType,
-  ExploreUrlType,
+  ExploreUrlNotAelf,
   DEFAULT_NULL_VALUE,
 } from '../../../constants';
 import { openWithBlank, getAelfExploreLink, getOtherExploreLink } from '../../../utils';
@@ -64,7 +64,9 @@ export default function AddressBox({
       );
       return;
     }
-    openWithBlank(getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlType));
+    openWithBlank(
+      getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlNotAelf),
+    );
   }, [network, calcAddress, type, toChainId, fromChainId]);
 
   return (

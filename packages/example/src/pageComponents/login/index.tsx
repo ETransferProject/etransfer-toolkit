@@ -5,7 +5,7 @@ import { Button, message } from 'antd';
 import { useCallback, useRef } from 'react';
 
 import { useQueryAuthToken } from '@/hooks/authToken';
-import { ETransferAuthHost, ETransferHost } from '@/constants';
+import { ETRANSFER_AUTH_URL, ETRANSFER_URL } from '@/constants';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 import { etransferCore, WalletTypeEnum } from '@etransfer/ui-react';
 import { etransferEvents } from '@etransfer/utils';
@@ -23,7 +23,7 @@ export default function GetAuth() {
 
   const fetchNewAuthToken = useCallback(async () => {
     // Please set freely.
-    eTransferCore.setAuthUrl(ETransferAuthHost);
+    eTransferCore.setAuthUrl(ETRANSFER_AUTH_URL);
     await eTransferCore.getAuthTokenFromApi({
       pubkey:
         '04671bfc20edb4cdc171bd7d20877aa64862e88dc9f52173673db9789e0dea71aca45472fd4841cad362cae8b5b6f05c55a350014f7917fe90870fd680c845edae',
@@ -59,7 +59,7 @@ export default function GetAuth() {
   }, [disConnectWallet]);
 
   const getReCaptcha = useCallback(() => {
-    window.open(ETransferHost + '/recaptcha');
+    window.open(ETRANSFER_URL + '/recaptcha');
     window.onmessage = function (event) {
       if (event.data.type === 'GOOGLE_RECAPTCHA_RESULT') {
         console.log('Google reCaptcha response:', event.data.data);

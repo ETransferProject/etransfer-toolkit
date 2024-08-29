@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { DEFAULT_NULL_VALUE, MIN_AMOUNT_DISPLAY, MIN_AMOUNT_USD_DISPLAY, SWAPPING } from '../../../constants';
 import { formatSymbolDisplay } from '../../../utils';
 import TokenImage from '../../SelectToken/TokenImage';
+import { TransferStatusType } from '../../../constants/transfer';
 
 export default function TokenAmount({
   status,
@@ -16,7 +17,7 @@ export default function TokenAmount({
   amountUsd,
   className,
 }: {
-  status: OrderStatusEnum;
+  status: OrderStatusEnum | TransferStatusType;
   symbol: string;
   fromSymbol?: string;
   icon?: string;
@@ -74,9 +75,9 @@ export default function TokenAmount({
 
   return (
     <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-token-amount', className)}>
-      {status === OrderStatusEnum.Processing && renderProcessing}
-      {status === OrderStatusEnum.Failed && DEFAULT_NULL_VALUE}
-      {status === OrderStatusEnum.Succeed && renderFinished}
+      {(status === OrderStatusEnum.Processing || status === TransferStatusType.Pending) && renderProcessing}
+      {(status === OrderStatusEnum.Failed || status === TransferStatusType.Failed) && DEFAULT_NULL_VALUE}
+      {(status === OrderStatusEnum.Succeed || status === TransferStatusType.Success) && renderFinished}
     </div>
   );
 }

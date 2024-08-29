@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { CommonModalProps } from '../../CommonModal';
-import CommonModalTips from '../../CommonModalTips';
+import CommonModalTip from '../../CommonTips/CommonModalTip';
 import './index.less';
 import { GOT_IT } from '../../../constants';
 
@@ -14,7 +14,7 @@ export type TSimpleTipModalProps = {
 
 export default function SimpleTipModal({ className, open = false, content, getContainer, onOk }: TSimpleTipModalProps) {
   return (
-    <CommonModalTips
+    <CommonModalTip
       className={clsx('etransfer-ui-simple-modal', className)}
       footerClassName="etransfer-ui-simple-modal-footer"
       getContainer={getContainer}
@@ -23,6 +23,6 @@ export default function SimpleTipModal({ className, open = false, content, getCo
       okText={GOT_IT}
       onOk={onOk}>
       <div className="etransfer-ui-flex-center etransfer-ui-simple-modal-body">{content}</div>
-    </CommonModalTips>
+    </CommonModalTip>
   );
 }

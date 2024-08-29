@@ -1,7 +1,7 @@
 import { GOT_IT } from '../../../constants';
 import { ComponentStyle } from '../../../types';
 import { CommonModalProps } from '../../CommonModal';
-import CommonModalTips from '../../CommonModalTips';
+import CommonModalTip from '../../CommonTips/CommonModalTip';
 import Copy, { CopySize } from '../../Copy';
 import OpenLink from '../../OpenLink';
 import './index.less';
@@ -31,7 +31,7 @@ export default function ViewContractAddressModal({
   onOk,
 }: TViewContractAddressModal) {
   return (
-    <CommonModalTips
+    <CommonModalTip
       className={clsx('etransfer-ui-view-contract-address-modal', className)}
       footerClassName="etransfer-ui-view-contract-address-modal-footer"
       getContainer={getContainer}
@@ -59,6 +59,6 @@ export default function ViewContractAddressModal({
           </div>
         </div>
       </div>
-    </CommonModalTips>
+    </CommonModalTip>
   );
 }

@@ -7,7 +7,7 @@ import {
   DEFAULT_NULL_VALUE,
   AelfExploreType,
   OtherExploreType,
-  ExploreUrlType,
+  ExploreUrlNotAelf,
   CHAIN_ID_LIST,
 } from '../../../constants';
 import { openWithBlank, getAelfExploreLink, getOtherExploreLink } from '../../../utils';
@@ -52,7 +52,7 @@ export default function WalletAddress({
       }
 
       openWithBlank(
-        getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlType),
+        getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlNotAelf),
       );
     },
     [chainId, network, calcAddress],
