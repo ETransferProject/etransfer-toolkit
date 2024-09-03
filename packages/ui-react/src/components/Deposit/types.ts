@@ -26,6 +26,10 @@ export interface DepositProps {
   componentStyle?: ComponentStyle;
   isShowErrorTip?: boolean;
   isShowMobilePoweredBy?: boolean;
+  isCheckTxnLoading?: boolean;
+  isShowProcessingTip?: boolean;
+  withdrawProcessingCount?: number;
+  onClickProcessingTip?: () => void;
 }
 
 export interface DepositDetailProps {
@@ -42,20 +46,32 @@ export interface DepositDetailProps {
   qrCodeValue: string;
   tokenLogoUrl?: string;
   showRetry?: boolean;
+  isCheckTxnLoading?: boolean;
   onRetry?: () => void;
+  onCheckTxnClick?: () => void;
 }
 
 export interface DepositDetailForMobileProps extends DepositDetailProps {
   networkItem?: Partial<TNetworkItem>;
 }
 
-export type TDepositForMobileProps = DepositSelectGroupProps & { isShowPoweredBy?: boolean } & Omit<
+export type TDepositForMobileProps = DepositSelectGroupProps & {
+  isShowPoweredBy?: boolean;
+  isShowProcessingTip?: boolean;
+  depositProcessingCount?: number;
+  withdrawProcessingCount?: number;
+  onClickProcessingTip?: () => void;
+} & Omit<
     DepositDetailForMobileProps,
     'chainItem' | 'depositTokenSymbol' | 'depositTokenDecimals' | 'receiveTokenSymbol' | 'networkItem'
   >;
 
-export type TDepositForWebProps = DepositSelectGroupProps &
-  Omit<DepositDetailProps, 'chainItem' | 'depositTokenSymbol' | 'depositTokenDecimals' | 'receiveTokenSymbol'>;
+export type TDepositForWebProps = DepositSelectGroupProps & {
+  isShowProcessingTip?: boolean;
+  depositProcessingCount?: number;
+  withdrawProcessingCount?: number;
+  onClickProcessingTip?: () => void;
+} & Omit<DepositDetailProps, 'chainItem' | 'depositTokenSymbol' | 'depositTokenDecimals' | 'receiveTokenSymbol'>;
 
 export type TGetNetworkData = {
   chainId: ChainId;

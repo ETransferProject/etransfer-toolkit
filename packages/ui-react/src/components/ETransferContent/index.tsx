@@ -5,9 +5,9 @@ import { Layout as AntdLayout } from 'antd';
 import Header from '../Header';
 import GlobalLoading from '../GlobalLoading';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ETransferDepositProvider } from '../../context/ETransferDepositProvider';
+import { ETransferDepositProvider, useETransferDeposit } from '../../context/ETransferDepositProvider';
 import Deposit from '../Deposit';
-import { ETransferWithdrawProvider } from '../../context/ETransferWithdrawProvider';
+import { ETransferWithdrawProvider, useETransferWithdraw } from '../../context/ETransferWithdrawProvider';
 import { getAccountInfo, TelegramPlatform } from '../../utils';
 import WebSider from './WebSider';
 import Withdraw from '../Withdraw';
@@ -16,6 +16,7 @@ import { AccountAddressProps } from '../Header/UserProfile/AccountAddress';
 import { etransferEvents } from '@etransfer/utils';
 import { useUpdateRecord } from '../../hooks/updateRecord';
 import TransferDetail from '../TransferDetail';
+import { useNoticeSocket } from '../../hooks/notice';
 
 export default function ETransferContent({
   className,
@@ -73,6 +74,22 @@ export default function ETransferContent({
   const getAccountListRef = useRef(getAccountList);
   getAccountListRef.current = getAccountList;
 
+  useNoticeSocket();
+
+  const [{ depositProcessingCount }] = useETransferDeposit();
+  const [{ withdrawProcessingCount }] = useETransferWithdraw();
+  const handleClickProcessingTip = useCallback(() => {
+    setActiveMenuKey(SideMenuKey.History);
+    setActivePageKey(PageKey.History);
+  }, []);
+
+  const [transferDetailId, setTransferDetailId] = useState('');
+  const handleClickHistoryItem = useCallback((id: string) => {
+    setTransferDetailId(id);
+    setActiveMenuKey(SideMenuKey.History);
+    setActivePageKey(PageKey.TransferDetail);
+  }, []);
+
   // TODO socket UnsubscribeUserOrderRecord
   useEffect(() => {
     const { remove: eTransferConfigUpdatedRemove } = etransferEvents.ETransferConfigUpdated.addListener(() => {
@@ -119,6 +136,9 @@ export default function ETransferContent({
                     componentStyle={componentStyle}
                     isShowErrorTip={isShowErrorTip}
                     isShowMobilePoweredBy={true}
+                    isShowProcessingTip={true}
+                    withdrawProcessingCount={withdrawProcessingCount}
+                    onClickProcessingTip={handleClickProcessingTip}
                   />
                 )}
                 {activePageKey === PageKey.Withdraw && (
@@ -126,6 +146,9 @@ export default function ETransferContent({
                     componentStyle={componentStyle}
                     isShowMobilePoweredBy={true}
                     isShowErrorTip={isShowErrorTip}
+                    isShowProcessingTip={true}
+                    depositProcessingCount={depositProcessingCount}
+                    onClickProcessingTip={handleClickProcessingTip}
                   />
                 )}
                 {activePageKey === PageKey.History && (
@@ -133,12 +156,14 @@ export default function ETransferContent({
                     componentStyle={componentStyle}
                     isUnreadHistory={isUnreadHistory}
                     isShowMobilePoweredBy={true}
+                    onClickHistoryItem={handleClickHistoryItem}
                   />
                 )}
                 {activePageKey === PageKey.TransferDetail && (
                   <TransferDetail
                     componentStyle={componentStyle}
                     isShowBackElement={true}
+                    orderId={transferDetailId}
                     onBack={handleTransferDetailBack}
                   />
                 )}

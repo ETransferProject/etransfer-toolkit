@@ -75,7 +75,7 @@ export default function TokenAmount({
 
   return (
     <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-token-amount', className)}>
-      {(status === OrderStatusEnum.Processing || status === TransferStatusType.Pending) && renderProcessing}
+      {(!status || status === OrderStatusEnum.Processing || status === TransferStatusType.Pending) && renderProcessing}
       {(status === OrderStatusEnum.Failed || status === TransferStatusType.Failed) && DEFAULT_NULL_VALUE}
       {(status === OrderStatusEnum.Succeed || status === TransferStatusType.Success) && renderFinished}
     </div>

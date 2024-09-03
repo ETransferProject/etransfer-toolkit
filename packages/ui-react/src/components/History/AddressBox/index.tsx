@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import './index.less';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { SupportedChainId } from '@etransfer/types';
 import { formatDIDAddress, getOmittedStr } from '@etransfer/utils';
 import { ChainId } from '@portkey/types';
@@ -39,22 +39,24 @@ export default function AddressBox({
   accounts,
   componentStyle = ComponentStyle.Web,
 }: TAddressBoxProps) {
+  const chainId = useMemo(() => {
+    return type === 'To' ? toChainId : fromChainId;
+  }, [fromChainId, toChainId, type]);
+
   const calcAddress = useCallback(() => {
     const address = type === 'To' ? toAddress : fromAddress;
     if (address && network === BlockchainNetworkType.AELF) {
       // format address: add suffix
-      const chainId: ChainId = type === 'To' ? toChainId : fromChainId;
       return formatDIDAddress(address, chainId);
     }
     if (!address && network === BlockchainNetworkType.AELF) {
-      const chainId = type === 'To' ? toChainId : fromChainId;
       if (accounts && accounts[chainId]) {
         return accounts[chainId] || accounts[SupportedChainId.AELF] || DEFAULT_NULL_VALUE;
       }
       return DEFAULT_NULL_VALUE;
     }
     return address || DEFAULT_NULL_VALUE;
-  }, [type, network, accounts, toChainId, fromChainId, fromAddress, toAddress]);
+  }, [type, toAddress, fromAddress, network, chainId, accounts]);
 
   const handleAddressClick = useCallback(() => {
     // link to Deposit: toTransfer.chainId and Withdraw: fromTransfer.chainId
@@ -77,7 +79,7 @@ export default function AddressBox({
           ? 'etransfer-ui-history-mobile-address-box'
           : 'etransfer-ui-history-web-address-box',
       )}>
-      <NetworkLogoForMobile network={network} size="small" />
+      <NetworkLogoForMobile network={network === BlockchainNetworkType.AELF ? chainId : network} size="small" />
       <CommonTooltip title={calcAddress()} trigger={'hover'}>
         <span className={clsx('etransfer-ui-history-address-box-word')} onClick={handleAddressClick}>
           {getOmittedStr(calcAddress(), 8, 9)}

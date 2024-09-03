@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   // depositTokenSymbol: TokenType.USDT,
   // receiveTokenSymbol: TokenType.USDT,
   // chainItem: CHAIN_MENU_DATA['AELF'],
+  withdrawProcessingCount: 0,
 };
 
 const ETransferWithdrawContext = createContext<any>(INITIAL_STATE);
@@ -60,6 +61,9 @@ function reducer(state: ETransferWithdrawState, { type, payload }: any) {
     }
     case ETransferWithdrawActions.setAddress: {
       return Object.assign({}, state, { address: payload.address });
+    }
+    case ETransferWithdrawActions.setWithdrawProcessingCount: {
+      return Object.assign({}, state, { withdrawProcessingCount: payload.count });
     }
     case ETransferWithdrawActions.destroy: {
       return INITIAL_STATE;

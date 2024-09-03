@@ -4,6 +4,7 @@ import DepositDetailForWeb from '../DepositDetailForWeb';
 import DepositSelectGroupForWeb from '../DepositSelectGroupForWeb';
 import { TDepositForWebProps } from '../types';
 import './index.less';
+import { ProcessingTip } from '../../CommonTips/ProcessingTip';
 
 export default function DepositForWeb({
   // common
@@ -33,10 +34,23 @@ export default function DepositForWeb({
   qrCodeValue,
   tokenLogoUrl,
   showRetry = false,
+  isCheckTxnLoading,
+  isShowProcessingTip = true,
+  depositProcessingCount,
+  withdrawProcessingCount,
   onRetry,
+  onCheckTxnClick,
+  onClickProcessingTip,
 }: TDepositForWebProps) {
   return (
     <div className={clsx('etransfer-ui-deposit-for-web', className)}>
+      {isShowProcessingTip && (
+        <ProcessingTip
+          depositProcessingCount={depositProcessingCount}
+          withdrawProcessingCount={withdrawProcessingCount}
+          onClick={onClickProcessingTip}
+        />
+      )}
       <div className={'etransfer-ui-deposit-title'}>Deposit Assets</div>
       <DepositSelectGroupForWeb
         depositTokenList={depositTokenList}
@@ -66,7 +80,9 @@ export default function DepositForWeb({
         qrCodeValue={qrCodeValue}
         tokenLogoUrl={tokenLogoUrl}
         showRetry={showRetry}
+        isCheckTxnLoading={isCheckTxnLoading}
         onRetry={onRetry}
+        onCheckTxnClick={onCheckTxnClick}
       />
     </div>
   );

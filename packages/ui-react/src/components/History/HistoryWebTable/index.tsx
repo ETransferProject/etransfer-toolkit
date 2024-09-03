@@ -148,6 +148,7 @@ export default function HistoryWebTable({
   skipCount,
   maxResultCount,
   onTableChange,
+  onClickItem,
 }: HistoryWebContentProps) {
   const handleRecordListData = (recordsList: TRecordsListItem[]) => {
     if (recordsList.length === 0) {
@@ -189,6 +190,12 @@ export default function HistoryWebTable({
       <Table
         size={'large'}
         rowKey={'key'}
+        rowClassName={'etransfer-ui-history-web-table-row'}
+        onRow={(record) => {
+          return {
+            onClick: () => onClickItem?.(record.key),
+          };
+        }}
         dataSource={handleRecordListData(recordsList)}
         columns={columns}
         scroll={{ x: 1020 }}

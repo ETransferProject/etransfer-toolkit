@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import './index.less';
 import { qrCodePlaceholder } from '../../../assets/images';
-import { DEPOSIT_ADDRESS_LABEL } from '../../../constants/deposit';
+import { CHECK_TXN_BUTTON, CHECKING_TXN_BUTTON, DEPOSIT_ADDRESS_LABEL } from '../../../constants/deposit';
 import CommonImage from '../../CommonImage';
 import CommonSpace from '../../CommonSpace';
 import Calculator from '../Calculator';
@@ -13,6 +13,7 @@ import CommonQRCode from '../../CommonQRCode';
 import CommonAddress from '../../CommonAddress';
 import { DepositDetailProps } from '../types';
 import { CopySize } from '../../Copy';
+import CommonButton, { CommonButtonSize } from '../../CommonButton';
 
 export default function DepositDetailForWeb({
   className,
@@ -28,7 +29,9 @@ export default function DepositDetailForWeb({
   qrCodeValue,
   tokenLogoUrl,
   showRetry = false,
+  isCheckTxnLoading = false,
   onRetry,
+  onCheckTxnClick,
 }: DepositDetailProps) {
   return (
     <div className={clsx('etransfer-ui-deposit-detail-for-web', className)}>
@@ -78,12 +81,21 @@ export default function DepositDetailForWeb({
                 alt="qrCodePlaceholder"
               />
             )}
-            <CommonAddress
-              label={DEPOSIT_ADDRESS_LABEL}
-              value={depositInfo.depositAddress}
-              componentStyle={componentStyle}
-              copySize={CopySize.Big}
-            />
+            <div>
+              <CommonAddress
+                label={DEPOSIT_ADDRESS_LABEL}
+                value={depositInfo.depositAddress}
+                componentStyle={componentStyle}
+                copySize={CopySize.Big}
+              />
+              <CommonButton
+                className={'etransfer-ui-check-txn-btn'}
+                size={CommonButtonSize.ExtraSmall}
+                onClick={onCheckTxnClick}
+                loading={isCheckTxnLoading}>
+                {isCheckTxnLoading ? CHECKING_TXN_BUTTON : CHECK_TXN_BUTTON}
+              </CommonButton>
+            </div>
           </div>
           <CommonSpace direction="vertical" size={12} />
           <DepositInfo

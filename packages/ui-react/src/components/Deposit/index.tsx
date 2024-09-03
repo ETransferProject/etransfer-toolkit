@@ -16,6 +16,7 @@ import DepositForWeb from './DepositForWeb';
 import { checkDepositSupportNetworkList, checkDepositSupportTokenAndChain } from './utils';
 import clsx from 'clsx';
 import './index.less';
+import { useCheckTxn } from '../../hooks/deposit';
 
 export default function Deposit({
   containerClassName,
@@ -23,6 +24,9 @@ export default function Deposit({
   componentStyle = ComponentStyle.Web,
   isShowErrorTip = true,
   isShowMobilePoweredBy,
+  isShowProcessingTip = true,
+  withdrawProcessingCount = 0,
+  onClickProcessingTip,
 }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
@@ -39,6 +43,7 @@ export default function Deposit({
       receiveTokenSymbol,
       chainItem,
       chainList,
+      depositProcessingCount,
     },
     { dispatch },
   ] = useETransferDeposit();
@@ -277,6 +282,18 @@ export default function Deposit({
     await getDepositData(chainItem.key, depositTokenSymbol, receiveTokenSymbol);
   }, [chainItem.key, depositTokenSymbol, getDepositData, receiveTokenSymbol]);
 
+  const { isCheckTxnLoading, handleCheckTxnClick, stopTimer } = useCheckTxn();
+  const stopTimerRef = useRef(stopTimer);
+  stopTimerRef.current = stopTimer;
+  useEffectOnce(() => {
+    const { remove } = etransferEvents.GlobalTxnNotice.addListener(() => {
+      stopTimerRef.current();
+    });
+    return () => {
+      remove();
+    };
+  });
+
   const init = useCallback(async () => {
     const currentSelected = await getTokenList(chainItem?.key, depositTokenSymbol, receiveTokenSymbol);
 
@@ -336,7 +353,13 @@ export default function Deposit({
           qrCodeValue={depositInfo.depositAddress}
           tokenLogoUrl={depositTokenSelected?.icon}
           showRetry={showRetry}
+          isCheckTxnLoading={isCheckTxnLoading}
+          isShowProcessingTip={isShowProcessingTip}
+          depositProcessingCount={depositProcessingCount}
+          withdrawProcessingCount={withdrawProcessingCount}
           onRetry={handleRetry}
+          onCheckTxnClick={handleCheckTxnClick}
+          onClickProcessingTip={onClickProcessingTip}
         />
       ) : (
         <DepositForWeb
@@ -364,7 +387,13 @@ export default function Deposit({
           qrCodeValue={depositInfo.depositAddress}
           tokenLogoUrl={depositTokenSelected?.icon}
           showRetry={showRetry}
+          isCheckTxnLoading={isCheckTxnLoading}
+          isShowProcessingTip={isShowProcessingTip}
+          depositProcessingCount={depositProcessingCount}
+          withdrawProcessingCount={withdrawProcessingCount}
           onRetry={handleRetry}
+          onCheckTxnClick={handleCheckTxnClick}
+          onClickProcessingTip={onClickProcessingTip}
         />
       )}
     </div>

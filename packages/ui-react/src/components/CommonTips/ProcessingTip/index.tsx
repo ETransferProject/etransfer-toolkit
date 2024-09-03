@@ -7,7 +7,7 @@ export interface ProcessingTipProps {
   marginBottom?: number;
   borderRadius?: number;
   className?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 export function ProcessingTip({
   depositProcessingCount,
@@ -36,7 +36,13 @@ export function ProcessingTip({
 
   return (
     <>
-      <CommonWarningTip content={text} onClick={onClick} className={className} borderRadius={borderRadius} />
+      <CommonWarningTip
+        content={text}
+        onClick={onClick}
+        className={className}
+        borderRadius={borderRadius}
+        isShowSuffix={!!onClick}
+      />
       <CommonSpace direction="vertical" size={marginBottom} />
     </>
   );

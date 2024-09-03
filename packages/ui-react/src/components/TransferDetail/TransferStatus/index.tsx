@@ -1,6 +1,7 @@
 import { OrderStatusEnum } from '@etransfer/types';
 import './index.less';
 import { TransferStatusType } from '../../../constants/transfer';
+import { DEFAULT_NULL_VALUE } from '../../../constants';
 
 export function TransferStatus({ status }: { status: OrderStatusEnum | TransferStatusType }) {
   if (status === OrderStatusEnum.Processing || status === TransferStatusType.Pending) {
@@ -15,5 +16,5 @@ export function TransferStatus({ status }: { status: OrderStatusEnum | TransferS
     return <div className={'etransfer-ui-transfer-status-failed'}>{TransferStatusType.Failed}</div>;
   }
 
-  return null;
+  return <span>{DEFAULT_NULL_VALUE}</span>;
 }

@@ -42,6 +42,7 @@ export interface HistoryContentProps {
   maxResultCount: number;
   totalCount: number;
   skipCount: number;
+  onClickItem?: (id: string) => void;
 }
 
 export interface HistoryMobileContentProps extends HistoryContentProps {

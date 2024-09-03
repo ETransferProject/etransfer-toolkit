@@ -299,8 +299,8 @@ export type TGetRecordDetailResult = TRecordsListItem & {
 export type TRecordDetailStep = {
   currentStep: TransactionRecordStep;
   fromTransfer: {
-    confirmingThreshold: number;
-    confirmedNum: number;
+    confirmingThreshold: number; // total
+    confirmedNum: number; // already
   };
 };
 

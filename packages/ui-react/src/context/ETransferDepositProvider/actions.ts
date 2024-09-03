@@ -14,6 +14,7 @@ export const ETransferDepositActions = {
   setReceiveTokenList: 'setReceiveTokenList',
   setChainItem: 'setChainItem',
   setChainList: 'setChainList',
+  setDepositProcessingCount: 'setDepositProcessingCount',
 };
 
 export interface ETransferDepositState {
@@ -32,6 +33,9 @@ export interface ETransferDepositState {
   // chain
   chainItem: IChainMenuItem;
   chainList?: IChainMenuItem[];
+
+  // notice
+  depositProcessingCount?: number;
 }
 
 export const etransferDepositAction = {
@@ -72,6 +76,10 @@ export const etransferDepositAction = {
   setChainList: {
     type: ETransferDepositActions['setChainList'],
     actions: (list: IChainMenuItem[]) => basicActions(ETransferDepositActions['setChainList'], { list }),
+  },
+  setDepositProcessingCount: {
+    type: ETransferDepositActions['setDepositProcessingCount'],
+    actions: (count?: number) => basicActions(ETransferDepositActions['setDepositProcessingCount'], { count }),
   },
   destroy: {
     type: ETransferDepositActions['destroy'],

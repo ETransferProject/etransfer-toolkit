@@ -52,6 +52,7 @@ import { ETransferAccountConfig } from '../../provider/types';
 import { useEffectOnce } from 'react-use';
 import clsx from 'clsx';
 import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
+import { ProcessingTip } from '../CommonTips/ProcessingTip';
 
 const FORM_VALIDATE_DATA = {
   [WithdrawFormKeys.TOKEN]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
@@ -71,13 +72,19 @@ export default function Withdraw({
   componentStyle = ComponentStyle.Web,
   isShowMobilePoweredBy,
   isShowErrorTip = true,
+  depositProcessingCount = 0,
+  isShowProcessingTip = true,
+  onClickProcessingTip,
 }: WithdrawProps) {
   const [form] = Form.useForm<TWithdrawFormValues>();
   const [formValidateData, setFormValidateData] = useState<{
     [key in WithdrawFormKeys]: { validateStatus: WithdrawValidateStatus; errorMessage: string };
   }>(JSON.parse(JSON.stringify(FORM_VALIDATE_DATA)));
 
-  const [{ tokenSymbol, tokenList, networkItem, chainItem, chainList, address }, { dispatch }] = useETransferWithdraw();
+  const [
+    { tokenSymbol, tokenList, networkItem, chainItem, chainList, address, withdrawProcessingCount },
+    { dispatch },
+  ] = useETransferWithdraw();
   const currentNetworkRef = useRef<TNetworkItem>();
   const currentChainItemRef = useRef<IChainMenuItem>(chainItem);
   const [withdrawInfo, setWithdrawInfo] = useState<TWithdrawInfo>(INITIAL_WITHDRAW_INFO);
@@ -759,6 +766,14 @@ export default function Withdraw({
 
   return (
     <div className={clsx('etransfer-ui-withdraw', className)}>
+      {isShowProcessingTip && (
+        <ProcessingTip
+          depositProcessingCount={depositProcessingCount}
+          withdrawProcessingCount={withdrawProcessingCount}
+          onClick={onClickProcessingTip}
+        />
+      )}
+
       <WithdrawSelectChain
         className={chainClassName}
         mobileTitle="Withdraw from"

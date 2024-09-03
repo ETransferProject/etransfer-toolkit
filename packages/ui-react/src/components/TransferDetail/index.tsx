@@ -8,12 +8,13 @@ import { etransferCore, setLoading } from '../../utils';
 import { useIsHaveJWT } from '../../hooks/login';
 
 export interface TransferDetailProps {
+  orderId: string;
   isShowBackElement?: boolean;
   componentStyle: ComponentStyle;
   onBack?: () => void;
 }
 
-export default function TransferDetail({ componentStyle, isShowBackElement, onBack }: TransferDetailProps) {
+export default function TransferDetail({ orderId, componentStyle, isShowBackElement, onBack }: TransferDetailProps) {
   const isMobileStyle = useMemo(() => componentStyle === ComponentStyle.Mobile, [componentStyle]);
 
   const isHaveJWT = useIsHaveJWT();
@@ -27,14 +28,13 @@ export default function TransferDetail({ componentStyle, isShowBackElement, onBa
   const { getDetail, stopTimer } = useMemo(() => {
     const getDetail = async (isLoading = true) => {
       try {
-        const id = ''; // TODO searchParams.get('id');
-        if (!id || !isHaveJWTRef.current) {
+        if (!orderId || !isHaveJWTRef.current) {
           return;
         }
 
         isLoading && setLoading(true);
 
-        const data = await etransferCore.services.getRecordDetail(id);
+        const data = await etransferCore.services.getRecordDetail(orderId);
         setDetailData(data);
 
         if (data.status === OrderStatusEnum.Processing) {
@@ -71,7 +71,7 @@ export default function TransferDetail({ componentStyle, isShowBackElement, onBa
     };
 
     return { getDetail, stopTimer };
-  }, []);
+  }, [orderId]);
 
   useEffect(() => {
     if (isHaveJWT) {

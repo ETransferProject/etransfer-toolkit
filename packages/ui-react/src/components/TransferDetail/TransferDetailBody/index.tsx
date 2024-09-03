@@ -25,21 +25,40 @@ export default function TransferDetailBody({
     return componentStyle === ComponentStyle.Mobile;
   }, [componentStyle]);
 
+  const orderType = useMemo(() => {
+    return data.orderType === BusinessType.Withdraw ? BusinessTypeLabel.Withdraw : data.orderType;
+  }, [data.orderType]);
+
   return (
     <div className={'etransfer-ui-transfer-detail-body'}>
-      <div className={'etransfer-ui-transfer-detail-item'}>
-        <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.Type}</div>
-        <div className={clsx('etransfer-ui-transfer-detail-value', 'etransfer-ui-transfer-detail-value-type')}>
-          {data.orderType === BusinessType.Withdraw ? BusinessTypeLabel.Withdraw : data.orderType}
-        </div>
-      </div>
+      {isMobileStyle ? (
+        <>
+          <div className={'etransfer-ui-transfer-detail-item'}>
+            <div className={'etransfer-ui-transfer-detail-label etransfer-ui-transfer-detail-value-type'}>
+              {orderType}
+            </div>
+            <div className={clsx('etransfer-ui-transfer-detail-value', 'etransfer-ui-transfer-detail-value-time')}>
+              {formatPastTime(data.createTime)}
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={'etransfer-ui-transfer-detail-item'}>
+            <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.Type}</div>
+            <div className={clsx('etransfer-ui-transfer-detail-value', 'etransfer-ui-transfer-detail-value-type')}>
+              {data.orderType === BusinessType.Withdraw ? BusinessTypeLabel.Withdraw : data.orderType}
+            </div>
+          </div>
 
-      <div className={'etransfer-ui-transfer-detail-item'}>
-        <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.CreateTime}</div>
-        <div className={clsx('etransfer-ui-transfer-detail-value', 'etransfer-ui-transfer-detail-value-time')}>
-          {formatPastTime(data.createTime)}
-        </div>
-      </div>
+          <div className={'etransfer-ui-transfer-detail-item'}>
+            <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.CreateTime}</div>
+            <div className={clsx('etransfer-ui-transfer-detail-value', 'etransfer-ui-transfer-detail-value-time')}>
+              {formatPastTime(data.createTime)}
+            </div>
+          </div>
+        </>
+      )}
 
       <div className={'etransfer-ui-transfer-detail-item'}>
         <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.TransactionFee}</div>

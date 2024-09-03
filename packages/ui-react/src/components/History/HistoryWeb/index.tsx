@@ -20,6 +20,7 @@ export default function HistoryWeb({
   onStatusChange,
   onTimeStampChange,
   onReset,
+  onClickItem,
   onTableChange,
 }: HistoryWebFilterProps & HistoryWebContentProps & { filterClassName?: string; contentClassName?: string }) {
   return (
@@ -41,6 +42,7 @@ export default function HistoryWeb({
         maxResultCount={maxResultCount}
         totalCount={totalCount}
         skipCount={skipCount}
+        onClickItem={onClickItem}
         onTableChange={onTableChange}
       />
     </div>

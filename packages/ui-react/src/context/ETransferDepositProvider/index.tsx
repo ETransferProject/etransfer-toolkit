@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   // depositTokenSymbol: TokenType.USDT,
   // receiveTokenSymbol: TokenType.USDT,
   // chainItem: CHAIN_MENU_DATA['AELF'],
+  depositProcessingCount: 0,
 };
 
 const ETransferDepositContext = createContext<any>(INITIAL_STATE);
@@ -70,6 +71,9 @@ function reducer(state: ETransferDepositState, { type, payload }: any) {
       if (!list || !Array.isArray(list)) return state;
 
       return Object.assign({}, state, { chainList: list });
+    }
+    case ETransferDepositActions.setDepositProcessingCount: {
+      return Object.assign({}, state, { depositProcessingCount: payload.count });
     }
 
     case ETransferDepositActions.destroy: {

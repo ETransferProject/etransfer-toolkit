@@ -1,5 +1,7 @@
 export enum BlockchainNetworkType {
   AELF = 'AELF',
+  tDVV = 'tDVV',
+  tDVW = 'tDVW',
   SETH = 'SETH',
   Ethereum = 'ETH',
   Polygon = 'MATIC',

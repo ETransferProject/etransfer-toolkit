@@ -16,11 +16,13 @@ export default function History({
   componentStyle = ComponentStyle.Web,
   isUnreadHistory,
   isShowMobilePoweredBy,
+  onClickHistoryItem,
 }: {
   className?: string;
   isUnreadHistory: boolean;
   componentStyle?: ComponentStyle;
   isShowMobilePoweredBy?: boolean;
+  onClickHistoryItem?: (id: string) => void;
 }) {
   const isMobileStyle = useMemo(() => componentStyle === ComponentStyle.Mobile, [componentStyle]);
   const [type, setType] = useState(RecordsRequestType.All);
@@ -210,6 +212,7 @@ export default function History({
       onCloseItem={handleCloseItem}
       onReset={handleReset}
       onApply={handleApply}
+      onClickItem={onClickHistoryItem}
       onNextPage={handleNextPage}
       recordsList={recordsList}
       hasMore={hasMore}
@@ -232,6 +235,7 @@ export default function History({
       onTypeChange={handleTypeChange}
       onStatusChange={handleStatusChange}
       onTimeStampChange={handleTimeStampChange}
+      onClickItem={onClickHistoryItem}
       onTableChange={handleTableChange}
     />
   );

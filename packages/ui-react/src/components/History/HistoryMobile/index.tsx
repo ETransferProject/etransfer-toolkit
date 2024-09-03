@@ -25,6 +25,7 @@ export default function HistoryMobile({
   onCloseItem,
   onReset,
   onApply,
+  onClickItem,
   onNextPage,
 }: HistoryMobileFilterProps &
   HistoryMobileContentProps & { filterClassName?: string; contentClassName?: string; isShowPoweredBy?: boolean }) {
@@ -49,6 +50,7 @@ export default function HistoryMobile({
             maxResultCount={maxResultCount}
             totalCount={totalCount}
             skipCount={skipCount}
+            onClickItem={onClickItem}
             onNextPage={onNextPage}
           />
         ) : (

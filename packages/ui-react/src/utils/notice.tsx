@@ -62,9 +62,11 @@ export const showNotice = ({
 
   const typeText = type === BusinessType.Withdraw ? 'withdrawal' : type.toLowerCase();
 
+  const action = 'received';
+
   const content =
     status === TTxnStatus.Successful
-      ? `The ${typeText} of ${amount} ${formatSymbolDisplay(symbol)} has been received.`
+      ? `The ${typeText} of ${amount} ${formatSymbolDisplay(symbol)} has been ${action}.`
       : isSwapFail
       ? `Swap ${formatSymbolDisplay(symbol)} failed, the ${typeText} of ${amount} USDT has been received.`
       : `The ${typeText} of ${amount} ${formatSymbolDisplay(
@@ -74,8 +76,10 @@ export const showNotice = ({
   notification.info({
     ...noticeProps,
     className: clsx(
-      'etransfer-txn-notification',
-      status === TTxnStatus.Successful ? 'etransfer-txn-notification-success' : 'etransfer-txn-notification-error',
+      'etransfer-ui-txn-notification',
+      status === TTxnStatus.Successful
+        ? 'etransfer-ui-txn-notification-success'
+        : 'etransfer-ui-txn-notification-error',
     ),
     icon: <CommonSvg type="checkNotice" />,
     message: title,
