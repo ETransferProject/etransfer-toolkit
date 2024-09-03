@@ -2,16 +2,24 @@
 
 .etransfer-ui-withdraw {
   height: 100%;
-  display: flex;
-  flex-direction: column;
 
-  @media @mediaPad {
-    padding: 0 16px 40px;
+  .etransfer-ui-withdraw-body {
+    display: flex;
+    flex-direction: column;
+    @media @mediaPad {
+      padding: 8px 16px 40px;
+    }
+    @media @mediaMobile {
+      padding: 0 16px 1px;
+    }
+    @media @mediaWeb {
+      padding: 0 32px 40px;
+    }
   }
-  @media @mediaMobile {
-    padding: 0 16px 1px;
-  }
-  @media @mediaWeb {
-    padding: 0 32px 40px;
+
+  .etransfer-ui-withdraw-processing-tip {
+    @media @mediaWeb {
+      padding: 0 32px;
+    }
   }
 }

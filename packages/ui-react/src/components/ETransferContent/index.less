@@ -45,24 +45,38 @@
     }
 
     .etransfer-ui-withdraw {
-      @media @mediaPad {
-        width: var(--etransfer-ui-content-width);
-        margin: auto;
-        padding-left: 0;
-        padding-right: 0;
-        padding-bottom: 0;
-        height: 100%;
-      }
-      @media @mediaMobile {
-        .etransfer-ui-mobile-bottom-powered-by {
-          margin-bottom: 2px;
+      .etransfer-ui-withdraw-body {
+        @media @mediaPad {
+          width: var(--etransfer-ui-content-width);
+          margin: auto;
+          padding-left: 0;
+          padding-right: 0;
+          padding-bottom: 0;
+        }
+
+        @media @mediaMobile {
+          .etransfer-ui-mobile-bottom-powered-by {
+            margin-bottom: 2px;
+          }
+        }
+
+        @media @mediaWeb {
+          padding-left: 40px;
+          padding-right: 40px;
+          max-width: 1180px;
+          margin: auto;
         }
       }
-      @media @mediaWeb {
-        padding-left: 40px;
-        padding-right: 40px;
-        max-width: 1180px;
-        margin: auto;
+      .etransfer-ui-withdraw-processing-tip {
+        @media @mediaWeb {
+          padding-left: 40px;
+          padding-right: 40px;
+          max-width: 1180px;
+          margin: auto;
+        }
+      }
+      @media @mediaPad {
+        height: 100%;
       }
     }
 

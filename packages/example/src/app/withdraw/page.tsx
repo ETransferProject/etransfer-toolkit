@@ -10,7 +10,7 @@ export default function WithdrawPage() {
   return (
     <ETransferWithdrawProvider>
       <CommonSpace direction={'vertical'} size={24} />
-      <Withdraw componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web} />
+      <Withdraw componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web} depositProcessingCount={8} />
     </ETransferWithdrawProvider>
   );
 }

@@ -1,11 +1,12 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { SingleMessage } from '../components';
 import { CHECK_TXN_DURATION, NO_TXN_FOUND } from '../constants';
+import { useETransferDeposit } from '../context/ETransferDepositProvider';
 
 export function useCheckTxn() {
   const [isCheckTxnLoading, setIsCheckTxnLoading] = useState(false);
-  // TODO
-  const { depositProcessingCount, withdrawProcessingCount } = { depositProcessingCount: 0, withdrawProcessingCount: 0 };
+  const [{ depositProcessingCount }] = useETransferDeposit();
+  const withdrawProcessingCountRef = useRef(0);
 
   const timerRef = useRef<NodeJS.Timeout>();
 
@@ -18,11 +19,11 @@ export function useCheckTxn() {
   const resetTimer = useCallback(() => {
     timerRef.current = setTimeout(() => {
       stopTimer();
-      if (!depositProcessingCount && !withdrawProcessingCount) {
+      if (!depositProcessingCount && !withdrawProcessingCountRef.current) {
         SingleMessage.info(NO_TXN_FOUND);
       }
     }, CHECK_TXN_DURATION);
-  }, [depositProcessingCount, stopTimer, withdrawProcessingCount]);
+  }, [depositProcessingCount, stopTimer]);
 
   const handleCheckTxnClick = useCallback(() => {
     setIsCheckTxnLoading(true);
@@ -35,5 +36,5 @@ export function useCheckTxn() {
     };
   });
 
-  return { isCheckTxnLoading, resetTimer, stopTimer, handleCheckTxnClick };
+  return { isCheckTxnLoading, resetTimer, stopTimer, handleCheckTxnClick, withdrawProcessingCountRef };
 }

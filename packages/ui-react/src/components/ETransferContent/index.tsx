@@ -5,18 +5,14 @@ import { Layout as AntdLayout } from 'antd';
 import Header from '../Header';
 import GlobalLoading from '../GlobalLoading';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ETransferDepositProvider, useETransferDeposit } from '../../context/ETransferDepositProvider';
-import Deposit from '../Deposit';
-import { ETransferWithdrawProvider, useETransferWithdraw } from '../../context/ETransferWithdrawProvider';
+import { ETransferDepositProvider } from '../../context/ETransferDepositProvider';
+import { ETransferWithdrawProvider } from '../../context/ETransferWithdrawProvider';
 import { getAccountInfo, TelegramPlatform } from '../../utils';
 import WebSider from './WebSider';
-import Withdraw from '../Withdraw';
-import History from '../History';
 import { AccountAddressProps } from '../Header/UserProfile/AccountAddress';
 import { etransferEvents } from '@etransfer/utils';
 import { useUpdateRecord } from '../../hooks/updateRecord';
-import TransferDetail from '../TransferDetail';
-import { useNoticeSocket } from '../../hooks/notice';
+import ETransferContentBody from './ETransferContentBody';
 
 export default function ETransferContent({
   className,
@@ -74,10 +70,6 @@ export default function ETransferContent({
   const getAccountListRef = useRef(getAccountList);
   getAccountListRef.current = getAccountList;
 
-  useNoticeSocket();
-
-  const [{ depositProcessingCount }] = useETransferDeposit();
-  const [{ withdrawProcessingCount }] = useETransferWithdraw();
   const handleClickProcessingTip = useCallback(() => {
     setActiveMenuKey(SideMenuKey.History);
     setActivePageKey(PageKey.History);
@@ -131,42 +123,16 @@ export default function ETransferContent({
           <Suspense fallback={<GlobalLoading />}>
             <ETransferDepositProvider>
               <ETransferWithdrawProvider>
-                {activePageKey === PageKey.Deposit && (
-                  <Deposit
-                    componentStyle={componentStyle}
-                    isShowErrorTip={isShowErrorTip}
-                    isShowMobilePoweredBy={true}
-                    isShowProcessingTip={true}
-                    withdrawProcessingCount={withdrawProcessingCount}
-                    onClickProcessingTip={handleClickProcessingTip}
-                  />
-                )}
-                {activePageKey === PageKey.Withdraw && (
-                  <Withdraw
-                    componentStyle={componentStyle}
-                    isShowMobilePoweredBy={true}
-                    isShowErrorTip={isShowErrorTip}
-                    isShowProcessingTip={true}
-                    depositProcessingCount={depositProcessingCount}
-                    onClickProcessingTip={handleClickProcessingTip}
-                  />
-                )}
-                {activePageKey === PageKey.History && (
-                  <History
-                    componentStyle={componentStyle}
-                    isUnreadHistory={isUnreadHistory}
-                    isShowMobilePoweredBy={true}
-                    onClickHistoryItem={handleClickHistoryItem}
-                  />
-                )}
-                {activePageKey === PageKey.TransferDetail && (
-                  <TransferDetail
-                    componentStyle={componentStyle}
-                    isShowBackElement={true}
-                    orderId={transferDetailId}
-                    onBack={handleTransferDetailBack}
-                  />
-                )}
+                <ETransferContentBody
+                  activePageKey={activePageKey}
+                  componentStyle={componentStyle}
+                  transferDetailId={transferDetailId}
+                  isUnreadHistory={isUnreadHistory}
+                  isShowErrorTip={isShowErrorTip}
+                  onClickProcessingTip={handleClickProcessingTip}
+                  onClickHistoryItem={handleClickHistoryItem}
+                  onTransferDetailBack={handleTransferDetailBack}
+                />
               </ETransferWithdrawProvider>
             </ETransferDepositProvider>
           </Suspense>

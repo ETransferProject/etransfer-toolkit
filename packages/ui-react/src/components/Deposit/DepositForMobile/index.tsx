@@ -51,7 +51,6 @@ export default function DepositForMobile({
         <ProcessingTip
           depositProcessingCount={depositProcessingCount}
           withdrawProcessingCount={withdrawProcessingCount}
-          // marginBottom={isPadPX && !isMobilePX ? 24 : 16} // TODO
           borderRadius={0}
           onClick={onClickProcessingTip}
         />

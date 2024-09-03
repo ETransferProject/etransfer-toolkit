@@ -22,7 +22,7 @@ export default function FromOrToChain({
   }, [chainId, network]);
 
   const renderNetworkName = useMemo(() => {
-    if (!chainId) return '';
+    if (!chainId) return <span className={'etransfer-ui-from-or-to-chain-network-name'}>{network}</span>;
 
     const currentNetworkName =
       network === BlockchainNetworkType.AELF

@@ -1,5 +1,6 @@
 import { OrderStatusEnum, TGetRecordDetailResult } from '@etransfer/types';
 import clsx from 'clsx';
+import './index.less';
 import { formatSymbolDisplay } from '../../../utils';
 import TransferDetailStep from '../TransferDetailStep';
 import CommonSvg from '../../CommonSvg';

@@ -8,7 +8,7 @@ export default function DepositPage() {
   return (
     <ETransferDepositProvider>
       <CommonSpace direction={'vertical'} size={24} />
-      <Deposit componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web} />
+      <Deposit componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web} withdrawProcessingCount={9} />
     </ETransferDepositProvider>
   );
 }

@@ -1,12 +1,13 @@
 import { notification } from 'antd';
 import { ArgsProps } from 'antd/lib/notification';
-import { etransferCore, formatSymbolDisplay } from '@etransfer/ui-react';
 import clsx from 'clsx';
 import { TOrderRecordsNoticeResponse } from '@etransfer/socket';
 import { ETRANSFER_LOGO } from '../constants';
 import { BusinessType } from '@etransfer/types';
 import { CommonSvg } from '../components';
 import { globalInstance } from './globalInstance';
+import { formatSymbolDisplay } from './format';
+import { etransferCore } from './core';
 
 export const browserNotification = ({ title, content }: { title: string; content: string }) => {
   if (!('Notification' in window)) {
@@ -86,7 +87,7 @@ export const showNotice = ({
     closeIcon: <CommonSvg type="closeMedium" />,
     description: content,
     placement: 'top',
-    duration: noticeProps?.duration || 5,
+    duration: noticeProps?.duration || 50,
   });
 
   if (isShowBrowserNotice) {

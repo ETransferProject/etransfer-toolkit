@@ -282,7 +282,8 @@ export default function Deposit({
     await getDepositData(chainItem.key, depositTokenSymbol, receiveTokenSymbol);
   }, [chainItem.key, depositTokenSymbol, getDepositData, receiveTokenSymbol]);
 
-  const { isCheckTxnLoading, handleCheckTxnClick, stopTimer } = useCheckTxn();
+  const { isCheckTxnLoading, withdrawProcessingCountRef, handleCheckTxnClick, stopTimer } = useCheckTxn();
+  withdrawProcessingCountRef.current = withdrawProcessingCount;
   const stopTimerRef = useRef(stopTimer);
   stopTimerRef.current = stopTimer;
   useEffectOnce(() => {

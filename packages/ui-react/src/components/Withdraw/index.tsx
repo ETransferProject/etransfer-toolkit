@@ -767,50 +767,54 @@ export default function Withdraw({
   return (
     <div className={clsx('etransfer-ui-withdraw', className)}>
       {isShowProcessingTip && (
-        <ProcessingTip
-          depositProcessingCount={depositProcessingCount}
-          withdrawProcessingCount={withdrawProcessingCount}
-          onClick={onClickProcessingTip}
-        />
+        <div className="etransfer-ui-withdraw-processing-tip">
+          <ProcessingTip
+            depositProcessingCount={depositProcessingCount}
+            withdrawProcessingCount={withdrawProcessingCount}
+            onClick={onClickProcessingTip}
+            borderRadius={componentStyle === ComponentStyle.Web ? 8 : 0}
+          />
+        </div>
       )}
-
-      <WithdrawSelectChain
-        className={chainClassName}
-        mobileTitle="Withdraw from"
-        mobileLabel="from"
-        webLabel={'Withdraw Assets from'}
-        menuItems={chainList || []}
-        selectedItem={chainItem}
-        componentStyle={componentStyle}
-        chainChanged={handleChainChanged}
-      />
-      <WithdrawForm
-        form={form}
-        className={fromClassName}
-        formValidateData={formValidateData}
-        componentStyle={componentStyle}
-        isShowMobilePoweredBy={isShowMobilePoweredBy}
-        address={getAddressInput()}
-        balance={balance}
-        amount={amount}
-        minAmount={minAmount}
-        receiveAmount={receiveAmount}
-        isShowNetworkLoading={isShowNetworkLoading}
-        isNetworkDisable={isNetworkDisable}
-        isBalanceLoading={isBalanceLoading}
-        isSubmitDisabled={isSubmitDisabled}
-        isTransactionFeeLoading={isTransactionFeeLoading}
-        onTokenChange={handleTokenChange}
-        onAddressBlur={handleAddressBlur}
-        onAddressChange={handleAddressChange}
-        withdrawInfo={withdrawInfo}
-        onNetworkChange={handleNetworkChanged}
-        onClickMax={handleClickMax}
-        onAmountChange={handleAmountChange}
-        onAmountBlur={handleAmountBlur}
-        onClickFailedOk={handleClickFailedOk}
-        onClickSuccessOk={handleClickSuccessOk}
-      />
+      <div className="etransfer-ui-withdraw-body">
+        <WithdrawSelectChain
+          className={chainClassName}
+          mobileTitle="Withdraw from"
+          mobileLabel="from"
+          webLabel={'Withdraw Assets from'}
+          menuItems={chainList || []}
+          selectedItem={chainItem}
+          componentStyle={componentStyle}
+          chainChanged={handleChainChanged}
+        />
+        <WithdrawForm
+          form={form}
+          className={fromClassName}
+          formValidateData={formValidateData}
+          componentStyle={componentStyle}
+          isShowMobilePoweredBy={isShowMobilePoweredBy}
+          address={getAddressInput()}
+          balance={balance}
+          amount={amount}
+          minAmount={minAmount}
+          receiveAmount={receiveAmount}
+          isShowNetworkLoading={isShowNetworkLoading}
+          isNetworkDisable={isNetworkDisable}
+          isBalanceLoading={isBalanceLoading}
+          isSubmitDisabled={isSubmitDisabled}
+          isTransactionFeeLoading={isTransactionFeeLoading}
+          onTokenChange={handleTokenChange}
+          onAddressBlur={handleAddressBlur}
+          onAddressChange={handleAddressChange}
+          withdrawInfo={withdrawInfo}
+          onNetworkChange={handleNetworkChanged}
+          onClickMax={handleClickMax}
+          onAmountChange={handleAmountChange}
+          onAmountBlur={handleAmountBlur}
+          onClickFailedOk={handleClickFailedOk}
+          onClickSuccessOk={handleClickSuccessOk}
+        />
+      </div>
     </div>
   );
 }
