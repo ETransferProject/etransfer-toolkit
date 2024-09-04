@@ -14,7 +14,7 @@ export default function TransferDetailMain({
   data,
   className,
 }: {
-  componentStyle: ComponentStyle;
+  componentStyle?: ComponentStyle;
   data: TGetRecordDetailResult;
   className?: string;
 }) {

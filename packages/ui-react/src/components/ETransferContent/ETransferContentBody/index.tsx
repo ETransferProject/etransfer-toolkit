@@ -19,7 +19,7 @@ export default function ETransferContentBody({
   onTransferDetailBack,
 }: {
   activePageKey: PageKey;
-  componentStyle: ComponentStyle;
+  componentStyle?: ComponentStyle;
   isUnreadHistory: boolean;
   transferDetailId?: string;
   isShowErrorTip?: boolean;

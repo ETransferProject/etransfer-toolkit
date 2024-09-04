@@ -18,7 +18,7 @@ export default function TransferDetailBody({
   componentStyle,
   data,
 }: {
-  componentStyle: ComponentStyle;
+  componentStyle?: ComponentStyle;
   data: TTransferDetailBodyData;
 }) {
   const isMobileStyle = useMemo(() => {

@@ -10,7 +10,7 @@ import { useIsHaveJWT } from '../../hooks/login';
 export interface TransferDetailProps {
   orderId: string;
   isShowBackElement?: boolean;
-  componentStyle: ComponentStyle;
+  componentStyle?: ComponentStyle;
   onBack?: () => void;
 }
 

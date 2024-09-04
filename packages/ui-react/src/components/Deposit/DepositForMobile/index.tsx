@@ -7,6 +7,7 @@ import { TDepositForMobileProps } from '../types';
 import CommonSvg from '../../CommonSvg';
 import { ComponentStyle } from '../../../types';
 import { ProcessingTip } from '../../CommonTips/ProcessingTip';
+import { useScreenSize } from '../../../hooks';
 
 export default function DepositForMobile({
   // common
@@ -45,6 +46,8 @@ export default function DepositForMobile({
   onCheckTxnClick,
   onClickProcessingTip,
 }: TDepositForMobileProps) {
+  const { isMobilePX } = useScreenSize();
+
   return (
     <>
       {isShowProcessingTip && (
@@ -53,6 +56,7 @@ export default function DepositForMobile({
           withdrawProcessingCount={withdrawProcessingCount}
           borderRadius={0}
           onClick={onClickProcessingTip}
+          marginBottom={isMobilePX ? 0 : 8}
         />
       )}
       <div className={clsx('etransfer-ui-deposit-for-mobile', className)}>

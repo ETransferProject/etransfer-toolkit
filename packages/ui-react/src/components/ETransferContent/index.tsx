@@ -26,7 +26,7 @@ export default function ETransferContent({
   onClickHeaderLogo,
 }: {
   className?: string;
-  componentStyle: ComponentStyle;
+  componentStyle?: ComponentStyle;
   isCanClickHeaderLogo?: boolean;
   isShowHeader?: boolean;
   isShowHeaderUserProfile?: boolean;

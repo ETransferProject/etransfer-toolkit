@@ -9,7 +9,7 @@ import { formatSymbolDisplay } from '../../../utils';
 
 export interface TransferDetailStepProps {
   className?: string;
-  componentStyle: ComponentStyle;
+  componentStyle?: ComponentStyle;
   orderType: BusinessType;
   currentStep: TransactionRecordStep;
   fromTransfer: {
