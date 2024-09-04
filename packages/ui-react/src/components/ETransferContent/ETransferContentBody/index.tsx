@@ -38,6 +38,7 @@ export default function ETransferContentBody({
           componentStyle={componentStyle}
           isShowErrorTip={isShowErrorTip}
           isShowMobilePoweredBy={true}
+          isListenNoticeAuto={false}
           isShowProcessingTip={true}
           withdrawProcessingCount={withdrawProcessingCount}
           onClickProcessingTip={onClickProcessingTip}
@@ -48,6 +49,7 @@ export default function ETransferContentBody({
           componentStyle={componentStyle}
           isShowMobilePoweredBy={true}
           isShowErrorTip={isShowErrorTip}
+          isListenNoticeAuto={false}
           isShowProcessingTip={true}
           depositProcessingCount={depositProcessingCount}
           onClickProcessingTip={onClickProcessingTip}

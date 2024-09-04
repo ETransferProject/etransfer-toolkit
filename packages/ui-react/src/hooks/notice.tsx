@@ -3,11 +3,110 @@ import { useCallback, useEffect, useRef } from 'react';
 import { etransferEvents, removeAddressSuffix } from '@etransfer/utils';
 import { TOrderRecordsNoticeResponse } from '@etransfer/socket';
 import { CHAIN_ID } from '../constants';
-import { handleNoticeDataAndShow } from '../utils/notice';
+import {
+  connectUserOrderRecord,
+  handleDepositNoticeDataAndShow,
+  handleNoticeDataAndShow,
+  handleWithdrawNoticeDataAndShow,
+} from '../utils/notice';
 import { useETransferWithdraw } from '../context/ETransferWithdrawProvider';
 import { useETransferDeposit } from '../context/ETransferDepositProvider';
 import { etransferWithdrawAction } from '../context/ETransferWithdrawProvider/actions';
 import { etransferDepositAction } from '../context/ETransferDepositProvider/actions';
+
+export function useDepositNoticeSocket(isListenNoticeAuto: boolean) {
+  const address = useCallback(() => {
+    const _address =
+      getAccountAddress(CHAIN_ID.AELF) || getAccountAddress(CHAIN_ID.tDVV) || getAccountAddress(CHAIN_ID.tDVW) || '';
+    return removeAddressSuffix(_address);
+  }, []);
+
+  const [_deposit, { dispatch }] = useETransferDeposit();
+
+  const handleNotice = useCallback(
+    (res: TOrderRecordsNoticeResponse | null) => {
+      if (res) {
+        if (res.processing.depositCount) {
+          dispatch(etransferDepositAction.setDepositProcessingCount.actions(res.processing.depositCount));
+        } else {
+          dispatch(etransferDepositAction.setDepositProcessingCount.actions(0));
+        }
+
+        etransferEvents.GlobalTxnNotice.emit();
+        // handle order data and show notice
+        handleDepositNoticeDataAndShow(res);
+      }
+    },
+    [dispatch],
+  );
+  const handleNoticeRef = useRef(handleNotice);
+  handleNoticeRef.current = handleNotice;
+
+  const openNoticeSocket = useCallback(() => {
+    if (address() && !etransferCore.noticeSocket?.signalr?.connectionId && isListenNoticeAuto) {
+      connectUserOrderRecord(address(), handleNoticeRef.current);
+    }
+  }, [address, isListenNoticeAuto]);
+  const openNoticeSocketRef = useRef(openNoticeSocket);
+  openNoticeSocketRef.current = openNoticeSocket;
+
+  useEffect(() => {
+    const { remove } = etransferEvents.ETransferConfigUpdated.addListener(() => {
+      openNoticeSocketRef.current();
+    });
+
+    return () => {
+      remove();
+    };
+  }, []);
+}
+
+export function useWithdrawNoticeSocket(isListenNoticeAuto: boolean) {
+  const address = useCallback(() => {
+    const _address =
+      getAccountAddress(CHAIN_ID.AELF) || getAccountAddress(CHAIN_ID.tDVV) || getAccountAddress(CHAIN_ID.tDVW) || '';
+    return removeAddressSuffix(_address);
+  }, []);
+
+  const [_withdraw, { dispatch }] = useETransferWithdraw();
+
+  const handleNotice = useCallback(
+    (res: TOrderRecordsNoticeResponse | null) => {
+      if (res) {
+        if (res.processing.withdrawCount) {
+          dispatch(etransferWithdrawAction.setWithdrawProcessingCount.actions(res.processing.withdrawCount));
+        } else {
+          dispatch(etransferWithdrawAction.setWithdrawProcessingCount.actions(0));
+        }
+
+        etransferEvents.GlobalTxnNotice.emit();
+        // handle order data and show notice
+        handleWithdrawNoticeDataAndShow(res);
+      }
+    },
+    [dispatch],
+  );
+  const handleNoticeRef = useRef(handleNotice);
+  handleNoticeRef.current = handleNotice;
+
+  const openNoticeSocket = useCallback(() => {
+    if (address() && !etransferCore.noticeSocket?.signalr?.connectionId && isListenNoticeAuto) {
+      connectUserOrderRecord(address(), handleNoticeRef.current);
+    }
+  }, [address, isListenNoticeAuto]);
+  const openNoticeSocketRef = useRef(openNoticeSocket);
+  openNoticeSocketRef.current = openNoticeSocket;
+
+  useEffect(() => {
+    const { remove } = etransferEvents.ETransferConfigUpdated.addListener(() => {
+      openNoticeSocketRef.current();
+    });
+
+    return () => {
+      remove();
+    };
+  }, []);
+}
 
 export function useNoticeSocket() {
   const address = useCallback(() => {
@@ -47,32 +146,7 @@ export function useNoticeSocket() {
 
   const openNoticeSocket = useCallback(() => {
     if (address() && !etransferCore.noticeSocket?.signalr?.connectionId) {
-      etransferCore.noticeSocket
-        ?.doOpen()
-        .then((res) => {
-          console.log('NoticeSocket doOpen result:', res);
-          etransferCore.noticeSocket?.RequestUserOrderRecord({
-            address: address(),
-          });
-          etransferCore.noticeSocket?.ReceiveUserOrderRecords(
-            {
-              address: address(),
-            },
-            (res) => {
-              console.log('NoticeSocket ReceiveUserOrderRecords res:', res);
-              handleNoticeRef.current(res);
-            },
-          );
-          etransferCore.noticeSocket?.signalr?.onreconnected((id?: string) => {
-            console.log('NoticeSocket onreconnected:', id);
-            etransferCore.noticeSocket?.RequestUserOrderRecord({
-              address: address(),
-            });
-          });
-        })
-        .catch((error) => {
-          console.log('NoticeSocket error:', error);
-        });
+      connectUserOrderRecord(address(), handleNoticeRef.current);
     }
   }, [address]);
   const openNoticeSocketRef = useRef(openNoticeSocket);

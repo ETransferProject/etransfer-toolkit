@@ -3,6 +3,7 @@ import { ConfigKey, ETransferConfigProps, ETransferConfigProviderProps, WalletTy
 // import { CHAIN_INFO as tDVV_CHAIN_INFO } from '../constants/platform/tDVV';
 import { BaseAsyncStorage } from '../utils/BaseAsyncStorage';
 import { etransferCore } from '../utils/core';
+import { etransferEvents } from '@etransfer/utils';
 // import { CHAIN_ID, DEFAULT_CHAIN_ID, TokenType } from '../constants';
 
 const defaultConfig: ETransferConfigProps = {
@@ -71,6 +72,8 @@ class ETransferConfigProvider implements ETransferConfigProviderProps {
     }
 
     this.config = { ...this.config, ..._config };
+
+    etransferEvents.ETransferConfigUpdated.emit();
   };
 }
 

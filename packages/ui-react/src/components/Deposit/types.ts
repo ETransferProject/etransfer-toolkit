@@ -26,7 +26,7 @@ export interface DepositProps {
   componentStyle?: ComponentStyle;
   isShowErrorTip?: boolean;
   isShowMobilePoweredBy?: boolean;
-  isCheckTxnLoading?: boolean;
+  isListenNoticeAuto?: boolean;
   isShowProcessingTip?: boolean;
   withdrawProcessingCount?: number;
   onClickProcessingTip?: () => void;

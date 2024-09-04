@@ -64,7 +64,7 @@ export const showNotice = ({
 
   const content =
     type === BusinessType.Deposit && status === TTxnStatus.Successful && isSwapFail
-      ? `Swap ${formatSymbolDisplay(symbol)} failed, the ${typeText} of ${amount} USDT has been received.`
+      ? `Swap failed, the ${typeText} of ${amount} USDT has been received.`
       : status === TTxnStatus.Successful
       ? `The ${typeText} of ${amount} ${formatSymbolDisplay(symbol)} has been ${action}.`
       : `The ${typeText} of ${amount} ${formatSymbolDisplay(
@@ -93,19 +93,17 @@ export const showNotice = ({
 };
 
 export const handleNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse) => {
+  handleDepositNoticeDataAndShow(noticeData);
+  handleWithdrawNoticeDataAndShow(noticeData);
+};
+
+export const handleDepositNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse) => {
   // >>>>>> save processing
   noticeData.processing?.deposit?.forEach((item) => {
     if (!globalInstance.processingIds.includes(item.id)) {
       globalInstance.processingIds.push(item.id);
     }
   });
-
-  noticeData.processing.withdraw?.forEach((item) => {
-    if (!globalInstance.processingIds.includes(item.id)) {
-      globalInstance.processingIds.push(item.id);
-    }
-  });
-
   // >>>>>> succeed notice
   noticeData.succeed?.deposit?.forEach((item) => {
     if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
@@ -119,18 +117,6 @@ export const handleNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse)
       globalInstance.showNoticeIds.push(item.id);
     }
   });
-  noticeData.succeed?.withdraw?.forEach((item) => {
-    if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
-      showNotice({
-        status: TTxnStatus.Successful,
-        type: BusinessType.Withdraw,
-        amount: item.amount,
-        symbol: item.symbol,
-      });
-      globalInstance.showNoticeIds.push(item.id);
-    }
-  });
-
   // >>>>>> failed notice
   noticeData.failed?.deposit?.forEach((item) => {
     if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
@@ -143,6 +129,28 @@ export const handleNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse)
       globalInstance.showNoticeIds.push(item.id);
     }
   });
+};
+
+export const handleWithdrawNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse) => {
+  // >>>>>> save processing
+  noticeData.processing.withdraw?.forEach((item) => {
+    if (!globalInstance.processingIds.includes(item.id)) {
+      globalInstance.processingIds.push(item.id);
+    }
+  });
+  // >>>>>> succeed notice
+  noticeData.succeed?.withdraw?.forEach((item) => {
+    if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
+      showNotice({
+        status: TTxnStatus.Successful,
+        type: BusinessType.Withdraw,
+        amount: item.amount,
+        symbol: item.symbol,
+      });
+      globalInstance.showNoticeIds.push(item.id);
+    }
+  });
+  // >>>>>> failed notice
   noticeData.failed?.withdraw?.forEach((item) => {
     if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
       showNotice({
@@ -154,6 +162,38 @@ export const handleNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse)
       globalInstance.showNoticeIds.push(item.id);
     }
   });
+};
+
+export const connectUserOrderRecord = async (
+  address: string,
+  receiveCallback: (res: TOrderRecordsNoticeResponse | null) => void,
+) => {
+  etransferCore.noticeSocket
+    ?.doOpen()
+    .then((res) => {
+      console.log('NoticeSocket doOpen result:', res);
+      etransferCore.noticeSocket?.RequestUserOrderRecord({
+        address: address,
+      });
+      etransferCore.noticeSocket?.ReceiveUserOrderRecords(
+        {
+          address: address,
+        },
+        (res) => {
+          console.log('NoticeSocket ReceiveUserOrderRecords res:', res);
+          receiveCallback(res);
+        },
+      );
+      etransferCore.noticeSocket?.signalr?.onreconnected((id?: string) => {
+        console.log('NoticeSocket onreconnected:', id);
+        etransferCore.noticeSocket?.RequestUserOrderRecord({
+          address: address,
+        });
+      });
+    })
+    .catch((error) => {
+      console.log('NoticeSocket error:', error);
+    });
 };
 
 export const unsubscribeUserOrderRecord = async (address: string) => {

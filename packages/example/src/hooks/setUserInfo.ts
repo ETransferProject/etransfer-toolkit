@@ -43,7 +43,7 @@ export function useSetUserInfo() {
       },
     });
     console.log('>>>>>> ETransferConfig.getAllConfig', ETransferConfig.getAllConfig());
-    etransferEvents.ETransferConfigUpdated.emit();
+    // etransferEvents.ETransferConfigUpdated.emit();
   }, [accounts, callSendMethod, getSignature, walletInfo, walletType]);
   const setUserInfoRef = useRef(setUserInfo);
   setUserInfoRef.current = setUserInfo;

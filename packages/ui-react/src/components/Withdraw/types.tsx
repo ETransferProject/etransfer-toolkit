@@ -9,6 +9,7 @@ export interface WithdrawProps {
   componentStyle?: ComponentStyle;
   isShowMobilePoweredBy?: boolean;
   isShowErrorTip?: boolean;
+  isListenNoticeAuto?: boolean;
   depositProcessingCount?: number;
   isShowProcessingTip?: boolean;
   onClickProcessingTip?: () => void;

@@ -17,6 +17,7 @@ import { checkDepositSupportNetworkList, checkDepositSupportTokenAndChain } from
 import clsx from 'clsx';
 import './index.less';
 import { useCheckTxn } from '../../hooks/deposit';
+import { useDepositNoticeSocket } from '../../hooks/notice';
 
 export default function Deposit({
   containerClassName,
@@ -24,6 +25,7 @@ export default function Deposit({
   componentStyle = ComponentStyle.Web,
   isShowErrorTip = true,
   isShowMobilePoweredBy,
+  isListenNoticeAuto = true,
   isShowProcessingTip = true,
   withdrawProcessingCount = 0,
   onClickProcessingTip,
@@ -324,6 +326,8 @@ export default function Deposit({
       remove();
     };
   }, []);
+
+  useDepositNoticeSocket(isListenNoticeAuto);
 
   return (
     <div className={clsx('etransfer-ui-deposit', containerClassName)}>

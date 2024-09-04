@@ -53,6 +53,7 @@ import { useEffectOnce } from 'react-use';
 import clsx from 'clsx';
 import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
 import { ProcessingTip } from '../CommonTips/ProcessingTip';
+import { useWithdrawNoticeSocket } from '../../hooks/notice';
 
 const FORM_VALIDATE_DATA = {
   [WithdrawFormKeys.TOKEN]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
@@ -72,6 +73,7 @@ export default function Withdraw({
   componentStyle = ComponentStyle.Web,
   isShowMobilePoweredBy,
   isShowErrorTip = true,
+  isListenNoticeAuto = true,
   depositProcessingCount = 0,
   isShowProcessingTip = true,
   onClickProcessingTip,
@@ -763,6 +765,8 @@ export default function Withdraw({
       remove();
     };
   }, []);
+
+  useWithdrawNoticeSocket(isListenNoticeAuto);
 
   return (
     <div className={clsx('etransfer-ui-withdraw', className)}>
