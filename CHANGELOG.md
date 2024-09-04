@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.0...v1.5.1) (2024-09-04)
+
+### Bug Fixes
+
+- 🐛 delete next dependencies ([7604468](https://github.com/ETransferProject/etransfer-toolkit/commit/7604468806b5341e4b76a851adbb4d67e32af681))
+
 ## [1.5.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.4.1...v1.5.0) (2024-08-20)
 
 ### Features
