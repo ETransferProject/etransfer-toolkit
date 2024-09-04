@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.1...v1.5.1-alpha.2) (2024-09-04)
+
+### Features
+
+- 🎸 add transaction notice ([c3b9403](https://github.com/ETransferProject/etransfer-toolkit/commit/c3b9403b8dac02c2048cf733ae6fb3d33a3f2366))
+- 🎸 add TransferDetail example amd modify style ([b10225b](https://github.com/ETransferProject/etransfer-toolkit/commit/b10225b5d43713dc557e13a676191d89ec5bfe3c))
+- 🎸 dev notice ([bf2887c](https://github.com/ETransferProject/etransfer-toolkit/commit/bf2887cd808119b3133adc8726c520d6963fdba9))
+- 🎸 dev notice socket ([c2c10c9](https://github.com/ETransferProject/etransfer-toolkit/commit/c2c10c9d64143dda0641c36dcabeed98082cbdcb))
+- 🎸 modify socket ([c42ad97](https://github.com/ETransferProject/etransfer-toolkit/commit/c42ad97c757e6d4b6d84b0ecc0321dccf5697c5a))
+
 ## [1.5.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.0...v1.5.1-alpha.1) (2024-08-28)
 
 ### Features
