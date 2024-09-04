@@ -19,11 +19,15 @@ export default function TokenImage({ src, isShowImage = true, symbol, size = 24,
   useEffect(() => {
     if (isShowImage && isSuccess) {
       setShowIcon(true);
+    } else {
+      setShowIcon(false);
     }
   }, [isSuccess, isShowImage]);
 
   return (
-    <div className={clsx('etransfer-ui-flex-shrink-0', 'etransfer-ui-token-image-wrapper', className)}>
+    <div
+      className={clsx('etransfer-ui-flex-shrink-0', 'etransfer-ui-token-image-wrapper', className)}
+      style={{ width: size, height: size }}>
       {showIcon && src && (
         <CommonImage
           src={src}

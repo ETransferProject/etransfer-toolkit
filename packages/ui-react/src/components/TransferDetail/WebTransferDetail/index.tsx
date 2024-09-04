@@ -20,7 +20,6 @@ export default function WebTransferDetail({
   onBack?: () => void;
 }) {
   return (
-    // TODO className
     <div className={clsx('etransfer-ui-web-transfer-detail', className)}>
       {isShowBackElement && (
         <Breadcrumb className={'etransfer-ui-web-transfer-detail-breadcrumb'}>

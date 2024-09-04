@@ -26,17 +26,16 @@ export class BaseSignalr<ListenList = any> implements ISignalr<ListenList> {
 
     const signalr = new HubConnectionBuilder()
       .withUrl(this.url, { withCredentials: false })
-      .withAutomaticReconnect()
+      .withAutomaticReconnect({
+        nextRetryDelayInMilliseconds: () => 3000,
+      })
       .build();
     this._listener(signalr);
     if (this.signalr) await this.signalr.stop();
     await signalr.start();
 
-    // TODO
-    // await signalr.invoke('Connect', clientId);
     this.connectionId = signalr.connectionId ?? '';
     this.signalr = signalr;
-    // this.url = url;
 
     // this.onReconnected(async () => {
     //   await signalr.invoke('Connect', clientId);

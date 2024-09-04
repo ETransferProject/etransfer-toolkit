@@ -56,20 +56,17 @@ export const showNotice = ({
 }) => {
   if (!type || !status || !amount || !symbol) return;
 
-  const title =
-    status === TTxnStatus.Failed && isSwapFail
-      ? 'Swap Failed'
-      : `${type === BusinessType.Withdraw ? 'Withdrawal' : type} ${status}`;
+  const title = `${type === BusinessType.Withdraw ? 'Withdrawal' : type} ${status}`;
 
   const typeText = type === BusinessType.Withdraw ? 'withdrawal' : type.toLowerCase();
 
   const action = 'received';
 
   const content =
-    status === TTxnStatus.Successful
-      ? `The ${typeText} of ${amount} ${formatSymbolDisplay(symbol)} has been ${action}.`
-      : isSwapFail
+    type === BusinessType.Deposit && status === TTxnStatus.Successful && isSwapFail
       ? `Swap ${formatSymbolDisplay(symbol)} failed, the ${typeText} of ${amount} USDT has been received.`
+      : status === TTxnStatus.Successful
+      ? `The ${typeText} of ${amount} ${formatSymbolDisplay(symbol)} has been ${action}.`
       : `The ${typeText} of ${amount} ${formatSymbolDisplay(
           symbol,
         )} failed; please check the transaction and contact customer service.`;
@@ -117,6 +114,7 @@ export const handleNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse)
         type: BusinessType.Deposit,
         amount: item.amount,
         symbol: item.symbol,
+        isSwapFail: item.isSwap && item.isSwapFail,
       });
       globalInstance.showNoticeIds.push(item.id);
     }
@@ -141,7 +139,6 @@ export const handleNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse)
         type: BusinessType.Deposit,
         amount: item.amount,
         symbol: item.symbol,
-        isSwapFail: item.isSwap && item.isSwapFail,
       });
       globalInstance.showNoticeIds.push(item.id);
     }

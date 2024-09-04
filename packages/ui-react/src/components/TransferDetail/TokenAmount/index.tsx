@@ -47,7 +47,7 @@ export default function TokenAmount({
     if (formatAmount && formatSymbol) {
       return (
         <>
-          <div className="etransfer-ui-flex-row-center">
+          <div className="etransfer-ui-flex-row-center etransfer-ui-token-amount-icon-wrap">
             <TokenImage
               symbol={symbol}
               className={'etransfer-ui-token-amount-icon'}

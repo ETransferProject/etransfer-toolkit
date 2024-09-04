@@ -13,24 +13,28 @@ import { TransferStatus } from '../TransferStatus';
 import WalletAddress from '../WalletAddress';
 import { formatPastTime } from '../../../utils';
 import { TRANSFER_DETAIL_LABEL } from '../../../constants/transfer';
+import { useScreenSize } from '../../../hooks';
 
 export default function TransferDetailBody({
   componentStyle,
   data,
+  className,
 }: {
   componentStyle?: ComponentStyle;
   data: TTransferDetailBodyData;
+  className?: string;
 }) {
+  const { isMobilePX } = useScreenSize();
   const isMobileStyle = useMemo(() => {
-    return componentStyle === ComponentStyle.Mobile;
-  }, [componentStyle]);
+    return componentStyle === ComponentStyle.Mobile && isMobilePX;
+  }, [componentStyle, isMobilePX]);
 
   const orderType = useMemo(() => {
     return data.orderType === BusinessType.Withdraw ? BusinessTypeLabel.Withdraw : data.orderType;
   }, [data.orderType]);
 
   return (
-    <div className={'etransfer-ui-transfer-detail-body'}>
+    <div className={clsx('etransfer-ui-transfer-detail-body', className)}>
       {isMobileStyle ? (
         <>
           <div className={'etransfer-ui-transfer-detail-item'}>

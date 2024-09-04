@@ -26,7 +26,6 @@ export default function MobileTransferDetail({
         isShowBackIcon={isShowBackIcon}
         backIcon={backIcon}
       />
-      {/* TODO className */}
       <div className="etransfer-ui-mobile-transfer-detail-main">
         <TransferDetailMain componentStyle={ComponentStyle.Mobile} data={data} />
       </div>

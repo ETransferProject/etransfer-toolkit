@@ -63,6 +63,12 @@ export function useNoticeSocket() {
               handleNoticeRef.current(res);
             },
           );
+          etransferCore.noticeSocket?.signalr?.onreconnected((id?: string) => {
+            console.log('NoticeSocket onreconnected:', id);
+            etransferCore.noticeSocket?.RequestUserOrderRecord({
+              address: address(),
+            });
+          });
         })
         .catch((error) => {
           console.log('NoticeSocket error:', error);
@@ -76,6 +82,7 @@ export function useNoticeSocket() {
     const { remove } = etransferEvents.ETransferConfigUpdated.addListener(() => {
       openNoticeSocketRef.current();
     });
+
     return () => {
       remove();
     };
