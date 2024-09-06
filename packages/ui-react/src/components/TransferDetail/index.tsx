@@ -8,13 +8,22 @@ import { etransferCore, setLoading } from '../../utils';
 import { useIsHaveJWT } from '../../hooks/login';
 
 export interface TransferDetailProps {
+  className?: string;
   orderId: string;
+  isShowMobilePoweredBy?: boolean;
   isShowBackElement?: boolean;
   componentStyle?: ComponentStyle;
   onBack?: () => void;
 }
 
-export default function TransferDetail({ orderId, componentStyle, isShowBackElement, onBack }: TransferDetailProps) {
+export default function TransferDetail({
+  className,
+  orderId,
+  componentStyle,
+  isShowMobilePoweredBy,
+  isShowBackElement,
+  onBack,
+}: TransferDetailProps) {
   const isMobileStyle = useMemo(() => componentStyle === ComponentStyle.Mobile, [componentStyle]);
 
   const isHaveJWT = useIsHaveJWT();
@@ -95,9 +104,20 @@ export default function TransferDetail({ orderId, componentStyle, isShowBackElem
 
   if (detailData?.id) {
     return isMobileStyle ? (
-      <MobileTransferDetail data={detailData} isShowBackIcon={isShowBackElement} onBack={onBack} />
+      <MobileTransferDetail
+        className={className}
+        data={detailData}
+        isShowPoweredBy={isShowMobilePoweredBy}
+        isShowBackIcon={isShowBackElement}
+        onBack={onBack}
+      />
     ) : (
-      <WebTransferDetail data={detailData} isShowBackElement={isShowBackElement} onBack={onBack} />
+      <WebTransferDetail
+        className={className}
+        data={detailData}
+        isShowBackElement={isShowBackElement}
+        onBack={onBack}
+      />
     );
   } else {
     return null;

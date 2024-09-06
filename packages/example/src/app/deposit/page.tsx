@@ -15,7 +15,12 @@ export default function DepositPage() {
       <CommonSpace direction={'vertical'} size={24} />
       <Deposit
         componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web}
-        onClickProcessingTip={() => router.push('/history')}
+        onClickProcessingTip={() => {
+          router.push('/history');
+        }}
+        onActionChange={data => {
+          console.log('>>>>>> deposit component data', data);
+        }}
       />
     </ETransferDepositProvider>
   );

@@ -13,6 +13,13 @@ import { AccountAddressProps } from '../Header/UserProfile/AccountAddress';
 import { etransferEvents } from '@etransfer/utils';
 import { useUpdateRecord } from '../../hooks/updateRecord';
 import ETransferContentBody from './ETransferContentBody';
+import { useUpdateEffect } from 'react-use';
+import { TDepositActionData } from '../Deposit/types';
+import { TTransferDetailActionData } from '../TransferDetail/types';
+import { TWithdrawActionData } from '../Withdraw/types';
+import { THistoryActionData } from '../History/types';
+
+type TPageActionData = TDepositActionData | TWithdrawActionData | THistoryActionData | TTransferDetailActionData | null;
 
 export default function ETransferContent({
   className,
@@ -24,6 +31,7 @@ export default function ETransferContent({
   isShowMobileFooter = false,
   isShowErrorTip = true,
   onClickHeaderLogo,
+  onLifeCycleChange,
 }: {
   className?: string;
   componentStyle?: ComponentStyle;
@@ -34,6 +42,7 @@ export default function ETransferContent({
   isShowMobileFooter?: boolean;
   isShowErrorTip?: boolean;
   onClickHeaderLogo?: () => void;
+  onLifeCycleChange?: (lifeCycle: PageKey, data?: any) => void;
 }) {
   const [activeMenuKey, setActiveMenuKey] = useState(SideMenuKey.Deposit);
   const [activePageKey, setActivePageKey] = useState(PageKey.Deposit);
@@ -100,6 +109,32 @@ export default function ETransferContent({
 
   const isUnreadHistory = useUpdateRecord();
 
+  const [pageActionData, setPageActionData] = useState<TPageActionData>();
+  const onActionChange = useCallback((data: TPageActionData) => {
+    setPageActionData(data);
+  }, []);
+
+  useUpdateEffect(() => {
+    let data: TPageActionData = null;
+    switch (activePageKey) {
+      case PageKey.Deposit:
+      case PageKey.Withdraw:
+      case PageKey.History:
+        data = pageActionData as TPageActionData;
+        break;
+      case PageKey.TransferDetail:
+        data = {
+          orderId: transferDetailId,
+        } as TTransferDetailActionData;
+        break;
+
+      default:
+        break;
+    }
+
+    onLifeCycleChange?.(activePageKey, data);
+  }, [activePageKey, pageActionData, transferDetailId]);
+
   return (
     <AntdLayout id="etransferContentLayout" className={clsx('etransfer-ui-content-layout', className)}>
       {showHeader && (
@@ -132,6 +167,9 @@ export default function ETransferContent({
                   onClickProcessingTip={handleClickProcessingTip}
                   onClickHistoryItem={handleClickHistoryItem}
                   onTransferDetailBack={handleTransferDetailBack}
+                  onDepositActionChange={onActionChange}
+                  onWithdrawActionChange={onActionChange}
+                  onHistoryActionChange={onActionChange}
                 />
               </ETransferWithdrawProvider>
             </ETransferDepositProvider>

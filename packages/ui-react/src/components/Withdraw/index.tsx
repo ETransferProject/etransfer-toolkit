@@ -49,7 +49,7 @@ import singleMessage from '../SingleMessage';
 import BigNumber from 'bignumber.js';
 import { ETransferConfig } from '../../provider/ETransferConfigProvider';
 import { ETransferAccountConfig } from '../../provider/types';
-import { useEffectOnce } from 'react-use';
+import { useEffectOnce, useUpdateEffect } from 'react-use';
 import clsx from 'clsx';
 import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
 import { ProcessingTip } from '../CommonTips/ProcessingTip';
@@ -77,6 +77,7 @@ export default function Withdraw({
   depositProcessingCount = 0,
   isShowProcessingTip = true,
   onClickProcessingTip,
+  onActionChange,
 }: WithdrawProps) {
   const [form] = Form.useForm<TWithdrawFormValues>();
   const [formValidateData, setFormValidateData] = useState<{
@@ -767,6 +768,16 @@ export default function Withdraw({
   }, []);
 
   useWithdrawNoticeSocket(isListenNoticeAuto);
+
+  useUpdateEffect(() => {
+    onActionChange?.({
+      symbolSelected: tokenSymbol,
+      addressInput: address,
+      networkSelected: networkItem?.network,
+      chainSelected: chainItem.key,
+      processingTransactionCount: withdrawProcessingCount,
+    });
+  }, [tokenSymbol, address, networkItem, chainItem, withdrawProcessingCount]);
 
   return (
     <div className={clsx('etransfer-ui-withdraw', className)}>

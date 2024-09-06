@@ -40,7 +40,7 @@ export default function TokenAmount({
     if (ZERO.plus(amountUsd).isLessThan(ZERO.plus(MIN_AMOUNT_USD_DISPLAY))) {
       return `<$${MIN_AMOUNT_USD_DISPLAY}`;
     }
-    return `$${MIN_AMOUNT_USD_DISPLAY}`;
+    return `$${amountUsd}`;
   }, [amountUsd]);
 
   const renderFinished = useMemo(() => {

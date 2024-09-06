@@ -84,7 +84,7 @@ export const showNotice = ({
     closeIcon: <CommonSvg type="closeMedium" />,
     description: content,
     placement: 'top',
-    duration: noticeProps?.duration || 50,
+    duration: noticeProps?.duration || 5,
   });
 
   if (isShowBrowserNotice) {

@@ -16,6 +16,9 @@ export default function WithdrawPage() {
       <Withdraw
         componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web}
         onClickProcessingTip={() => router.push('/history')}
+        onActionChange={data => {
+          console.log('>>>>>> withdraw component data', data);
+        }}
       />
     </ETransferWithdrawProvider>
   );

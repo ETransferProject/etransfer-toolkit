@@ -3,7 +3,7 @@ import { TDepositInfo, BusinessType, NetworkStatus, TNetworkItem } from '@etrans
 import { etransferEvents, handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
 import { ChainId } from '@portkey/types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useEffectOnce } from 'react-use';
+import { useEffectOnce, useUpdateEffect } from 'react-use';
 import { InitDepositInfo } from '../../constants/deposit';
 import singleMessage from '../SingleMessage';
 import { etransferCore, setLoading } from '../../utils';
@@ -29,6 +29,7 @@ export default function Deposit({
   isShowProcessingTip = true,
   withdrawProcessingCount = 0,
   onClickProcessingTip,
+  onActionChange,
 }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
@@ -328,6 +329,16 @@ export default function Deposit({
   }, []);
 
   useDepositNoticeSocket(isListenNoticeAuto);
+
+  useUpdateEffect(() => {
+    onActionChange?.({
+      depositSymbolSelected: depositTokenSymbol,
+      receiveSymbolSelected: receiveTokenSymbol,
+      networkSelected: networkItem?.network,
+      chainSelected: chainItem.key,
+      processingTransactionCount: depositProcessingCount,
+    });
+  }, [depositTokenSymbol, receiveTokenSymbol, networkItem, chainItem, depositProcessingCount]);
 
   return (
     <div className={clsx('etransfer-ui-deposit', containerClassName)}>

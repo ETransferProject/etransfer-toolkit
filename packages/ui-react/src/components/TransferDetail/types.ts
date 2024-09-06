@@ -28,3 +28,7 @@ export type TTransferDetailBodyData = {
   toStatus: OrderStatusEnum | TransferStatusType;
   toFeeInfo: THistoryFeeInfo[];
 };
+
+export type TTransferDetailActionData = {
+  orderId: string;
+};

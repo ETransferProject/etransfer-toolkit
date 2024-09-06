@@ -7,6 +7,9 @@ import { useETransferDeposit } from '../../../context/ETransferDepositProvider';
 import { useETransferWithdraw } from '../../../context/ETransferWithdrawProvider';
 import { useNoticeSocket } from '../../../hooks/notice';
 import './index.less';
+import { TDepositActionData } from '../../Deposit/types';
+import { TWithdrawActionData } from '../../Withdraw/types';
+import { THistoryActionData } from '../../History/types';
 
 export default function ETransferContentBody({
   activePageKey,
@@ -17,6 +20,9 @@ export default function ETransferContentBody({
   onClickProcessingTip,
   onClickHistoryItem,
   onTransferDetailBack,
+  onDepositActionChange,
+  onWithdrawActionChange,
+  onHistoryActionChange,
 }: {
   activePageKey: PageKey;
   componentStyle?: ComponentStyle;
@@ -26,6 +32,9 @@ export default function ETransferContentBody({
   onClickProcessingTip: () => void;
   onClickHistoryItem: (id: string) => void;
   onTransferDetailBack: () => void;
+  onDepositActionChange?: (data: TDepositActionData) => void;
+  onWithdrawActionChange?: (data: TWithdrawActionData) => void;
+  onHistoryActionChange?: (data: THistoryActionData) => void;
 }) {
   const [{ depositProcessingCount }] = useETransferDeposit();
   const [{ withdrawProcessingCount }] = useETransferWithdraw();
@@ -42,6 +51,7 @@ export default function ETransferContentBody({
           isShowProcessingTip={true}
           withdrawProcessingCount={withdrawProcessingCount}
           onClickProcessingTip={onClickProcessingTip}
+          onActionChange={onDepositActionChange}
         />
       )}
       {activePageKey === PageKey.Withdraw && (
@@ -53,6 +63,7 @@ export default function ETransferContentBody({
           isShowProcessingTip={true}
           depositProcessingCount={depositProcessingCount}
           onClickProcessingTip={onClickProcessingTip}
+          onActionChange={onWithdrawActionChange}
         />
       )}
       {activePageKey === PageKey.History && (
@@ -61,12 +72,14 @@ export default function ETransferContentBody({
           isUnreadHistory={isUnreadHistory}
           isShowMobilePoweredBy={true}
           onClickHistoryItem={onClickHistoryItem}
+          onActionChange={onHistoryActionChange}
         />
       )}
       {activePageKey === PageKey.TransferDetail && (
         <TransferDetail
           componentStyle={componentStyle}
           isShowBackElement={true}
+          isShowMobilePoweredBy={true}
           orderId={transferDetailId || ''}
           onBack={onTransferDetailBack}
         />

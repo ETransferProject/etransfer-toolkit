@@ -25,6 +25,9 @@ export default function HistoryPage() {
         componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web}
         isUnreadHistory={false}
         onClickHistoryItem={handleClickHistoryItem}
+        onActionChange={data => {
+          console.log('>>>>>> history component data', data);
+        }}
       />
     </>
   ) : (
@@ -32,6 +35,7 @@ export default function HistoryPage() {
       <CommonSpace direction={'vertical'} size={24} />
       <TransferDetail
         orderId={detailId}
+        isShowBackElement={true}
         componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web}
         onBack={handleBackToHistory}
       />

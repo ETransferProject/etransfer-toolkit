@@ -5,6 +5,10 @@
   display: flex;
   justify-content: center;
 
+  @media @mediaWeb {
+    max-width: 784px;
+  }
+
   .etransfer-ui-transfer-detail-step-horizontal {
     .etransfer-ant-steps-item {
       .etransfer-ant-steps-item-tail {
@@ -23,9 +27,14 @@
         .etransfer-ant-steps-item-title {
           font-family: var(--etransfer-ui-font-family-medium);
           font-weight: var(--etransfer-ui-font-weight-medium);
+          font-size: 12px;
+          height: 20px;
+          line-height: 20px;
         }
         .etransfer-ant-steps-item-description {
           color: var(--etransfer-ui-secondary-text);
+          font-size: 12px;
+          line-height: 20px;
         }
       }
     }
@@ -77,9 +86,14 @@
         .etransfer-ant-steps-item-title {
           font-family: var(--etransfer-ui-font-family-medium);
           font-weight: var(--etransfer-ui-font-weight-medium);
+          font-size: 12px;
+          height: 20px;
+          line-height: 20px;
         }
         .etransfer-ant-steps-item-description {
           color: var(--etransfer-ui-secondary-text);
+          font-size: 12px;
+          line-height: 20px;
         }
       }
     }

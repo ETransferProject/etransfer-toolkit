@@ -30,7 +30,16 @@ export interface DepositProps {
   isShowProcessingTip?: boolean;
   withdrawProcessingCount?: number;
   onClickProcessingTip?: () => void;
+  onActionChange?: (data: TDepositActionData) => void;
 }
+
+export type TDepositActionData = {
+  depositSymbolSelected: string;
+  receiveSymbolSelected: string;
+  chainSelected: IChainMenuItem['key'];
+  networkSelected?: string;
+  processingTransactionCount?: number;
+};
 
 export interface DepositDetailProps {
   className?: string;
