@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { SingleMessage } from '../components';
-import { CHECK_TXN_DURATION, NO_TXN_FOUND } from '../constants';
+import { CHECK_TXN_DURATION, NO_TXN_FOUND, START_CHECKING_TXN } from '../constants';
 import { useETransferDeposit } from '../context/ETransferDepositProvider';
 
 export function useCheckTxn() {
@@ -27,6 +27,7 @@ export function useCheckTxn() {
 
   const handleCheckTxnClick = useCallback(() => {
     setIsCheckTxnLoading(true);
+    SingleMessage.info(START_CHECKING_TXN);
     resetTimer();
   }, [resetTimer]);
 
