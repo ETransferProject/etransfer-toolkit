@@ -6,6 +6,7 @@ import { ComponentStyle } from '../../../types';
 import clsx from 'clsx';
 import { BusinessType, TransactionRecordStep } from '@etransfer/types';
 import { formatSymbolDisplay } from '../../../utils';
+import { BlockchainNetworkType } from '../../../constants';
 
 export interface TransferDetailStepProps {
   className?: string;
@@ -17,12 +18,12 @@ export interface TransferDetailStepProps {
     confirmedNum: number;
     amount: string;
     symbol: string;
-    chainId: string;
+    network: string;
   };
   toTransfer: {
     amount: string;
     symbol: string;
-    chainId: string;
+    network: string;
   };
 }
 
@@ -42,11 +43,13 @@ export default function TransferDetailStep({
         description: `${fromTransfer.amount} ${formatSymbolDisplay(fromTransfer.symbol)}`,
       },
       {
-        title: `${fromTransfer.chainId} Chain in progress(${fromTransfer.confirmedNum}/${fromTransfer.confirmingThreshold})`,
+        title: `${
+          fromTransfer.network === BlockchainNetworkType.AELF ? 'aelf' : fromTransfer.network
+        } Chain in progress(${fromTransfer.confirmedNum}/${fromTransfer.confirmingThreshold})`,
         description: `Requires ${fromTransfer.confirmedNum} confirmations`,
       },
       {
-        title: `${toTransfer.chainId} Chain in progress`,
+        title: `${toTransfer.network === BlockchainNetworkType.AELF ? 'aelf' : toTransfer.network} Chain in progress`,
       },
       {
         title: 'Received',
@@ -65,13 +68,13 @@ export default function TransferDetailStep({
   }, [
     currentStep,
     fromTransfer.amount,
-    fromTransfer.chainId,
     fromTransfer.confirmedNum,
     fromTransfer.confirmingThreshold,
+    fromTransfer.network,
     fromTransfer.symbol,
     orderType,
     toTransfer.amount,
-    toTransfer.chainId,
+    toTransfer.network,
     toTransfer.symbol,
   ]);
 

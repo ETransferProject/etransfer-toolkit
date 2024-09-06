@@ -19,8 +19,6 @@ export default function TokenImage({ src, isShowImage = true, symbol, size = 24,
   useEffect(() => {
     if (isShowImage && isSuccess) {
       setShowIcon(true);
-    } else {
-      setShowIcon(false);
     }
   }, [isSuccess, isShowImage]);
 
@@ -40,7 +38,10 @@ export default function TokenImage({ src, isShowImage = true, symbol, size = 24,
           onLoad={() => {
             setIsSuccess(true);
           }}
-          onError={() => setIsSuccess(false)}
+          onError={() => {
+            setIsSuccess(false);
+            setShowIcon(false);
+          }}
         />
       )}
       {!isSuccess && (

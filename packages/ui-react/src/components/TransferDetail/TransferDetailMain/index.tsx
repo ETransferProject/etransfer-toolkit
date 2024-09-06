@@ -30,12 +30,12 @@ export default function TransferDetailMain({
             confirmedNum: data.step.fromTransfer.confirmedNum,
             amount: data.fromTransfer.amount,
             symbol: data.fromTransfer.symbol,
-            chainId: data.fromTransfer.chainId || data.fromTransfer.network,
+            network: data.fromTransfer.network,
           }}
           toTransfer={{
             amount: data.toTransfer.amount,
             symbol: data.toTransfer.symbol,
-            chainId: data.toTransfer.chainId || data.toTransfer.network,
+            network: data.toTransfer.network,
           }}
         />
       );
@@ -45,7 +45,6 @@ export default function TransferDetailMain({
   }, [
     componentStyle,
     data.fromTransfer.amount,
-    data.fromTransfer.chainId,
     data.fromTransfer.network,
     data.fromTransfer.symbol,
     data.orderType,
@@ -54,7 +53,6 @@ export default function TransferDetailMain({
     data.step.fromTransfer.confirmedNum,
     data.step.fromTransfer.confirmingThreshold,
     data.toTransfer.amount,
-    data.toTransfer.chainId,
     data.toTransfer.network,
     data.toTransfer.symbol,
   ]);
