@@ -20,7 +20,7 @@ const managerAddress = '7iC6EQtt4rKsqv9vFiwpUDvZVipSoKwvPLy7pRG189qJjyVT7';
 
 describe('getAElf', () => {
   test('get aelf testnet instance', () => {
-    const aelf = getAElf('https://explorer-test.aelf.io');
+    const aelf = getAElf('https://testnet.aelfscan.io/AELF');
     expect(aelf).toHaveProperty('chain');
   });
 });

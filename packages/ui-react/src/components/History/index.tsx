@@ -3,24 +3,28 @@ import { ComponentStyle } from '../../types';
 import HistoryMobile from './HistoryMobile';
 import HistoryWeb from './HistoryWeb';
 import { RecordsRequestStatus, RecordsRequestType, TRecordsListItem } from '@etransfer/types';
-import { useEffectOnce } from 'react-use';
+import { useEffectOnce, useUpdateEffect } from 'react-use';
 import { etransferEvents, sleep } from '@etransfer/utils';
 import { etransferCore, getAuth, setLoading } from '../../utils';
 import moment from 'moment';
 import { END_TIME_FORMAT, START_TIME_FORMAT } from '../../constants';
 import { useDebounceCallback } from '../../hooks';
-import { HistoryFilterOnApplyParams } from './types';
+import { HistoryFilterOnApplyParams, THistoryActionData } from './types';
 
 export default function History({
   className,
   componentStyle = ComponentStyle.Web,
   isUnreadHistory,
   isShowMobilePoweredBy,
+  onClickHistoryItem,
+  onActionChange,
 }: {
   className?: string;
   isUnreadHistory: boolean;
   componentStyle?: ComponentStyle;
   isShowMobilePoweredBy?: boolean;
+  onClickHistoryItem?: (id: string) => void;
+  onActionChange?: (data: THistoryActionData) => void;
 }) {
   const isMobileStyle = useMemo(() => componentStyle === ComponentStyle.Mobile, [componentStyle]);
   const [type, setType] = useState(RecordsRequestType.All);
@@ -200,6 +204,14 @@ export default function History({
     };
   });
 
+  useUpdateEffect(() => {
+    onActionChange?.({
+      type,
+      status,
+      timestamp,
+    });
+  }, [type, status, timestamp]);
+
   return isMobileStyle ? (
     <HistoryMobile
       className={className}
@@ -210,6 +222,7 @@ export default function History({
       onCloseItem={handleCloseItem}
       onReset={handleReset}
       onApply={handleApply}
+      onClickItem={onClickHistoryItem}
       onNextPage={handleNextPage}
       recordsList={recordsList}
       hasMore={hasMore}
@@ -232,6 +245,7 @@ export default function History({
       onTypeChange={handleTypeChange}
       onStatusChange={handleStatusChange}
       onTimeStampChange={handleTimeStampChange}
+      onClickItem={onClickHistoryItem}
       onTableChange={handleTableChange}
     />
   );

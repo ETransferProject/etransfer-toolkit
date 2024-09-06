@@ -1,0 +1,48 @@
+@import '../../../assets/theme/breakpoint.less';
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-transfer-detail-main {
+  @media @mediaWeb {
+    padding: 0 40px 0 32px;
+  }
+  @media @mediaPad {
+    padding: 16px 24px 24px;
+  }
+  @media @mediaMobile {
+    padding: 16px;
+  }
+}
+
+.etransfer-ui-transfer-detail-main-received,
+.etransfer-ui-transfer-detail-main-failed {
+  .font-medium();
+  @media @mediaPad {
+    margin-bottom: 24px;
+    justify-content: flex-start;
+  }
+  @media @mediaMobile {
+    margin-bottom: 24px;
+    justify-content: space-between;
+  }
+}
+.etransfer-ui-transfer-detail-main-label {
+  width: 240px;
+  font-size: 14px;
+  flex-shrink: 0;
+  gap: 8px;
+
+  @media @mediaMobile {
+    width: 130px;
+  }
+}
+
+.etransfer-ui-transfer-detail-main-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--etransfer-ui-dividers);
+  margin: 24px 0;
+
+  @media @mediaMobileAndPad {
+    margin: 8px 0 24px;
+  }
+}

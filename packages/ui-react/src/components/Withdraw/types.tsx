@@ -1,5 +1,5 @@
 import { TNetworkItem, TTokenItem, TWithdrawInfo } from '@etransfer/types';
-import { ComponentStyle } from '../../types';
+import { ComponentStyle, IChainMenuItem } from '../../types';
 import { FormInstance } from 'antd';
 
 export interface WithdrawProps {
@@ -9,7 +9,20 @@ export interface WithdrawProps {
   componentStyle?: ComponentStyle;
   isShowMobilePoweredBy?: boolean;
   isShowErrorTip?: boolean;
+  isListenNoticeAuto?: boolean;
+  depositProcessingCount?: number;
+  isShowProcessingTip?: boolean;
+  onClickProcessingTip?: () => void;
+  onActionChange?: (data: TWithdrawActionData) => void;
 }
+
+export type TWithdrawActionData = {
+  symbolSelected: string;
+  chainSelected: IChainMenuItem['key'];
+  addressInput?: string;
+  networkSelected?: string;
+  processingTransactionCount?: number;
+};
 
 export interface WithdrawFormProps {
   className?: string;

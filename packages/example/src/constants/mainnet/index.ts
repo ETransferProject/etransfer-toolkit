@@ -69,8 +69,8 @@ export const AELF_NODES = {
   tDVV: tDVV.CHAIN_INFO,
 };
 
-export const ETransferHost = 'https://app.etransfer.exchange';
-export const ETransferAuthHost = 'https://app.etransfer.exchange';
+export const ETRANSFER_URL = 'https://app.etransfer.exchange';
+export const ETRANSFER_AUTH_URL = 'https://app.etransfer.exchange';
 export const WebLoginGraphqlUrl =
   'https://dapp-aa-portkey.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql';
 export const WebLoginServiceUrl = 'https://aa-portkey.portkey.finance';

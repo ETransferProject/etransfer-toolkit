@@ -23,6 +23,7 @@ export default function HistoryMobileInfiniteList({
   totalCount,
   skipCount,
   onNextPage,
+  onClickItem,
 }: HistoryMobileContentProps) {
   const handleRecordListData = (recordsList: TRecordsListItem[]) => {
     if (recordsList.length === 0) {
@@ -78,7 +79,10 @@ export default function HistoryMobileInfiniteList({
         }>
         {handleRecordListData(recordsList).map((recordItem: THistoryItem) => {
           return (
-            <div className={clsx('etransfer-ui-history-mobile-infinite-item-wrapper')} key={recordItem.key}>
+            <div
+              className={clsx('etransfer-ui-history-mobile-infinite-item-wrapper')}
+              key={recordItem.key}
+              onClick={() => onClickItem?.(recordItem.key)}>
               <div className={clsx('etransfer-ui-history-mobile-infinite-item-header')}>
                 <StatusBox
                   status={recordItem.status}

@@ -33,6 +33,7 @@ const WithdrawApiList: Record<string, TBaseConfig> = {
 const HistoryApiList: Record<string, TBaseConfig> = {
   getRecordsList: '/api/etransfer/record/list',
   getRecordStatus: '/api/etransfer/record/status',
+  getRecordDetail: '/api/etransfer/record',
 };
 
 const UserApiList: Record<string, TBaseConfig> = {

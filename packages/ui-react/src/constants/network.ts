@@ -1,5 +1,7 @@
 export enum BlockchainNetworkType {
   AELF = 'AELF',
+  tDVV = 'tDVV',
+  tDVW = 'tDVW',
   SETH = 'SETH',
   Ethereum = 'ETH',
   Polygon = 'MATIC',
@@ -14,8 +16,7 @@ export enum BlockchainNetworkType {
   BASE = 'BASE',
 }
 
-export enum ExploreUrlType {
-  AELF = 'https://explorer.aelf.io',
+export enum ExploreUrlNotAelf {
   SETH = 'https://sepolia.etherscan.io',
   ETH = 'https://etherscan.io',
   MATIC = 'https://polygonscan.com',

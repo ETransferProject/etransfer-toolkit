@@ -1,4 +1,4 @@
-import { AelfExploreType, OtherExploreType, ExploreUrlType, BlockchainNetworkType } from '../constants/network';
+import { AelfExploreType, OtherExploreType, ExploreUrlNotAelf, BlockchainNetworkType } from '../constants/network';
 import { ChainId } from '@portkey/types';
 // import { getAelfExploreUrl } from '../provider/utils';
 import { getAelfReact } from './contract';
@@ -34,9 +34,9 @@ export function getAelfExploreLink(data: string, type: AelfExploreType, chainId:
 export function getOtherExploreLink(
   data: string,
   type: OtherExploreType,
-  network: keyof typeof ExploreUrlType,
+  network: keyof typeof ExploreUrlNotAelf,
 ): string {
-  const prefix = ExploreUrlType[network];
+  const prefix = ExploreUrlNotAelf[network];
   switch (type) {
     case OtherExploreType.transaction: {
       if (network === 'TRX') {
@@ -66,5 +66,5 @@ export const viewTxDetailInExplore = (network: string, txHash: string, chainId?:
     openWithBlank(getAelfExploreLink(txHash, AelfExploreType.transaction, chainId));
     return;
   }
-  openWithBlank(getOtherExploreLink(txHash, OtherExploreType.transaction, network as keyof typeof ExploreUrlType));
+  openWithBlank(getOtherExploreLink(txHash, OtherExploreType.transaction, network as keyof typeof ExploreUrlNotAelf));
 };

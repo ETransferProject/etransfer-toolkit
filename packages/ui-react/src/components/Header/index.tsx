@@ -13,7 +13,7 @@ export default function Header({
   isShowMobileFooter,
   onClickLogo,
   onChange,
-}: { componentStyle: ComponentStyle } & MobileHeaderProps & WebHeaderProps) {
+}: { componentStyle?: ComponentStyle } & MobileHeaderProps & WebHeaderProps) {
   return (
     <div className="etransfer-ui-header-wrapper">
       {componentStyle === ComponentStyle.Mobile ? (

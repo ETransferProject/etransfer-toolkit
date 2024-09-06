@@ -24,6 +24,7 @@ import {
   TGetRecordStatusResult,
   TGetTokenPricesRequest,
   TGetTokenPricesResult,
+  TGetRecordDetailResult,
 } from '@etransfer/types';
 import { TServices } from './types';
 import { formatApiError } from './utils';
@@ -165,6 +166,15 @@ export class Services extends BaseService implements TServices {
       return res.data;
     } catch (error: any) {
       throw formatApiError(error, 'getRecordStatus error', false);
+    }
+  }
+
+  async getRecordDetail(id: string): Promise<TGetRecordDetailResult> {
+    try {
+      const res = await this._request.send(API_LIST.records.getRecordDetail, { query: id });
+      return res.data;
+    } catch (error: any) {
+      throw formatApiError(error, 'getRecordDetail error', false);
     }
   }
 

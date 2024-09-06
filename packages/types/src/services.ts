@@ -253,6 +253,7 @@ export type TRecordsListItem = {
   orderType: BusinessType;
   status: OrderStatusEnum;
   arrivalTime: number;
+  createTime: number;
   fromTransfer: TFromTransfer;
   toTransfer: TToTransfer;
 };
@@ -263,18 +264,14 @@ export type TFromTransfer = {
   fromAddress: string;
   toAddress: string;
   amount: string;
+  amountUsd?: string;
   symbol: string;
+  icon?: string;
   txId: string;
+  status: OrderStatusEnum;
 };
 
-export type TToTransfer = {
-  network: string;
-  chainId: ChainId;
-  fromAddress: string;
-  toAddress: string;
-  amount: string;
-  symbol: string;
-  txId: string;
+export type TToTransfer = TFromTransfer & {
   feeInfo: TToTransferFeeInfo[];
 };
 
@@ -294,3 +291,22 @@ export type TCheckEOARegistrationRequest = {
 export type TCheckEOARegistrationResult = {
   result: boolean;
 };
+
+export type TGetRecordDetailResult = TRecordsListItem & {
+  step: TRecordDetailStep;
+};
+
+export type TRecordDetailStep = {
+  currentStep: TransactionRecordStep;
+  fromTransfer: {
+    confirmingThreshold: number; // total
+    confirmedNum: number; // already
+  };
+};
+
+export enum TransactionRecordStep {
+  Submitted,
+  FromTransfer,
+  ToTransfer,
+  ReceivedOrSent,
+}

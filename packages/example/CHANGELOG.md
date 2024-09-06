@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.2...v1.6.0) (2024-09-06)
+
+### Features
+
+- 🎸 add lifecycle callback ([1a11afd](https://github.com/ETransferProject/etransfer-toolkit/commit/1a11afda4ec01f08d07abdc241dc37f2e7168ed6))
+- 🎸 modify socket logic ([f50d611](https://github.com/ETransferProject/etransfer-toolkit/commit/f50d611182f233898e3c330889caf1716ac2ec7f))
+
+## [1.5.1-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.1...v1.5.1-alpha.2) (2024-09-04)
+
+### Features
+
+- 🎸 add transaction notice ([c3b9403](https://github.com/ETransferProject/etransfer-toolkit/commit/c3b9403b8dac02c2048cf733ae6fb3d33a3f2366))
+- 🎸 add TransferDetail example amd modify style ([b10225b](https://github.com/ETransferProject/etransfer-toolkit/commit/b10225b5d43713dc557e13a676191d89ec5bfe3c))
+- 🎸 dev notice socket ([c2c10c9](https://github.com/ETransferProject/etransfer-toolkit/commit/c2c10c9d64143dda0641c36dcabeed98082cbdcb))
+
+## [1.5.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.0...v1.5.1-alpha.1) (2024-08-28)
+
+**Note:** Version bump only for package @etransfer/example
+
+## [1.5.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.0...v1.5.1-alpha.0) (2024-08-28)
+
+**Note:** Version bump only for package @etransfer/example
+
 ## [1.5.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.4.1...v1.5.0) (2024-08-20)
 
 **Note:** Version bump only for package @etransfer/example

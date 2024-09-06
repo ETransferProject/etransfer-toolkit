@@ -1,0 +1,70 @@
+@import '../../../assets/theme/breakpoint.less';
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-transfer-detail-body {
+  .etransfer-ui-transfer-detail-divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--etransfer-ui-dividers);
+    margin: 24px 0;
+  }
+
+  .etransfer-ui-transfer-detail-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--etransfer-ui-primary-text);
+    margin-bottom: 12px;
+
+    @media @mediaMobile {
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  .etransfer-ui-transfer-detail-label {
+    width: 240px;
+    font-size: 14px;
+    color: var(--etransfer-ui-secondary-text);
+    flex-shrink: 0;
+    min-height: 20px;
+
+    @media @mediaMobile {
+      width: 130px;
+    }
+  }
+
+  .etransfer-ui-transfer-detail-value {
+    font-size: 14px;
+  }
+
+  .etransfer-ui-transfer-detail-value-type {
+    color: var(--etransfer-ui-primary-text);
+    .font-medium();
+  }
+
+  .etransfer-ui-transfer-detail-value-from-tx-hash,
+  .etransfer-ui-transfer-detail-value-to-tx-hash {
+    color: var(--etransfer-ui-brand);
+    text-decoration: none;
+    cursor: pointer;
+    word-break: break-all;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .etransfer-ui-transfer-detail-value-wallet-address {
+    font-size: 14px;
+    line-height: 22px;
+    @media @mediaMobile {
+      justify-content: flex-end;
+    }
+  }
+
+  .etransfer-ui-transfer-detail-value-wallet-address-web {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

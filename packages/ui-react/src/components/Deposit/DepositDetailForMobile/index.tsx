@@ -6,7 +6,7 @@ import ExchangeRate from '../ExchangeRate';
 import { DepositDetailForMobileProps } from '../types';
 import { useMemo } from 'react';
 import { qrCodePlaceholder } from '../../../assets/images';
-import { DEPOSIT_ADDRESS_LABEL } from '../../../constants/deposit';
+import { CHECK_TXN_BUTTON, CHECKING_TXN_BUTTON, DEPOSIT_ADDRESS_LABEL } from '../../../constants/deposit';
 import CommonAddress from '../../CommonAddress';
 import CommonImage from '../../CommonImage';
 import CommonQRCode from '../../CommonQRCode';
@@ -14,6 +14,7 @@ import DepositInfo from '../DepositInfo';
 import { DepositRetryForMobile } from '../DepositRetry';
 import DepositTip from '../DepositTip';
 import { CopySize } from '../../Copy';
+import CommonButton, { CommonButtonSize } from '../../CommonButton';
 
 export default function DepositDetailForMobile({
   className,
@@ -30,7 +31,9 @@ export default function DepositDetailForMobile({
   qrCodeValue,
   tokenLogoUrl,
   showRetry = false,
+  isCheckTxnLoading = false,
   onRetry,
+  onCheckTxnClick,
 }: DepositDetailForMobileProps) {
   const allSelected = useMemo(() => {
     return !!depositTokenSymbol && !!receiveTokenSymbol && !!chainItem?.key && !!networkItem?.network;
@@ -92,7 +95,7 @@ export default function DepositDetailForMobile({
         </div>
         <CommonSpace direction="vertical" size={16} />
         {showRetry && <DepositRetryForMobile onClick={onRetry} />}
-        {!showRetry && depositInfo?.depositAddress && (
+        {!showRetry && !!depositInfo?.depositAddress && (
           <CommonAddress
             label={DEPOSIT_ADDRESS_LABEL}
             value={depositInfo.depositAddress}
@@ -100,9 +103,29 @@ export default function DepositDetailForMobile({
             copySize={CopySize.Big}
           />
         )}
+        {!showRetry && !!depositInfo.depositAddress && (
+          <div className="etransfer-ui-flex-center">
+            <CommonButton
+              className={'etransfer-ui-check-txn-btn'}
+              size={CommonButtonSize.ExtraSmall}
+              onClick={onCheckTxnClick}
+              loading={isCheckTxnLoading}>
+              {isCheckTxnLoading ? CHECKING_TXN_BUTTON : CHECK_TXN_BUTTON}
+            </CommonButton>
+          </div>
+        )}
       </div>
     );
-  }, [componentStyle, depositInfo.depositAddress, onRetry, qrCodeValue, showRetry, tokenLogoUrl]);
+  }, [
+    componentStyle,
+    depositInfo.depositAddress,
+    isCheckTxnLoading,
+    onCheckTxnClick,
+    onRetry,
+    qrCodeValue,
+    showRetry,
+    tokenLogoUrl,
+  ]);
 
   const renderDepositInfo = useMemo(() => {
     return (

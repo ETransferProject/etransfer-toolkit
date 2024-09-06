@@ -3,7 +3,7 @@ import { TDepositInfo, BusinessType, NetworkStatus, TNetworkItem } from '@etrans
 import { etransferEvents, handleErrorMessage, isAuthTokenError } from '@etransfer/utils';
 import { ChainId } from '@portkey/types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useEffectOnce } from 'react-use';
+import { useEffectOnce, useUpdateEffect } from 'react-use';
 import { InitDepositInfo } from '../../constants/deposit';
 import singleMessage from '../SingleMessage';
 import { etransferCore, setLoading } from '../../utils';
@@ -16,6 +16,8 @@ import DepositForWeb from './DepositForWeb';
 import { checkDepositSupportNetworkList, checkDepositSupportTokenAndChain } from './utils';
 import clsx from 'clsx';
 import './index.less';
+import { useCheckTxn } from '../../hooks/deposit';
+import { useDepositNoticeSocket } from '../../hooks/notice';
 
 export default function Deposit({
   containerClassName,
@@ -23,6 +25,11 @@ export default function Deposit({
   componentStyle = ComponentStyle.Web,
   isShowErrorTip = true,
   isShowMobilePoweredBy,
+  isListenNoticeAuto = true,
+  isShowProcessingTip = true,
+  withdrawProcessingCount = 0,
+  onClickProcessingTip,
+  onActionChange,
 }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
@@ -39,6 +46,7 @@ export default function Deposit({
       receiveTokenSymbol,
       chainItem,
       chainList,
+      depositProcessingCount,
     },
     { dispatch },
   ] = useETransferDeposit();
@@ -277,6 +285,19 @@ export default function Deposit({
     await getDepositData(chainItem.key, depositTokenSymbol, receiveTokenSymbol);
   }, [chainItem.key, depositTokenSymbol, getDepositData, receiveTokenSymbol]);
 
+  const { isCheckTxnLoading, withdrawProcessingCountRef, handleCheckTxnClick, stopTimer } = useCheckTxn();
+  withdrawProcessingCountRef.current = withdrawProcessingCount;
+  const stopTimerRef = useRef(stopTimer);
+  stopTimerRef.current = stopTimer;
+  useEffectOnce(() => {
+    const { remove } = etransferEvents.GlobalTxnNotice.addListener(() => {
+      stopTimerRef.current();
+    });
+    return () => {
+      remove();
+    };
+  });
+
   const init = useCallback(async () => {
     const currentSelected = await getTokenList(chainItem?.key, depositTokenSymbol, receiveTokenSymbol);
 
@@ -307,6 +328,18 @@ export default function Deposit({
     };
   }, []);
 
+  useDepositNoticeSocket(isListenNoticeAuto);
+
+  useUpdateEffect(() => {
+    onActionChange?.({
+      depositSymbolSelected: depositTokenSymbol,
+      receiveSymbolSelected: receiveTokenSymbol,
+      networkSelected: networkItem?.network,
+      chainSelected: chainItem.key,
+      processingTransactionCount: depositProcessingCount,
+    });
+  }, [depositTokenSymbol, receiveTokenSymbol, networkItem, chainItem, depositProcessingCount]);
+
   return (
     <div className={clsx('etransfer-ui-deposit', containerClassName)}>
       {componentStyle === ComponentStyle.Mobile ? (
@@ -336,7 +369,13 @@ export default function Deposit({
           qrCodeValue={depositInfo.depositAddress}
           tokenLogoUrl={depositTokenSelected?.icon}
           showRetry={showRetry}
+          isCheckTxnLoading={isCheckTxnLoading}
+          isShowProcessingTip={isShowProcessingTip}
+          depositProcessingCount={depositProcessingCount}
+          withdrawProcessingCount={withdrawProcessingCount}
           onRetry={handleRetry}
+          onCheckTxnClick={handleCheckTxnClick}
+          onClickProcessingTip={onClickProcessingTip}
         />
       ) : (
         <DepositForWeb
@@ -364,7 +403,13 @@ export default function Deposit({
           qrCodeValue={depositInfo.depositAddress}
           tokenLogoUrl={depositTokenSelected?.icon}
           showRetry={showRetry}
+          isCheckTxnLoading={isCheckTxnLoading}
+          isShowProcessingTip={isShowProcessingTip}
+          depositProcessingCount={depositProcessingCount}
+          withdrawProcessingCount={withdrawProcessingCount}
           onRetry={handleRetry}
+          onCheckTxnClick={handleCheckTxnClick}
+          onClickProcessingTip={onClickProcessingTip}
         />
       )}
     </div>

@@ -8,4 +8,6 @@ export const EVENT_LIST = [
   'GoogleReCaptcha',
   'RefreshHistoryData',
   'ETransferConfigUpdated',
+  'GlobalTxnNotice',
+  'DisplayNewPage',
 ] as const;

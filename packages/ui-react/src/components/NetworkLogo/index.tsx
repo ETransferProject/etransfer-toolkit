@@ -11,6 +11,14 @@ const NetworkLogoMap: Record<string, Record<TNetworkLogoSize, any>> = {
     normal: <CommonSvg type="aelfMedium" />,
     small: <CommonSvg type="aelf" />,
   },
+  [BlockchainNetworkType.tDVV]: {
+    normal: <CommonSvg type="tDVVMedium" />,
+    small: <CommonSvg type="tDVV" />,
+  },
+  [BlockchainNetworkType.tDVW]: {
+    normal: <CommonSvg type="tDVVMedium" />,
+    small: <CommonSvg type="tDVV" />,
+  },
   [BlockchainNetworkType.Arbitrum]: {
     normal: <CommonSvg type="arbitrumMedium" />,
     small: <CommonSvg type="arbitrum" />,

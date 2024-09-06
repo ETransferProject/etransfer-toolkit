@@ -49,9 +49,11 @@ import singleMessage from '../SingleMessage';
 import BigNumber from 'bignumber.js';
 import { ETransferConfig } from '../../provider/ETransferConfigProvider';
 import { ETransferAccountConfig } from '../../provider/types';
-import { useEffectOnce } from 'react-use';
+import { useEffectOnce, useUpdateEffect } from 'react-use';
 import clsx from 'clsx';
 import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
+import { ProcessingTip } from '../CommonTips/ProcessingTip';
+import { useWithdrawNoticeSocket } from '../../hooks/notice';
 
 const FORM_VALIDATE_DATA = {
   [WithdrawFormKeys.TOKEN]: { validateStatus: WithdrawValidateStatus.Normal, errorMessage: '' },
@@ -71,13 +73,21 @@ export default function Withdraw({
   componentStyle = ComponentStyle.Web,
   isShowMobilePoweredBy,
   isShowErrorTip = true,
+  isListenNoticeAuto = true,
+  depositProcessingCount = 0,
+  isShowProcessingTip = true,
+  onClickProcessingTip,
+  onActionChange,
 }: WithdrawProps) {
   const [form] = Form.useForm<TWithdrawFormValues>();
   const [formValidateData, setFormValidateData] = useState<{
     [key in WithdrawFormKeys]: { validateStatus: WithdrawValidateStatus; errorMessage: string };
   }>(JSON.parse(JSON.stringify(FORM_VALIDATE_DATA)));
 
-  const [{ tokenSymbol, tokenList, networkItem, chainItem, chainList, address }, { dispatch }] = useETransferWithdraw();
+  const [
+    { tokenSymbol, tokenList, networkItem, chainItem, chainList, address, withdrawProcessingCount },
+    { dispatch },
+  ] = useETransferWithdraw();
   const currentNetworkRef = useRef<TNetworkItem>();
   const currentChainItemRef = useRef<IChainMenuItem>(chainItem);
   const [withdrawInfo, setWithdrawInfo] = useState<TWithdrawInfo>(INITIAL_WITHDRAW_INFO);
@@ -757,45 +767,69 @@ export default function Withdraw({
     };
   }, []);
 
+  useWithdrawNoticeSocket(isListenNoticeAuto);
+
+  useUpdateEffect(() => {
+    onActionChange?.({
+      symbolSelected: tokenSymbol,
+      addressInput: address,
+      networkSelected: networkItem?.network,
+      chainSelected: chainItem.key,
+      processingTransactionCount: withdrawProcessingCount,
+    });
+  }, [tokenSymbol, address, networkItem, chainItem, withdrawProcessingCount]);
+
   return (
     <div className={clsx('etransfer-ui-withdraw', className)}>
-      <WithdrawSelectChain
-        className={chainClassName}
-        mobileTitle="Withdraw from"
-        mobileLabel="from"
-        webLabel={'Withdraw Assets from'}
-        menuItems={chainList || []}
-        selectedItem={chainItem}
-        componentStyle={componentStyle}
-        chainChanged={handleChainChanged}
-      />
-      <WithdrawForm
-        form={form}
-        className={fromClassName}
-        formValidateData={formValidateData}
-        componentStyle={componentStyle}
-        isShowMobilePoweredBy={isShowMobilePoweredBy}
-        address={getAddressInput()}
-        balance={balance}
-        amount={amount}
-        minAmount={minAmount}
-        receiveAmount={receiveAmount}
-        isShowNetworkLoading={isShowNetworkLoading}
-        isNetworkDisable={isNetworkDisable}
-        isBalanceLoading={isBalanceLoading}
-        isSubmitDisabled={isSubmitDisabled}
-        isTransactionFeeLoading={isTransactionFeeLoading}
-        onTokenChange={handleTokenChange}
-        onAddressBlur={handleAddressBlur}
-        onAddressChange={handleAddressChange}
-        withdrawInfo={withdrawInfo}
-        onNetworkChange={handleNetworkChanged}
-        onClickMax={handleClickMax}
-        onAmountChange={handleAmountChange}
-        onAmountBlur={handleAmountBlur}
-        onClickFailedOk={handleClickFailedOk}
-        onClickSuccessOk={handleClickSuccessOk}
-      />
+      {isShowProcessingTip && (
+        <div className="etransfer-ui-withdraw-processing-tip">
+          <ProcessingTip
+            depositProcessingCount={depositProcessingCount}
+            withdrawProcessingCount={withdrawProcessingCount}
+            onClick={onClickProcessingTip}
+            borderRadius={componentStyle === ComponentStyle.Web ? 8 : 0}
+          />
+        </div>
+      )}
+      <div className="etransfer-ui-withdraw-body">
+        <WithdrawSelectChain
+          className={chainClassName}
+          mobileTitle="Withdraw from"
+          mobileLabel="from"
+          webLabel={'Withdraw Assets from'}
+          menuItems={chainList || []}
+          selectedItem={chainItem}
+          componentStyle={componentStyle}
+          chainChanged={handleChainChanged}
+        />
+        <WithdrawForm
+          form={form}
+          className={fromClassName}
+          formValidateData={formValidateData}
+          componentStyle={componentStyle}
+          isShowMobilePoweredBy={isShowMobilePoweredBy}
+          address={getAddressInput()}
+          balance={balance}
+          amount={amount}
+          minAmount={minAmount}
+          receiveAmount={receiveAmount}
+          isShowNetworkLoading={isShowNetworkLoading}
+          isNetworkDisable={isNetworkDisable}
+          isBalanceLoading={isBalanceLoading}
+          isSubmitDisabled={isSubmitDisabled}
+          isTransactionFeeLoading={isTransactionFeeLoading}
+          onTokenChange={handleTokenChange}
+          onAddressBlur={handleAddressBlur}
+          onAddressChange={handleAddressChange}
+          withdrawInfo={withdrawInfo}
+          onNetworkChange={handleNetworkChanged}
+          onClickMax={handleClickMax}
+          onAmountChange={handleAmountChange}
+          onAmountBlur={handleAmountBlur}
+          onClickFailedOk={handleClickFailedOk}
+          onClickSuccessOk={handleClickSuccessOk}
+        />
+      </div>
     </div>
   );
 }

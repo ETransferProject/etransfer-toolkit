@@ -12,6 +12,7 @@ export const ETransferWithdrawActions = {
   setChainItem: 'setChainItem',
   setChainList: 'setChainList',
   setAddress: 'setAddress',
+  setWithdrawProcessingCount: 'setWithdrawProcessingCount',
 };
 
 export interface ETransferWithdrawState {
@@ -28,6 +29,9 @@ export interface ETransferWithdrawState {
   chainList?: IChainMenuItem[];
 
   address?: string;
+
+  // notice
+  withdrawProcessingCount?: number;
 }
 
 export const etransferWithdrawAction = {
@@ -64,6 +68,11 @@ export const etransferWithdrawAction = {
     type: ETransferWithdrawActions['setAddress'],
     actions: (address: string | null) => basicActions(ETransferWithdrawActions['setAddress'], { address }),
   },
+  setWithdrawProcessingCount: {
+    type: ETransferWithdrawActions['setWithdrawProcessingCount'],
+    actions: (count?: number) => basicActions(ETransferWithdrawActions['setWithdrawProcessingCount'], { count }),
+  },
+
   destroy: {
     type: ETransferWithdrawActions['destroy'],
     actions: () => basicActions(ETransferWithdrawActions['destroy']),

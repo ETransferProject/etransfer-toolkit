@@ -22,6 +22,7 @@ import {
   TGetRecordsListResult,
   TGetTokenPricesRequest,
   TGetTokenPricesResult,
+  TGetRecordDetailResult,
 } from '@etransfer/types';
 
 export type TServices = {
@@ -36,5 +37,6 @@ export type TServices = {
   createWithdrawOrder(params: TCreateWithdrawOrderRequest): Promise<TCreateWithdrawOrderResult>;
   getRecordsList(params: TGetRecordsListRequest): Promise<TGetRecordsListResult>;
   getRecordStatus(): Promise<TGetRecordStatusResult>;
+  getRecordDetail(id: string): Promise<TGetRecordDetailResult>;
   checkEOARegistration(params: TCheckEOARegistrationRequest): Promise<TCheckEOARegistrationResult>;
 };

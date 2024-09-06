@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.2...v1.6.0) (2024-09-06)
+
+**Note:** Version bump only for package @etransfer/services
+
+## [1.5.1-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.1...v1.5.1-alpha.2) (2024-09-04)
+
+**Note:** Version bump only for package @etransfer/services
+
+## [1.5.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.0...v1.5.1-alpha.1) (2024-08-28)
+
+**Note:** Version bump only for package @etransfer/services
+
+## [1.5.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.0...v1.5.1-alpha.0) (2024-08-28)
+
+### Features
+
+- 🎸 socket and transfer detail components ([b48483e](https://github.com/ETransferProject/etransfer-toolkit/commit/b48483e2d78495654ff9104ecc693747769deedc))
+
 ## [1.5.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.4.1...v1.5.0) (2024-08-20)
 
 **Note:** Version bump only for package @etransfer/services

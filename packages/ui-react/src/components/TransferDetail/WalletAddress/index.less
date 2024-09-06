@@ -1,0 +1,21 @@
+@import '../../../assets/theme/breakpoint.less';
+
+.etransfer-ui-wallet-address-container {
+  min-width: 190px;
+  justify-content: flex-start;
+
+  @media @mediaMobile {
+    justify-content: flex-end;
+  }
+}
+
+.etransfer-ui-wallet-address {
+  color: var(--etransfer-ui-normal);
+  margin: 0 4px 0 0;
+  cursor: pointer;
+  word-break: break-all;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

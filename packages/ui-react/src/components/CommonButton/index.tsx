@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import './index.less';
 
 export enum CommonButtonSize {
+  ExtraSmall = 'extraSmall',
   Small = 'small',
   Middle = 'middle',
   Large = 'large',

@@ -9,7 +9,12 @@ export default function ETransferPage() {
 
   return (
     <>
-      <ETransferContent componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web} />
+      <ETransferContent
+        componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web}
+        onLifeCycleChange={(liftCycle, data) => {
+          console.log('>>>>>> onLifeCycleChange:', liftCycle, data);
+        }}
+      />
     </>
   );
 }

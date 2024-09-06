@@ -25,6 +25,7 @@ import {
 import {
   API_VERSION,
   INSUFFICIENT_ALLOWANCE_MESSAGE,
+  SOCKET_PREFIX,
   WITHDRAW_ERROR_MESSAGE,
   WITHDRAW_TRANSACTION_ERROR_CODE_LIST,
   WithdrawErrorNameType,
@@ -32,6 +33,7 @@ import {
 import { divDecimals } from '@etransfer/utils';
 import { IStorageSuite, TWalletType } from '@etransfer/types';
 import { AuthTokenSource, TGetAuthRequest } from '@etransfer/types';
+import { BaseSignalr, NOTICE_LISTEN_LIST, noticeSignalr, NoticeSignalr } from '@etransfer/socket';
 
 export abstract class BaseETransferCore {
   public storage?: IStorageSuite;
@@ -45,19 +47,23 @@ export abstract class BaseETransferCore {
 
 export class ETransferCore extends BaseETransferCore implements TETransferCore {
   public services: Services;
+  public noticeSocket?: BaseSignalr<typeof NOTICE_LISTEN_LIST> & NoticeSignalr;
   public baseUrl?: string;
   public authUrl?: string;
+  public socketUrl?: string;
   public version?: string;
 
   constructor(options: TETransferCoreOptions) {
     super(options.storage);
     this.services = new Services();
+    this.noticeSocket = noticeSignalr;
     this.init(options);
   }
 
-  public init({ etransferUrl, etransferAuthUrl, storage, version }: TETransferCoreOptions) {
+  public init({ etransferUrl, etransferAuthUrl, etransferSocketUrl, storage, version }: TETransferCoreOptions) {
     etransferUrl && this.setBaseUrl(etransferUrl);
     etransferAuthUrl && this.setAuthUrl(etransferAuthUrl);
+    this.setSocketUrl(etransferSocketUrl || '');
 
     // version
     const versionNew = version || API_VERSION;
@@ -75,6 +81,11 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   public setAuthUrl(url?: string) {
     if (!url) return;
     this.authUrl = url;
+  }
+
+  public setSocketUrl(url?: string) {
+    this.socketUrl = url;
+    this.noticeSocket?.setUrl(url + SOCKET_PREFIX);
   }
 
   public setVersion(version?: string) {

@@ -42,6 +42,7 @@ export interface HistoryContentProps {
   maxResultCount: number;
   totalCount: number;
   skipCount: number;
+  onClickItem?: (id: string) => void;
 }
 
 export interface HistoryMobileContentProps extends HistoryContentProps {
@@ -81,3 +82,9 @@ export type HistoryFilterOnApplyParams = {
 };
 
 export type TRangeValue = [Moment | null, Moment | null] | null;
+
+export type THistoryActionData = {
+  type: RecordsRequestType;
+  status: RecordsRequestStatus;
+  timestamp?: number[] | null;
+};

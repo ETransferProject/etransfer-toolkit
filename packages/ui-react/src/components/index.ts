@@ -7,7 +7,7 @@ export { default as CommonDropdown } from './CommonDropdown';
 export { default as CommonImage } from './CommonImage';
 export { default as CommonLink } from './CommonLink';
 export { default as CommonModal } from './CommonModal';
-export { default as CommonModalTips } from './CommonModalTips';
+export { default as CommonModalTip } from './CommonTips/CommonModalTip';
 export { default as CommonQRCode } from './CommonQRCode';
 export { default as CommonSpace } from './CommonSpace';
 export { default as CommonSvg } from './CommonSvg';
@@ -63,6 +63,18 @@ export { default as Withdraw } from './Withdraw';
 
 // feature module - history
 export { default as History } from './History';
+export { default as HistoryWebFilter } from './History/HistoryWebFilter';
+export { default as HistoryMobileFilter } from './History/HistoryMobileFilter';
+export { default as HistoryWebTable } from './History/HistoryWebTable';
+export { default as HistoryMobileInfiniteList } from './History/HistoryMobileInfiniteList';
+
+// feature module - TransferDetail
+export { default as TransferDetail } from './TransferDetail';
+export { default as MobileTransferDetail } from './TransferDetail/MobileTransferDetail';
+export { default as WebTransferDetail } from './TransferDetail/WebTransferDetail';
+export { default as TransferDetailBody } from './TransferDetail/TransferDetailBody';
+export { default as TransferDetailMain } from './TransferDetail/TransferDetailMain';
+export { default as TransferDetailStep } from './TransferDetail/TransferDetailStep';
 
 // feature module - ETransferMain
 export { default as ETransferContent } from './ETransferContent';

@@ -1,3 +1,4 @@
+import { ETRANSFER_URL } from '@/constants';
 import { eTransferCore as _eTransferCore } from '@etransfer/core';
 import { IStorageSuite } from '@etransfer/types';
 
@@ -18,5 +19,6 @@ export const eTransferCore = _eTransferCore;
 eTransferCore.init({
   // etransferUrl: ETRANSFER_URL,
   // etransferAuthUrl: ETRANSFER_AUTH_URL,
+  etransferSocketUrl: ETRANSFER_URL,
   storage: new Store(),
 });
