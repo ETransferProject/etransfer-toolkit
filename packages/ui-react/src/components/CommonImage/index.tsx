@@ -14,6 +14,7 @@ export type TCommonImageProps = {
   onLoad?: ReactEventHandler<HTMLImageElement>;
   onError?: ReactEventHandler<HTMLImageElement>;
 };
+
 export default function CommonImage({
   src,
   width,

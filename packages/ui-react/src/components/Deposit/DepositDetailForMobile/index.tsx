@@ -13,8 +13,8 @@ import CommonQRCode from '../../CommonQRCode';
 import DepositInfo from '../DepositInfo';
 import { DepositRetryForMobile } from '../DepositRetry';
 import DepositTip from '../DepositTip';
-import { CopySize } from '../../Copy';
-import CommonButton, { CommonButtonSize } from '../../CommonButton';
+import CommonButton from '../../CommonButton';
+import { CommonButtonSize, CopySize } from '../../../types/components';
 
 export default function DepositDetailForMobile({
   className,

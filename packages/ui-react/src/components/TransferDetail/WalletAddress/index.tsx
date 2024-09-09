@@ -12,8 +12,9 @@ import {
 } from '../../../constants';
 import { openWithBlank, getAelfExploreLink, getOtherExploreLink } from '../../../utils';
 import CommonTooltip from '../../CommonTooltip';
-import Copy, { CopySize } from '../../Copy';
+import Copy from '../../Copy';
 import { ChainId } from '@portkey/types';
+import { CopySize } from '../../../types/components';
 
 interface WalletAddressProps {
   address: string;

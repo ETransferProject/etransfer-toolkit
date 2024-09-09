@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import './index.less';
-import Copy, { CopySize } from '../Copy';
+import Copy from '../Copy';
 import { ComponentStyle } from '../../types';
+import { CopySize } from '../../types/components';
 
 interface CommonAddressProps {
   labelClassName?: string;

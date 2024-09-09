@@ -2,7 +2,7 @@ import './index.less';
 import clsx from 'clsx';
 import CommonAddress from '../../../CommonAddress';
 import { SYNCHRONIZING_ADDRESS } from '../../../../constants';
-import { CopySize } from '../../../Copy';
+import { CopySize } from '../../../../types/components';
 
 export interface AccountAddressProps {
   hideBorder?: boolean;

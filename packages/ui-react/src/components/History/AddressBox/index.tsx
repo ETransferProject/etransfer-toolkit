@@ -13,10 +13,11 @@ import {
 } from '../../../constants';
 import { openWithBlank, getAelfExploreLink, getOtherExploreLink } from '../../../utils';
 import CommonTooltip from '../../CommonTooltip';
-import Copy, { CopySize } from '../../Copy';
+import Copy from '../../Copy';
 import { NetworkLogoForMobile } from '../../NetworkLogo';
 import { ComponentStyle } from '../../../types';
 import { TAelfAccounts } from '../../../provider/types';
+import { CopySize } from '../../../types/components';
 
 export type TAddressBoxProps = {
   type: 'To' | 'From';

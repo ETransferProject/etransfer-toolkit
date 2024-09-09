@@ -12,8 +12,8 @@ import ExchangeRate from '../ExchangeRate';
 import CommonQRCode from '../../CommonQRCode';
 import CommonAddress from '../../CommonAddress';
 import { DepositDetailProps } from '../types';
-import { CopySize } from '../../Copy';
-import CommonButton, { CommonButtonSize } from '../../CommonButton';
+import CommonButton from '../../CommonButton';
+import { CommonButtonSize, CopySize } from '../../../types/components';
 
 export default function DepositDetailForWeb({
   className,

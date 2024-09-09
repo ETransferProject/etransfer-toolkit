@@ -2,7 +2,8 @@ import { Modal, ModalProps } from 'antd';
 import clsx from 'clsx';
 import './index.less';
 import CommonSvg from '../CommonSvg';
-import CommonButton, { CommonButtonType } from '../CommonButton';
+import CommonButton from '../CommonButton';
+import { CommonButtonType } from '../../types/components';
 
 export type CommonModalProps = Omit<
   ModalProps,

@@ -2,7 +2,8 @@ import qrCodePlaceholder from '../../../assets/images/qrCodePlaceholder.png';
 import clsx from 'clsx';
 import './index.less';
 import { DepositRetryText, DepositRetryBtnText } from '../../../constants/deposit';
-import CommonButton, { CommonButtonSize } from '../../CommonButton';
+import CommonButton from '../../CommonButton';
+import { CommonButtonSize } from '../../../types/components';
 import CommonImage from '../../CommonImage';
 
 export type TDepositRetry = {
