@@ -42,7 +42,8 @@
   },
   "dependencies": {
     "@etransfer/services": "^1.6.0",
-    "@etransfer/types": "^1.6.0"
+    "@etransfer/types": "^1.6.0",
+    "bn.js": "^5.2.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.3.1",
