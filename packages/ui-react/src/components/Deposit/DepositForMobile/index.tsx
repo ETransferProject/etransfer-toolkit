@@ -6,7 +6,7 @@ import DepositSelectGroupForMobile from '../DepositSelectGroupForMobile';
 import { TDepositForMobileProps } from '../types';
 import CommonSvg from '../../CommonSvg';
 import { ComponentStyle } from '../../../types';
-import { ProcessingTip } from '../../CommonTips/ProcessingTip';
+import ProcessingTip from '../../CommonTips/ProcessingTip';
 import { useScreenSize } from '../../../hooks';
 
 export default function DepositForMobile({

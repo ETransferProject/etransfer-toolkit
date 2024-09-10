@@ -4,7 +4,7 @@ import DepositDetailForWeb from '../DepositDetailForWeb';
 import DepositSelectGroupForWeb from '../DepositSelectGroupForWeb';
 import { TDepositForWebProps } from '../types';
 import './index.less';
-import { ProcessingTip } from '../../CommonTips/ProcessingTip';
+import ProcessingTip from '../../CommonTips/ProcessingTip';
 
 export default function DepositForWeb({
   // common

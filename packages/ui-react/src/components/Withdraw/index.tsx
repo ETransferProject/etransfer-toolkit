@@ -52,7 +52,7 @@ import { ETransferAccountConfig } from '../../provider/types';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 import clsx from 'clsx';
 import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
-import { ProcessingTip } from '../CommonTips/ProcessingTip';
+import ProcessingTip from '../CommonTips/ProcessingTip';
 import { useWithdrawNoticeSocket } from '../../hooks/notice';
 
 const FORM_VALIDATE_DATA = {
