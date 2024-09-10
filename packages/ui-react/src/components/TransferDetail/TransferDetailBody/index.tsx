@@ -9,7 +9,7 @@ import { formatSymbolDisplay, viewTxDetailInExplore } from '../../../utils';
 import { BusinessTypeLabel, DEFAULT_NULL_VALUE } from '../../../constants';
 import FromOrToChain from '../FromOrToChain';
 import TokenAmount from '../TokenAmount';
-import { TransferStatus } from '../TransferStatus';
+import TransferStatus from '../TransferStatus';
 import WalletAddress from '../WalletAddress';
 import { formatPastTime } from '../../../utils';
 import { TRANSFER_DETAIL_LABEL } from '../../../constants/transfer';

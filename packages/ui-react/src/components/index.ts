@@ -78,6 +78,11 @@ export { default as HistoryWebFilter } from './History/HistoryWebFilter';
 export { default as HistoryMobileFilter } from './History/HistoryMobileFilter';
 export { default as HistoryWebTable } from './History/HistoryWebTable';
 export { default as HistoryMobileInfiniteList } from './History/HistoryMobileInfiniteList';
+export { default as AddressBox } from './History/AddressBox';
+export { default as AmountBox } from './History/AmountBox';
+export { default as ArrivalTimeBox } from './History/ArrivalTimeBox';
+export { default as FeeInfo } from './History/FeeInfo';
+export { default as FromAndToBox } from './History/FromAndToBox';
 
 // feature module - TransferDetail
 export { default as TransferDetail } from './TransferDetail';
@@ -86,6 +91,10 @@ export { default as WebTransferDetail } from './TransferDetail/WebTransferDetail
 export { default as TransferDetailBody } from './TransferDetail/TransferDetailBody';
 export { default as TransferDetailMain } from './TransferDetail/TransferDetailMain';
 export { default as TransferDetailStep } from './TransferDetail/TransferDetailStep';
+export { default as FromOrToChain } from './TransferDetail/FromOrToChain';
+export { default as TokenAmount } from './TransferDetail/TokenAmount';
+export { default as TransferStatus } from './TransferDetail/TransferStatus';
+export { default as WalletAddress } from './TransferDetail/WalletAddress';
 
 // feature module - ETransferMain
 export { default as ETransferContent } from './ETransferContent';
