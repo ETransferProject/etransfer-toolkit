@@ -59,18 +59,22 @@ export default function AddressBox({
     return address || DEFAULT_NULL_VALUE;
   }, [type, toAddress, fromAddress, network, chainId, accounts]);
 
-  const handleAddressClick = useCallback(() => {
-    // link to Deposit: toTransfer.chainId and Withdraw: fromTransfer.chainId
-    if (network === BlockchainNetworkType.AELF) {
+  const handleAddressClick = useCallback(
+    (event: any) => {
+      event.stopPropagation();
+      // link to Deposit: toTransfer.chainId and Withdraw: fromTransfer.chainId
+      if (network === BlockchainNetworkType.AELF) {
+        openWithBlank(
+          getAelfExploreLink(calcAddress(), AelfExploreType.address, type === 'To' ? toChainId : fromChainId),
+        );
+        return;
+      }
       openWithBlank(
-        getAelfExploreLink(calcAddress(), AelfExploreType.address, type === 'To' ? toChainId : fromChainId),
+        getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlNotAelf),
       );
-      return;
-    }
-    openWithBlank(
-      getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlNotAelf),
-    );
-  }, [network, calcAddress, type, toChainId, fromChainId]);
+    },
+    [network, calcAddress, type, toChainId, fromChainId],
+  );
 
   return (
     <div
