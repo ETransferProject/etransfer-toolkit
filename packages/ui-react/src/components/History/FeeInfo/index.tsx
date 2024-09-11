@@ -30,7 +30,7 @@ export default function FeeInfo({ feeInfo, status, orderType, componentStyle = C
           ? 'etransfer-ui-history-mobile-fee-info-wrapper'
           : 'etransfer-ui-history-web-fee-info-wrapper',
       )}>
-      {feeInfo.map((item, index) => {
+      {feeInfo?.map((item, index) => {
         return (
           <span className="etransfer-ui-history-fee-info-item-wrapper" key={item.symbol}>
             {index !== 0 && <span className="etransfer-ui-history-fee-info-item-add">+</span>}

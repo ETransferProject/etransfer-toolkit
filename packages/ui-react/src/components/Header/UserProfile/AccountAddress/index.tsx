@@ -12,7 +12,7 @@ export interface AccountAddressProps {
 export default function AccountAddress({ hideBorder, accountList }: AccountAddressProps) {
   return (
     <div>
-      {accountList.map((item) => (
+      {accountList?.map((item) => (
         <div key={item.label} className={clsx('address-wrapper', hideBorder ? 'address-hideBorder' : '')}>
           <CommonAddress
             labelClassName={'label'}

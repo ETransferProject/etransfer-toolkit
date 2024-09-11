@@ -24,8 +24,8 @@ export type TAddressBoxProps = {
   fromAddress: string;
   toAddress: string;
   network: string;
-  fromChainId: ChainId;
-  toChainId: ChainId;
+  fromChainId?: ChainId;
+  toChainId?: ChainId;
   accounts: TAelfAccounts;
   componentStyle?: ComponentStyle;
 };
@@ -50,7 +50,7 @@ export default function AddressBox({
       // format address: add suffix
       return formatDIDAddress(address, chainId);
     }
-    if (!address && network === BlockchainNetworkType.AELF) {
+    if (!address && network === BlockchainNetworkType.AELF && chainId) {
       if (accounts && accounts[chainId]) {
         return accounts[chainId] || accounts[SupportedChainId.AELF] || DEFAULT_NULL_VALUE;
       }
@@ -63,17 +63,15 @@ export default function AddressBox({
     (event: any) => {
       event.stopPropagation();
       // link to Deposit: toTransfer.chainId and Withdraw: fromTransfer.chainId
-      if (network === BlockchainNetworkType.AELF) {
-        openWithBlank(
-          getAelfExploreLink(calcAddress(), AelfExploreType.address, type === 'To' ? toChainId : fromChainId),
-        );
+      if (network === BlockchainNetworkType.AELF && chainId) {
+        openWithBlank(getAelfExploreLink(calcAddress(), AelfExploreType.address, chainId));
         return;
       }
       openWithBlank(
         getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlNotAelf),
       );
     },
-    [network, calcAddress, type, toChainId, fromChainId],
+    [network, chainId, calcAddress],
   );
 
   return (
@@ -84,7 +82,10 @@ export default function AddressBox({
           ? 'etransfer-ui-history-mobile-address-box'
           : 'etransfer-ui-history-web-address-box',
       )}>
-      <NetworkLogoForMobile network={network === BlockchainNetworkType.AELF ? chainId : network} size="small" />
+      <NetworkLogoForMobile
+        network={network === BlockchainNetworkType.AELF && chainId ? chainId : network}
+        size="small"
+      />
       <CommonTooltip title={calcAddress()} trigger={'hover'}>
         <span className={clsx('etransfer-ui-history-address-box-word')} onClick={handleAddressClick}>
           {getOmittedStr(calcAddress(), 8, 9)}

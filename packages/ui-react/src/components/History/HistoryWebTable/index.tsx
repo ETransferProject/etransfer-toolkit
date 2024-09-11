@@ -21,17 +21,7 @@ const columns = [
     dataIndex: 'status',
     key: 'status',
     render: (status: string, record: THistoryItem) => {
-      return (
-        <StatusBox
-          status={status}
-          address={record.fromAddress}
-          network={record.fromNetwork}
-          fromChainId={record.fromChainId}
-          toChainId={record.toChainId}
-          orderType={record.orderType}
-          componentStyle={componentStyle}
-        />
-      );
+      return <StatusBox status={status} network={record.fromNetwork} componentStyle={componentStyle} />;
     },
   },
   {
@@ -157,7 +147,7 @@ export default function HistoryWebTable({
 
     const recordsTableList: THistoryItem[] = [];
 
-    recordsList.map((item) => {
+    recordsList?.map((item) => {
       const { id, orderType, status, arrivalTime, fromTransfer, toTransfer } = item;
       recordsTableList.push({
         key: id,

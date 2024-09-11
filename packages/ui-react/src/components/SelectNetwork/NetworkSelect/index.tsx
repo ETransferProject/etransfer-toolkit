@@ -65,7 +65,7 @@ export function NetworkSelectForMobile({
       <div className={'network-select-list'}>
         {(isShowLoading || !Array.isArray(networkList) || networkList.length == 0) && <NetworkListSkeletonForMobile />}
         {!isShowLoading &&
-          networkList.map((item, idx) => {
+          networkList?.map((item, idx) => {
             return (
               <NetworkCardForMobile
                 key={'network-select' + item.network + idx}
@@ -105,7 +105,7 @@ export function NetworkSelectForWeb({
       <div className={'network-select-list'}>
         {(isShowLoading || !Array.isArray(networkList) || networkList.length == 0) && <NetworkListSkeletonForWeb />}
         {!isShowLoading &&
-          networkList.map((item, idx) => {
+          networkList?.map((item, idx) => {
             return (
               <NetworkCardForWeb
                 key={'network-select' + item.network + idx}

@@ -260,7 +260,7 @@ export type TRecordsListItem = {
 
 export type TFromTransfer = {
   network: string;
-  chainId: ChainId;
+  chainId?: ChainId;
   fromAddress: string;
   toAddress: string;
   amount: string;
@@ -269,11 +269,10 @@ export type TFromTransfer = {
   icon?: string;
   txId: string;
   status: OrderStatusEnum;
+  feeInfo?: TToTransferFeeInfo[];
 };
 
-export type TToTransfer = TFromTransfer & {
-  feeInfo: TToTransferFeeInfo[];
-};
+export type TToTransfer = TFromTransfer;
 
 export type TToTransferFeeInfo = {
   symbol: string;

@@ -70,7 +70,7 @@ export default function TransferDetailBody({
           {data.status === OrderStatusEnum.Failed
             ? DEFAULT_NULL_VALUE
             : data.orderType === BusinessType.Withdraw
-            ? `${data.toFeeInfo[0].amount} ${formatSymbolDisplay(data.toFeeInfo[0].symbol)}`
+            ? `${data.toFeeInfo?.[0].amount} ${formatSymbolDisplay(data.toFeeInfo?.[0].symbol || '')}`
             : 'Free'}
         </div>
       </div>

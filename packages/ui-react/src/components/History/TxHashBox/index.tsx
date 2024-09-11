@@ -11,7 +11,7 @@ import { viewTxDetailInExplore } from '../../../utils';
 
 export type TTxHashBoxProps = {
   txHashLabel?: string;
-  chainId: ChainId;
+  chainId?: ChainId;
   network: string;
   txHash: string;
   orderStatus: OrderStatusEnum;

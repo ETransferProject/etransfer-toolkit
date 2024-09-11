@@ -32,7 +32,7 @@ export default function HistoryMobileInfiniteList({
 
     const recordsTableList: THistoryItem[] = [];
 
-    recordsList.map((item) => {
+    recordsList?.map((item) => {
       const { id, orderType, status, arrivalTime, fromTransfer, toTransfer } = item;
       recordsTableList.push({
         key: id,
@@ -77,7 +77,7 @@ export default function HistoryMobileInfiniteList({
             <b>{NO_DATA_TEXT}</b>
           </p>
         }>
-        {handleRecordListData(recordsList).map((recordItem: THistoryItem) => {
+        {handleRecordListData(recordsList)?.map((recordItem: THistoryItem) => {
           return (
             <div
               className={clsx('etransfer-ui-history-mobile-infinite-item-wrapper')}
@@ -86,11 +86,7 @@ export default function HistoryMobileInfiniteList({
               <div className={clsx('etransfer-ui-history-mobile-infinite-item-header')}>
                 <StatusBox
                   status={recordItem.status}
-                  address={recordItem.fromAddress}
                   network={recordItem.fromNetwork}
-                  fromChainId={recordItem.fromChainId}
-                  toChainId={recordItem.toChainId}
-                  orderType={recordItem.orderType}
                   componentStyle={componentStyle}
                 />
                 <span className={clsx('etransfer-ui-history-mobile-infinite-item-order-type')}>
@@ -187,7 +183,7 @@ export default function HistoryMobileInfiniteList({
               <div className="etransfer-ui-history-mobile-infinite-item-fee">
                 <span className="etransfer-ui-history-mobile-infinite-item-label">Transaction Fee</span>
                 <FeeInfo
-                  feeInfo={recordItem.feeInfo}
+                  feeInfo={recordItem.feeInfo || []}
                   status={recordItem.status}
                   orderType={recordItem.orderType}
                   componentStyle={componentStyle}

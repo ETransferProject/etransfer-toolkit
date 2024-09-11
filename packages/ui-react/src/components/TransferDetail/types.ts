@@ -9,7 +9,7 @@ export type TTransferDetailBodyData = {
   status: OrderStatusEnum;
   createTime: number;
   fromNetwork: string;
-  fromChainId: ChainId;
+  fromChainId?: ChainId;
   fromSymbol: string;
   fromIcon?: string;
   fromAddress: string;
@@ -18,7 +18,7 @@ export type TTransferDetailBodyData = {
   fromTxId: string;
   fromStatus: OrderStatusEnum | TransferStatusType;
   toNetwork: string;
-  toChainId: ChainId;
+  toChainId?: ChainId;
   toSymbol: string;
   toIcon?: string;
   toAddress: string;
@@ -26,7 +26,7 @@ export type TTransferDetailBodyData = {
   toAmountUsd: string;
   toTxId: string;
   toStatus: OrderStatusEnum | TransferStatusType;
-  toFeeInfo: THistoryFeeInfo[];
+  toFeeInfo?: THistoryFeeInfo[];
 };
 
 export type TTransferDetailActionData = {
