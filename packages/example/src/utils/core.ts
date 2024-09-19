@@ -19,6 +19,6 @@ export const eTransferCore = _eTransferCore;
 eTransferCore.init({
   // etransferUrl: ETRANSFER_URL,
   // etransferAuthUrl: ETRANSFER_AUTH_URL,
-  etransferSocketUrl: ETRANSFER_URL,
+  // etransferSocketUrl: ETRANSFER_URL,
   storage: new Store(),
 });

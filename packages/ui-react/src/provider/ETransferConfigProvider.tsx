@@ -67,6 +67,10 @@ class ETransferConfigProvider implements ETransferConfigProviderProps {
       etransferCore.setAuthUrl(_config['etransferAuthUrl']);
     }
 
+    if ('etransferSocketUrl' in _config) {
+      etransferCore.setSocketUrl(_config['etransferSocketUrl']);
+    }
+
     if ('authorization' in _config && _config['authorization']?.jwt) {
       etransferCore.services.setRequestHeaders('Authorization', _config['authorization'].jwt);
     }
