@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import { BusinessType, OrderStatusEnum } from '@etransfer/types';
 import { getOmittedStr } from '@etransfer/utils';
 import { formatSymbolDisplay, viewTxDetailInExplore } from '../../../utils';
-import { BusinessTypeLabel, DEFAULT_NULL_VALUE } from '../../../constants';
+import { BusinessTypeLabel, COBO_CUSTODY, DEFAULT_NULL_VALUE } from '../../../constants';
 import FromOrToChain from '../FromOrToChain';
 import TokenAmount from '../TokenAmount';
 import TransferStatus from '../TransferStatus';
@@ -83,7 +83,14 @@ export default function TransferDetailBody({
         {data.fromTxId ? (
           <div
             className={clsx('etransfer-ui-transfer-detail-value', 'etransfer-ui-transfer-detail-value-from-tx-hash')}
-            onClick={() => viewTxDetailInExplore(data.fromNetwork, data.fromTxId, data.fromChainId)}>
+            onClick={() =>
+              viewTxDetailInExplore(
+                data.fromNetwork,
+                data.fromTxId,
+                data.fromAddress === COBO_CUSTODY || data.fromToAddress === COBO_CUSTODY,
+                data.fromChainId,
+              )
+            }>
             {isMobileStyle ? getOmittedStr(data.fromTxId, 8, 9) : data.fromTxId}
           </div>
         ) : (
@@ -139,7 +146,14 @@ export default function TransferDetailBody({
         {data.toTxId ? (
           <div
             className={clsx('etransfer-ui-transfer-detail-value', 'etransfer-ui-transfer-detail-value-to-tx-hash')}
-            onClick={() => viewTxDetailInExplore(data.toNetwork, data.toTxId, data.toChainId)}>
+            onClick={() =>
+              viewTxDetailInExplore(
+                data.toNetwork,
+                data.toTxId,
+                data.toFromAddress === COBO_CUSTODY || data.toAddress === COBO_CUSTODY,
+                data.toChainId,
+              )
+            }>
             {isMobileStyle ? getOmittedStr(data.toTxId, 8, 9) : data.toTxId}
           </div>
         ) : (

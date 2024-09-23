@@ -13,6 +13,7 @@ export type TTransferDetailBodyData = {
   fromSymbol: string;
   fromIcon?: string;
   fromAddress: string;
+  fromToAddress: string;
   fromAmount: string;
   fromAmountUsd: string;
   fromTxId: string;
@@ -22,6 +23,7 @@ export type TTransferDetailBodyData = {
   toSymbol: string;
   toIcon?: string;
   toAddress: string;
+  toFromAddress: string;
   toAmount: string;
   toAmountUsd: string;
   toTxId: string;

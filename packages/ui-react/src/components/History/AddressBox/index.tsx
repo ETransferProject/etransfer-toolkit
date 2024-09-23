@@ -10,6 +10,7 @@ import {
   OtherExploreType,
   ExploreUrlNotAelf,
   DEFAULT_NULL_VALUE,
+  COBO_CUSTODY,
 } from '../../../constants';
 import { openWithBlank, getAelfExploreLink, getOtherExploreLink } from '../../../utils';
 import CommonTooltip from '../../CommonTooltip';
@@ -86,12 +87,18 @@ export default function AddressBox({
         network={network === BlockchainNetworkType.AELF && chainId ? chainId : network}
         size="small"
       />
-      <CommonTooltip title={calcAddress()} trigger={'hover'}>
-        <span className={clsx('etransfer-ui-history-address-box-word')} onClick={handleAddressClick}>
-          {getOmittedStr(calcAddress(), 8, 9)}
-        </span>
-      </CommonTooltip>
-      <Copy toCopy={calcAddress()} size={CopySize.Small} />
+      {calcAddress() === COBO_CUSTODY ? (
+        <span className={clsx('etransfer-ui-history-address-word-static')}>{calcAddress()}</span>
+      ) : (
+        <>
+          <CommonTooltip title={calcAddress()} trigger={'hover'}>
+            <span className={clsx('etransfer-ui-history-address-box-word')} onClick={handleAddressClick}>
+              {getOmittedStr(calcAddress(), 8, 9)}
+            </span>
+          </CommonTooltip>
+          <Copy toCopy={calcAddress()} size={CopySize.Small} />
+        </>
+      )}
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function DepositSelectGroupForMobile({
   receiveTokenList,
   receiveTokenSelected,
   receiveTokenSelectCallback,
-}: DepositSelectGroupProps) {
+}: Omit<DepositSelectGroupProps, 'onConnect'>) {
   return (
     <div className={className}>
       <SelectTokenNetwork

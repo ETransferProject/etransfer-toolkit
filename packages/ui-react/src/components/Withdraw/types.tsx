@@ -14,6 +14,7 @@ export interface WithdrawProps {
   isShowProcessingTip?: boolean;
   onClickProcessingTip?: () => void;
   onActionChange?: (data: TWithdrawActionData) => void;
+  onLogin?: () => void;
 }
 
 export type TWithdrawActionData = {
@@ -51,6 +52,7 @@ export interface WithdrawFormProps {
   onAmountBlur: React.ChangeEventHandler<HTMLInputElement>;
   onClickFailedOk: () => void;
   onClickSuccessOk: () => void;
+  onLogin?: () => void;
 }
 
 export type TWithdrawFormValidateData = {

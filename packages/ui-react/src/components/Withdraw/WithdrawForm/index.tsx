@@ -53,6 +53,7 @@ export default function WithdrawForm({
   onAmountBlur,
   onClickFailedOk,
   onClickSuccessOk,
+  onLogin,
 }: WithdrawFormProps) {
   const isAndroid = devices.isMobile().android;
   const isMobileStyle = useMemo(() => componentStyle === ComponentStyle.Mobile, [componentStyle]);
@@ -282,6 +283,7 @@ export default function WithdrawForm({
         clickSuccessOk={onClickSuccessOk}
         componentStyle={componentStyle}
         isShowMobilePoweredBy={isShowMobilePoweredBy}
+        onLogin={onLogin}
       />
     </Form>
   );

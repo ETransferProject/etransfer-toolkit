@@ -1,7 +1,7 @@
 import './index.less';
 import { Table } from 'antd';
 import { BusinessType, TRecordsListItem } from '@etransfer/types';
-import { NO_HISTORY_FOUND, LOGIN_TO_VIEW_HISTORY, BusinessTypeLabel } from '../../../constants';
+import { NO_HISTORY_FOUND, LOGIN_TO_VIEW_HISTORY, BusinessTypeLabel, COBO_CUSTODY } from '../../../constants';
 import AmountBox from '../AmountBox';
 import ArrivalTimeBox from '../ArrivalTimeBox';
 import FeeInfo from '../FeeInfo';
@@ -87,6 +87,7 @@ const columns = [
           txHash={record.fromTxId}
           componentStyle={componentStyle}
           accounts={getAccountInfo().accounts}
+          isCoboHash={record.fromAddress === COBO_CUSTODY || record.fromToAddress === COBO_CUSTODY}
         />
       );
     },
@@ -110,6 +111,7 @@ const columns = [
           txHash={record.toTxId}
           componentStyle={componentStyle}
           accounts={getAccountInfo().accounts}
+          isCoboHash={record.toAddress === COBO_CUSTODY || record.toFromAddress === COBO_CUSTODY}
         />
       );
     },

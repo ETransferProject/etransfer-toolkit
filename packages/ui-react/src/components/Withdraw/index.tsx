@@ -78,6 +78,7 @@ export default function Withdraw({
   isShowProcessingTip = true,
   onClickProcessingTip,
   onActionChange,
+  onLogin,
 }: WithdrawProps) {
   const [form] = Form.useForm<TWithdrawFormValues>();
   const [formValidateData, setFormValidateData] = useState<{
@@ -828,6 +829,7 @@ export default function Withdraw({
           onAmountBlur={handleAmountBlur}
           onClickFailedOk={handleClickFailedOk}
           onClickSuccessOk={handleClickSuccessOk}
+          onLogin={onLogin}
         />
       </div>
     </div>

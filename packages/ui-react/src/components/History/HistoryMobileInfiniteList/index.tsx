@@ -12,7 +12,7 @@ import FeeInfo from '../FeeInfo';
 import StatusBox from '../StatusBox';
 import TxHashBox from '../TxHashBox';
 import { ComponentStyle } from '../../../types';
-import { BusinessTypeLabel, LOADING_TEXT, NO_DATA_TEXT } from '../../../constants';
+import { BusinessTypeLabel, COBO_CUSTODY, LOADING_TEXT, NO_DATA_TEXT } from '../../../constants';
 
 const componentStyle = ComponentStyle.Mobile;
 
@@ -148,6 +148,7 @@ export default function HistoryMobileInfiniteList({
                   txHash={recordItem.fromTxId}
                   network={recordItem.fromNetwork}
                   componentStyle={componentStyle}
+                  isCoboHash={recordItem.fromAddress === COBO_CUSTODY || recordItem.fromToAddress === COBO_CUSTODY}
                 />
               </div>
               <div className="etransfer-ui-history-mobile-infinite-item-line">
@@ -178,6 +179,7 @@ export default function HistoryMobileInfiniteList({
                   txHash={recordItem.toTxId}
                   network={recordItem.toNetwork}
                   componentStyle={componentStyle}
+                  isCoboHash={recordItem.toAddress === COBO_CUSTODY || recordItem.toFromAddress === COBO_CUSTODY}
                 />
               </div>
               <div className="etransfer-ui-history-mobile-infinite-item-fee">

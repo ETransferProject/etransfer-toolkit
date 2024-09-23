@@ -9,6 +9,7 @@ import {
   OtherExploreType,
   ExploreUrlNotAelf,
   CHAIN_ID_LIST,
+  COBO_CUSTODY,
 } from '../../../constants';
 import { openWithBlank, getAelfExploreLink, getOtherExploreLink } from '../../../utils';
 import CommonTooltip from '../../CommonTooltip';
@@ -61,12 +62,20 @@ export default function WalletAddress({
 
   return (
     <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-wallet-address-container', className)}>
-      <CommonTooltip title={calcAddress()} trigger={'hover'}>
-        <span className={clsx('etransfer-ui-wallet-address')} onClick={handleAddressClick}>
-          {isOmitAddress ? getOmittedStr(calcAddress(), 8, 9) : calcAddress()}
-        </span>
-      </CommonTooltip>
-      {!!calcAddress() && calcAddress() !== DEFAULT_NULL_VALUE && <Copy toCopy={calcAddress()} size={CopySize.Small} />}
+      {calcAddress() === COBO_CUSTODY ? (
+        <span className={clsx('etransfer-ui-wallet-address-cobo')}>{COBO_CUSTODY}</span>
+      ) : (
+        <>
+          <CommonTooltip title={calcAddress()} trigger={'hover'}>
+            <span className={clsx('etransfer-ui-wallet-address')} onClick={handleAddressClick}>
+              {isOmitAddress ? getOmittedStr(calcAddress(), 8, 9) : calcAddress()}
+            </span>
+          </CommonTooltip>
+          {!!calcAddress() && calcAddress() !== DEFAULT_NULL_VALUE && (
+            <Copy toCopy={calcAddress()} size={CopySize.Small} />
+          )}
+        </>
+      )}
     </div>
   );
 }

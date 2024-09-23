@@ -41,6 +41,7 @@ export default function DepositForWeb({
   onRetry,
   onCheckTxnClick,
   onClickProcessingTip,
+  onConnect,
 }: TDepositForWebProps) {
   return (
     <div className={clsx('etransfer-ui-deposit-for-web', className)}>
@@ -66,6 +67,7 @@ export default function DepositForWeb({
         receiveTokenList={receiveTokenList}
         receiveTokenSelected={receiveTokenSelected}
         receiveTokenSelectCallback={receiveTokenSelectCallback}
+        onConnect={onConnect}
       />
       <DepositDetailForWeb
         componentStyle={componentStyle}
