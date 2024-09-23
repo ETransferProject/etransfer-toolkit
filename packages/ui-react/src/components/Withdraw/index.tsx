@@ -390,6 +390,8 @@ export default function Withdraw({
         setIsTransactionFeeLoading(false);
 
         handleAmountValidate(res.withdrawInfo?.minAmount, res.withdrawInfo?.transactionUnit, newMaxBalance);
+
+        return res;
       } catch (error: any) {
         // when network error, transactionUnit should as the same with symbol
         setWithdrawInfo({
@@ -557,13 +559,28 @@ export default function Withdraw({
   );
 
   const handleClickMax = useCallback(async () => {
-    setAmount(balance);
-    form.setFieldValue(WithdrawFormKeys.AMOUNT, balance);
+    if (balance && tokenSymbol === 'ELF') {
+      try {
+        setLoading(true);
+        const res = await getWithdrawData();
+        let _maxBalance = balance;
+        if (res?.withdrawInfo?.aelfTransactionFee) {
+          _maxBalance = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee).toFixed();
+        }
+        setBalance(_maxBalance);
+        form.setFieldValue(WithdrawFormKeys.AMOUNT, _maxBalance);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setAmount(balance);
+      form.setFieldValue(WithdrawFormKeys.AMOUNT, balance);
 
-    if (handleAmountValidate()) {
-      await getWithdrawData();
+      if (handleAmountValidate()) {
+        await getWithdrawData();
+      }
     }
-  }, [balance, form, handleAmountValidate, getWithdrawData]);
+  }, [balance, tokenSymbol, getWithdrawData, form, handleAmountValidate]);
 
   const handleAddressBlur = useCallback(async () => {
     const addressInput = getAddressInput();

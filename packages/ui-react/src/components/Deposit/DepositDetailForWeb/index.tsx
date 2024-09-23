@@ -14,6 +14,7 @@ import CommonAddress from '../../CommonAddress';
 import { DepositDetailProps } from '../types';
 import CommonButton from '../../CommonButton';
 import { CommonButtonSize, CopySize } from '../../../types/components';
+import NotLoginTip from '../NotLoginTip';
 
 export default function DepositDetailForWeb({
   className,
@@ -30,8 +31,10 @@ export default function DepositDetailForWeb({
   tokenLogoUrl,
   showRetry = false,
   isCheckTxnLoading = false,
+  isShowNotLoginTip = false,
   onRetry,
   onCheckTxnClick,
+  onLogin,
 }: DepositDetailProps) {
   return (
     <div className={clsx('etransfer-ui-deposit-detail-for-web', className)}>
@@ -63,6 +66,7 @@ export default function DepositDetailForWeb({
 
       <CommonSpace direction="vertical" size={40} />
       {(showRetry || !!depositInfo.depositAddress) && <div className={'deposit-address-label'}>Deposit address</div>}
+      {isShowNotLoginTip && <NotLoginTip onLogin={() => onLogin?.()} />}
       {showRetry && <DepositRetryForWeb isShowImage={true} onClick={onRetry} />}
       {!showRetry && !!depositInfo.depositAddress && (
         <>

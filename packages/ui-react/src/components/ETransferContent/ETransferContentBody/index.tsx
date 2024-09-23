@@ -23,6 +23,7 @@ export default function ETransferContentBody({
   onDepositActionChange,
   onWithdrawActionChange,
   onHistoryActionChange,
+  onLogin,
 }: {
   activePageKey: PageKey;
   componentStyle?: ComponentStyle;
@@ -35,6 +36,7 @@ export default function ETransferContentBody({
   onDepositActionChange?: (data: TDepositActionData) => void;
   onWithdrawActionChange?: (data: TWithdrawActionData) => void;
   onHistoryActionChange?: (data: THistoryActionData) => void;
+  onLogin?: () => void;
 }) {
   const [{ depositProcessingCount }] = useETransferDeposit();
   const [{ withdrawProcessingCount }] = useETransferWithdraw();
@@ -52,6 +54,7 @@ export default function ETransferContentBody({
           withdrawProcessingCount={withdrawProcessingCount}
           onClickProcessingTip={onClickProcessingTip}
           onActionChange={onDepositActionChange}
+          onConnect={onLogin}
         />
       )}
       {activePageKey === PageKey.Withdraw && (
@@ -64,6 +67,7 @@ export default function ETransferContentBody({
           depositProcessingCount={depositProcessingCount}
           onClickProcessingTip={onClickProcessingTip}
           onActionChange={onWithdrawActionChange}
+          onLogin={onLogin}
         />
       )}
       {activePageKey === PageKey.History && (

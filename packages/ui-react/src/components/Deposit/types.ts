@@ -58,15 +58,17 @@ export interface DepositDetailProps {
   tokenLogoUrl?: string;
   showRetry?: boolean;
   isCheckTxnLoading?: boolean;
+  isShowNotLoginTip?: boolean;
   onRetry?: () => void;
   onCheckTxnClick?: () => void;
+  onLogin?: () => void;
 }
 
 export interface DepositDetailForMobileProps extends DepositDetailProps {
   networkItem?: Partial<TNetworkItem>;
 }
 
-export type TDepositForMobileProps = Omit<DepositSelectGroupProps, 'onConnect'> & {
+export type TDepositForMobileProps = DepositSelectGroupProps & {
   isShowPoweredBy?: boolean;
   isShowProcessingTip?: boolean;
   depositProcessingCount?: number;

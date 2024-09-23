@@ -42,6 +42,8 @@ export default function DepositForMobile({
   isShowProcessingTip = true,
   depositProcessingCount,
   withdrawProcessingCount,
+  isShowNotLoginTip,
+  onConnect,
   onRetry,
   onCheckTxnClick,
   onClickProcessingTip,
@@ -91,6 +93,8 @@ export default function DepositForMobile({
             tokenLogoUrl={tokenLogoUrl}
             showRetry={showRetry}
             isCheckTxnLoading={isCheckTxnLoading}
+            isShowNotLoginTip={isShowNotLoginTip}
+            onLogin={onConnect}
             onRetry={onRetry}
             onCheckTxnClick={onCheckTxnClick}
           />
