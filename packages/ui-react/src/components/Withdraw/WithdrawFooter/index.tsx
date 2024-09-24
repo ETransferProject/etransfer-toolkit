@@ -97,7 +97,7 @@ export default function WithdrawFooter({
 
   const createTransactionOrder = useCallback(async () => {
     try {
-      setLoading(false);
+      setLoading(true, { text: 'Please approve the transaction in the wallet...' });
 
       const aelfReact = getAelfReact(getNetworkType(), chainItem.key);
       const accountAddress = getAccountAddress(chainItem.key);
@@ -165,6 +165,7 @@ export default function WithdrawFooter({
         setFailModalReason(WITHDRAW_ERROR_MESSAGE);
         setIsFailModalOpen(true);
       }
+      setLoading(false);
     } catch (error: any) {
       setLoading(false);
       if (error?.code == 4001) {
