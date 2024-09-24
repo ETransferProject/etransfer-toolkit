@@ -65,7 +65,9 @@ export default function DepositDetailForWeb({
       )}
 
       <CommonSpace direction="vertical" size={40} />
-      {(showRetry || !!depositInfo.depositAddress) && <div className={'deposit-address-label'}>Deposit address</div>}
+      {(showRetry || !!depositInfo.depositAddress || isShowNotLoginTip) && (
+        <div className={'deposit-address-label'}>Deposit address</div>
+      )}
       {isShowNotLoginTip && <NotLoginTip onLogin={() => onLogin?.()} />}
       {showRetry && <DepositRetryForWeb isShowImage={true} onClick={onRetry} />}
       {!showRetry && !!depositInfo.depositAddress && (

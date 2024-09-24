@@ -567,7 +567,7 @@ export default function Withdraw({
         if (res?.withdrawInfo?.aelfTransactionFee) {
           _maxBalance = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee).toFixed();
         }
-        setBalance(_maxBalance);
+        setAmount(_maxBalance);
         form.setFieldValue(WithdrawFormKeys.AMOUNT, _maxBalance);
       } finally {
         setLoading(false);
