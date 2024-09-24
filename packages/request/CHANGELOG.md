@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.5-alpha.3...v1.7.0) (2024-09-24)
+
+**Note:** Version bump only for package @etransfer/request
+
 ## [1.6.5-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.5-alpha.2...v1.6.5-alpha.3) (2024-09-19)
 
 **Note:** Version bump only for package @etransfer/request
