@@ -13,8 +13,9 @@ import CommonQRCode from '../../CommonQRCode';
 import DepositInfo from '../DepositInfo';
 import { DepositRetryForMobile } from '../DepositRetry';
 import DepositTip from '../DepositTip';
-import { CopySize } from '../../Copy';
-import CommonButton, { CommonButtonSize } from '../../CommonButton';
+import CommonButton from '../../CommonButton';
+import { CommonButtonSize, CopySize } from '../../../types/components';
+import NotLoginTip from '../NotLoginTip';
 
 export default function DepositDetailForMobile({
   className,
@@ -32,6 +33,8 @@ export default function DepositDetailForMobile({
   tokenLogoUrl,
   showRetry = false,
   isCheckTxnLoading = false,
+  isShowNotLoginTip = false,
+  onLogin,
   onRetry,
   onCheckTxnClick,
 }: DepositDetailForMobileProps) {
@@ -177,7 +180,7 @@ export default function DepositDetailForMobile({
 
       <CommonSpace size={24} />
 
-      {renderDepositInfo}
+      {isShowNotLoginTip ? <NotLoginTip onLogin={() => onLogin?.()} /> : renderDepositInfo}
     </div>
   );
 }

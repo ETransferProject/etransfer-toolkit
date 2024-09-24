@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { ReactNode } from 'react';
 
 interface ILinkForBlankProps {
@@ -9,8 +8,8 @@ interface ILinkForBlankProps {
 }
 export default function LinkForBlank({ href, className, ariaLabel, element }: ILinkForBlankProps) {
   return (
-    <Link href={href} passHref className={className} target="_blank" aria-label={ariaLabel} rel="noopener noreferrer">
+    <a href={href} className={className} target="_blank" aria-label={ariaLabel} rel="noopener noreferrer">
       {element}
-    </Link>
+    </a>
   );
 }

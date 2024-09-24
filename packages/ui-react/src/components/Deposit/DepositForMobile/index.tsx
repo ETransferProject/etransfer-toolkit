@@ -6,7 +6,7 @@ import DepositSelectGroupForMobile from '../DepositSelectGroupForMobile';
 import { TDepositForMobileProps } from '../types';
 import CommonSvg from '../../CommonSvg';
 import { ComponentStyle } from '../../../types';
-import { ProcessingTip } from '../../CommonTips/ProcessingTip';
+import ProcessingTip from '../../CommonTips/ProcessingTip';
 import { useScreenSize } from '../../../hooks';
 
 export default function DepositForMobile({
@@ -42,6 +42,8 @@ export default function DepositForMobile({
   isShowProcessingTip = true,
   depositProcessingCount,
   withdrawProcessingCount,
+  isShowNotLoginTip,
+  onConnect,
   onRetry,
   onCheckTxnClick,
   onClickProcessingTip,
@@ -91,6 +93,8 @@ export default function DepositForMobile({
             tokenLogoUrl={tokenLogoUrl}
             showRetry={showRetry}
             isCheckTxnLoading={isCheckTxnLoading}
+            isShowNotLoginTip={isShowNotLoginTip}
+            onLogin={onConnect}
             onRetry={onRetry}
             onCheckTxnClick={onCheckTxnClick}
           />

@@ -1,18 +1,7 @@
 import { Button, ButtonProps } from 'antd';
 import clsx from 'clsx';
 import './index.less';
-
-export enum CommonButtonSize {
-  ExtraSmall = 'extraSmall',
-  Small = 'small',
-  Middle = 'middle',
-  Large = 'large',
-}
-
-export enum CommonButtonType {
-  Primary = 'primary',
-  Secondary = 'secondary',
-}
+import { CommonButtonSize, CommonButtonType } from '../../types/components';
 
 export type CommonButtonProps = Omit<ButtonProps, 'size' | 'type'> & {
   size?: CommonButtonSize;

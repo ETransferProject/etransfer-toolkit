@@ -23,6 +23,7 @@ export default function DepositSelectGroupForWeb({
   receiveTokenList,
   receiveTokenSelected,
   receiveTokenSelectCallback,
+  onConnect,
 }: DepositSelectGroupProps) {
   const isHaveJWT = useIsHaveJWT();
   return (
@@ -75,11 +76,15 @@ export default function DepositSelectGroupForWeb({
           id="etransferWebDepositChainWrapper">
           <div className={clsx('etransfer-ui-flex-row-center-between', 'label')}>
             <span>To</span>
-            {isHaveJWT && (
+            {isHaveJWT ? (
               <div className="etransfer-ui-flex-row-center">
                 <div className={'circle'} />
                 <span className={'connected'}>Connected</span>
               </div>
+            ) : (
+              <span className={'connect'} onClick={onConnect}>
+                Connect
+              </span>
             )}
           </div>
 

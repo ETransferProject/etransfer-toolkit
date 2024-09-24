@@ -3,7 +3,8 @@ import './index.less';
 import { ComponentStyle } from '../../types';
 import CommonDrawer from '../CommonDrawer';
 import CommonModal from '../CommonModal';
-import CommonButton, { CommonButtonType } from '../CommonButton';
+import CommonButton from '../CommonButton';
+import { CommonButtonType } from '../../types/components';
 
 export interface CommonModalAutoScreenProps {
   title?: string;

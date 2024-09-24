@@ -10,21 +10,23 @@ import {
   OtherExploreType,
   ExploreUrlNotAelf,
   DEFAULT_NULL_VALUE,
+  COBO_CUSTODY,
 } from '../../../constants';
 import { openWithBlank, getAelfExploreLink, getOtherExploreLink } from '../../../utils';
 import CommonTooltip from '../../CommonTooltip';
-import Copy, { CopySize } from '../../Copy';
+import Copy from '../../Copy';
 import { NetworkLogoForMobile } from '../../NetworkLogo';
 import { ComponentStyle } from '../../../types';
 import { TAelfAccounts } from '../../../provider/types';
+import { CopySize } from '../../../types/components';
 
 export type TAddressBoxProps = {
   type: 'To' | 'From';
   fromAddress: string;
   toAddress: string;
   network: string;
-  fromChainId: ChainId;
-  toChainId: ChainId;
+  fromChainId?: ChainId;
+  toChainId?: ChainId;
   accounts: TAelfAccounts;
   componentStyle?: ComponentStyle;
 };
@@ -49,7 +51,7 @@ export default function AddressBox({
       // format address: add suffix
       return formatDIDAddress(address, chainId);
     }
-    if (!address && network === BlockchainNetworkType.AELF) {
+    if (!address && network === BlockchainNetworkType.AELF && chainId) {
       if (accounts && accounts[chainId]) {
         return accounts[chainId] || accounts[SupportedChainId.AELF] || DEFAULT_NULL_VALUE;
       }
@@ -58,18 +60,20 @@ export default function AddressBox({
     return address || DEFAULT_NULL_VALUE;
   }, [type, toAddress, fromAddress, network, chainId, accounts]);
 
-  const handleAddressClick = useCallback(() => {
-    // link to Deposit: toTransfer.chainId and Withdraw: fromTransfer.chainId
-    if (network === BlockchainNetworkType.AELF) {
+  const handleAddressClick = useCallback(
+    (event: any) => {
+      event.stopPropagation();
+      // link to Deposit: toTransfer.chainId and Withdraw: fromTransfer.chainId
+      if (network === BlockchainNetworkType.AELF && chainId) {
+        openWithBlank(getAelfExploreLink(calcAddress(), AelfExploreType.address, chainId));
+        return;
+      }
       openWithBlank(
-        getAelfExploreLink(calcAddress(), AelfExploreType.address, type === 'To' ? toChainId : fromChainId),
+        getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlNotAelf),
       );
-      return;
-    }
-    openWithBlank(
-      getOtherExploreLink(calcAddress(), OtherExploreType.address, network as keyof typeof ExploreUrlNotAelf),
-    );
-  }, [network, calcAddress, type, toChainId, fromChainId]);
+    },
+    [network, chainId, calcAddress],
+  );
 
   return (
     <div
@@ -79,13 +83,22 @@ export default function AddressBox({
           ? 'etransfer-ui-history-mobile-address-box'
           : 'etransfer-ui-history-web-address-box',
       )}>
-      <NetworkLogoForMobile network={network === BlockchainNetworkType.AELF ? chainId : network} size="small" />
-      <CommonTooltip title={calcAddress()} trigger={'hover'}>
-        <span className={clsx('etransfer-ui-history-address-box-word')} onClick={handleAddressClick}>
-          {getOmittedStr(calcAddress(), 8, 9)}
-        </span>
-      </CommonTooltip>
-      <Copy toCopy={calcAddress()} size={CopySize.Small} />
+      <NetworkLogoForMobile
+        network={network === BlockchainNetworkType.AELF && chainId ? chainId : network}
+        size="small"
+      />
+      {calcAddress() === COBO_CUSTODY ? (
+        <span className={clsx('etransfer-ui-history-address-word-static')}>{calcAddress()}</span>
+      ) : (
+        <>
+          <CommonTooltip title={calcAddress()} trigger={'hover'}>
+            <span className={clsx('etransfer-ui-history-address-box-word')} onClick={handleAddressClick}>
+              {getOmittedStr(calcAddress(), 8, 9)}
+            </span>
+          </CommonTooltip>
+          <Copy toCopy={calcAddress()} size={CopySize.Small} />
+        </>
+      )}
     </div>
   );
 }

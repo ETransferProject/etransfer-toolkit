@@ -6,6 +6,7 @@ import ChainSelect from '../ChainSelect';
 import CommonSpace from '../../CommonSpace';
 import { IChainMenuItem } from '../../../types/chain';
 import { ComponentStyle } from '../../../types/common';
+import { BlockchainNetworkType } from '../../../constants';
 
 interface DepositSelectChainProps {
   menuItems: IChainMenuItem[];
@@ -37,7 +38,12 @@ export default function DepositSelectChain({
       className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-deposit-select-chain', className)}>
       {isMobileStyle && <span className={'select-chain-label'}>{mobileLabel}</span>}
 
-      <CommonSvg type={isMobileStyle ? 'aelf' : 'aelfMedium'} />
+      {selectedItem?.key === BlockchainNetworkType.AELF ? (
+        <CommonSvg type={isMobileStyle ? 'aelf' : 'aelfMedium'} />
+      ) : (
+        <CommonSvg type={isMobileStyle ? 'tDVV' : 'tDVVMedium'} />
+      )}
+
       <CommonSpace direction={'horizontal'} size={isMobileStyle ? 6 : 8} />
 
       {isDisabled ? (

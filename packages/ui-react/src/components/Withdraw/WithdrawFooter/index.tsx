@@ -10,6 +10,7 @@ import {
   DEFAULT_NULL_VALUE,
   INITIAL_WITHDRAW_STATE,
   INITIAL_WITHDRAW_SUCCESS_CHECK,
+  LOGIN,
 } from '../../../constants';
 import CommonButton from '../../CommonButton';
 import CommonLink from '../../CommonLink';
@@ -33,6 +34,7 @@ import { useETransferWithdraw } from '../../../context/ETransferWithdrawProvider
 import { WITHDRAW_ERROR_MESSAGE, WithdrawErrorNameType } from '@etransfer/core';
 import { removeDIDAddressSuffix } from '@etransfer/utils';
 import { WalletTypeEnum } from '../../../provider/types';
+import { useIsHaveJWT } from '../../../hooks';
 
 export interface WithdrawFooterProps {
   isTransactionFeeLoading: boolean;
@@ -47,6 +49,7 @@ export interface WithdrawFooterProps {
   componentStyle?: ComponentStyle;
   clickFailedOk: () => void;
   clickSuccessOk: () => void;
+  onLogin?: () => void;
 }
 
 export default function WithdrawFooter({
@@ -62,7 +65,9 @@ export default function WithdrawFooter({
   componentStyle = ComponentStyle.Web,
   clickFailedOk,
   clickSuccessOk,
+  onLogin,
 }: WithdrawFooterProps) {
+  const isHaveJWT = useIsHaveJWT();
   const [{ tokenList, tokenSymbol, chainItem, networkItem }] = useETransferWithdraw();
 
   // DoubleCheckModal
@@ -92,7 +97,7 @@ export default function WithdrawFooter({
 
   const createTransactionOrder = useCallback(async () => {
     try {
-      setLoading(false);
+      setLoading(true, { text: 'Please approve the transaction in the wallet...' });
 
       const aelfReact = getAelfReact(getNetworkType(), chainItem.key);
       const accountAddress = getAccountAddress(chainItem.key);
@@ -160,6 +165,7 @@ export default function WithdrawFooter({
         setFailModalReason(WITHDRAW_ERROR_MESSAGE);
         setIsFailModalOpen(true);
       }
+      setLoading(false);
     } catch (error: any) {
       setLoading(false);
       if (error?.code == 4001) {
@@ -227,13 +233,19 @@ export default function WithdrawFooter({
         <Form.Item
           shouldUpdate
           className={clsx('etransfer-ui-flex-none', 'etransfer-ui-withdraw-form-submit-button-wrapper')}>
-          <CommonButton
-            className={'etransfer-ui-withdraw-form-submit-button'}
-            // htmlType="submit"
-            onClick={onSubmit}
-            disabled={isTransactionFeeLoading || !receiveAmount || isSubmitDisabled}>
-            {BusinessType.Withdraw}
-          </CommonButton>
+          {isHaveJWT ? (
+            <CommonButton
+              className={'etransfer-ui-withdraw-form-submit-button'}
+              // htmlType="submit"
+              onClick={onSubmit}
+              disabled={isTransactionFeeLoading || !receiveAmount || isSubmitDisabled}>
+              {BusinessType.Withdraw}
+            </CommonButton>
+          ) : (
+            <CommonButton className={'etransfer-ui-withdraw-form-submit-button'} onClick={onLogin}>
+              {LOGIN}
+            </CommonButton>
+          )}
         </Form.Item>
       </div>
       {isShowMobilePoweredBy && componentStyle === ComponentStyle.Mobile && (

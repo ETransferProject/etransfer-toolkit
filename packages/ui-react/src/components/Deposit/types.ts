@@ -18,6 +18,7 @@ export interface DepositSelectGroupProps {
   receiveTokenList: TTokenOptionItem[];
   receiveTokenSelected?: TTokenOptionItem;
   receiveTokenSelectCallback: (item: TTokenOptionItem) => void;
+  onConnect?: () => void;
 }
 
 export interface DepositProps {
@@ -31,6 +32,7 @@ export interface DepositProps {
   withdrawProcessingCount?: number;
   onClickProcessingTip?: () => void;
   onActionChange?: (data: TDepositActionData) => void;
+  onConnect?: () => void;
 }
 
 export type TDepositActionData = {
@@ -56,8 +58,10 @@ export interface DepositDetailProps {
   tokenLogoUrl?: string;
   showRetry?: boolean;
   isCheckTxnLoading?: boolean;
+  isShowNotLoginTip?: boolean;
   onRetry?: () => void;
   onCheckTxnClick?: () => void;
+  onLogin?: () => void;
 }
 
 export interface DepositDetailForMobileProps extends DepositDetailProps {

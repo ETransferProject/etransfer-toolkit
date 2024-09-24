@@ -15,6 +15,7 @@ export default function FromAndToBox({
   txHash,
   accounts,
   componentStyle,
+  isCoboHash,
 }: Omit<TAddressBoxProps & TTxHashBoxProps, 'chainId'>) {
   return (
     <div>
@@ -38,6 +39,7 @@ export default function FromAndToBox({
         chainId={type === 'From' ? fromChainId : toChainId}
         network={network}
         componentStyle={componentStyle}
+        isCoboHash={isCoboHash}
       />
     </div>
   );

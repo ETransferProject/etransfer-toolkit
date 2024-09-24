@@ -47,7 +47,7 @@ export default function MobileHeaderSelectMenu({
         onClose={() => setIsDrawerOpen(false)}>
         <div className={clsx('etransfer-ui-flex-column', 'etransfer-ui-mobile-header-select-menu-drawer-body')}>
           <div>
-            {MENU_ITEMS.map((item) => {
+            {MENU_ITEMS?.map((item) => {
               return (
                 <div
                   key={item.key}
@@ -102,7 +102,7 @@ export default function MobileHeaderSelectMenu({
                   onChange={(res) => {
                     setActivePanel(res);
                   }}>
-                  {FOOTER_CONFIG.menus.map((menu) => {
+                  {FOOTER_CONFIG.menus?.map((menu) => {
                     return (
                       <Collapse.Panel
                         key={'footerMenus' + menu.group}
@@ -133,7 +133,7 @@ export default function MobileHeaderSelectMenu({
                             />
                           </div>
                         }>
-                        {menu.items.map((secondMenu) => {
+                        {menu.items?.map((secondMenu) => {
                           return (
                             <LinkForBlank
                               key={'footerSecondMenu' + secondMenu.name}

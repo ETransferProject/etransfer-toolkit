@@ -4,7 +4,7 @@ import DepositDetailForWeb from '../DepositDetailForWeb';
 import DepositSelectGroupForWeb from '../DepositSelectGroupForWeb';
 import { TDepositForWebProps } from '../types';
 import './index.less';
-import { ProcessingTip } from '../../CommonTips/ProcessingTip';
+import ProcessingTip from '../../CommonTips/ProcessingTip';
 
 export default function DepositForWeb({
   // common
@@ -38,9 +38,11 @@ export default function DepositForWeb({
   isShowProcessingTip = true,
   depositProcessingCount,
   withdrawProcessingCount,
+  isShowNotLoginTip = false,
   onRetry,
   onCheckTxnClick,
   onClickProcessingTip,
+  onConnect,
 }: TDepositForWebProps) {
   return (
     <div className={clsx('etransfer-ui-deposit-for-web', className)}>
@@ -66,6 +68,7 @@ export default function DepositForWeb({
         receiveTokenList={receiveTokenList}
         receiveTokenSelected={receiveTokenSelected}
         receiveTokenSelectCallback={receiveTokenSelectCallback}
+        onConnect={onConnect}
       />
       <DepositDetailForWeb
         componentStyle={componentStyle}
@@ -81,6 +84,8 @@ export default function DepositForWeb({
         tokenLogoUrl={tokenLogoUrl}
         showRetry={showRetry}
         isCheckTxnLoading={isCheckTxnLoading}
+        isShowNotLoginTip={isShowNotLoginTip}
+        onLogin={onConnect}
         onRetry={onRetry}
         onCheckTxnClick={onCheckTxnClick}
       />

@@ -9,7 +9,7 @@ export interface ProcessingTipProps {
   className?: string;
   onClick?: () => void;
 }
-export function ProcessingTip({
+export default function ProcessingTip({
   depositProcessingCount,
   withdrawProcessingCount,
   marginBottom = 16,

@@ -12,7 +12,7 @@ import FeeInfo from '../FeeInfo';
 import StatusBox from '../StatusBox';
 import TxHashBox from '../TxHashBox';
 import { ComponentStyle } from '../../../types';
-import { BusinessTypeLabel, LOADING_TEXT, NO_DATA_TEXT } from '../../../constants';
+import { BusinessTypeLabel, COBO_CUSTODY, LOADING_TEXT, NO_DATA_TEXT } from '../../../constants';
 
 const componentStyle = ComponentStyle.Mobile;
 
@@ -32,7 +32,7 @@ export default function HistoryMobileInfiniteList({
 
     const recordsTableList: THistoryItem[] = [];
 
-    recordsList.map((item) => {
+    recordsList?.map((item) => {
       const { id, orderType, status, arrivalTime, fromTransfer, toTransfer } = item;
       recordsTableList.push({
         key: id,
@@ -77,7 +77,7 @@ export default function HistoryMobileInfiniteList({
             <b>{NO_DATA_TEXT}</b>
           </p>
         }>
-        {handleRecordListData(recordsList).map((recordItem: THistoryItem) => {
+        {handleRecordListData(recordsList)?.map((recordItem: THistoryItem) => {
           return (
             <div
               className={clsx('etransfer-ui-history-mobile-infinite-item-wrapper')}
@@ -86,11 +86,7 @@ export default function HistoryMobileInfiniteList({
               <div className={clsx('etransfer-ui-history-mobile-infinite-item-header')}>
                 <StatusBox
                   status={recordItem.status}
-                  address={recordItem.fromAddress}
                   network={recordItem.fromNetwork}
-                  fromChainId={recordItem.fromChainId}
-                  toChainId={recordItem.toChainId}
-                  orderType={recordItem.orderType}
                   componentStyle={componentStyle}
                 />
                 <span className={clsx('etransfer-ui-history-mobile-infinite-item-order-type')}>
@@ -152,6 +148,7 @@ export default function HistoryMobileInfiniteList({
                   txHash={recordItem.fromTxId}
                   network={recordItem.fromNetwork}
                   componentStyle={componentStyle}
+                  isCoboHash={recordItem.fromAddress === COBO_CUSTODY || recordItem.fromToAddress === COBO_CUSTODY}
                 />
               </div>
               <div className="etransfer-ui-history-mobile-infinite-item-line">
@@ -182,12 +179,13 @@ export default function HistoryMobileInfiniteList({
                   txHash={recordItem.toTxId}
                   network={recordItem.toNetwork}
                   componentStyle={componentStyle}
+                  isCoboHash={recordItem.toAddress === COBO_CUSTODY || recordItem.toFromAddress === COBO_CUSTODY}
                 />
               </div>
               <div className="etransfer-ui-history-mobile-infinite-item-fee">
                 <span className="etransfer-ui-history-mobile-infinite-item-label">Transaction Fee</span>
                 <FeeInfo
-                  feeInfo={recordItem.feeInfo}
+                  feeInfo={recordItem.feeInfo || []}
                   status={recordItem.status}
                   orderType={recordItem.orderType}
                   componentStyle={componentStyle}

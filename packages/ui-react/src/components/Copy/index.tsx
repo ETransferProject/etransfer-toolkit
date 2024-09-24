@@ -5,12 +5,7 @@ import './index.less';
 import CommonSvg from '../CommonSvg';
 import CommonTooltip from '../CommonTooltip';
 import { ComponentStyle } from '../../types/common';
-
-export enum CopySize {
-  Small = 'small',
-  Normal = 'normal',
-  Big = 'big',
-}
+import { CopySize } from '../../types/components';
 
 export default function Copy({
   toCopy,

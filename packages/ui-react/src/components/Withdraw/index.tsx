@@ -52,7 +52,7 @@ import { ETransferAccountConfig } from '../../provider/types';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 import clsx from 'clsx';
 import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
-import { ProcessingTip } from '../CommonTips/ProcessingTip';
+import ProcessingTip from '../CommonTips/ProcessingTip';
 import { useWithdrawNoticeSocket } from '../../hooks/notice';
 
 const FORM_VALIDATE_DATA = {
@@ -78,6 +78,7 @@ export default function Withdraw({
   isShowProcessingTip = true,
   onClickProcessingTip,
   onActionChange,
+  onLogin,
 }: WithdrawProps) {
   const [form] = Form.useForm<TWithdrawFormValues>();
   const [formValidateData, setFormValidateData] = useState<{
@@ -389,6 +390,8 @@ export default function Withdraw({
         setIsTransactionFeeLoading(false);
 
         handleAmountValidate(res.withdrawInfo?.minAmount, res.withdrawInfo?.transactionUnit, newMaxBalance);
+
+        return res;
       } catch (error: any) {
         // when network error, transactionUnit should as the same with symbol
         setWithdrawInfo({
@@ -556,13 +559,28 @@ export default function Withdraw({
   );
 
   const handleClickMax = useCallback(async () => {
-    setAmount(balance);
-    form.setFieldValue(WithdrawFormKeys.AMOUNT, balance);
+    if (balance && tokenSymbol === 'ELF') {
+      try {
+        setLoading(true);
+        const res = await getWithdrawData();
+        let _maxBalance = balance;
+        if (res?.withdrawInfo?.aelfTransactionFee) {
+          _maxBalance = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee).toFixed();
+        }
+        setAmount(_maxBalance);
+        form.setFieldValue(WithdrawFormKeys.AMOUNT, _maxBalance);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setAmount(balance);
+      form.setFieldValue(WithdrawFormKeys.AMOUNT, balance);
 
-    if (handleAmountValidate()) {
-      await getWithdrawData();
+      if (handleAmountValidate()) {
+        await getWithdrawData();
+      }
     }
-  }, [balance, form, handleAmountValidate, getWithdrawData]);
+  }, [balance, tokenSymbol, getWithdrawData, form, handleAmountValidate]);
 
   const handleAddressBlur = useCallback(async () => {
     const addressInput = getAddressInput();
@@ -828,6 +846,7 @@ export default function Withdraw({
           onAmountBlur={handleAmountBlur}
           onClickFailedOk={handleClickFailedOk}
           onClickSuccessOk={handleClickSuccessOk}
+          onLogin={onLogin}
         />
       </div>
     </div>

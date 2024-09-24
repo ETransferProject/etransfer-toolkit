@@ -11,9 +11,10 @@ import { viewTxDetailInExplore } from '../../../utils';
 
 export type TTxHashBoxProps = {
   txHashLabel?: string;
-  chainId: ChainId;
+  chainId?: ChainId;
   network: string;
   txHash: string;
+  isCoboHash: boolean;
   orderStatus: OrderStatusEnum;
   orderType: BusinessType;
   type: 'From' | 'To';
@@ -26,6 +27,7 @@ export default function TxHashBox({
   chainId,
   network,
   txHash,
+  isCoboHash,
   orderStatus,
   orderType,
   type,
@@ -43,12 +45,12 @@ export default function TxHashBox({
         )}
         onClick={(event: any) => {
           event.stopPropagation();
-          viewTxDetailInExplore(network, txHash, chainId);
+          viewTxDetailInExplore(network, txHash, isCoboHash, chainId);
         }}>
         {getOmittedStr(txHash, 6, 6)}
       </span>
     );
-  }, [chainId, componentStyle, network, txHash]);
+  }, [chainId, componentStyle, isCoboHash, network, txHash]);
 
   const txHashPending = useMemo(() => {
     return (

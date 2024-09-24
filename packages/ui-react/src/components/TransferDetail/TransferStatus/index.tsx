@@ -3,7 +3,7 @@ import './index.less';
 import { TransferStatusType } from '../../../constants/transfer';
 import { DEFAULT_NULL_VALUE } from '../../../constants';
 
-export function TransferStatus({ status }: { status: OrderStatusEnum | TransferStatusType }) {
+export default function TransferStatus({ status }: { status: OrderStatusEnum | TransferStatusType }) {
   if (status === OrderStatusEnum.Processing || status === TransferStatusType.Pending) {
     return <div className={'etransfer-ui-transfer-status-pending'}>{TransferStatusType.Pending}</div>;
   }

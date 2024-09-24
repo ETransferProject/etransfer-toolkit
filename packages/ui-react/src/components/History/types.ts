@@ -19,15 +19,15 @@ export type THistoryItem = {
   fromNetwork: string;
   fromAddress: string;
   fromToAddress: string;
-  fromChainId: ChainId;
+  fromChainId?: ChainId;
   fromTxId: string;
   toSymbol: string;
   toNetwork: string;
   toFromAddress: string;
   toAddress: string;
-  toChainId: ChainId;
+  toChainId?: ChainId;
   toTxId: string;
-  feeInfo: THistoryFeeInfo[];
+  feeInfo?: THistoryFeeInfo[];
 };
 
 export type THistoryFeeInfo = {

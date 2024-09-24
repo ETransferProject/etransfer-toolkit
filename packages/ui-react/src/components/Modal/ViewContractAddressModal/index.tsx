@@ -1,8 +1,9 @@
 import { GOT_IT } from '../../../constants';
 import { ComponentStyle } from '../../../types';
+import { CopySize } from '../../../types/components';
 import { CommonModalProps } from '../../CommonModal';
 import CommonModalTip from '../../CommonTips/CommonModalTip';
-import Copy, { CopySize } from '../../Copy';
+import Copy from '../../Copy';
 import OpenLink from '../../OpenLink';
 import './index.less';
 import clsx from 'clsx';

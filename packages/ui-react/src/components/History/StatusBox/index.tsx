@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import './index.less';
-import { BusinessType, OrderStatusEnum } from '@etransfer/types';
-import { ChainId } from '@portkey/types';
+import { OrderStatusEnum } from '@etransfer/types';
 import { Tooltip } from 'antd';
 import CommonModal from '../../CommonModal';
 import { ComponentStyle } from '../../../types';
@@ -10,11 +9,7 @@ import CommonSvg from '../../CommonSvg';
 
 type TStatusBoxProps = {
   status: string;
-  address: string;
   network: string;
-  fromChainId: ChainId;
-  toChainId: ChainId;
-  orderType: BusinessType;
   componentStyle?: ComponentStyle;
 };
 

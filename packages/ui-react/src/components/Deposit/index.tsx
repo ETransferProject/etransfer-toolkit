@@ -18,6 +18,7 @@ import clsx from 'clsx';
 import './index.less';
 import { useCheckTxn } from '../../hooks/deposit';
 import { useDepositNoticeSocket } from '../../hooks/notice';
+import { useIsHaveJWT } from '../../hooks';
 
 export default function Deposit({
   containerClassName,
@@ -30,6 +31,7 @@ export default function Deposit({
   withdrawProcessingCount = 0,
   onClickProcessingTip,
   onActionChange,
+  onConnect,
 }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
@@ -58,6 +60,11 @@ export default function Deposit({
   const receiveTokenSelected = useMemo(() => {
     return receiveTokenList?.find((item) => item.symbol === receiveTokenSymbol) || receiveTokenList?.[0];
   }, [receiveTokenList, receiveTokenSymbol]);
+
+  const isHaveJWT = useIsHaveJWT();
+  const isShowNotLoginTip = useMemo(() => {
+    return !isHaveJWT && !!depositTokenSymbol && !!receiveTokenSymbol && !!networkItem?.network && !!chainItem.key;
+  }, [chainItem.key, depositTokenSymbol, isHaveJWT, networkItem?.network, receiveTokenSymbol]);
 
   const getTokenList = useCallback(
     async (chainId: ChainId, fromSymbol: string, toSymbol: string) => {
@@ -373,6 +380,8 @@ export default function Deposit({
           isShowProcessingTip={isShowProcessingTip}
           depositProcessingCount={depositProcessingCount}
           withdrawProcessingCount={withdrawProcessingCount}
+          isShowNotLoginTip={isShowNotLoginTip}
+          onConnect={onConnect}
           onRetry={handleRetry}
           onCheckTxnClick={handleCheckTxnClick}
           onClickProcessingTip={onClickProcessingTip}
@@ -407,9 +416,11 @@ export default function Deposit({
           isShowProcessingTip={isShowProcessingTip}
           depositProcessingCount={depositProcessingCount}
           withdrawProcessingCount={withdrawProcessingCount}
+          isShowNotLoginTip={isShowNotLoginTip}
           onRetry={handleRetry}
           onCheckTxnClick={handleCheckTxnClick}
           onClickProcessingTip={onClickProcessingTip}
+          onConnect={onConnect}
         />
       )}
     </div>

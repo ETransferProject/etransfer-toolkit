@@ -32,6 +32,7 @@ export default function ETransferContent({
   isShowErrorTip = true,
   onClickHeaderLogo,
   onLifeCycleChange,
+  onLogin,
 }: {
   className?: string;
   componentStyle?: ComponentStyle;
@@ -43,6 +44,7 @@ export default function ETransferContent({
   isShowErrorTip?: boolean;
   onClickHeaderLogo?: () => void;
   onLifeCycleChange?: (lifeCycle: PageKey, data?: any) => void;
+  onLogin?: () => void;
 }) {
   const [activeMenuKey, setActiveMenuKey] = useState(SideMenuKey.Deposit);
   const [activePageKey, setActivePageKey] = useState(PageKey.Deposit);
@@ -91,7 +93,6 @@ export default function ETransferContent({
     setActivePageKey(PageKey.TransferDetail);
   }, []);
 
-  // TODO socket UnsubscribeUserOrderRecord
   useEffect(() => {
     const { remove: eTransferConfigUpdatedRemove } = etransferEvents.ETransferConfigUpdated.addListener(() => {
       console.log('update userInfo');
@@ -170,6 +171,7 @@ export default function ETransferContent({
                   onDepositActionChange={onActionChange}
                   onWithdrawActionChange={onActionChange}
                   onHistoryActionChange={onActionChange}
+                  onLogin={onLogin}
                 />
               </ETransferWithdrawProvider>
             </ETransferDepositProvider>

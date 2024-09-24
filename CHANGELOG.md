@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.5-alpha.3...v1.7.0) (2024-09-24)
+
+### Features
+
+- 🎸 add notlogin tip and max logic ([d7e53b1](https://github.com/ETransferProject/etransfer-toolkit/commit/d7e53b13ff32ad1c2fe9dc2bb7ee0225a01b342e))
+- 🎸 signature and cobo custody ([8a5fe30](https://github.com/ETransferProject/etransfer-toolkit/commit/8a5fe30bbad521af86c8ad2f3bfb6a836b37bc6f))
+- 🎸 update demo ([867dce5](https://github.com/ETransferProject/etransfer-toolkit/commit/867dce55be843f4fe858705be6a86da969b3a8f8))
+
+### Bug Fixes
+
+- 🐛 max balance and deposit address title ([f3ea9cb](https://github.com/ETransferProject/etransfer-toolkit/commit/f3ea9cb69278673de7b29336ac9f2f2ad05b9dc3))
+- 🐛 withdraw loading ([0a46be2](https://github.com/ETransferProject/etransfer-toolkit/commit/0a46be2a3a5c85e2b7bd13d08c8f06b3e7e2e886))
+
+## [1.6.5-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.5-alpha.2...v1.6.5-alpha.3) (2024-09-19)
+
+**Note:** Version bump only for package root
+
+## [1.6.5-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.5-alpha.1...v1.6.5-alpha.2) (2024-09-12)
+
+**Note:** Version bump only for package root
+
+## [1.6.5-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.5-alpha.0...v1.6.5-alpha.1) (2024-09-11)
+
+### Features
+
+- 🎸 modify history types ([1387c25](https://github.com/ETransferProject/etransfer-toolkit/commit/1387c25fdfac108c2eab976791438ba7ec146872))
+
+## [1.6.5-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.4...v1.6.5-alpha.0) (2024-09-11)
+
+**Note:** Version bump only for package root
+
+## [1.6.4](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.3...v1.6.4) (2024-09-10)
+
+**Note:** Version bump only for package root
+
+## [1.6.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.3-alpha.0...v1.6.3) (2024-09-10)
+
+**Note:** Version bump only for package root
+
+## [1.6.3-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.2...v1.6.3-alpha.0) (2024-09-10)
+
+**Note:** Version bump only for package root
+
+## [1.6.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.1...v1.6.2) (2024-09-09)
+
+**Note:** Version bump only for package root
+
+## [1.6.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.0...v1.6.1) (2024-09-09)
+
+**Note:** Version bump only for package root
+
 ## [1.6.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.5.1-alpha.2...v1.6.0) (2024-09-06)
 
 ### Features

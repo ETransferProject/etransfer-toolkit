@@ -8,7 +8,7 @@ export type TSimpleTipModalProps = {
   className?: string;
   open?: boolean;
   content: string;
-  getContainer: CommonModalProps['getContainer'];
+  getContainer?: CommonModalProps['getContainer'];
   onOk?: () => void;
 };
 

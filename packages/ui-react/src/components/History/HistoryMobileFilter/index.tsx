@@ -6,7 +6,8 @@ import type { Moment } from 'moment';
 import moment from 'moment';
 import SimpleTipModal from '../../Modal/SimpleTipModal';
 import CommonDrawer from '../../CommonDrawer';
-import CommonButton, { CommonButtonType } from '../../CommonButton';
+import CommonButton from '../../CommonButton';
+import { CommonButtonType } from '../../../types/components';
 import CommonSvg from '../../CommonSvg';
 import { RecordsRequestStatus, RecordsRequestType } from '@etransfer/types';
 import {
