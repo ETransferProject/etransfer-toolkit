@@ -38,7 +38,7 @@ export default function WalletAddress({
         // aelf chain address: add prefix and suffix
         return formatDIDAddress(address, chainId);
       } else {
-        return address;
+        return address || DEFAULT_NULL_VALUE;
       }
     }
 

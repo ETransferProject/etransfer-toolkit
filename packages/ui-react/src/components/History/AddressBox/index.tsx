@@ -87,7 +87,7 @@ export default function AddressBox({
         network={network === BlockchainNetworkType.AELF && chainId ? chainId : network}
         size="small"
       />
-      {calcAddress() === COBO_CUSTODY ? (
+      {calcAddress() === COBO_CUSTODY || calcAddress() === DEFAULT_NULL_VALUE ? (
         <span className={clsx('etransfer-ui-history-address-word-static')}>{calcAddress()}</span>
       ) : (
         <>
