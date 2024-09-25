@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.7.0...v1.7.1-alpha.0) (2024-09-25)
+
+### Bug Fixes
+
+- 🐛 address display ([741367a](https://github.com/ETransferProject/etransfer-toolkit/commit/741367a623b6380e14310f07aca048f5b9267afd))
+
 ## [1.7.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.5-alpha.3...v1.7.0) (2024-09-24)
 
 ### Features
