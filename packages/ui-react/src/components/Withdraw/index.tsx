@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import './index.less';
-import { ComponentStyle, IChainMenuItem } from '../../types';
+import { ComponentStyle, CONTRACT_TYPE, IChainMenuItem } from '../../types';
 import { TWithdrawFormValues, WithdrawFormKeys, WithdrawProps, WithdrawValidateStatus } from './types';
 import WithdrawForm from './WithdrawForm';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -18,6 +18,7 @@ import {
 } from '@etransfer/types';
 import {
   AMOUNT_GREATER_THAN_BALANCE_TIP,
+  APPROVE_ELF_FEE,
   BlockchainNetworkType,
   ETH_DELAY_WITHDRAWAL_TIP,
   INITIAL_WITHDRAW_INFO,
@@ -28,12 +29,16 @@ import { etransferWithdrawAction } from '../../context/ETransferWithdrawProvider
 import {
   etransferCore,
   formatSymbolDisplay,
+  getAccountAddress,
+  getAelfReact,
   getBalanceDivDecimalsAdapt,
+  getNetworkType,
   isHaveTotalAccountInfo,
   parseWithCommas,
   setLoading,
 } from '../../utils';
 import {
+  checkIsEnoughAllowance,
   etransferEvents,
   handleErrorMessage,
   isAuthTokenError,
@@ -47,8 +52,6 @@ import { WITHDRAW_ADDRESS_ERROR_CODE_LIST } from '@etransfer/core';
 import { CommonErrorNameType } from '@etransfer/request';
 import singleMessage from '../SingleMessage';
 import BigNumber from 'bignumber.js';
-import { ETransferConfig } from '../../provider/ETransferConfigProvider';
-import { ETransferAccountConfig } from '../../provider/types';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 import clsx from 'clsx';
 import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
@@ -421,8 +424,8 @@ export default function Withdraw({
     async (isLoading: boolean, item?: TTokenItem) => {
       try {
         console.log('getAccountBalance - symbol', item?.symbol);
-        const accountInfo = ETransferConfig.getConfig('accountInfo') as ETransferAccountConfig;
-        const caAddress = accountInfo.accounts?.[currentChainItemRef.current.key];
+        const caAddress = getAccountAddress(currentChainItemRef.current.key);
+
         if (!caAddress) return '';
         isLoading && setIsBalanceLoading(true);
 
@@ -564,9 +567,30 @@ export default function Withdraw({
         setLoading(true);
         const res = await getWithdrawData();
         let _maxBalance = balance;
-        if (res?.withdrawInfo?.aelfTransactionFee) {
-          _maxBalance = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee).toFixed();
+
+        const aelfReact = getAelfReact(getNetworkType(), currentChainItemRef.current.key);
+        const accountAddress = getAccountAddress(currentChainItemRef.current.key);
+        if (!accountAddress) throw new Error('User address is missing');
+
+        const isEnoughAllowance = await checkIsEnoughAllowance({
+          tokenContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
+          endPoint: aelfReact.endPoint,
+          symbol: tokenSymbol,
+          owner: accountAddress,
+          spender: currentToken.contractAddress,
+          amount: _maxBalance,
+        });
+        if (res?.withdrawInfo?.aelfTransactionFee && isEnoughAllowance) {
+          const _maxBalanceBignumber = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee);
+          _maxBalance = _maxBalanceBignumber.lt(0) ? '0' : _maxBalanceBignumber.toFixed();
+        } else if (res?.withdrawInfo?.aelfTransactionFee && !isEnoughAllowance) {
+          const _maxBalanceBignumber = ZERO.plus(balance)
+            .minus(res.withdrawInfo.aelfTransactionFee)
+            .minus(APPROVE_ELF_FEE);
+
+          _maxBalance = _maxBalanceBignumber.lt(0) ? '0' : _maxBalanceBignumber.toFixed();
         }
+
         setAmount(_maxBalance);
         form.setFieldValue(WithdrawFormKeys.AMOUNT, _maxBalance);
       } finally {
@@ -580,7 +604,7 @@ export default function Withdraw({
         await getWithdrawData();
       }
     }
-  }, [balance, tokenSymbol, getWithdrawData, form, handleAmountValidate]);
+  }, [balance, tokenSymbol, getWithdrawData, currentToken.contractAddress, form, handleAmountValidate]);
 
   const handleAddressBlur = useCallback(async () => {
     const addressInput = getAddressInput();

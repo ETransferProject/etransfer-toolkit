@@ -6,7 +6,6 @@ import { SignInDesignEnum } from '@aelf-web-login/wallet-adapter-base';
 import {
   APP_NAME,
   AelfReact,
-  BRAND_NAME,
   NETWORK_TYPE,
   SupportedChainId,
   TELEGRAM_BOT_ID,
@@ -14,7 +13,6 @@ import {
   WebLoginGraphqlUrl,
   WebLoginServiceUrl,
 } from '@/constants/index';
-import { ETRANSFER_LOGO_BASE64 } from '@/constants/wallet';
 
 const didConfig = {
   graphQLUrl: WebLoginGraphqlUrl,
@@ -25,10 +23,6 @@ const didConfig = {
     timeout: 20000,
   },
   socialLogin: {
-    Portkey: {
-      websiteName: BRAND_NAME,
-      websiteIcon: ETRANSFER_LOGO_BASE64,
-    },
     Telegram: {
       botId: TELEGRAM_BOT_ID,
     },
@@ -42,9 +36,8 @@ const baseConfig = {
   chainId: SupportedChainId.sideChain,
   keyboard: true,
   noCommonBaseModal: false,
-  design: SignInDesignEnum.SocialDesign,
-  titleForSocialDesign: 'Log In to ETransfer',
-  iconSrcForSocialDesign: ETRANSFER_LOGO_BASE64,
+  design: SignInDesignEnum.CryptoDesign,
+  enableAcceleration: true,
 };
 
 const portkeyAAWallet = new PortkeyAAWallet({

@@ -32,7 +32,7 @@ export function useQueryAuthToken() {
   }, [accounts]);
 
   const handleGetSignature = useCallback(async () => {
-    if (!walletInfo) return;
+    if (!walletInfo || !walletInfo.address) return;
     const plainTextOrigin = `Welcome to ETransfer!
 
 Click to sign in and accept the ETransfer Terms of Service (https://etransfer.gitbook.io/docs/more-information/terms-of-service) and Privacy Policy (https://etransfer.gitbook.io/docs/more-information/privacy-policy).
@@ -104,7 +104,7 @@ ${Date.now()}`;
 
   const getUserInfo = useCallback(
     async (isCheckReCaptcha: boolean = true) => {
-      if (!walletInfo) throw new Error('Failed to obtain wallet information.');
+      if (!walletInfo || !walletInfo.address) throw new Error('Failed to obtain wallet information.');
       if (!isLoginRef.current) throw new Error('You are not logged in.');
 
       let reCaptchaToken = undefined;
