@@ -568,26 +568,27 @@ export default function Withdraw({
         const res = await getWithdrawData();
         let _maxBalance = balance;
 
-        const aelfReact = getAelfReact(getNetworkType(), currentChainItemRef.current.key);
-        const accountAddress = getAccountAddress(currentChainItemRef.current.key);
-        if (!accountAddress) throw new Error('User address is missing');
+        const aelfFee = res?.withdrawInfo?.aelfTransactionFee;
+        if (aelfFee && ZERO.plus(aelfFee).gt(0)) {
+          const aelfReact = getAelfReact(getNetworkType(), currentChainItemRef.current.key);
+          const accountAddress = getAccountAddress(currentChainItemRef.current.key);
+          if (!accountAddress) throw new Error('User address is missing');
 
-        const isEnoughAllowance = await checkIsEnoughAllowance({
-          tokenContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
-          endPoint: aelfReact.endPoint,
-          symbol: tokenSymbol,
-          owner: accountAddress,
-          spender: currentToken.contractAddress,
-          amount: _maxBalance,
-        });
-        if (res?.withdrawInfo?.aelfTransactionFee && isEnoughAllowance) {
-          const _maxBalanceBignumber = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee);
-          _maxBalance = _maxBalanceBignumber.lt(0) ? '0' : _maxBalanceBignumber.toFixed();
-        } else if (res?.withdrawInfo?.aelfTransactionFee && !isEnoughAllowance) {
-          const _maxBalanceBignumber = ZERO.plus(balance)
-            .minus(res.withdrawInfo.aelfTransactionFee)
-            .minus(APPROVE_ELF_FEE);
+          const isEnoughAllowance = await checkIsEnoughAllowance({
+            tokenContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
+            endPoint: aelfReact.endPoint,
+            symbol: tokenSymbol,
+            owner: accountAddress,
+            spender: currentToken.contractAddress,
+            amount: _maxBalance,
+          });
 
+          let _maxBalanceBignumber;
+          if (isEnoughAllowance) {
+            _maxBalanceBignumber = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee);
+          } else {
+            _maxBalanceBignumber = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee).minus(APPROVE_ELF_FEE);
+          }
           _maxBalance = _maxBalanceBignumber.lt(0) ? '0' : _maxBalanceBignumber.toFixed();
         }
 
