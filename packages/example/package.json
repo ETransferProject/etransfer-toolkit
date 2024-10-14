@@ -1,6 +1,6 @@
 {
   "name": "@etransfer/example",
-  "version": "1.7.1-alpha.1",
+  "version": "1.8.0",
   "private": true,
   "scripts": {
     "dev-https": "next dev --experimental-https",
@@ -17,10 +17,10 @@
     "@aelf-web-login/wallet-adapter-portkey-aa": "^0.1.15",
     "@aelf-web-login/wallet-adapter-portkey-discover": "^0.1.15",
     "@aelf-web-login/wallet-adapter-react": "^0.1.15",
-    "@etransfer/core": "^1.7.1-alpha.1",
-    "@etransfer/types": "^1.7.1-alpha.1",
-    "@etransfer/ui-react": "^1.7.1-alpha.1",
-    "@etransfer/utils": "^1.7.1-alpha.1",
+    "@etransfer/core": "^1.8.0",
+    "@etransfer/types": "^1.8.0",
+    "@etransfer/ui-react": "^1.8.0",
+    "@etransfer/utils": "^1.8.0",
     "@portkey/contracts": "^2.11.0",
     "@portkey/did-ui-react": "^2.11.0",
     "@portkey/types": "^2.11.0",
