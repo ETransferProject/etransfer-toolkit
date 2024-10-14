@@ -15,7 +15,7 @@ import {
 import { openWithBlank, getAelfExploreLink, getOtherExploreLink } from '../../../utils';
 import CommonTooltip from '../../CommonTooltip';
 import Copy from '../../Copy';
-import { NetworkLogoForMobile } from '../../NetworkLogo';
+import { NetworkLogo } from '../../NetworkLogo';
 import { ComponentStyle } from '../../../types';
 import { TAelfAccounts } from '../../../provider/types';
 import { CopySize } from '../../../types/components';
@@ -83,10 +83,7 @@ export default function AddressBox({
           ? 'etransfer-ui-history-mobile-address-box'
           : 'etransfer-ui-history-web-address-box',
       )}>
-      <NetworkLogoForMobile
-        network={network === BlockchainNetworkType.AELF && chainId ? chainId : network}
-        size="small"
-      />
+      <NetworkLogo network={network === BlockchainNetworkType.AELF && chainId ? chainId : network} size="small" />
       {calcAddress() === COBO_CUSTODY || calcAddress() === DEFAULT_NULL_VALUE ? (
         <span className={clsx('etransfer-ui-history-address-word-static')}>{calcAddress()}</span>
       ) : (

@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import { DeviceSelectChainProps } from '../../types';
 import './index.less';
 import CommonDropdown from '../../../CommonDropdown';
+import { useMemo } from 'react';
+import { CHAIN_ID } from '../../../../constants';
+import CommonSvg from '../../../CommonSvg';
 
 export default function WebSelectChain({
   className,
@@ -15,6 +18,18 @@ export default function WebSelectChain({
   onClick,
   getContainer,
 }: DeviceSelectChainProps) {
+  const menuItemsAddIcon = useMemo(() => {
+    const list: any[] = [];
+    menuItems.forEach((item) => {
+      list.push({
+        ...item,
+        icon: item.key === CHAIN_ID.AELF ? <CommonSvg type="aelfBig" /> : <CommonSvg type="tDVVBig" />,
+      });
+    });
+
+    return list;
+  }, [menuItems]);
+
   return (
     <CommonDropdown
       getContainer={getContainer}
@@ -23,7 +38,7 @@ export default function WebSelectChain({
       overlayClassName={clsx('etransfer-ui-web-select-chain-dropdown', overlayClassName)}
       isBorder={isBorder}
       menu={{
-        items: menuItems,
+        items: menuItemsAddIcon,
         selectedKeys: [selectedItem?.key || ''],
       }}
       handleMenuClick={(item) => {

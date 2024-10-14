@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import './index.less';
 import { BlockchainNetworkType, CHAIN_NAME_ENUM } from '../../../constants';
 import { SupportedChainId } from '@etransfer/types';
-import { NetworkLogoForMobile } from '../../NetworkLogo';
+import { NetworkLogo } from '../../NetworkLogo';
 
 export default function FromOrToChain({
   network,
@@ -18,7 +18,7 @@ export default function FromOrToChain({
   const renderNetworkLogo = useMemo(() => {
     const currentNetwork = network === BlockchainNetworkType.AELF ? chainId : network;
     if (!currentNetwork) return null;
-    return <NetworkLogoForMobile network={currentNetwork} size="small" />;
+    return <NetworkLogo network={currentNetwork} size="small" />;
   }, [chainId, network]);
 
   const renderNetworkName = useMemo(() => {
