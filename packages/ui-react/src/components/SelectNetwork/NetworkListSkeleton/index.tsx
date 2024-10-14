@@ -10,11 +10,16 @@ export function NetworkListSkeletonForWeb() {
         return (
           <div className={'skeleton'} key={'NetworkListSkeletonForWeb' + index}>
             <div className={'left'}>
-              <div className={'row1'}>
-                <Skeleton.Input active />
+              <div className={'left-logo'}>
+                <Skeleton.Avatar active />
               </div>
-              <div className={'row2'}>
-                <Skeleton.Input active />
+              <div className="left-info">
+                <div className={'row1'}>
+                  <Skeleton.Input active />
+                </div>
+                <div className={'row2'}>
+                  <Skeleton.Input active />
+                </div>
               </div>
             </div>
             <div className={'right'}>
@@ -38,9 +43,15 @@ export function NetworkListSkeletonForMobile() {
       {NetworkListSkeletonCountList.map((_item, index) => {
         return (
           <div className={'skeleton'} key={'NetworkListSkeletonForMobile' + index}>
-            <div className={'row1'}>
-              <Skeleton.Input active />
+            <div className="row1">
+              <div className={'row1-logo'}>
+                <Skeleton.Avatar active />
+              </div>
+              <div className={'row1-info'}>
+                <Skeleton.Input active />
+              </div>
             </div>
+
             <div className={'row2'}>
               <Skeleton.Input active />
             </div>

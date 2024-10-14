@@ -20,13 +20,40 @@
           );
         }
       }
+      .etransfer-ant-skeleton-avatar {
+        width: 24px !important;
+        height: 24px !important;
+        background: var(--etransfer-ui-normal-bg);
+        border-radius: 50%;
+        &::after {
+          background: linear-gradient(
+            90deg,
+            hsla(0, 0%, 96%, 0.2) 25%,
+            hsla(0, 0%, 85%, 0.24) 37%,
+            hsla(0, 0%, 96%, 0.2) 63%
+          );
+        }
+      }
     }
 
     .left {
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2px;
+      align-items: center;
+      gap: 8px;
+
+      .left-logo {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+      }
+
+      .left-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+
       .row1 {
         height: 22px;
 
@@ -104,19 +131,45 @@
           );
         }
       }
-    }
-
-    .row1 {
-      height: 22px;
-
-      .etransfer-ant-skeleton {
-        .etransfer-ant-skeleton-input {
-          width: 200px !important;
-          min-width: 200px !important;
-          height: 22px !important;
+      .etransfer-ant-skeleton-avatar {
+        width: 20px !important;
+        height: 20px !important;
+        background: var(--etransfer-ui-normal-bg);
+        border-radius: 50%;
+        &::after {
+          background: linear-gradient(
+            90deg,
+            hsla(0, 0%, 96%, 0.2) 25%,
+            hsla(0, 0%, 85%, 0.24) 37%,
+            hsla(0, 0%, 96%, 0.2) 63%
+          );
         }
       }
     }
+
+    .row1 {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      .row1-logo {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+      .row1-info {
+        height: 22px;
+
+        .etransfer-ant-skeleton {
+          .etransfer-ant-skeleton-input {
+            width: 200px !important;
+            min-width: 200px !important;
+            height: 22px !important;
+          }
+        }
+      }
+    }
+
     .row2 {
       height: 16px;
 
