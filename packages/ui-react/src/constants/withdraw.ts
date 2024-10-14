@@ -72,3 +72,5 @@ export const ARRIVAL_TIME_CONFIG: Record<string, TArrivalTimeConfig> = {
     chainList: [CHAIN_ID.AELF, CHAIN_ID.tDVV, CHAIN_ID.tDVW],
   },
 };
+
+export const APPROVE_ELF_FEE = '0.02';

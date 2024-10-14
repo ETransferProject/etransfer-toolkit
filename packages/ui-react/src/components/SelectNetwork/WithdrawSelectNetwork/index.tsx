@@ -6,6 +6,7 @@ import DynamicArrow from '../../DynamicArrow';
 import NetworkSelectDrawer from '../NetworkSelectDrawer';
 import NetworkSelectDropdown from '../NetworkSelectDropdown';
 import { ComponentStyle } from '../../../types';
+import { NetworkLogo } from '../../NetworkLogo';
 
 type TSelectNetworkProps = {
   networkList: TNetworkItem[];
@@ -58,9 +59,13 @@ export default function WithdrawSelectNetwork({
               <span
                 className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-withdraw-select-network-value-selected')}>
                 {componentStyle === ComponentStyle.Mobile ? (
-                  <span className={'etransfer-ui-withdraw-select-network-primary'}>{selected.name}</span>
+                  <>
+                    <NetworkLogo network={selected.network} size="big" />
+                    <span className={'etransfer-ui-withdraw-select-network-primary'}>{selected.name}</span>
+                  </>
                 ) : (
                   <>
+                    <NetworkLogo network={selected.network} size="big" />
                     <span className={'etransfer-ui-withdraw-select-network-primary'}>{selected.network}</span>
                     <span className={'etransfer-ui-withdraw-select-network-secondary'}>{selected.name}</span>
                   </>

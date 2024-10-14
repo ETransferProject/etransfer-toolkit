@@ -2,9 +2,11 @@ import clsx from 'clsx';
 import './index.less';
 import { formatSymbolDisplay } from '../../../utils/format';
 import { BusinessType, NetworkStatus } from '@etransfer/types';
+import { NetworkLogo } from '../../NetworkLogo';
 
 interface NetworkCardProps {
   type: BusinessType;
+  network: string;
   name: string;
   status: string;
   multiConfirmTime: string;
@@ -14,10 +16,6 @@ interface NetworkCardProps {
   className?: string;
   isDisabled?: boolean;
   onClick: () => void;
-}
-
-interface NetworkCardForWebProps extends NetworkCardProps {
-  network: string;
 }
 
 const feeContent = (transactionFee?: string, transactionFeeUnit?: string) => {
@@ -31,6 +29,7 @@ export function NetworkCardForMobile({
   transactionFee,
   transactionFeeUnit,
   className,
+  network,
   name,
   multiConfirmTime,
   multiConfirm,
@@ -46,9 +45,12 @@ export function NetworkCardForMobile({
         className,
       )}
       onClick={onClick}>
-      <div className={'network-card-name'}>
-        {name}
-        {status === NetworkStatus.Offline && <span className={'network-card-network-suspended'}>Suspended</span>}
+      <div className={clsx('etransfer-ui-flex-row', 'network-card-name-row')}>
+        <NetworkLogo network={network} size={'normal'} />
+        <div className={'network-card-name'}>
+          {name}
+          {status === NetworkStatus.Offline && <span className={'network-card-network-suspended'}>Suspended</span>}
+        </div>
       </div>
 
       <div className={'network-card-arrival-time'}>
@@ -74,29 +76,32 @@ export function NetworkCardForWeb({
   isDisabled = false,
   onClick,
   status,
-}: NetworkCardForWebProps) {
+}: NetworkCardProps) {
   return (
     <div
       className={clsx(
-        'etransfer-ui-flex-column',
+        'etransfer-ui-flex-row-center',
         'etransfer-ui-network-card-for-web',
         'etransfer-ui-network-card-for-web-hover',
         (isDisabled || status === NetworkStatus.Offline) && 'etransfer-ui-network-card-disabled',
         className,
       )}
       onClick={onClick}>
-      <div className={clsx('etransfer-ui-flex-row-center-between', 'network-card-row')}>
-        <span className={'network-card-network'}>
-          {network}
-          {status === NetworkStatus.Offline && <span className={'network-card-network-suspended'}>Suspended</span>}
-        </span>
-        <span className={'network-card-arrival-time'}>≈ {multiConfirmTime}</span>
-      </div>
-      <div className={clsx('etransfer-ui-flex-row-center-between', 'network-card-row')}>
-        <span className={'network-card-name'}>{name}</span>
-        <span className={'network-card-confirm-time'}>
-          {type === BusinessType.Deposit ? multiConfirm : feeContent(transactionFee, transactionFeeUnit)}
-        </span>
+      <NetworkLogo network={network} size="big" />
+      <div className="etransfer-ui-flex-column etransfer-ui-flex-1">
+        <div className={clsx('etransfer-ui-flex-row-center-between', 'network-card-row')}>
+          <span className={'network-card-network'}>
+            {network}
+            {status === NetworkStatus.Offline && <span className={'network-card-network-suspended'}>Suspended</span>}
+          </span>
+          <span className={'network-card-arrival-time'}>≈ {multiConfirmTime}</span>
+        </div>
+        <div className={clsx('etransfer-ui-flex-row-center-between', 'network-card-row')}>
+          <span className={'network-card-name'}>{name}</span>
+          <span className={'network-card-confirm-time'}>
+            {type === BusinessType.Deposit ? multiConfirm : feeContent(transactionFee, transactionFeeUnit)}
+          </span>
+        </div>
       </div>
     </div>
   );

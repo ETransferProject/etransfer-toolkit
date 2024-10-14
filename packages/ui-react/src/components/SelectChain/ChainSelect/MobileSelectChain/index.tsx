@@ -4,6 +4,7 @@ import { DeviceSelectChainProps } from '../../types';
 import './index.less';
 import CommonDrawer from '../../../CommonDrawer';
 import DynamicArrow from '../../../DynamicArrow';
+import { NetworkLogo } from '../../../NetworkLogo';
 
 export default function MobileSelectChain({
   title,
@@ -34,13 +35,14 @@ export default function MobileSelectChain({
           {menuItems?.map((item) => (
             <div
               key={item.key}
-              className={clsx('drawer-item', {
+              className={clsx('etransfer-ui-flex-row-center', 'drawer-item', {
                 ['drawer-item-selected']: item.key === selectedItem?.key,
               })}
               onClick={() => {
                 onClick?.(item);
                 setIsDrawerOpen(false);
               }}>
+              <NetworkLogo network={item.key} size="big" />
               {item.label}
             </div>
           ))}

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import './index.less';
 import { useMemo } from 'react';
 import DynamicArrow from '../../DynamicArrow';
-import { NetworkLogoForMobile, NetworkLogoForWeb } from '../../NetworkLogo';
+import { NetworkLogo } from '../../NetworkLogo';
 import CommonSvg from '../../CommonSvg';
 import { TNetworkItem } from '@etransfer/types';
 
@@ -30,10 +30,10 @@ export function DepositNetworkResultForWeb({ selected, isArrowDown = true, onCli
   const renderNetworkLogo = useMemo(() => {
     return (
       selected?.network && (
-        <NetworkLogoForWeb
+        <NetworkLogo
           className="etransfer-ui-flex-shrink-0 etransfer-ui-flex"
           network={selected?.network}
-          size={'normal'}
+          size={'big'}
         />
       )
     );
@@ -88,7 +88,7 @@ export function DepositNetworkResultForMobile({
   const renderNetworkLogo = useMemo(() => {
     return (
       selected?.network && (
-        <NetworkLogoForMobile
+        <NetworkLogo
           className="etransfer-ui-flex-shrink-0 etransfer-ui-flex"
           network={selected?.network}
           size={'small'}

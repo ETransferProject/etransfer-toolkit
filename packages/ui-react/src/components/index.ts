@@ -39,7 +39,7 @@ export { default as SelectChain } from './SelectChain/ChainSelect';
 export { default as DepositSelectChain } from './SelectChain/DepositSelectChain';
 
 // feature - select network
-export { NetworkLogoForMobile, NetworkLogoForWeb } from './NetworkLogo';
+export { NetworkLogo } from './NetworkLogo';
 export { DepositNetworkResultForMobile, DepositNetworkResultForWeb } from './SelectNetwork/DepositNetworkResult';
 export { DepositSelectNetworkForMobile, DepositSelectNetworkForWeb } from './SelectNetwork/DepositSelectNetwork';
 // export { NetworkCardForMobile, NetworkCardForWeb } from './SelectNetwork/NetworkCard';

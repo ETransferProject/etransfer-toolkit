@@ -33,6 +33,15 @@ export type TCheckTokenAllowanceAndApproveParams = TTokenContractCallSendMethod 
   memo?: string;
 };
 
+export type TCheckIsEnoughAllowanceParams = {
+  endPoint: string;
+  tokenContractAddress: string;
+  symbol: string;
+  owner: string;
+  spender: string;
+  amount: string;
+};
+
 export type TContractGetBalance = {
   call: (params: TContractGetBalanceParams) => Promise<TContractGetBalanceResult>;
 };

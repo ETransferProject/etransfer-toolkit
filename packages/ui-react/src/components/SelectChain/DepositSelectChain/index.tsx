@@ -39,9 +39,9 @@ export default function DepositSelectChain({
       {isMobileStyle && <span className={'select-chain-label'}>{mobileLabel}</span>}
 
       {selectedItem?.key === BlockchainNetworkType.AELF ? (
-        <CommonSvg type={isMobileStyle ? 'aelf' : 'aelfMedium'} />
+        <CommonSvg type={isMobileStyle ? 'aelf' : 'aelfBig'} />
       ) : (
-        <CommonSvg type={isMobileStyle ? 'tDVV' : 'tDVVMedium'} />
+        <CommonSvg type={isMobileStyle ? 'tDVV' : 'aelfBig'} />
       )}
 
       <CommonSpace direction={'horizontal'} size={isMobileStyle ? 6 : 8} />

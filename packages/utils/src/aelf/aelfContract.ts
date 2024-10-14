@@ -3,6 +3,7 @@ import { COMMON_PRIVATE, CONTRACT_GET_DATA_ERROR, CONTRACT_METHOD_NAME, MANAGER_
 import { getAElf, getRawTx, getTxResult } from './aelfBase';
 import {
   TApproveAllowanceParams,
+  TCheckIsEnoughAllowanceParams,
   TCheckTokenAllowanceAndApproveParams,
   TCreateHandleManagerForwardCall,
   TCreateTransferToken,
@@ -123,6 +124,31 @@ export const checkTokenAllowanceAndApprove = async ({
     console.log('second check allowance:', allowanceNew);
 
     return bigA.lte(allowanceNew);
+  }
+  return true;
+};
+
+export const checkIsEnoughAllowance = async ({
+  endPoint,
+  tokenContractAddress,
+  symbol,
+  owner,
+  spender,
+  amount,
+}: TCheckIsEnoughAllowanceParams) => {
+  const tokenContractOrigin = await getTokenContract(endPoint, tokenContractAddress);
+
+  const [allowance, tokenInfo] = await Promise.all([
+    getAllowance(tokenContractOrigin, symbol, owner, spender),
+    getTokenInfo(tokenContractOrigin, symbol),
+  ]);
+  console.log('>>>>>> allowance', allowance);
+  console.log('>>>>>> tokenInfo', tokenInfo);
+  const bigA = timesDecimals(amount, tokenInfo?.decimals || 8);
+  const allowanceBN = new BigNumber(allowance);
+
+  if (allowanceBN.lt(bigA)) {
+    return false;
   }
   return true;
 };

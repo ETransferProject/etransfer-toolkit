@@ -71,6 +71,7 @@ export function NetworkSelectForMobile({
                 key={'network-select' + item.network + idx}
                 className={selectedNetwork == item.network ? 'network-card-selected' : undefined}
                 isDisabled={isDisabled}
+                network={item.network}
                 name={item.name}
                 type={type}
                 transactionFee={item.withdrawFee}

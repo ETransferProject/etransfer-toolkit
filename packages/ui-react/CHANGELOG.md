@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.7.1-alpha.1...v1.8.0) (2024-10-14)
+
+### Features
+
+- 🎸 add network logo ([d8cf130](https://github.com/ETransferProject/etransfer-toolkit/commit/d8cf130e49858bdb1681bd08b50ede8b1a6a96c4))
+- 🎸 update network skeleton ([01c3a2e](https://github.com/ETransferProject/etransfer-toolkit/commit/01c3a2e2751f2d6bbab1a94e902b247b63c4733f))
+- 🎸 update withdraw max logic ([25274d2](https://github.com/ETransferProject/etransfer-toolkit/commit/25274d2a604a5ad017778d60a4633094ad9772c4))
+
+### Bug Fixes
+
+- 🐛 update withdraw max logic ([8e4a65c](https://github.com/ETransferProject/etransfer-toolkit/commit/8e4a65c3007f7e28603bf3316a26afd8e8e55dfe))
+
+## [1.7.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.7.1-alpha.0...v1.7.1-alpha.1) (2024-09-25)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.7.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.7.0...v1.7.1-alpha.0) (2024-09-25)
+
+### Bug Fixes
+
+- 🐛 address display ([741367a](https://github.com/ETransferProject/etransfer-toolkit/commit/741367a623b6380e14310f07aca048f5b9267afd))
+
 ## [1.7.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.6.5-alpha.3...v1.7.0) (2024-09-24)
 
 ### Features
