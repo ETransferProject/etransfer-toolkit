@@ -2,7 +2,7 @@
 
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { ETransferConfig, ETransferLayoutProvider, ETransferStyleProvider } from '@etransfer/ui-react';
+import { ETransferConfig, ETransferLayoutProvider, ETransferStyleProvider, ReCaptchaType } from '@etransfer/ui-react';
 import { ETRANSFER_AUTH_URL, ETRANSFER_URL } from '@/constants';
 const GetAuth = dynamic(() => import('@/pageComponents/login'), { ssr: false });
 
@@ -26,6 +26,10 @@ export default function ETransferLayout({ children }: { children: React.ReactNod
     // reCaptchaConfig: {
     //   theme: 'dark',
     //   size: 'compact',
+    //   customReCaptchaHandler: async () => {
+    //     console.log('customReCaptchaHandler', '');
+    //     return { type: ReCaptchaType.success, message: 'recaptcha token' };
+    //   },
     // },
   });
 
