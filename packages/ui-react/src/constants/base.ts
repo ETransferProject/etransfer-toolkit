@@ -2,7 +2,7 @@ import { SideMenuKey, TMenuItem } from '../types';
 
 export const ETRANSFER_WEBSITE_URL = 'https://etransfer.exchange';
 export const ETRANSFER_WEB_PAGE = 'https://app.etransfer.exchange';
-export const ETRANSFER_WEB_PAGE_TESTNET = 'https://localhost:3001'; //'https://test-app.etransfer.exchange';
+export const ETRANSFER_WEB_PAGE_TESTNET = 'https://test-app.etransfer.exchange';
 export const ETRANSFER_ROOT_ID = 'etransfer-ui-root';
 export const ETRANSFER_PREFIX_CLS = 'etransfer-ant';
 export const ETRANSFER_PREFIX_CLS_MESSAGE = 'etransfer-ant-message';
