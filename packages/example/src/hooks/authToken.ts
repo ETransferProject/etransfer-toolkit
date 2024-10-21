@@ -11,7 +11,7 @@ import {
   ETRANSFER_USER_MANAGER_ADDRESS,
 } from '@/constants/storage';
 import { getCaHashAndOriginChainIdByWallet } from '@/utils/wallet';
-import { ETransferConfig, getETransferReCaptcha, WalletTypeEnum } from '@etransfer/ui-react';
+import { ETransferConfig, WalletTypeEnum, useReCaptchaModal } from '@etransfer/ui-react';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 import { useGetAccount, useIsLogin } from './wallet';
 import { ExtraInfoForDiscover, WalletInfo } from '@/types/wallet';
@@ -24,6 +24,7 @@ export function useQueryAuthToken() {
   const accounts = useGetAccount();
   const accountsRef = useRef(accounts);
   accountsRef.current = accounts;
+  const getReCaptcha = useReCaptchaModal();
 
   const loginSuccessActive = useCallback(() => {
     console.log('%c login success and emit event', 'color: green');
@@ -109,7 +110,10 @@ ${Date.now()}`;
 
       let reCaptchaToken = undefined;
       if (isCheckReCaptcha && walletType === WalletTypeEnum.elf) {
-        reCaptchaToken = await getETransferReCaptcha(walletInfo.address);
+        // 1. need to add your dapp's domain
+        // reCaptchaToken = await getETransferReCaptcha(walletInfo.address);
+        // 2. don't need to add your dapp's domain
+        reCaptchaToken = await getReCaptcha({ open: true, walletAddress: walletInfo.address });
       }
 
       try {
@@ -144,7 +148,7 @@ ${Date.now()}`;
         throw new Error('Failed to obtain user information');
       }
     },
-    [handleGetSignature, walletInfo, walletType],
+    [getReCaptcha, handleGetSignature, walletInfo, walletType],
   );
 
   const getAuthToken = useCallback(async () => {

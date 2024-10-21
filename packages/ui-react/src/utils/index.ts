@@ -10,3 +10,4 @@ export * from './loading';
 export * from './login';
 export * from './moment';
 export * from './notice';
+export * from './recaptcha';

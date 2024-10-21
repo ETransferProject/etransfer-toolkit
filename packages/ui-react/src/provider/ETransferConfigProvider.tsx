@@ -75,6 +75,10 @@ class ETransferConfigProvider implements ETransferConfigProviderProps {
       etransferCore.services.setRequestHeaders('Authorization', _config['authorization'].jwt);
     }
 
+    if ('reCaptchaConfig' in _config) {
+      _config['reCaptchaConfig'] && etransferEvents.SetRecaptchaConfig.emit(_config['reCaptchaConfig']);
+    }
+
     this.config = { ...this.config, ..._config };
 
     etransferEvents.ETransferConfigUpdated.emit();

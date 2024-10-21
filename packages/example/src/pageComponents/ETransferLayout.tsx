@@ -23,6 +23,10 @@ export default function ETransferLayout({ children }: { children: React.ReactNod
     etransferAuthUrl: ETRANSFER_AUTH_URL,
     etransferSocketUrl: ETRANSFER_URL,
     networkType: 'TESTNET',
+    // reCaptchaConfig: {
+    //   theme: 'dark',
+    //   size: 'compact',
+    // },
   });
 
   return (
