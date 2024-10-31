@@ -1,6 +1,6 @@
 export const ChainNamePrefix = {
-  MainChain: 'MainChain',
-  SideChain: 'SideChain',
+  MainChain: 'aef MainChain',
+  SideChain: 'aelf dAppChain',
 };
 
 export enum ContractType {

@@ -16,10 +16,10 @@ export const SupportChain: Record<string, ChainId> = {
 export const ChainList = [
   {
     value: SupportChain.MainChain,
-    label: ChainNamePrefix.MainChain + ' ' + SupportChain.MainChain,
+    label: ChainNamePrefix.MainChain,
   },
   {
     value: SupportChain.SideChain,
-    label: ChainNamePrefix.SideChain + ' ' + SupportChain.SideChain,
+    label: ChainNamePrefix.SideChain,
   },
 ];
