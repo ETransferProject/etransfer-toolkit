@@ -41,7 +41,7 @@ export default function DepositSelectChain({
       {selectedItem?.key === BlockchainNetworkType.AELF ? (
         <CommonSvg type={isMobileStyle ? 'aelf' : 'aelfBig'} />
       ) : (
-        <CommonSvg type={isMobileStyle ? 'tDVV' : 'aelfBig'} />
+        <CommonSvg type={isMobileStyle ? 'tDVV' : 'tDVVBig'} />
       )}
 
       <CommonSpace direction={'horizontal'} size={isMobileStyle ? 6 : 8} />
