@@ -52,9 +52,9 @@
     "ts-jest": "^29.0.5"
   },
   "peerDependencies": {
-    "@portkey/contracts": "^2.6.6",
-    "@portkey/types": "^2.6.6",
-    "@portkey/utils": "^2.6.6",
+    "@portkey/contracts": "^2.15.0",
+    "@portkey/types": "^2.15.0",
+    "@portkey/utils": "^2.15.0",
     "aelf-sdk": "^3.4.8",
     "bignumber.js": "^9.1.0",
     "query-string": "^7.1.1"
