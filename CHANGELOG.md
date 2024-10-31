@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.8.0...v1.9.0) (2024-10-31)
+
+### Features
+
+- 🎸 update aelf chain name and update sdk ([958fbfc](https://github.com/ETransferProject/etransfer-toolkit/commit/958fbfc211e3b6dc334ec14bf9ad1ba0494b7c59))
+
+### Bug Fixes
+
+- 🐛 aelf chain img ([19b082e](https://github.com/ETransferProject/etransfer-toolkit/commit/19b082efc7e67980b1763c11893f96132547558a))
+
 ## [1.8.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.7.1-alpha.1...v1.8.0) (2024-10-14)
 
 ### Features
