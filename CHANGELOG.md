@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.10.0...v1.10.1) (2024-11-01)
+
+### Features
+
+- 🎸 update aelf dAppChain logo ([410727e](https://github.com/ETransferProject/etransfer-toolkit/commit/410727e4ca8618fa7f5e474c76f80368b29a1131))
+
 ## [1.10.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.9.1...v1.10.0) (2024-11-01)
 
 ### Features
