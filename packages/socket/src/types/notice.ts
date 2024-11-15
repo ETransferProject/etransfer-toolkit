@@ -14,8 +14,10 @@ export type TOrderRecordsNoticeResponse = {
 export type TRecordsNoticeDetail = {
   depositCount: number;
   withdrawCount: number;
+  transferCount: number;
   deposit: TDepositRecordsNoticeDetailItem[];
   withdraw: TWithdrawRecordsNoticeDetailItem[];
+  transfer: TTransferRecordsNoticeDetailItem[];
 };
 
 export type TDepositRecordsNoticeDetailItem = {
@@ -27,6 +29,12 @@ export type TDepositRecordsNoticeDetailItem = {
 };
 
 export type TWithdrawRecordsNoticeDetailItem = {
+  id: string;
+  amount: string;
+  symbol: string;
+};
+
+export type TTransferRecordsNoticeDetailItem = {
   id: string;
   amount: string;
   symbol: string;
