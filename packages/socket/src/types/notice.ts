@@ -1,11 +1,17 @@
 import { IListen } from './signalr';
 
 export type TOrderRecordsNoticeRequest = {
-  address: string;
+  address?: string;
+  addressList?: TOrderRecordsNoticeRequestAddressItem[];
   minTimestamp?: number;
 };
+export type TOrderRecordsNoticeRequestAddressItem = {
+  SourceType: string;
+  Address: string;
+};
 export type TOrderRecordsNoticeResponse = {
-  address: string;
+  address?: string;
+  addressList?: TOrderRecordsNoticeRequestAddressItem[];
   processing: TRecordsNoticeDetail;
   succeed: TRecordsNoticeDetail;
   failed: TRecordsNoticeDetail;
@@ -41,10 +47,10 @@ export type TTransferRecordsNoticeDetailItem = {
 };
 
 export interface INoticeSignalr {
-  RequestUserOrderRecord({ address, minTimestamp }: TOrderRecordsNoticeRequest): Promise<any>;
+  RequestUserOrderRecord({ address, addressList, minTimestamp }: TOrderRecordsNoticeRequest): Promise<any>;
   ReceiveUserOrderRecords(
-    { address }: { address: string },
+    { address, addressList }: { address: string; addressList?: TOrderRecordsNoticeRequestAddressItem[] },
     callback: (data: TOrderRecordsNoticeResponse | null) => void,
   ): IListen;
-  UnsubscribeUserOrderRecord(address: string): Promise<any>;
+  UnsubscribeUserOrderRecord(address: string, addressList?: TOrderRecordsNoticeRequestAddressItem[]): Promise<any>;
 }
