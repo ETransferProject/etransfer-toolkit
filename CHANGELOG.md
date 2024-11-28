@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.0-alpha.4](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.3...v1.11.0-alpha.4) (2024-11-28)
+
+### Features
+
+- **add:** add log for socket ([1ed2aaa](https://github.com/ETransferProject/etransfer-toolkit/commit/1ed2aaa877c3a69742d5077d456c116a588c2dec))
+
 ## [1.11.0-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.2...v1.11.0-alpha.3) (2024-11-25)
 
 ### Features
