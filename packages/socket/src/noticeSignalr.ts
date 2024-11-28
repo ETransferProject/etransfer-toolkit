@@ -21,8 +21,9 @@ export class NoticeSignalr extends BaseSignalr implements INoticeSignalr {
     callback: (data: TOrderRecordsNoticeResponse | null) => void,
   ) {
     return this.listen('ReceiveUserOrderRecords', (data: TOrderRecordsNoticeResponse) => {
+      console.log('listen ReceiveUserOrderRecords', data);
       const hasAddressCount = data?.addressList?.filter(item => addressList?.includes(item));
-
+      console.log('listen ReceiveUserOrderRecords hasAddressCount', hasAddressCount);
       if (data?.address === address || hasAddressCount === addressList?.length) {
         callback(data);
       } else {
