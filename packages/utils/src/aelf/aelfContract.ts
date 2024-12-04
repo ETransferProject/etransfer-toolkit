@@ -1,5 +1,5 @@
 import AElf from 'aelf-sdk';
-import { COMMON_PRIVATE, CONTRACT_GET_DATA_ERROR, CONTRACT_METHOD_NAME, MANAGER_FORWARD_CALL } from '../constants';
+import { CONTRACT_GET_DATA_ERROR, CONTRACT_METHOD_NAME, MANAGER_FORWARD_CALL } from '../constants';
 import { getAElf, getRawTx, getTxResult } from './aelfBase';
 import {
   TApproveAllowanceParams,
@@ -22,7 +22,7 @@ export const getContract = async (endPoint: string, contractAddress: string, wal
   const key = endPoint + contractAddress;
 
   if (!CacheViewContracts[key]) {
-    if (!wallet) wallet = AElf.wallet.getWalletByPrivateKey(COMMON_PRIVATE);
+    if (!wallet) wallet = AElf.wallet.createNewWallet();
     const aelf = getAElf(endPoint);
     const contract = await aelf.chain.contractAt(contractAddress, wallet);
     CacheViewContracts[endPoint + contractAddress] = contract;
