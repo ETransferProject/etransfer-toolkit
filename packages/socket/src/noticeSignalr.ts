@@ -1,21 +1,28 @@
 import { BaseSignalr } from './signalr';
-import { INoticeSignalr, TOrderRecordsNoticeRequest, TOrderRecordsNoticeResponse } from './types';
+import {
+  INoticeSignalr,
+  TOrderRecordsNoticeRequest,
+  TOrderRecordsNoticeRequestAddressItem,
+  TOrderRecordsNoticeResponse,
+} from './types';
 
 export class NoticeSignalr extends BaseSignalr implements INoticeSignalr {
-  public RequestUserOrderRecord({ address, minTimestamp }: TOrderRecordsNoticeRequest) {
-    console.log('invoke RequestUserOrderRecord', address, minTimestamp);
+  public RequestUserOrderRecord({ address, addressList, minTimestamp }: TOrderRecordsNoticeRequest) {
+    console.log('invoke RequestUserOrderRecord', address, addressList, minTimestamp);
     return this.invoke('RequestUserOrderRecord', {
       Address: address,
+      AddressList: addressList,
       MinTimestamp: minTimestamp,
     });
   }
 
   public ReceiveUserOrderRecords(
-    { address }: { address: string },
+    { address, addressList }: { address?: string; addressList?: TOrderRecordsNoticeRequestAddressItem[] },
     callback: (data: TOrderRecordsNoticeResponse | null) => void,
   ) {
     return this.listen('ReceiveUserOrderRecords', (data: TOrderRecordsNoticeResponse) => {
-      if (data?.address === address) {
+      console.log('listen ReceiveUserOrderRecords', data);
+      if (data?.address === address || data?.addressList?.length === addressList?.length) {
         callback(data);
       } else {
         callback(null);
@@ -23,10 +30,11 @@ export class NoticeSignalr extends BaseSignalr implements INoticeSignalr {
     });
   }
 
-  public UnsubscribeUserOrderRecord(address: string) {
-    console.log('invoke UnsubscribeUserOrderRecord', address);
+  public UnsubscribeUserOrderRecord(address?: string, addressList?: TOrderRecordsNoticeRequestAddressItem[]) {
+    console.log('invoke UnsubscribeUserOrderRecord', address, addressList);
     return this.invoke('UnsubscribeUserOrderRecord', {
       Address: address,
+      AddressList: addressList,
     });
   }
 }

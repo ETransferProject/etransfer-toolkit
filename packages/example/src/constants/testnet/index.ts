@@ -72,8 +72,7 @@ export const AELF_NODES = {
 // testnet-jenkins
 export const ETRANSFER_URL = 'https://test-app.etransfer.exchange';
 export const ETRANSFER_AUTH_URL = 'https://test-app.etransfer.exchange';
-export const WebLoginGraphqlUrl = 'https://dapp-aa-portkey-test.portkey.finance/aefinder-v2/api/app/graphql/portkey';
-// 'https://dapp-aa-portkey-test.portkey.finance/Portkey_DID/PortKeyIndexerCASchema/graphql';
+export const WebLoginGraphqlUrl = 'https://test-indexer-api.aefinder.io/api/app/graphql/portkey';
 export const WebLoginServiceUrl = 'https://aa-portkey-test.portkey.finance';
 export const WebLoginConnectUrl = 'https://auth-aa-portkey-test.portkey.finance';
 
