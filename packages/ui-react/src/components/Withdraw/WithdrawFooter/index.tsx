@@ -109,9 +109,11 @@ export default function WithdrawFooter({
 
       const tokenContractCallSendMethod = getAccountInfo().tokenContractCallSendMethod;
       const getSignature = getAccountInfo().getSignature;
+      const getTransactionSignature = getAccountInfo().getTransactionSignature;
 
       if (!tokenContractCallSendMethod) throw new Error('Please config tokenContractCallSendMethod');
-      if (!getSignature) throw new Error('Please config getSignature');
+      if (!getTransactionSignature && !getSignature)
+        throw new Error('Please config getTransactionSignature or getSignature');
 
       const res = await etransferCore.sendWithdrawOrder({
         tokenContractCallSendMethod: (params) => tokenContractCallSendMethod?.({ chainId: chainItem.key, ...params }),
@@ -135,16 +137,29 @@ export default function WithdrawFooter({
             throw new Error('Please config walletType');
           }
           let signInfo: string;
-          if (walletType !== WalletTypeEnum.aa) {
-            // nightElf or discover
-            signInfo = AElf.utils.sha256(ser);
-          } else {
-            // portkey sdk
-            signInfo = Buffer.from(ser).toString('hex');
-          }
+          if (typeof getTransactionSignature === 'function') {
+            if (walletType === WalletTypeEnum.elf) {
+              // nightElf
+              signInfo = AElf.utils.sha256(ser);
+            } else {
+              // portkey sdk and discover
+              signInfo = Buffer.from(ser).toString('hex');
+            }
+            // signature
+            return await getTransactionSignature(signInfo);
+          } else if (typeof getSignature === 'function') {
+            if (walletType !== WalletTypeEnum.aa) {
+              // nightElf or discover
+              signInfo = AElf.utils.sha256(ser);
+            } else {
+              // portkey sdk
+              signInfo = Buffer.from(ser).toString('hex');
+            }
 
-          // signature
-          return await getSignature(signInfo);
+            // signature
+            return await getSignature(signInfo);
+          }
+          throw new Error('Please config getTransactionSignature or getSignature');
         },
       });
       console.log('>>>>>> withdraw/order response', res);

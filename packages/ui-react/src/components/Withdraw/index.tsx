@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import './index.less';
-import { ComponentStyle, CONTRACT_TYPE, IChainMenuItem } from '../../types';
+import { ComponentStyle, IChainMenuItem } from '../../types';
 import { TWithdrawFormValues, WithdrawFormKeys, WithdrawProps, WithdrawValidateStatus } from './types';
 import WithdrawForm from './WithdrawForm';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -18,11 +18,11 @@ import {
 } from '@etransfer/types';
 import {
   AMOUNT_GREATER_THAN_BALANCE_TIP,
-  APPROVE_ELF_FEE,
   BlockchainNetworkType,
   ETH_DELAY_WITHDRAWAL_TIP,
   INITIAL_WITHDRAW_INFO,
   INITIAL_WITHDRAW_STATE,
+  NOT_ENOUGH_ELF_FEE,
   WITHDRAWAL_COMMENT_CHECK_TIP,
 } from '../../constants';
 import { etransferWithdrawAction } from '../../context/ETransferWithdrawProvider/actions';
@@ -30,15 +30,12 @@ import {
   etransferCore,
   formatSymbolDisplay,
   getAccountAddress,
-  getAelfReact,
   getBalanceDivDecimalsAdapt,
-  getNetworkType,
   isHaveTotalAccountInfo,
   parseWithCommas,
   setLoading,
 } from '../../utils';
 import {
-  checkIsEnoughAllowance,
   etransferEvents,
   handleErrorMessage,
   isAuthTokenError,
@@ -54,7 +51,7 @@ import singleMessage from '../SingleMessage';
 import BigNumber from 'bignumber.js';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 import clsx from 'clsx';
-import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList } from './utils';
+import { checkWithdrawSupportNetworkList, checkWithdrawSupportTokenList, getAelfMaxBalance } from './utils';
 import ProcessingTip from '../CommonTips/ProcessingTip';
 import { useWithdrawNoticeSocket } from '../../hooks/notice';
 
@@ -95,6 +92,7 @@ export default function Withdraw({
   const currentNetworkRef = useRef<TNetworkItem>();
   const currentChainItemRef = useRef<IChainMenuItem>(chainItem);
   const [withdrawInfo, setWithdrawInfo] = useState<TWithdrawInfo>(INITIAL_WITHDRAW_INFO);
+  const withdrawInfoRef = useRef(INITIAL_WITHDRAW_INFO);
   const [amount, setAmount] = useState('0');
   const [balance, setBalance] = useState('');
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
@@ -299,7 +297,7 @@ export default function Withdraw({
   );
 
   const handleAmountValidate = useCallback(
-    (newMinAmount?: string, newTransactionUnit?: string, newMaxBalance?: string) => {
+    async (newMaxBalance?: string) => {
       if (!isHaveTotalAccountInfo()) return;
 
       const amount = form.getFieldValue(WithdrawFormKeys.AMOUNT);
@@ -313,8 +311,15 @@ export default function Withdraw({
         return;
       }
       const parserNumber = Number(parseWithCommas(amount));
-      const currentMinAmount = Number(parseWithCommas(newMinAmount || minAmount));
-      const currentTransactionUnit = formatSymbolDisplay(newTransactionUnit || withdrawInfo.transactionUnit);
+      const currentMinAmount = Number(parseWithCommas(withdrawInfoRef.current.minAmount || minAmount));
+      const currentTransactionUnit = formatSymbolDisplay(withdrawInfoRef.current.transactionUnit);
+      const _maxBalance = await getAelfMaxBalance({
+        balance: newMaxBalance || balance,
+        aelfFee: withdrawInfoRef.current?.aelfTransactionFee || '',
+        chainId: currentChainItemRef.current.key,
+        tokenSymbol,
+        contractAddress: currentToken.contractAddress,
+      });
       if (parserNumber < currentMinAmount) {
         handleFormValidateDataChange({
           [WithdrawFormKeys.AMOUNT]: {
@@ -323,7 +328,10 @@ export default function Withdraw({
           },
         });
         return;
-      } else if (withdrawInfo.remainingLimit && parserNumber > Number(parseWithCommas(withdrawInfo.remainingLimit))) {
+      } else if (
+        withdrawInfoRef.current.remainingLimit &&
+        parserNumber > Number(parseWithCommas(withdrawInfoRef.current.remainingLimit))
+      ) {
         handleFormValidateDataChange({
           [WithdrawFormKeys.AMOUNT]: {
             validateStatus: WithdrawValidateStatus.Error,
@@ -340,6 +348,15 @@ export default function Withdraw({
           },
         });
         return;
+      } else if (parserNumber > Number(parseWithCommas(_maxBalance))) {
+        handleFormValidateDataChange({
+          [WithdrawFormKeys.AMOUNT]: {
+            validateStatus: WithdrawValidateStatus.Error,
+            errorMessage: NOT_ENOUGH_ELF_FEE,
+          },
+        });
+
+        return;
       } else {
         handleFormValidateDataChange({
           [WithdrawFormKeys.AMOUNT]: {
@@ -351,7 +368,7 @@ export default function Withdraw({
         return true;
       }
     },
-    [balance, form, handleFormValidateDataChange, minAmount, withdrawInfo.remainingLimit, withdrawInfo.transactionUnit],
+    [balance, currentToken.contractAddress, form, handleFormValidateDataChange, minAmount, tokenSymbol],
   );
 
   const getWithdrawData = useCallback(
@@ -390,9 +407,14 @@ export default function Withdraw({
           limitCurrency: formatSymbolDisplay(res.withdrawInfo.limitCurrency),
           transactionUnit: formatSymbolDisplay(res.withdrawInfo.transactionUnit),
         });
+        withdrawInfoRef.current = {
+          ...res.withdrawInfo,
+          limitCurrency: formatSymbolDisplay(res.withdrawInfo.limitCurrency),
+          transactionUnit: formatSymbolDisplay(res.withdrawInfo.transactionUnit),
+        };
         setIsTransactionFeeLoading(false);
 
-        handleAmountValidate(res.withdrawInfo?.minAmount, res.withdrawInfo?.transactionUnit, newMaxBalance);
+        handleAmountValidate(newMaxBalance);
 
         return res;
       } catch (error: any) {
@@ -402,6 +424,11 @@ export default function Withdraw({
           limitCurrency: formatSymbolDisplay(symbol),
           transactionUnit: formatSymbolDisplay(symbol),
         });
+        withdrawInfoRef.current = {
+          ...INITIAL_WITHDRAW_INFO,
+          limitCurrency: formatSymbolDisplay(symbol),
+          transactionUnit: formatSymbolDisplay(symbol),
+        };
         if (
           error.name !== CommonErrorNameType.CANCEL &&
           !isHtmlError(error?.code, handleErrorMessage(error)) &&
@@ -437,10 +464,10 @@ export default function Withdraw({
           symbol,
           decimals,
         );
-
+        const amountValidate = await handleAmountValidate(tempBalance);
         setBalance((preMaxBalance) => {
           if (preMaxBalance !== tempBalance) {
-            if (handleAmountValidate(undefined, undefined, tempBalance)) {
+            if (amountValidate) {
               getWithdrawData(undefined, tempBalance);
             }
           }
@@ -520,7 +547,11 @@ export default function Withdraw({
         limitCurrency: formatSymbolDisplay(item.symbol),
         transactionUnit: formatSymbolDisplay(item.symbol),
       });
-
+      withdrawInfoRef.current = {
+        ...withdrawInfo,
+        limitCurrency: formatSymbolDisplay(item.symbol),
+        transactionUnit: formatSymbolDisplay(item.symbol),
+      };
       try {
         setLoading(true);
         setAmount('');
@@ -566,31 +597,14 @@ export default function Withdraw({
       try {
         setLoading(true);
         const res = await getWithdrawData();
-        let _maxBalance = balance;
 
-        const aelfFee = res?.withdrawInfo?.aelfTransactionFee;
-        if (aelfFee && ZERO.plus(aelfFee).gt(0)) {
-          const aelfReact = getAelfReact(getNetworkType(), currentChainItemRef.current.key);
-          const accountAddress = getAccountAddress(currentChainItemRef.current.key);
-          if (!accountAddress) throw new Error('User address is missing');
-
-          const isEnoughAllowance = await checkIsEnoughAllowance({
-            tokenContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.TOKEN],
-            endPoint: aelfReact.endPoint,
-            symbol: tokenSymbol,
-            owner: accountAddress,
-            spender: currentToken.contractAddress,
-            amount: _maxBalance,
-          });
-
-          let _maxBalanceBignumber;
-          if (isEnoughAllowance) {
-            _maxBalanceBignumber = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee);
-          } else {
-            _maxBalanceBignumber = ZERO.plus(balance).minus(res.withdrawInfo.aelfTransactionFee).minus(APPROVE_ELF_FEE);
-          }
-          _maxBalance = _maxBalanceBignumber.lt(0) ? '0' : _maxBalanceBignumber.toFixed();
-        }
+        const _maxBalance = await getAelfMaxBalance({
+          balance,
+          aelfFee: res?.withdrawInfo?.aelfTransactionFee || '',
+          chainId: currentChainItemRef.current.key,
+          tokenSymbol,
+          contractAddress: currentToken.contractAddress,
+        });
 
         setAmount(_maxBalance);
         form.setFieldValue(WithdrawFormKeys.AMOUNT, _maxBalance);
@@ -601,7 +615,8 @@ export default function Withdraw({
       setAmount(balance);
       form.setFieldValue(WithdrawFormKeys.AMOUNT, balance);
 
-      if (handleAmountValidate()) {
+      const amountValidate = await handleAmountValidate();
+      if (amountValidate) {
         await getWithdrawData();
       }
     }
@@ -683,8 +698,9 @@ export default function Withdraw({
     setAmount(valueNotComma || '');
   }, []);
 
-  const handleAmountBlur = useCallback(() => {
-    if (handleAmountValidate()) {
+  const handleAmountBlur = useCallback(async () => {
+    const amountValidate = await handleAmountValidate();
+    if (amountValidate) {
       getWithdrawData();
     }
   }, [getWithdrawData, handleAmountValidate]);

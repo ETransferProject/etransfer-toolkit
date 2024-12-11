@@ -17,6 +17,8 @@ export const WITHDRAWAL_COMMENT_TIP =
 
 export const WITHDRAWAL_COMMENT_CHECK_TIP = 'Check that the Comment is correct, otherwise your funds will be lost.';
 
+export const NOT_ENOUGH_ELF_FEE = 'Not enough ELF for network fee. Please keep enough ELF in your wallet for the fee.';
+
 export const INITIAL_WITHDRAW_STATE = {
   currentSymbol: TokenType.USDT,
   tokenList: [TOKEN_INFO_USDT],
