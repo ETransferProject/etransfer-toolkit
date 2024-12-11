@@ -313,8 +313,9 @@ export default function Withdraw({
       const parserNumber = Number(parseWithCommas(amount));
       const currentMinAmount = Number(parseWithCommas(withdrawInfoRef.current.minAmount || minAmount));
       const currentTransactionUnit = formatSymbolDisplay(withdrawInfoRef.current.transactionUnit);
+      const _balance = newMaxBalance || balance;
       const _maxBalance = await getAelfMaxBalance({
-        balance: newMaxBalance || balance,
+        balance: _balance,
         aelfFee: withdrawInfoRef.current?.aelfTransactionFee || '',
         chainId: currentChainItemRef.current.key,
         tokenSymbol,
@@ -339,7 +340,7 @@ export default function Withdraw({
           },
         });
         return;
-      } else if (parserNumber > Number(parseWithCommas(newMaxBalance || balance))) {
+      } else if (parserNumber > Number(parseWithCommas(_balance))) {
         handleFormValidateDataChange({
           [WithdrawFormKeys.AMOUNT]: {
             validateStatus: WithdrawValidateStatus.Error,
@@ -348,7 +349,7 @@ export default function Withdraw({
           },
         });
         return;
-      } else if (parserNumber > Number(parseWithCommas(_maxBalance))) {
+      } else if (_balance && tokenSymbol === 'ELF' && parserNumber > Number(parseWithCommas(_maxBalance))) {
         handleFormValidateDataChange({
           [WithdrawFormKeys.AMOUNT]: {
             validateStatus: WithdrawValidateStatus.Error,
