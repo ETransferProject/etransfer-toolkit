@@ -297,7 +297,7 @@ export default function Withdraw({
   );
 
   const handleAmountValidate = useCallback(
-    async (newMaxBalance?: string) => {
+    async (newMaxBalance?: string, isCheckMax = true) => {
       if (!isHaveTotalAccountInfo()) return;
 
       const amount = form.getFieldValue(WithdrawFormKeys.AMOUNT);
@@ -314,13 +314,17 @@ export default function Withdraw({
       const currentMinAmount = Number(parseWithCommas(withdrawInfoRef.current.minAmount || minAmount));
       const currentTransactionUnit = formatSymbolDisplay(withdrawInfoRef.current.transactionUnit);
       const _balance = newMaxBalance || balance;
-      const _maxBalance = await getAelfMaxBalance({
-        balance: _balance,
-        aelfFee: withdrawInfoRef.current?.aelfTransactionFee || '',
-        chainId: currentChainItemRef.current.key,
-        tokenSymbol,
-        contractAddress: currentToken.contractAddress,
-      });
+      let _maxBalance = '';
+      if (isCheckMax) {
+        _maxBalance = await getAelfMaxBalance({
+          balance: _balance,
+          aelfFee: withdrawInfoRef.current?.aelfTransactionFee || '',
+          chainId: currentChainItemRef.current.key,
+          tokenSymbol,
+          contractAddress: currentToken.contractAddress,
+        });
+      }
+
       if (parserNumber < currentMinAmount) {
         handleFormValidateDataChange({
           [WithdrawFormKeys.AMOUNT]: {
@@ -349,7 +353,12 @@ export default function Withdraw({
           },
         });
         return;
-      } else if (_balance && tokenSymbol === 'ELF' && parserNumber > Number(parseWithCommas(_maxBalance))) {
+      } else if (
+        isCheckMax &&
+        _balance &&
+        tokenSymbol === 'ELF' &&
+        parserNumber > Number(parseWithCommas(_maxBalance))
+      ) {
         handleFormValidateDataChange({
           [WithdrawFormKeys.AMOUNT]: {
             validateStatus: WithdrawValidateStatus.Error,
@@ -611,6 +620,8 @@ export default function Withdraw({
         form.setFieldValue(WithdrawFormKeys.AMOUNT, _maxBalance);
       } finally {
         setLoading(false);
+
+        handleAmountValidate(undefined, false);
       }
     } else {
       setAmount(balance);
