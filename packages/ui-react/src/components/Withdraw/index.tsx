@@ -621,7 +621,10 @@ export default function Withdraw({
       } finally {
         setLoading(false);
 
-        handleAmountValidate(undefined, false);
+        const amountValidate = await handleAmountValidate(undefined, false);
+        if (amountValidate) {
+          await getWithdrawData();
+        }
       }
     } else {
       setAmount(balance);
