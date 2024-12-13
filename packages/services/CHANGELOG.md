@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.5...v1.11.0) (2024-12-13)
+
+### Features
+
+- update max validate and txn signature ([1ace5a2](https://github.com/ETransferProject/etransfer-toolkit/commit/1ace5a2b598f603f19d7f3d95c2a8d037154e913))
+
 ## [1.11.0-alpha.5](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.4...v1.11.0-alpha.5) (2024-11-28)
 
 **Note:** Version bump only for package @etransfer/services

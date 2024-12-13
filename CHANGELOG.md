@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.5...v1.11.0) (2024-12-13)
+
+### Features
+
+- update approve elf fee ([f47d826](https://github.com/ETransferProject/etransfer-toolkit/commit/f47d8269654803f442c1e4cb446e220b73f2fea5))
+- update max validate ([447803b](https://github.com/ETransferProject/etransfer-toolkit/commit/447803b21e8cfec69d51aea447dc0d07997cfd5e))
+- update max validate and txn signature ([1ace5a2](https://github.com/ETransferProject/etransfer-toolkit/commit/1ace5a2b598f603f19d7f3d95c2a8d037154e913))
+
+### Bug Fixes
+
+- after click max, fetch info api ([c4116c7](https://github.com/ETransferProject/etransfer-toolkit/commit/c4116c7d75e339b2c50f90d7cfb994ce322c996a))
+- max validate ([3633d36](https://github.com/ETransferProject/etransfer-toolkit/commit/3633d36c5076fe305bbb0017c8e6eeab338c4204))
+
 ## [1.11.0-alpha.5](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.4...v1.11.0-alpha.5) (2024-11-28)
 
 ### Features
