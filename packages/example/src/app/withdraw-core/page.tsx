@@ -7,12 +7,13 @@ import { Button, Divider, Input, Select } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 import { eTransferCore } from '@/utils/core';
 import { BusinessType, PortkeyVersion, TNetworkItem, TTokenItem, TWalletType, TWithdrawInfo } from '@etransfer/types';
-import { removeDIDAddressSuffix, removeELFAddressSuffix } from '@etransfer/utils';
+import { removeDIDAddressSuffix } from '@etransfer/utils';
 import { ETRANSFER_USER_ACCOUNT, ETRANSFER_USER_CA_HASH, ETRANSFER_USER_MANAGER_ADDRESS } from '@/constants/storage';
-import { ADDRESS_MAP, AelfReact, APP_NAME, SupportedELFChainId } from '@/constants';
+import { ADDRESS_MAP, AelfReact, SupportedELFChainId } from '@/constants';
 import { ContractType } from '@/constants/chain';
 import { WalletTypeEnum } from '@etransfer/ui-react';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
+import { useGetTransactionSignature } from '@/hooks/useGetTransactionSignature';
 
 type TTokenItemForSelect = TTokenItem & {
   value: string;
@@ -134,7 +135,8 @@ export default function WithdrawPage() {
     setAmount(value);
   }, []);
 
-  const { walletType, callSendMethod, getSignature } = useConnectWallet();
+  const { walletType, callSendMethod } = useConnectWallet();
+  const getTransactionSignature = useGetTransactionSignature();
   const onSubmit = useCallback(async () => {
     try {
       const endPoint = AelfReact[currentChain as SupportedELFChainId].rpcUrl;
@@ -171,20 +173,16 @@ export default function WithdrawPage() {
         accountAddress: removeDIDAddressSuffix(ownerAddress),
         getSignature: async (ser: any) => {
           let signInfo: string;
-          if (walletType !== WalletTypeEnum.aa) {
-            // nightElf or discover
+          if (walletType === WalletTypeEnum.elf) {
+            // nightElf
             signInfo = AElf.utils.sha256(ser);
           } else {
-            // portkey sdk
+            // portkey sdk and discover
             signInfo = Buffer.from(ser).toString('hex');
           }
 
           // signature
-          return await getSignature({
-            signInfo,
-            appName: APP_NAME,
-            address: removeELFAddressSuffix(ownerAddress),
-          });
+          return await getTransactionSignature(signInfo);
         },
       });
       console.log('>>>>>> res', res);
@@ -205,7 +203,7 @@ export default function WithdrawPage() {
     currentDecimals,
     currentNetwork,
     currentToken,
-    getSignature,
+    getTransactionSignature,
     walletType,
   ]);
 
