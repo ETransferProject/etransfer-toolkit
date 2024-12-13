@@ -75,4 +75,4 @@ export const ARRIVAL_TIME_CONFIG: Record<string, TArrivalTimeConfig> = {
   },
 };
 
-export const APPROVE_ELF_FEE = '0.02';
+export const APPROVE_ELF_FEE = '0.05';
