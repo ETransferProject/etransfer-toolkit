@@ -149,6 +149,8 @@ export default function DepositDetailForMobile({
             contractAddress={contractAddress}
             contractAddressLink={contractAddressLink}
             minAmountUsd={depositInfo.minAmountUsd}
+            serviceFee={depositInfo.serviceFee || ''}
+            serviceFeeUsd={depositInfo.serviceFeeUsd || ''}
             depositTokenSymbol={depositTokenSymbol}
             extraNotes={depositInfo.extraNotes}
             componentStyle={componentStyle}
@@ -166,6 +168,8 @@ export default function DepositDetailForMobile({
     depositInfo?.depositAddress,
     depositInfo.minAmount,
     depositInfo.minAmountUsd,
+    depositInfo.serviceFee,
+    depositInfo.serviceFeeUsd,
     depositInfo.extraNotes,
     contractAddress,
     contractAddressLink,

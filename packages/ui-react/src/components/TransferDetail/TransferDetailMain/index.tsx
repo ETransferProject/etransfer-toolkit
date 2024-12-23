@@ -1,13 +1,14 @@
-import { OrderStatusEnum, TGetRecordDetailResult } from '@etransfer/types';
+import { BusinessType, OrderStatusEnum, TGetRecordDetailResult } from '@etransfer/types';
 import clsx from 'clsx';
 import './index.less';
 import { formatSymbolDisplay } from '../../../utils';
 import TransferDetailStep from '../TransferDetailStep';
 import CommonSvg from '../../CommonSvg';
-import { DEFAULT_NULL_VALUE } from '../../../constants';
+import { DEFAULT_NULL_VALUE, NOTICE, RECEIVED_0_TIP } from '../../../constants';
 import TransferDetailBody from '../TransferDetailBody';
 import { ComponentStyle } from '../../../types';
 import { useMemo } from 'react';
+import CommonTip from '../../CommonTip';
 
 export default function TransferDetailMain({
   componentStyle,
@@ -66,9 +67,16 @@ export default function TransferDetailMain({
             <span>Received</span>
           </div>
           {data.toTransfer.amount && data.toTransfer.symbol ? (
-            <div className={'etransfer-ui-transfer-detail-main-value-amount'}>{`${
-              data.toTransfer.amount
-            } ${formatSymbolDisplay(data.toTransfer.symbol)}`}</div>
+            <div className={'etransfer-ui-transfer-detail-main-value-amount'}>
+              {`${data.toTransfer.amount} ${formatSymbolDisplay(data.toTransfer.symbol)}`}
+              {data.orderType === BusinessType.Deposit && data.toTransfer.amount === '0' && (
+                <CommonTip
+                  tip={RECEIVED_0_TIP}
+                  className={'etransfer-ui-transfer-detail-received-tip'}
+                  modalTitle={NOTICE}
+                />
+              )}
+            </div>
           ) : (
             <div>{DEFAULT_NULL_VALUE}</div>
           )}
@@ -77,7 +85,7 @@ export default function TransferDetailMain({
     } else {
       return null;
     }
-  }, [data.status, data.toTransfer.amount, data.toTransfer.symbol]);
+  }, [data.orderType, data.status, data.toTransfer.amount, data.toTransfer.symbol]);
 
   const renderTopFailed = useMemo(() => {
     const value = () => {
