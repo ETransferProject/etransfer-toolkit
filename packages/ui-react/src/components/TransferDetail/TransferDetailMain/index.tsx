@@ -74,6 +74,7 @@ export default function TransferDetailMain({
                   tip={RECEIVED_0_TIP}
                   className={'etransfer-ui-transfer-detail-received-tip'}
                   modalTitle={NOTICE}
+                  componentStyle={componentStyle}
                 />
               )}
             </div>
@@ -85,7 +86,7 @@ export default function TransferDetailMain({
     } else {
       return null;
     }
-  }, [data.orderType, data.status, data.toTransfer.amount, data.toTransfer.symbol]);
+  }, [componentStyle, data.orderType, data.status, data.toTransfer.amount, data.toTransfer.symbol]);
 
   const renderTopFailed = useMemo(() => {
     const value = () => {

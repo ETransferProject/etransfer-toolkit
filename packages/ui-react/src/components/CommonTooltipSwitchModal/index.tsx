@@ -23,7 +23,18 @@ interface ICommonTooltipSwitchModalProps {
 }
 
 const CommonTooltipSwitchModal = forwardRef<ICommonTooltipSwitchModalRef, ICommonTooltipSwitchModalProps>(
-  ({ tooltipProps, modalProps, modalWidth = 335, tip, children, modalFooterClassName, componentStyle }, ref) => {
+  (
+    {
+      tooltipProps,
+      modalProps,
+      modalWidth = 335,
+      tip,
+      children,
+      modalFooterClassName,
+      componentStyle = ComponentStyle.Web,
+    },
+    ref,
+  ) => {
     const isMobileStyle = componentStyle === ComponentStyle.Mobile;
 
     const isTooltip = useMemo(() => !isMobileStyle, [isMobileStyle]);

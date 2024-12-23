@@ -77,14 +77,15 @@ export default function DepositInfo({
   return (
     <div className={clsx('etransfer-ui-flex-column etransfer-ui-deposit-info', className)}>
       {!!serviceFee && (
-        <div className={clsx('etransfer-ui-flex', 'info-line')}>
-          <div className={clsx('etransfer-ui-flex-row-center gap-4', 'info-title')}>
+        <div className={clsx('etransfer-ui-flex-row-start', 'info-line')}>
+          <div className={clsx('etransfer-ui-flex-row-center etransfer-ui-gap-4', 'info-title')}>
             {SERVICE_FEE}
             <CommonTip
               tip={SERVICE_FEE_TIP}
               className={'service-fee-tip'}
               modalTitle={NOTICE}
               icon={<CommonSvg type="questionMark16" />}
+              componentStyle={componentStyle}
             />
           </div>
           <div className={clsx('etransfer-ui-flex-1')}>
