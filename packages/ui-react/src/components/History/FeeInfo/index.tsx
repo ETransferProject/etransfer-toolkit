@@ -18,7 +18,7 @@ export default function FeeInfo({ feeInfo, status, orderType, componentStyle = C
     return <div className="etransfer-ui-history-fee-info-wrapper">{DEFAULT_NULL_VALUE}</div>;
   }
 
-  if (orderType === BusinessType.Deposit) {
+  if (orderType === BusinessType.Deposit && Array.isArray(feeInfo) && feeInfo.length === 0) {
     return <div className="etransfer-ui-history-fee-info-wrapper">Free</div>;
   }
 
@@ -34,8 +34,25 @@ export default function FeeInfo({ feeInfo, status, orderType, componentStyle = C
         return (
           <span className="etransfer-ui-history-fee-info-item-wrapper" key={item.symbol}>
             {index !== 0 && <span className="etransfer-ui-history-fee-info-item-add">+</span>}
-            <span> {item.amount} </span>
-            <span> {formatSymbolDisplay(item.symbol)} </span>
+            {index === 0 ? (
+              item.amount ? (
+                orderType === BusinessType.Deposit && item.amount === '0' ? (
+                  'Free'
+                ) : (
+                  <>
+                    <span> {item.amount} </span>
+                    <span> {formatSymbolDisplay(item.symbol)} </span>
+                  </>
+                )
+              ) : (
+                DEFAULT_NULL_VALUE
+              )
+            ) : (
+              <>
+                <span> {item.amount} </span>
+                <span> {formatSymbolDisplay(item.symbol)} </span>
+              </>
+            )}
           </span>
         );
       })}
