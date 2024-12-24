@@ -76,7 +76,7 @@ export default function DepositInfo({
 
   return (
     <div className={clsx('etransfer-ui-flex-column etransfer-ui-deposit-info', className)}>
-      {!!serviceFee && (
+      {!!serviceFee && serviceFee !== '0' && (
         <div className={clsx('etransfer-ui-flex-row-start', 'info-line')}>
           <div className={clsx('etransfer-ui-flex-row-center etransfer-ui-gap-4', 'info-title')}>
             {SERVICE_FEE}

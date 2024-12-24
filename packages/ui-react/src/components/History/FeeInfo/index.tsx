@@ -13,7 +13,12 @@ type TFeeInfoProps = {
   componentStyle?: ComponentStyle;
 };
 
-export default function FeeInfo({ feeInfo, status, orderType, componentStyle = ComponentStyle.Web }: TFeeInfoProps) {
+export default function FeeInfo({
+  feeInfo = [],
+  status,
+  orderType,
+  componentStyle = ComponentStyle.Web,
+}: TFeeInfoProps) {
   if (status === OrderStatusEnum.Failed) {
     return <div className="etransfer-ui-history-fee-info-wrapper">{DEFAULT_NULL_VALUE}</div>;
   }
