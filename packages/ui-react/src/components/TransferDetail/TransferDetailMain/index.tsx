@@ -67,7 +67,11 @@ export default function TransferDetailMain({
             <span>Received</span>
           </div>
           {data.toTransfer.amount && data.toTransfer.symbol ? (
-            <div className={'etransfer-ui-transfer-detail-main-value-amount'}>
+            <div
+              className={clsx(
+                'etransfer-ui-row-center etransfer-ui-gap-4',
+                'etransfer-ui-transfer-detail-main-value-amount',
+              )}>
               {`${data.toTransfer.amount} ${formatSymbolDisplay(data.toTransfer.symbol)}`}
               {data.orderType === BusinessType.Deposit && data.toTransfer.amount === '0' && (
                 <CommonTip
