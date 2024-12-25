@@ -117,7 +117,7 @@ const columns = [
     },
   },
   {
-    title: 'Transaction Fee',
+    title: 'Fee',
     dataIndex: 'feeInfo',
     key: 'feeInfo',
     render: (feeInfo: THistoryFeeInfo[], record: THistoryItem) => {

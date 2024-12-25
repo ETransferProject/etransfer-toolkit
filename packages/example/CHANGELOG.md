@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0...v1.12.0) (2024-12-25)
+
+### Features
+
+- modify styles and service fee tip and example auth logic ([5abdf5a](https://github.com/ETransferProject/etransfer-toolkit/commit/5abdf5af2881496e1bcbba27dd1fec250f9c4e63))
+
 ## [1.11.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.5...v1.11.0) (2024-12-13)
 
 ### Features

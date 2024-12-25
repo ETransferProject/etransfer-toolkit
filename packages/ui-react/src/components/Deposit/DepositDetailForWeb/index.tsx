@@ -110,6 +110,8 @@ export default function DepositDetailForWeb({
             contractAddress={contractAddress}
             contractAddressLink={contractAddressLink}
             minAmountUsd={depositInfo.minAmountUsd || ''}
+            serviceFee={depositInfo.serviceFee || ''}
+            serviceFeeUsd={depositInfo.serviceFeeUsd || ''}
             extraNotes={depositInfo.extraNotes}
             depositTokenSymbol={depositTokenSymbol}
           />
