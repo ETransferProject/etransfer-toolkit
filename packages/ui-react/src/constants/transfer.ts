@@ -2,6 +2,7 @@ export enum TRANSFER_DETAIL_LABEL {
   Type = 'Type',
   CreateTime = 'CreateTime',
   TransactionFee = 'Transaction Fee',
+  Fee = 'Fee',
   SourceTxHash = 'Source Tx Hash',
   SourceChain = 'Source Chain',
   Amount = 'Amount',

@@ -66,7 +66,7 @@ export default function TransferDetailBody({
       )}
 
       <div className={'etransfer-ui-transfer-detail-item'}>
-        <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.TransactionFee}</div>
+        <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.Fee}</div>
         <div className={clsx('etransfer-ui-transfer-detail-value', 'detail-value-fee')}>
           <FeeInfo
             feeInfo={data.toFeeInfo || []}

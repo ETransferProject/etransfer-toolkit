@@ -183,7 +183,7 @@ export default function HistoryMobileInfiniteList({
                 />
               </div>
               <div className="etransfer-ui-history-mobile-infinite-item-fee">
-                <span className="etransfer-ui-history-mobile-infinite-item-label">Transaction Fee</span>
+                <span className="etransfer-ui-history-mobile-infinite-item-label">Fee</span>
                 <FeeInfo
                   feeInfo={recordItem.feeInfo || []}
                   status={recordItem.status}
