@@ -20,6 +20,7 @@ interface ICommonTooltipSwitchModalProps {
   children: React.ReactNode;
   modalFooterClassName?: string;
   componentStyle?: ComponentStyle;
+  tooltipElementId?: string;
 }
 
 const CommonTooltipSwitchModal = forwardRef<ICommonTooltipSwitchModalRef, ICommonTooltipSwitchModalProps>(
@@ -31,6 +32,7 @@ const CommonTooltipSwitchModal = forwardRef<ICommonTooltipSwitchModalRef, ICommo
       tip,
       children,
       modalFooterClassName,
+      tooltipElementId,
       componentStyle = ComponentStyle.Web,
     },
     ref,
@@ -63,7 +65,11 @@ const CommonTooltipSwitchModal = forwardRef<ICommonTooltipSwitchModalRef, ICommo
 
     return (
       <>
-        <CommonTooltip {...tooltipProps} placement="top" title={isTooltip && tip}>
+        <CommonTooltip
+          {...tooltipProps}
+          placement="top"
+          title={isTooltip && tip}
+          getPopupContainer={() => document.getElementById(tooltipElementId || '') as HTMLElement}>
           {children}
         </CommonTooltip>
         <CommonModal

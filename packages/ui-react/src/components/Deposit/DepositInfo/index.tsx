@@ -74,6 +74,20 @@ export default function DepositInfo({
     return Array.isArray(extraNotes) && extraNotes.length > 0 && <DepositDescription list={extraNotes} />;
   }, [extraNotes]);
 
+  const serviceFeeTip = useMemo(() => {
+    return (
+      <div>
+        <div>{SERVICE_FEE_TIP}</div>
+        <div>{`• Deposit amount ≥ ${minimumDeposit} ${formatSymbolDisplay(depositTokenSymbol)}: No service fee`}</div>
+        <div>
+          {`• Deposit amount < ${minimumDeposit} ${formatSymbolDisplay(
+            depositTokenSymbol,
+          )}: Max service fee ${serviceFee} ${formatSymbolDisplay(depositTokenSymbol)}`}
+        </div>
+      </div>
+    );
+  }, [depositTokenSymbol, minimumDeposit, serviceFee]);
+
   return (
     <div className={clsx('etransfer-ui-flex-column etransfer-ui-deposit-info', className)}>
       {!!serviceFee && serviceFee !== '0' && (
@@ -81,7 +95,7 @@ export default function DepositInfo({
           <div className={clsx('etransfer-ui-flex-row-center etransfer-ui-gap-4', 'info-title')}>
             {SERVICE_FEE}
             <CommonTip
-              tip={SERVICE_FEE_TIP}
+              tip={serviceFeeTip}
               className={'service-fee-tip'}
               modalTitle={NOTICE}
               icon={<CommonSvg type="questionMark16" />}
@@ -90,10 +104,10 @@ export default function DepositInfo({
           </div>
           <div className={clsx('etransfer-ui-flex-1')}>
             <div className={clsx('etransfer-ui-text-right', 'info-value')}>
-              {serviceFee} {formatSymbolDisplay(depositTokenSymbol)}
+              {`0~${serviceFee}`} {formatSymbolDisplay(depositTokenSymbol)}
             </div>
             <div className={clsx('etransfer-ui-text-right', 'info-exhibit')}>
-              {valueFixed2LessThanMin(serviceFeeUsd, '$ ')}
+              {`$ 0~${valueFixed2LessThanMin(serviceFeeUsd, '')}`}
             </div>
           </div>
         </div>

@@ -29,8 +29,12 @@ export default function CommonTip({
       }}
       modalProps={{ title: modalTitle || title, zIndex: 300 }}
       tip={tip}
+      tooltipElementId="commonTipTitle"
       componentStyle={componentStyle}>
-      <div className={clsx('common-tip-title', className)} onClick={() => tooltipSwitchModalsRef.current?.open()}>
+      <div
+        id="commonTipTitle"
+        className={clsx('common-tip-title', className)}
+        onClick={() => tooltipSwitchModalsRef.current?.open()}>
         {icon ? icon : <CommonSvg type={'infoLine'} className={'common-tip-title-icon'} />}
         {title && <span className={'common-tip-title-text'}>{title}</span>}
       </div>
