@@ -17,6 +17,7 @@ export default function ETransferContentBody({
   transferDetailId,
   isUnreadHistory,
   isShowErrorTip,
+  customDepositDescriptionNode,
   onClickProcessingTip,
   onClickHistoryItem,
   onTransferDetailBack,
@@ -30,6 +31,7 @@ export default function ETransferContentBody({
   isUnreadHistory: boolean;
   transferDetailId?: string;
   isShowErrorTip?: boolean;
+  customDepositDescriptionNode?: React.ReactNode;
   onClickProcessingTip: () => void;
   onClickHistoryItem: (id: string) => void;
   onTransferDetailBack: () => void;
@@ -52,6 +54,7 @@ export default function ETransferContentBody({
           isListenNoticeAuto={false}
           isShowProcessingTip={true}
           withdrawProcessingCount={withdrawProcessingCount}
+          customDescriptionNode={customDepositDescriptionNode}
           onClickProcessingTip={onClickProcessingTip}
           onActionChange={onDepositActionChange}
           onConnect={onLogin}
