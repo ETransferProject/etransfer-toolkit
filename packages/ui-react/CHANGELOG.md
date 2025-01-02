@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.0...v1.12.1-alpha.0) (2025-01-02)
+
+### Features
+
+- add custom deposit info config ([1174a02](https://github.com/ETransferProject/etransfer-toolkit/commit/1174a02a25c4abffdf8bf5c3094e3021cede0505))
+
 ## [1.12.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0...v1.12.0) (2024-12-25)
 
 ### Features
