@@ -32,6 +32,7 @@ export default function ETransferContent({
   isShowSider = true,
   isShowMobileFooter = false,
   isShowErrorTip = true,
+  customDepositDescriptionNode,
   onClickHeaderLogo,
   onLifeCycleChange,
   onLogin,
@@ -44,6 +45,7 @@ export default function ETransferContent({
   isShowSider?: boolean;
   isShowMobileFooter?: boolean;
   isShowErrorTip?: boolean;
+  customDepositDescriptionNode?: React.ReactNode;
   onClickHeaderLogo?: () => void;
   onLifeCycleChange?: (lifeCycle: PageKey, data?: any) => void;
   onLogin?: () => void;
@@ -168,6 +170,7 @@ export default function ETransferContent({
                   transferDetailId={transferDetailId}
                   isUnreadHistory={isUnreadHistory}
                   isShowErrorTip={isShowErrorTip}
+                  customDepositDescriptionNode={customDepositDescriptionNode}
                   onClickProcessingTip={handleClickProcessingTip}
                   onClickHistoryItem={handleClickHistoryItem}
                   onTransferDetailBack={handleTransferDetailBack}

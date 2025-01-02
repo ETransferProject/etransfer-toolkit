@@ -21,7 +21,7 @@ export default function DepositPage() {
     <ETransferDepositProvider>
       <CommonSpace direction={'vertical'} size={24} />
       <Deposit
-        customDescriptionNode={<div>customer Deposit Description</div>}
+        customDescriptionNode={<div>Custom Deposit Description</div>}
         componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web}
         onClickProcessingTip={() => {
           router.push('/history');
