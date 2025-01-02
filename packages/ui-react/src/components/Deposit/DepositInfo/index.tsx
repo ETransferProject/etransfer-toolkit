@@ -25,6 +25,7 @@ export interface DepositInfoProps {
   extraNotes?: string[];
   serviceFee?: string;
   serviceFeeUsd?: string;
+  threshold?: string;
   modalContainer?: CommonModalProps['getContainer'];
   componentStyle?: ComponentStyle;
 }
@@ -40,6 +41,7 @@ export default function DepositInfo({
   extraNotes,
   serviceFee,
   serviceFeeUsd,
+  threshold,
   modalContainer,
   componentStyle = ComponentStyle.Web,
 }: DepositInfoProps) {
@@ -78,15 +80,15 @@ export default function DepositInfo({
     return (
       <div>
         <div>{SERVICE_FEE_TIP}</div>
-        <div>{`• Deposit amount ≥ ${minimumDeposit} ${formatSymbolDisplay(depositTokenSymbol)}: No service fee`}</div>
+        <div>{`• Deposit amount ≥ ${threshold} ${formatSymbolDisplay(depositTokenSymbol)}: No service fee`}</div>
         <div>
-          {`• Deposit amount < ${minimumDeposit} ${formatSymbolDisplay(
+          {`• Deposit amount < ${threshold} ${formatSymbolDisplay(
             depositTokenSymbol,
           )}: Max service fee ${serviceFee} ${formatSymbolDisplay(depositTokenSymbol)}`}
         </div>
       </div>
     );
-  }, [depositTokenSymbol, minimumDeposit, serviceFee]);
+  }, [depositTokenSymbol, serviceFee, threshold]);
 
   return (
     <div className={clsx('etransfer-ui-flex-column etransfer-ui-deposit-info', className)}>
@@ -120,7 +122,7 @@ export default function DepositInfo({
               {minimumDeposit} {formatSymbolDisplay(depositTokenSymbol)}
             </div>
             <div className={clsx('etransfer-ui-text-right', 'info-exhibit')}>
-              {valueFixed2LessThanMin(minAmountUsd, '$ ')}
+              {minAmountUsd === '0' ? '$ 0' : valueFixed2LessThanMin(minAmountUsd, '$ ')}
             </div>
           </div>
         </div>

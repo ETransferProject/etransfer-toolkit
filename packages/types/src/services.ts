@@ -133,6 +133,7 @@ export type TDepositInfo = {
   minAmountUsd: string;
   serviceFee?: string;
   serviceFeeUsd?: string;
+  currentThreshold?: string;
   extraInfo?: TDepositExtraInfo;
 };
 
