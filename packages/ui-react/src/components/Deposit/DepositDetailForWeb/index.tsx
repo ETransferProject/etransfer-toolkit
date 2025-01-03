@@ -113,6 +113,7 @@ export default function DepositDetailForWeb({
             minAmountUsd={depositInfo.minAmountUsd || ''}
             serviceFee={depositInfo.serviceFee || ''}
             serviceFeeUsd={depositInfo.serviceFeeUsd || ''}
+            threshold={depositInfo.currentThreshold || ''}
             extraNotes={depositInfo.extraNotes}
             depositTokenSymbol={depositTokenSymbol}
             customDescriptionNode={customDescriptionNode}

@@ -152,6 +152,7 @@ export default function DepositDetailForMobile({
             minAmountUsd={depositInfo.minAmountUsd}
             serviceFee={depositInfo.serviceFee || ''}
             serviceFeeUsd={depositInfo.serviceFeeUsd || ''}
+            threshold={depositInfo.currentThreshold || ''}
             depositTokenSymbol={depositTokenSymbol}
             extraNotes={depositInfo.extraNotes}
             componentStyle={componentStyle}

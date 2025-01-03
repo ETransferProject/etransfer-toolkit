@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.1...v1.12.1) (2025-01-03)
+
+### Features
+
+- dev deposit minimum amount and threshold ([05b56a1](https://github.com/ETransferProject/etransfer-toolkit/commit/05b56a1e2d2c54a75edd9d5571fa154643e211a4))
+
 ## [1.12.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.0...v1.12.1-alpha.1) (2025-01-02)
 
 **Note:** Version bump only for package @etransfer/types
