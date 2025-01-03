@@ -18,6 +18,7 @@ export default function ETransferPage() {
   return (
     <>
       <ETransferContent
+        customDepositDescriptionNode={<div>Custom Deposit Description</div>}
         componentStyle={isPadPX ? ComponentStyle.Mobile : ComponentStyle.Web}
         onLifeCycleChange={(liftCycle, data) => {
           console.log('>>>>>> onLifeCycleChange:', liftCycle, data);

@@ -34,6 +34,7 @@ export default function DepositDetailForMobile({
   showRetry = false,
   isCheckTxnLoading = false,
   isShowNotLoginTip = false,
+  customDescriptionNode,
   onLogin,
   onRetry,
   onCheckTxnClick,
@@ -155,6 +156,7 @@ export default function DepositDetailForMobile({
             depositTokenSymbol={depositTokenSymbol}
             extraNotes={depositInfo.extraNotes}
             componentStyle={componentStyle}
+            customDescriptionNode={customDescriptionNode}
           />
         )}
       </>
@@ -175,6 +177,7 @@ export default function DepositDetailForMobile({
     contractAddress,
     contractAddressLink,
     componentStyle,
+    customDescriptionNode,
   ]);
 
   return (

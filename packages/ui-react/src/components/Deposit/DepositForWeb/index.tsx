@@ -39,6 +39,7 @@ export default function DepositForWeb({
   depositProcessingCount,
   withdrawProcessingCount,
   isShowNotLoginTip = false,
+  customDescriptionNode,
   onRetry,
   onCheckTxnClick,
   onClickProcessingTip,
@@ -85,6 +86,7 @@ export default function DepositForWeb({
         showRetry={showRetry}
         isCheckTxnLoading={isCheckTxnLoading}
         isShowNotLoginTip={isShowNotLoginTip}
+        customDescriptionNode={customDescriptionNode}
         onLogin={onConnect}
         onRetry={onRetry}
         onCheckTxnClick={onCheckTxnClick}

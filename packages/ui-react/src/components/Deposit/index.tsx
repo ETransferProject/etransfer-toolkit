@@ -29,6 +29,7 @@ export default function Deposit({
   isListenNoticeAuto = true,
   isShowProcessingTip = true,
   withdrawProcessingCount = 0,
+  customDescriptionNode,
   onClickProcessingTip,
   onActionChange,
   onConnect,
@@ -381,6 +382,7 @@ export default function Deposit({
           depositProcessingCount={depositProcessingCount}
           withdrawProcessingCount={withdrawProcessingCount}
           isShowNotLoginTip={isShowNotLoginTip}
+          customDescriptionNode={customDescriptionNode}
           onConnect={onConnect}
           onRetry={handleRetry}
           onCheckTxnClick={handleCheckTxnClick}
@@ -417,6 +419,7 @@ export default function Deposit({
           depositProcessingCount={depositProcessingCount}
           withdrawProcessingCount={withdrawProcessingCount}
           isShowNotLoginTip={isShowNotLoginTip}
+          customDescriptionNode={customDescriptionNode}
           onRetry={handleRetry}
           onCheckTxnClick={handleCheckTxnClick}
           onClickProcessingTip={onClickProcessingTip}

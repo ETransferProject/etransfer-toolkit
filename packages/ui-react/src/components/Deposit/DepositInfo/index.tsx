@@ -28,6 +28,7 @@ export interface DepositInfoProps {
   threshold?: string;
   modalContainer?: CommonModalProps['getContainer'];
   componentStyle?: ComponentStyle;
+  customDescriptionNode?: React.ReactNode;
 }
 
 export default function DepositInfo({
@@ -44,6 +45,7 @@ export default function DepositInfo({
   threshold,
   modalContainer,
   componentStyle = ComponentStyle.Web,
+  customDescriptionNode,
 }: DepositInfoProps) {
   const [openAddressModal, setOpenAddressModal] = useState(false);
 
@@ -73,8 +75,11 @@ export default function DepositInfo({
   }, [contractAddress, contractAddressLink]);
 
   const renderDepositDescription = useMemo(() => {
-    return Array.isArray(extraNotes) && extraNotes.length > 0 && <DepositDescription list={extraNotes} />;
-  }, [extraNotes]);
+    return (
+      Array.isArray(extraNotes) &&
+      extraNotes.length > 0 && <DepositDescription list={extraNotes} customContent={customDescriptionNode} />
+    );
+  }, [customDescriptionNode, extraNotes]);
 
   const serviceFeeTip = useMemo(() => {
     return (

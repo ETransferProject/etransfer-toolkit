@@ -32,6 +32,7 @@ export default function DepositDetailForWeb({
   showRetry = false,
   isCheckTxnLoading = false,
   isShowNotLoginTip = false,
+  customDescriptionNode,
   onRetry,
   onCheckTxnClick,
   onLogin,
@@ -115,6 +116,7 @@ export default function DepositDetailForWeb({
             threshold={depositInfo.currentThreshold || ''}
             extraNotes={depositInfo.extraNotes}
             depositTokenSymbol={depositTokenSymbol}
+            customDescriptionNode={customDescriptionNode}
           />
         </>
       )}
