@@ -4,6 +4,7 @@ import { PortkeyVersion } from './portkey';
 export enum BusinessType {
   Deposit = 'Deposit',
   Withdraw = 'Withdraw',
+  Transfer = 'Transfer',
 }
 
 export enum AuthTokenSource {
