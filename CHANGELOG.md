@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.2-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1...v1.12.2-alpha.0) (2025-01-06)
+
+### Features
+
+- update BusinessType enum ([4cfb5ae](https://github.com/ETransferProject/etransfer-toolkit/commit/4cfb5ae4b3927f104866d4d482adbd1d3c7446d1))
+
 ## [1.12.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.1...v1.12.1) (2025-01-03)
 
 ### Features
