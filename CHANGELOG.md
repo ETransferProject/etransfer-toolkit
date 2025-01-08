@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.2-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.0...v1.12.2-alpha.1) (2025-01-08)
+
+### Features
+
+- 🎸 add renderDepositTip ([3fa3d4a](https://github.com/ETransferProject/etransfer-toolkit/commit/3fa3d4a6c08e1698c9fda61464a85cc404e5826c))
+
 ## [1.12.2-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1...v1.12.2-alpha.0) (2025-01-06)
 
 ### Features
