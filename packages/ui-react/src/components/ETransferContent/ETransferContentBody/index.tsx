@@ -25,6 +25,7 @@ export default function ETransferContentBody({
   onWithdrawActionChange,
   onHistoryActionChange,
   onLogin,
+  renderDepositTip,
 }: {
   activePageKey: PageKey;
   componentStyle?: ComponentStyle;
@@ -32,6 +33,7 @@ export default function ETransferContentBody({
   transferDetailId?: string;
   isShowErrorTip?: boolean;
   customDepositDescriptionNode?: React.ReactNode;
+  renderDepositTip?: (fromToken: string, toToken: string) => React.ReactNode;
   onClickProcessingTip: () => void;
   onClickHistoryItem: (id: string) => void;
   onTransferDetailBack: () => void;
@@ -55,6 +57,7 @@ export default function ETransferContentBody({
           isShowProcessingTip={true}
           withdrawProcessingCount={withdrawProcessingCount}
           customDescriptionNode={customDepositDescriptionNode}
+          renderDepositTip={renderDepositTip}
           onClickProcessingTip={onClickProcessingTip}
           onActionChange={onDepositActionChange}
           onConnect={onLogin}

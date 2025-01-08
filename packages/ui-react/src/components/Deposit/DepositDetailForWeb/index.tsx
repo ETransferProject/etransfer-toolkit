@@ -33,6 +33,7 @@ export default function DepositDetailForWeb({
   isCheckTxnLoading = false,
   isShowNotLoginTip = false,
   customDescriptionNode,
+  renderDepositTip,
   onRetry,
   onCheckTxnClick,
   onLogin,
@@ -74,7 +75,7 @@ export default function DepositDetailForWeb({
       {!showRetry && !!depositInfo.depositAddress && (
         <>
           <CommonSpace direction="vertical" size={4} />
-          <DepositTip fromToken={depositTokenSymbol} toToken={receiveTokenSymbol} />
+          <DepositTip fromToken={depositTokenSymbol} toToken={receiveTokenSymbol} renderDepositTip={renderDepositTip} />
           <CommonSpace direction="vertical" size={12} />
           <div className={clsx('etransfer-ui-flex-row-center', 'deposit-address-wrapper')}>
             {qrCodeValue ? (

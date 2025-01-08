@@ -44,6 +44,7 @@ export default function DepositForMobile({
   withdrawProcessingCount,
   isShowNotLoginTip,
   customDescriptionNode,
+  renderDepositTip,
   onConnect,
   onRetry,
   onCheckTxnClick,
@@ -96,6 +97,7 @@ export default function DepositForMobile({
             isCheckTxnLoading={isCheckTxnLoading}
             isShowNotLoginTip={isShowNotLoginTip}
             customDescriptionNode={customDescriptionNode}
+            renderDepositTip={renderDepositTip}
             onLogin={onConnect}
             onRetry={onRetry}
             onCheckTxnClick={onCheckTxnClick}
