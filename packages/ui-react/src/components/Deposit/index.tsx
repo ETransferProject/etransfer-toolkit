@@ -33,6 +33,7 @@ export default function Deposit({
   onClickProcessingTip,
   onActionChange,
   onConnect,
+  renderDepositTip,
 }: DepositProps) {
   const [isShowNetworkLoading, setIsShowNetworkLoading] = useState(false);
   const networkItemRef = useRef<string>();
@@ -383,6 +384,7 @@ export default function Deposit({
           withdrawProcessingCount={withdrawProcessingCount}
           isShowNotLoginTip={isShowNotLoginTip}
           customDescriptionNode={customDescriptionNode}
+          renderDepositTip={renderDepositTip}
           onConnect={onConnect}
           onRetry={handleRetry}
           onCheckTxnClick={handleCheckTxnClick}
@@ -420,6 +422,7 @@ export default function Deposit({
           withdrawProcessingCount={withdrawProcessingCount}
           isShowNotLoginTip={isShowNotLoginTip}
           customDescriptionNode={customDescriptionNode}
+          renderDepositTip={renderDepositTip}
           onRetry={handleRetry}
           onCheckTxnClick={handleCheckTxnClick}
           onClickProcessingTip={onClickProcessingTip}
