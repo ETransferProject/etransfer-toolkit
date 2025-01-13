@@ -1,5 +1,14 @@
 import { describe, expect, test } from '@jest/globals';
-import { handleContractError, handleContractErrorMessage, handleError, handleErrorMessage } from '../../src/error';
+import {
+  handleContractError,
+  handleContractErrorMessage,
+  handleError,
+  handleErrorMessage,
+  handleWebLoginErrorMessage,
+  isAuthTokenError,
+  isHtmlError,
+  isWriteOperationError,
+} from '../../src/error';
 import { ServicesError } from '../__mocks__/error';
 
 describe('handleError', () => {
@@ -124,5 +133,82 @@ describe('handleErrorMessage', () => {
   test('Input is undefined', () => {
     const error = handleErrorMessage(undefined);
     expect(error).toBeFalsy();
+  });
+});
+
+describe('isHtmlError', () => {
+  test('should return true for 5xx error with HTML message', () => {
+    expect(isHtmlError('500', '<!DOCTYPE HTML PUBLIC')).toBe(true);
+    expect(isHtmlError(503, '<!DOCTYPE HTML PUBLIC')).toBe(true);
+  });
+
+  test('should return false for non-5xx error', () => {
+    expect(isHtmlError('404', '<!DOCTYPE HTML PUBLIC')).toBe(false);
+    expect(isHtmlError('200', '<!DOCTYPE HTML PUBLIC')).toBe(false);
+  });
+
+  test('should return false for 5xx error without HTML message', () => {
+    expect(isHtmlError('500', 'Internal Server Error')).toBe(false);
+  });
+
+  test('should return false without params', () => {
+    expect(isHtmlError('' as any, 'Internal Server Error')).toBe(false);
+  });
+});
+
+describe('isAuthTokenError', () => {
+  test('should return true for error with 401 in message', () => {
+    const error = { status: 401, message: 'Unauthorized' };
+    expect(isAuthTokenError(error)).toBe(true);
+  });
+
+  test('should return false for error without 401 in message', () => {
+    const error = { status: 403, message: 'Forbidden' };
+    expect(isAuthTokenError(error)).toBe(false);
+    expect(isAuthTokenError(null)).toBe(false);
+  });
+
+  test('should return false for error without 401 in message', () => {
+    const error = { status: 401, message: '401 Unauthorized' };
+    expect(isAuthTokenError(error)).toBe(true);
+  });
+});
+
+describe('isWriteOperationError', () => {
+  test('should return true for 5xx error with specific message', () => {
+    expect(isWriteOperationError('500', 'A write operation resulted in an error')).toBe(true);
+    expect(isWriteOperationError(503, 'A write operation resulted in an error')).toBe(true);
+  });
+
+  test('should return false for non-5xx error', () => {
+    expect(isWriteOperationError('404', 'A write operation resulted in an error')).toBe(false);
+    expect(isWriteOperationError('200', 'A write operation resulted in an error')).toBe(false);
+  });
+
+  test('should return false for 5xx error without the specific message', () => {
+    expect(isWriteOperationError('500', 'Internal Server Error')).toBe(false);
+  });
+});
+
+describe('handleWebLoginErrorMessage', () => {
+  test('should return the error message from nativeError if it exists', () => {
+    const error = { nativeError: { message: 'Native error occurred' } };
+    const result = handleWebLoginErrorMessage(error);
+
+    expect(result).toContain('Native error occurred');
+  });
+
+  test('should call handleErrorMessage with the error', () => {
+    const error = { message: 'Some error occurred' };
+    const errorText = 'Handle this error';
+    const result = handleWebLoginErrorMessage(error, errorText);
+
+    expect(result).toContain('Some error occurred');
+  });
+
+  test('should return default error message if no error is provided', () => {
+    const result = handleWebLoginErrorMessage(undefined);
+
+    expect(result).toBe('Failed to fetch data');
   });
 });
