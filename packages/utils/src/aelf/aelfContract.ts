@@ -16,7 +16,7 @@ import BigNumber from 'bignumber.js';
 import { aelfInstance } from './aelfInstance';
 import { handleManagerForwardCall, getContractMethods } from '@portkey/contracts';
 
-const CacheViewContracts: { [key: string]: TTokenContract } = {};
+export const CacheViewContracts: { [key: string]: TTokenContract } = {};
 
 export const getContract = async (endPoint: string, contractAddress: string, wallet?: any): Promise<TTokenContract> => {
   const key = endPoint + contractAddress;

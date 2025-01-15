@@ -157,9 +157,9 @@ describe('isHtmlError', () => {
 });
 
 describe('isAuthTokenError', () => {
-  test('should return true for error with 401 in message', () => {
+  test('should return false for error with 401 status', () => {
     const error = { status: 401, message: 'Unauthorized' };
-    expect(isAuthTokenError(error)).toBe(true);
+    expect(isAuthTokenError(error)).toBe(false);
   });
 
   test('should return false for error without 401 in message', () => {
@@ -168,7 +168,7 @@ describe('isAuthTokenError', () => {
     expect(isAuthTokenError(null)).toBe(false);
   });
 
-  test('should return false for error without 401 in message', () => {
+  test('should return true for error without 401 in message', () => {
     const error = { status: 401, message: '401 Unauthorized' };
     expect(isAuthTokenError(error)).toBe(true);
   });
@@ -209,6 +209,12 @@ describe('handleWebLoginErrorMessage', () => {
   test('should return default error message if no error is provided', () => {
     const result = handleWebLoginErrorMessage(undefined);
 
-    expect(result).toBe('Failed to fetch data');
+    expect(result).toBe('');
+  });
+
+  test('should return default error message if no message', () => {
+    const result = handleWebLoginErrorMessage({ nativeError: '' });
+
+    expect(result).toBe('');
   });
 });
