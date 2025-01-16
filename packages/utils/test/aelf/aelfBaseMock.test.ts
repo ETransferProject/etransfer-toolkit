@@ -9,3 +9,12 @@ describe('TXError Class', () => {
     expect(error.transactionId).toBe('12345');
   });
 });
+
+describe('getTxResult', () => {
+  it('should throw TXError for invalid transaction', async () => {
+    const TransactionId = '12345';
+    const endPoint = 'http://localhost:1234';
+
+    await expect(AelfBaseUtils.getTxResult(TransactionId, endPoint)).rejects.toThrow(AelfBaseUtils.TXError);
+  });
+});

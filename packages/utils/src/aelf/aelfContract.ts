@@ -105,7 +105,7 @@ export const checkTokenAllowanceAndApprove = async ({
   ]);
   console.log('>>>>>> allowance', allowance);
   console.log('>>>>>> tokenInfo', tokenInfo);
-  const bigA = timesDecimals(amount, tokenInfo?.decimals || 8);
+  const bigA = timesDecimals(amount, tokenInfo.decimals || 8);
   const allowanceBN = new BigNumber(allowance);
 
   if (allowanceBN.lt(bigA)) {
@@ -144,7 +144,7 @@ export const checkIsEnoughAllowance = async ({
   ]);
   console.log('>>>>>> allowance', allowance);
   console.log('>>>>>> tokenInfo', tokenInfo);
-  const bigA = timesDecimals(amount, tokenInfo?.decimals || 8);
+  const bigA = timesDecimals(amount, tokenInfo.decimals || 8);
   const allowanceBN = new BigNumber(allowance);
 
   if (allowanceBN.lt(bigA)) {

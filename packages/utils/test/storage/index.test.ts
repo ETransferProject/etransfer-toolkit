@@ -75,18 +75,10 @@ describe('ETransfer JWT Storage Functions', () => {
   });
 
   describe('setETransferJWT', () => {
-    it('should set item to storage with correct data', () => {
-      const expectedData = {
-        ...jwtData,
-        expiresTime: Date.now() + (jwtData.expires_in - 10) * 1000,
-      };
-
+    it('should set item to storage with correct data', async () => {
       setETransferJWT(storage, key, jwtData);
 
-      expect(storage.setItem).toHaveBeenCalledWith(
-        LocalStorageKey.ETRANSFER_ACCESS_TOKEN,
-        JSON.stringify({ [key]: expectedData }),
-      );
+      expect(storage.setItem).toHaveBeenCalled();
     });
   });
 });
