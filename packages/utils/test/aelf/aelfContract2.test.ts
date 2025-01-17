@@ -1,7 +1,15 @@
 import AElf from 'aelf-sdk';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import * as AelfBaseUtils from '../../src/aelf/aelfBase';
-import { checkIsEnoughAllowance, checkTokenAllowanceAndApprove } from '../../src/aelf/aelfContract';
+import {
+  checkIsEnoughAllowance,
+  checkTokenAllowanceAndApprove,
+  createManagerForwardCall,
+  createTransferToken,
+  handleTransaction,
+} from '../../src/aelf/aelfContract';
+import { getContractMethods, handleManagerForwardCall } from '@portkey/contracts';
+import { CONTRACT_METHOD_NAME, MANAGER_FORWARD_CALL } from '../../src/constants';
 
 jest.mock('aelf-sdk');
 jest.mock('../../src/aelf/aelfBase', () => {
@@ -13,8 +21,10 @@ jest.mock('../../src/aelf/aelfBase', () => {
     __esModule: true,
     ...originalModule,
     getTxResult: jest.fn().mockResolvedValueOnce(mockTxResult as never),
+    getRawTx: jest.fn(),
   };
 });
+jest.mock('@portkey/contracts');
 
 describe('Token Utility Functions', () => {
   const mockEndPoint = 'http://localhost:1234';
@@ -143,9 +153,145 @@ describe('Token Utility Functions', () => {
     });
   });
 
-  //   describe('createManagerForwardCall', () => {});
+  describe('createManagerForwardCall', () => {
+    const caContractAddress = 'caContractAddress';
+    const contractAddress = 'contractAddress';
+    const endPoint = 'http://localhost';
+    const args = { key: 'value' };
+    const methodName = 'mockMethod';
+    const caHash = 'caHash';
+    const chainId = 'AELF';
 
-  //   describe('createTransferToken', () => {});
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
 
-  //   describe('handleTransaction', () => {});
+    it('should create a manager forward call and return encoded message', async () => {
+      const mockResponse = {
+        args: new Uint8Array([1, 2, 3]),
+      } as never;
+
+      (handleManagerForwardCall as jest.Mock).mockResolvedValue(mockResponse);
+      (AElf.utils.uint8ArrayToHex as jest.Mock).mockReturnValue('01 02 03');
+      (getContractMethods as jest.Mock).mockResolvedValue({
+        [MANAGER_FORWARD_CALL]: {
+          fromObject: jest.fn().mockReturnValue({}),
+          encode: jest.fn().mockReturnValue({
+            finish: jest.fn().mockReturnValue('encoded_result'),
+          }),
+        },
+      } as never);
+
+      const result = await createManagerForwardCall({
+        caContractAddress,
+        contractAddress,
+        endPoint,
+        args,
+        methodName,
+        caHash,
+        chainId,
+      });
+
+      expect(result).toBe('encoded_result'); // Ensure the return value is correct
+    });
+  });
+
+  describe('createTransferToken', () => {
+    const contractAddress = 'contractAddress';
+    const endPoint = 'http://localhost';
+    const args = { key: 'value' };
+    const chainId = 'AELF';
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should create transfer token and return encoded message', async () => {
+      (AElf.utils.uint8ArrayToHex as jest.Mock).mockReturnValue('01 02 03');
+      (AElf.utils.transform.transformMapToArray as jest.Mock).mockReturnValue(['01', '02', '03']);
+      (AElf.utils.transform.transform as jest.Mock).mockReturnValue({});
+
+      (getContractMethods as jest.Mock).mockResolvedValue({
+        [CONTRACT_METHOD_NAME.TransferToken]: {
+          fromObject: jest.fn().mockReturnValue({}),
+          encode: jest.fn().mockReturnValue({
+            finish: jest.fn().mockReturnValue('encoded_result'),
+          }),
+        },
+      } as never);
+
+      const result = await createTransferToken({
+        contractAddress,
+        endPoint,
+        args,
+        chainId,
+      });
+
+      expect(result).toBe('encoded_result');
+    });
+  });
+
+  describe('handleTransaction', () => {
+    const mockGetSignature: any = jest.fn();
+    const rawTxInput = {
+      blockHeightInput: '1',
+      blockHashInput: 'mockBlockHash',
+      packedInput: 'packedInputValue',
+      address: 'mockAddress',
+      contractAddress: 'mockContractAddress',
+      functionName: 'mockFunction',
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should create and return encoded hex transaction', async () => {
+      const mockRawTx = {
+        params: '0x123456',
+      };
+      (AelfBaseUtils.getRawTx as jest.Mock).mockReturnValue(mockRawTx);
+      (AElf.pbUtils.Transaction.encode as jest.Mock).mockReturnValue({
+        finish: jest.fn().mockReturnValue('encoded_tx'),
+      });
+
+      mockGetSignature.mockResolvedValue({ signature: 'mockSignature' } as never);
+
+      const result = await handleTransaction({ ...rawTxInput, getSignature: mockGetSignature });
+
+      expect(result).toBe('01 02 03');
+    });
+
+    it('signature is undefined and return undefined', async () => {
+      const mockRawTx = {
+        params: '0x123456',
+      };
+      (AelfBaseUtils.getRawTx as jest.Mock).mockReturnValue(mockRawTx);
+      (AElf.pbUtils.Transaction.encode as jest.Mock).mockReturnValue({
+        finish: jest.fn().mockReturnValue('encoded_tx'),
+      });
+
+      mockGetSignature.mockResolvedValue(undefined as never);
+
+      const result = await handleTransaction({ ...rawTxInput, getSignature: mockGetSignature });
+
+      expect(result).toBe(undefined);
+    });
+
+    it('tx is buffer and return correct', async () => {
+      const mockRawTx = {
+        params: '0x123456',
+      };
+      (AelfBaseUtils.getRawTx as jest.Mock).mockReturnValue(mockRawTx);
+      (AElf.pbUtils.Transaction.encode as jest.Mock).mockReturnValue({
+        finish: jest.fn().mockReturnValue(Buffer.from(mockRawTx.params, 'utf-8')),
+      });
+
+      mockGetSignature.mockResolvedValue({ signature: 'mockSignature' } as never);
+
+      const result = await handleTransaction({ ...rawTxInput, getSignature: mockGetSignature });
+
+      expect(result).toBe('3078313233343536');
+    });
+  });
 });
