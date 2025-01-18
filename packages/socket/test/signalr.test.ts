@@ -30,6 +30,29 @@ describe('BaseSignalr', () => {
       await expect(signalr.doOpen()).rejects.toThrow('Please set url');
     });
 
+    it('should return the correct connectionId if origin connectionId is undefined', async () => {
+      const mockConnection = {
+        connectionId: undefined,
+        start: jest.fn().mockResolvedValue(undefined as never),
+        on: jest.fn().mockImplementation((_: any, fn?: any) => {
+          fn('mockData');
+        }),
+      };
+
+      (HubConnectionBuilder.prototype.withUrl as jest.Mock).mockReturnValue({
+        withAutomaticReconnect: jest.fn().mockImplementation(({ nextRetryDelayInMilliseconds }: any) => {
+          nextRetryDelayInMilliseconds();
+          return {
+            build: jest.fn().mockReturnValue(mockConnection),
+          };
+        }),
+      });
+
+      await signalr.doOpen();
+
+      expect(signalr.connectionId).toBe('');
+    });
+
     it('should create a HubConnection and start it', async () => {
       const mockConnection = {
         connectionId: 'mockConnectionId',
@@ -50,12 +73,16 @@ describe('BaseSignalr', () => {
       };
 
       (HubConnectionBuilder.prototype.withUrl as jest.Mock).mockReturnValue({
-        withAutomaticReconnect: jest.fn().mockReturnValue({
-          build: jest.fn().mockReturnValue(mockConnection),
+        withAutomaticReconnect: jest.fn().mockImplementation(({ nextRetryDelayInMilliseconds }: any) => {
+          nextRetryDelayInMilliseconds();
+          return {
+            build: jest.fn().mockReturnValue(mockConnection),
+          };
         }),
       });
 
-      const connection = await signalr.doOpen();
+      signalr.setUrl(''); // Clear the URL
+      const connection = await signalr.doOpen({ url: mockUrl });
 
       expect(HubConnectionBuilder.prototype.withUrl).toHaveBeenCalledWith(mockUrl, { withCredentials: false });
       expect(connection).toBe(mockConnection);
