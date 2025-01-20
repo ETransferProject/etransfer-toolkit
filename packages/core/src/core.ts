@@ -97,7 +97,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
   async getAuthToken(params: TGetAuthParams) {
     // 1: local storage has JWT token
     const data = await this.getAuthTokenFromStorage({
-      walletType: (params?.source as unknown as TWalletType) || TWalletType.Portkey,
+      walletType: (params.source as unknown as TWalletType) || TWalletType.Portkey,
       caHash: params.caHash,
       managerAddress: params.managerAddress,
     });
@@ -108,8 +108,8 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
       pubkey: params.pubkey,
       signature: params.signature,
       plain_text: params.plainText,
-      ca_hash: params?.caHash || undefined,
-      chain_id: params?.chainId || undefined,
+      ca_hash: params.caHash || undefined,
+      chain_id: params.chainId || undefined,
       managerAddress: params.managerAddress,
       version: params.version,
       source: params.source || AuthTokenSource.Portkey,
@@ -169,8 +169,7 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     etransferEvents.AuthTokenSuccess.emit();
 
     if (this.storage) {
-      const frontPartKey =
-        params?.source === AuthTokenSource.NightElf ? AuthTokenSource.NightElf : params?.ca_hash || '';
+      const frontPartKey = params.source === AuthTokenSource.NightElf ? AuthTokenSource.NightElf : params.ca_hash || '';
       const key = frontPartKey + params.managerAddress;
       await setETransferJWT(this.storage, key, res);
     }
@@ -218,26 +217,22 @@ export class ETransferCore extends BaseETransferCore implements TETransferCore {
     }
     console.log('>>>>>> sendTransferTokenTransaction approveRes', approveRes);
 
-    if (approveRes) {
-      return this.withdrawOrder({
-        caContractAddress,
-        eTransferContractAddress,
-        caHash,
-        symbol,
-        amount,
-        walletType,
-        chainId,
-        endPoint,
-        managerAddress,
-        decimals,
-        network,
-        toAddress,
-        memo,
-        getSignature,
-      });
-    } else {
-      throw new Error('Approve Failed');
-    }
+    return this.withdrawOrder({
+      caContractAddress,
+      eTransferContractAddress,
+      caHash,
+      symbol,
+      amount,
+      walletType,
+      chainId,
+      endPoint,
+      managerAddress,
+      decimals,
+      network,
+      toAddress,
+      memo,
+      getSignature,
+    });
   }
 
   async withdrawOrder(
