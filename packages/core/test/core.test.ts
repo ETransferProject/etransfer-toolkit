@@ -247,7 +247,11 @@ describe('ETransferCore', () => {
   });
 
   describe('getReCaptcha', () => {
-    it('should return undefined if checkEOARegistration is false', async () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should throw error if baseUrl is empty', async () => {
       eTransferCore.baseUrl = '';
       (eTransferCore.services.checkEOARegistration as jest.Mock).mockResolvedValue({
         result: false,
@@ -261,6 +265,53 @@ describe('ETransferCore', () => {
 
       const result = await eTransferCore.getReCaptcha(correctAelfAddress, '');
       expect(result).toBeUndefined();
+    });
+
+    it('should open reCaptcha URL and return result from message', async () => {
+      const mockReCaptchaUrl = 'http://localhost/recaptcha';
+      const mockMessageEvent = {
+        origin: mockReCaptchaUrl,
+        data: { type: 'GOOGLE_RECAPTCHA_RESULT', data: 'mockResultData' },
+      };
+
+      // Mock the checkEOARegistration method
+      (eTransferCore.services.checkEOARegistration as jest.Mock).mockResolvedValue({ result: false } as never);
+
+      // Mock window.open
+      (window as any).open = jest.fn().mockImplementation;
+
+      window.removeEventListener = jest.fn();
+      window.addEventListener = jest.fn().mockImplementation((_, handleFunction: any) => {
+        handleFunction(mockMessageEvent);
+      });
+
+      const result = await eTransferCore.getReCaptcha(correctAelfAddress, mockReCaptchaUrl);
+      expect(result).toBe(mockMessageEvent.data.data);
+    });
+
+    it('listen error type and reject error', async () => {
+      const mockReCaptchaUrl = 'http://localhost/recaptcha';
+      const mockMessageEvent = {
+        origin: mockReCaptchaUrl,
+        data: { type: 'MOCK_RESULT', data: 'mockResultData' },
+      };
+
+      // Mock the checkEOARegistration method
+      (eTransferCore.services.checkEOARegistration as jest.Mock).mockResolvedValue({ result: false } as never);
+
+      // Mock window.open
+      (window as any).open = jest.fn().mockImplementation;
+
+      window.removeEventListener = jest.fn();
+      window.addEventListener = jest.fn().mockImplementation((_, handleFunction: any) => {
+        handleFunction(mockMessageEvent);
+      });
+
+      try {
+        await eTransferCore.getReCaptcha(correctAelfAddress, mockReCaptchaUrl);
+      } catch (error) {
+        expect(error).toBe(mockMessageEvent.data.data);
+      }
     });
   });
 
