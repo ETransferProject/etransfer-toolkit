@@ -38,7 +38,8 @@
     "lint:fix": "eslint --fix --ext .js,.ts .",
     "format": "prettier --write '**/*'",
     "start": "tsc --watch",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@etransfer/services": "^1.12.2-alpha.1",

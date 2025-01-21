@@ -21,6 +21,7 @@
     "utils": "yarn workspace @etransfer/utils run",
     "test": "jest",
     "test:browser": "jest --config=jest.browser.config.ts",
+    "test:coverage": "jest --coverage",
     "make-badges": "istanbul-badges-readme"
   },
   "devDependencies": {
