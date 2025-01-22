@@ -37,7 +37,8 @@
     "dev": "rollup --config rollup.config.js --watch",
     "release": "yarn version && yarn build",
     "modified:less": "lessc --js --modify-var='ant-prefix=etransfer-ant' src/assets/theme/antd.less src/assets/theme/modified.antd.css",
-    "pub": "npm publish"
+    "pub": "npm publish",
+    "test": "jest"
   },
   "dependencies": {
     "@etransfer/core": "^1.12.2-alpha.1",
