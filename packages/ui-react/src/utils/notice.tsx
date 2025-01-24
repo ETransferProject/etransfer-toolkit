@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { TOrderRecordsNoticeResponse } from '@etransfer/socket';
 import { ETRANSFER_LOGO } from '../constants';
 import { BusinessType } from '@etransfer/types';
-import { CommonSvg } from '../components';
+import CommonSvg from '../components/CommonSvg';
 import { globalInstance } from './globalInstance';
 import { formatSymbolDisplay } from './format';
 import { etransferCore } from './core';
@@ -32,7 +32,7 @@ export const browserNotification = ({ title, content }: { title: string; content
   }
 };
 
-const enum TTxnStatus {
+export const enum TTxnNoticeStatus {
   Successful = 'Successful',
   Failed = 'Failed',
 }
@@ -46,7 +46,7 @@ export const showNotice = ({
   isShowBrowserNotice = true,
   noticeProps,
 }: {
-  status: TTxnStatus;
+  status: TTxnNoticeStatus;
   type: BusinessType;
   amount: string;
   symbol: string;
@@ -63,11 +63,11 @@ export const showNotice = ({
   const action = 'received';
 
   const content =
-    type === BusinessType.Deposit && status === TTxnStatus.Successful && isSwapFail
+    type === BusinessType.Deposit && status === TTxnNoticeStatus.Successful && isSwapFail
       ? amount === '0'
         ? `Swap ${formatSymbolDisplay(symbol)} failed, the USDT ${typeText} has been processed.`
         : `Swap failed, the ${typeText} of ${amount} USDT has been received.`
-      : status === TTxnStatus.Successful
+      : status === TTxnNoticeStatus.Successful
       ? amount === '0'
         ? `The ${typeText} has been processed successfully.`
         : `The ${typeText} of ${amount} ${formatSymbolDisplay(symbol)} has been ${action}.`
@@ -79,7 +79,7 @@ export const showNotice = ({
     ...noticeProps,
     className: clsx(
       'etransfer-ui-txn-notification',
-      status === TTxnStatus.Successful
+      status === TTxnNoticeStatus.Successful
         ? 'etransfer-ui-txn-notification-success'
         : 'etransfer-ui-txn-notification-error',
     ),
@@ -112,7 +112,7 @@ export const handleDepositNoticeDataAndShow = (noticeData: TOrderRecordsNoticeRe
   noticeData.succeed?.deposit?.forEach((item) => {
     if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
       showNotice({
-        status: TTxnStatus.Successful,
+        status: TTxnNoticeStatus.Successful,
         type: BusinessType.Deposit,
         amount: item.amount,
         symbol: item.symbol,
@@ -125,7 +125,7 @@ export const handleDepositNoticeDataAndShow = (noticeData: TOrderRecordsNoticeRe
   noticeData.failed?.deposit?.forEach((item) => {
     if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
       showNotice({
-        status: TTxnStatus.Failed,
+        status: TTxnNoticeStatus.Failed,
         type: BusinessType.Deposit,
         amount: item.amount,
         symbol: item.symbol,
@@ -137,7 +137,7 @@ export const handleDepositNoticeDataAndShow = (noticeData: TOrderRecordsNoticeRe
 
 export const handleWithdrawNoticeDataAndShow = (noticeData: TOrderRecordsNoticeResponse) => {
   // >>>>>> save processing
-  noticeData.processing.withdraw?.forEach((item) => {
+  noticeData.processing?.withdraw?.forEach((item) => {
     if (!globalInstance.processingIds.includes(item.id)) {
       globalInstance.processingIds.push(item.id);
     }
@@ -146,7 +146,7 @@ export const handleWithdrawNoticeDataAndShow = (noticeData: TOrderRecordsNoticeR
   noticeData.succeed?.withdraw?.forEach((item) => {
     if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
       showNotice({
-        status: TTxnStatus.Successful,
+        status: TTxnNoticeStatus.Successful,
         type: BusinessType.Withdraw,
         amount: item.amount,
         symbol: item.symbol,
@@ -158,7 +158,7 @@ export const handleWithdrawNoticeDataAndShow = (noticeData: TOrderRecordsNoticeR
   noticeData.failed?.withdraw?.forEach((item) => {
     if (globalInstance.processingIds.includes(item.id) && !globalInstance.showNoticeIds.includes(item.id)) {
       showNotice({
-        status: TTxnStatus.Failed,
+        status: TTxnNoticeStatus.Failed,
         type: BusinessType.Withdraw,
         amount: item.amount,
         symbol: item.symbol,

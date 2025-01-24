@@ -31,40 +31,40 @@ describe('getAelfExploreLink', () => {
 
   it('should return the correct transaction link', () => {
     (getNetworkType as jest.Mock).mockReturnValue('mainnet');
-    (getAelfReact as jest.Mock).mockReturnValue({ exploreUrl: 'https://explore.aelf.io/' }); // Mock exploreUrl
+    (getAelfReact as jest.Mock).mockReturnValue({ exploreUrl: 'https://testnet.aelfscan.io/' }); // Mock exploreUrl
 
     const result = getAelfExploreLink(mockData, AelfExploreType.transaction, mockChainId);
 
-    expect(result).toBe('https://explore.aelf.io/tx/mockData'); // Check the result
+    expect(result).toBe('https://testnet.aelfscan.io/tx/mockData'); // Check the result
   });
 
   it('should return the correct token link', () => {
     (getNetworkType as jest.Mock).mockReturnValue('mainnet');
-    (getAelfReact as jest.Mock).mockReturnValue({ exploreUrl: 'https://explore.aelf.io/' });
+    (getAelfReact as jest.Mock).mockReturnValue({ exploreUrl: 'https://testnet.aelfscan.io/' });
 
     const result = getAelfExploreLink(mockData, AelfExploreType.token, mockChainId);
 
-    expect(result).toBe('https://explore.aelf.io/token/mockData'); // Check the result
+    expect(result).toBe('https://testnet.aelfscan.io/token/mockData'); // Check the result
   });
 
   it('should return the correct block link', () => {
     (getNetworkType as jest.Mock).mockReturnValue('mainnet');
-    (getAelfReact as jest.Mock).mockReturnValue({ exploreUrl: 'https://explore.aelf.io/' });
+    (getAelfReact as jest.Mock).mockReturnValue({ exploreUrl: 'https://testnet.aelfscan.io/' });
 
     const result = getAelfExploreLink(mockData, AelfExploreType.block, mockChainId);
 
-    expect(result).toBe('https://explore.aelf.io/block/mockData'); // Check the result
+    expect(result).toBe('https://testnet.aelfscan.io/block/mockData'); // Check the result
   });
 
   it('should return the correct address link when type is address or default', () => {
     (getNetworkType as jest.Mock).mockReturnValue('mainnet');
-    (getAelfReact as jest.Mock).mockReturnValue({ exploreUrl: 'https://explore.aelf.io/' });
+    (getAelfReact as jest.Mock).mockReturnValue({ exploreUrl: 'https://testnet.aelfscan.io/' });
 
     let result = getAelfExploreLink(mockData, AelfExploreType.address, mockChainId);
-    expect(result).toBe('https://explore.aelf.io/address/mockData'); // Check the result
+    expect(result).toBe('https://testnet.aelfscan.io/address/mockData'); // Check the result
 
     result = getAelfExploreLink(mockData, undefined as any, mockChainId); // Test default case (undefined)
-    expect(result).toBe('https://explore.aelf.io/address/mockData'); // Check the result
+    expect(result).toBe('https://testnet.aelfscan.io/address/mockData'); // Check the result
   });
 });
 
