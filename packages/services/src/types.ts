@@ -34,10 +34,12 @@ import {
   TGetTransferInfoResult,
   TUpdateTransferOrderRequest,
   TUpdateTransferOrderResult,
+  TGetOtherChainAuthRequest,
 } from '@etransfer/types';
 
 export type TServices = {
   getAuthToken(params: TGetAuthRequest): Promise<TGetAuthResult>;
+  getOtherChainAuthToken(params: TGetOtherChainAuthRequest): Promise<TGetAuthResult>;
   getTokenList(params: TGetTokenListRequest): Promise<TGetTokenListResult>;
   getTokenOption(params: TGetTokenOptionRequest): Promise<TGetTokenOptionResult>;
   getNetworkList(params: TGetNetworkListRequest, authToken?: string): Promise<TGetNetworkListResult>;

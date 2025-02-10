@@ -37,10 +37,11 @@ import {
   TUpdateTransferOrderRequest,
   TUpdateTransferOrderResult,
   TGetRecordStatusRequest,
+  TGetOtherChainAuthRequest,
 } from '@etransfer/types';
 import { TServices } from './types';
 import { formatApiError } from './utils';
-import { API_LIST, AUTH_API_BASE_PARAMS, CANCEL_TOKEN_SOURCE_KEY } from './constants';
+import { API_LIST, AUTH_API_BASE_PARAMS, CANCEL_TOKEN_SOURCE_KEY, OTHER_CHAIN_AUTH_API_BASE_PARAMS } from './constants';
 import { TRequestConfig, EtransferRequest } from '@etransfer/request';
 
 export abstract class BaseService {
@@ -70,6 +71,25 @@ export class Services extends BaseService implements TServices {
         ...config,
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
+      return res.data;
+    } catch (error) {
+      throw formatApiError(error, 'getAuthToken error', false);
+    }
+  }
+
+  async getOtherChainAuthToken(
+    params: TGetOtherChainAuthRequest,
+    config?: AxiosRequestConfig<any>,
+  ): Promise<TGetAuthResult> {
+    try {
+      const res = await this._request.post(
+        `/connect/token`,
+        stringify({ ...OTHER_CHAIN_AUTH_API_BASE_PARAMS, ...params }),
+        {
+          ...config,
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        },
+      );
       return res.data;
     } catch (error) {
       throw formatApiError(error, 'getAuthToken error', false);

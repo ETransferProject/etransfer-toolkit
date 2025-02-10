@@ -27,6 +27,14 @@ export type TAuthApiBaseParams = {
   client_id: string;
 };
 
+export type TOtherChainAuthApiBaseParams = {
+  grant_type: string;
+  scope: string;
+  client_id: string;
+  version: PortkeyVersion.v2;
+  source: string;
+};
+
 export type TGetAuthRequest = {
   pubkey: string;
   signature: string;
@@ -36,6 +44,14 @@ export type TGetAuthRequest = {
   managerAddress?: string; // for Portkey
   version: PortkeyVersion;
   source: AuthTokenSource;
+  recaptchaToken?: string; // for NightElf
+};
+
+export type TGetOtherChainAuthRequest = {
+  signature: string;
+  plain_text: string;
+  pubkey: string; // wallet address
+  sourceType: AuthTokenSource;
   recaptchaToken?: string; // for NightElf
 };
 

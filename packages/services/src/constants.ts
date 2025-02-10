@@ -1,5 +1,5 @@
 import { TBaseConfig } from '@etransfer/request';
-import { TAuthApiBaseParams } from '@etransfer/types';
+import { PortkeyVersion, TAuthApiBaseParams, TOtherChainAuthApiBaseParams } from '@etransfer/types';
 
 export const DEFAULT_METHOD = 'GET';
 
@@ -75,4 +75,12 @@ export const AUTH_API_BASE_PARAMS: TAuthApiBaseParams = {
   grant_type: 'signature',
   scope: 'ETransferServer',
   client_id: 'ETransferServer_App',
+};
+
+export const OTHER_CHAIN_AUTH_API_BASE_PARAMS: TOtherChainAuthApiBaseParams = {
+  grant_type: 'signature',
+  scope: 'ETransferServer',
+  client_id: 'ETransferServer_App',
+  version: PortkeyVersion.v2,
+  source: 'wallet',
 };
