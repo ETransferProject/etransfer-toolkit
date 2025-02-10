@@ -29,6 +29,19 @@ import {
   TGetRecordStatusResult,
   TGetWithdrawInfoRequest,
   TGetWithdrawInfoResult,
+  TGetOtherChainAuthRequest,
+  TCheckRegistrationRequest,
+  TCheckRegistrationResult,
+  WalletSourceType,
+  TGetTransferInfoResult,
+  TGetTransferInfoRequest,
+  TCreateTransferOrderRequest,
+  TCreateTransferOrderResult,
+  TUpdateTransferOrderResult,
+  TUpdateTransferOrderRequest,
+  TGetTokenNetworkRelationRequest,
+  TGetTokenNetworkRelationResult,
+  TGetRecordStatusRequest,
 } from '@etransfer/types';
 import { BaseService, Services } from '../src/services';
 import { API_LIST, CANCEL_TOKEN_SOURCE_KEY } from '../src/constants';
@@ -85,6 +98,7 @@ describe('Services', () => {
     headers: {},
     config: {},
   };
+  const authToken = 'Bearer token';
 
   beforeEach(() => {
     mockRequest = new EtransferRequest() as jest.Mocked<EtransferRequest>;
@@ -96,441 +110,752 @@ describe('Services', () => {
     jest.clearAllMocks();
   });
 
-  it('should get auth token successfully', async () => {
-    const params: TGetAuthRequest = {
-      pubkey: '',
-      signature: '',
-      plain_text: '',
-      ca_hash: '',
-      chain_id: '',
-      managerAddress: '',
-      version: PortkeyVersion.v2,
-      source: AuthTokenSource.Portkey,
-      recaptchaToken: '',
-    };
-    const result: TGetAuthResult = {
-      token_type: 'Bearer',
-      access_token: '',
-      expires_in: 172798,
-    };
+  describe('getAuthToken', () => {
+    it('should get auth token successfully', async () => {
+      const params: TGetAuthRequest = {
+        pubkey: '',
+        signature: '',
+        plain_text: '',
+        ca_hash: '',
+        chain_id: '',
+        managerAddress: '',
+        version: PortkeyVersion.v2,
+        source: AuthTokenSource.Portkey,
+        recaptchaToken: '',
+      };
+      const result: TGetAuthResult = {
+        token_type: 'Bearer',
+        access_token: '',
+        expires_in: 172798,
+      };
 
-    mockRequest.post.mockResolvedValue({
-      data: result,
-      ...defaultResponse,
+      mockRequest.post.mockResolvedValue({
+        data: result,
+        ...defaultResponse,
+      });
+
+      const response = await services.getAuthToken(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.post).toHaveBeenCalledWith(
+        `/connect/token`,
+        expect.stringContaining('grant_type=signature'),
+        expect.objectContaining({ headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }),
+      );
     });
 
-    const response = await services.getAuthToken(params);
+    it('should handle error in getAuthToken', async () => {
+      const params: TGetAuthRequest = {
+        pubkey: '',
+        signature: '',
+        plain_text: '',
+        ca_hash: '',
+        chain_id: '',
+        managerAddress: '',
+        version: PortkeyVersion.v2,
+        source: AuthTokenSource.Portkey,
+        recaptchaToken: '',
+      };
+      const error = { message: 'Network Error' };
+      mockRequest.post.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getAuthToken error'));
 
-    expect(response).toEqual(result);
-    expect(mockRequest.post).toHaveBeenCalledWith(
-      `/connect/token`,
-      expect.stringContaining('grant_type=signature'),
-      expect.objectContaining({ headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }),
-    );
+      await expect(services.getAuthToken(params)).rejects.toThrow('getAuthToken error');
+    });
   });
+  describe('getOtherChainAuthToken', () => {
+    it('should get other chain auth token successfully', async () => {
+      const params: TGetOtherChainAuthRequest = {
+        pubkey: '',
+        signature: '',
+        plain_text: '',
+        recaptchaToken: '',
+        sourceType: AuthTokenSource.EVM,
+      };
+      const result: TGetAuthResult = {
+        token_type: 'Bearer',
+        access_token: '',
+        expires_in: 172798,
+      };
 
-  it('should handle error in getAuthToken', async () => {
-    const params: TGetAuthRequest = {
-      pubkey: '',
-      signature: '',
-      plain_text: '',
-      ca_hash: '',
-      chain_id: '',
-      managerAddress: '',
-      version: PortkeyVersion.v2,
-      source: AuthTokenSource.Portkey,
-      recaptchaToken: '',
-    };
-    const error = { message: 'Network Error' };
-    mockRequest.post.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getAuthToken error'));
+      mockRequest.post.mockResolvedValue({
+        data: result,
+        ...defaultResponse,
+      });
 
-    await expect(services.getAuthToken(params)).rejects.toThrow('getAuthToken error');
-  });
+      const response = await services.getOtherChainAuthToken(params);
 
-  it('should get token list successfully', async () => {
-    const params: TGetTokenListRequest = {
-      type: BusinessType.Deposit,
-      chainId: 'AELF',
-    };
-    const result: TGetTokenListResult = {
-      tokenList: [],
-    };
-
-    mockRequest.send.mockResolvedValue({
-      data: result,
-      ...defaultResponse,
+      expect(response).toEqual(result);
+      expect(mockRequest.post).toHaveBeenCalledWith(
+        `/connect/token`,
+        expect.stringContaining('grant_type=signature'),
+        expect.objectContaining({ headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }),
+      );
     });
 
-    const response = await services.getTokenList(params);
+    it('should handle error in getOtherChainAuthToken', async () => {
+      const params: TGetOtherChainAuthRequest = {
+        pubkey: '',
+        signature: '',
+        plain_text: '',
+        recaptchaToken: '',
+        sourceType: AuthTokenSource.EVM,
+      };
+      const error = { message: 'Network Error' };
+      mockRequest.post.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getOtherChainAuthToken error'));
 
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getTokenList, { params });
+      await expect(services.getOtherChainAuthToken(params)).rejects.toThrow('getOtherChainAuthToken error');
+    });
   });
 
-  it('should handle error in getTokenList', async () => {
-    const params: TGetTokenListRequest = {
-      type: BusinessType.Deposit,
-      chainId: 'AELF',
-    };
-    const error = { message: 'Token List Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getTokenList error'));
+  describe('getTokenList', () => {
+    it('should get token list successfully', async () => {
+      const params: TGetTokenListRequest = {
+        type: BusinessType.Deposit,
+        chainId: 'AELF',
+      };
+      const result: TGetTokenListResult = {
+        tokenList: [],
+      };
 
-    await expect(services.getTokenList(params)).rejects.toThrow('getTokenList error');
+      mockRequest.send.mockResolvedValue({
+        data: result,
+        ...defaultResponse,
+      });
+
+      const response = await services.getTokenList(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getTokenList, { params });
+    });
+
+    it('should handle error in getTokenList', async () => {
+      const params: TGetTokenListRequest = {
+        type: BusinessType.Deposit,
+        chainId: 'AELF',
+      };
+      const error = { message: 'Token List Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getTokenList error'));
+
+      await expect(services.getTokenList(params)).rejects.toThrow('getTokenList error');
+    });
   });
 
-  it('should get token options successfully', async () => {
-    const params: TGetTokenOptionRequest = {
-      type: BusinessType.Deposit,
-    };
-    const result: TGetTokenOptionResult = {
-      tokenList: [],
-    };
+  describe('getTokenOption', () => {
+    it('should get token options successfully', async () => {
+      const params: TGetTokenOptionRequest = {
+        type: BusinessType.Deposit,
+      };
+      const result: TGetTokenOptionResult = {
+        tokenList: [],
+      };
 
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
 
-    const response = await services.getTokenOption(params);
+      const response = await services.getTokenOption(params);
 
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getTokenOption, { params });
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getTokenOption, { params });
+    });
+
+    it('should handle error in getTokenOption', async () => {
+      const params: TGetTokenOptionRequest = {
+        type: BusinessType.Deposit,
+      };
+      const error = { message: 'Token Option Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getTokenOption error'));
+
+      await expect(services.getTokenOption(params)).rejects.toThrow('getTokenOption error');
+    });
   });
 
-  it('should handle error in getTokenOption', async () => {
-    const params: TGetTokenOptionRequest = {
-      type: BusinessType.Deposit,
-    };
-    const error = { message: 'Token Option Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getTokenOption error'));
-
-    await expect(services.getTokenOption(params)).rejects.toThrow('getTokenOption error');
-  });
-
-  it('should get network list successfully', async () => {
+  describe('getNetworkList', () => {
     const params: TGetNetworkListRequest = {
       type: BusinessType.Deposit,
       chainId: 'AELF',
     };
+
     const result: TGetNetworkListResult = {
       networkList: [],
     };
 
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+    it('should get network list successfully', async () => {
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
 
-    const response = await services.getNetworkList(params);
+      const response = await services.getNetworkList(params);
 
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getNetworkList, {
-      params,
-      cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_NETWORK_LIST,
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getNetworkList, {
+        params,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_NETWORK_LIST,
+      });
+    });
+
+    it('should get network list successfully with auth token', async () => {
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.getNetworkList(params, authToken);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getNetworkList, {
+        params,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_NETWORK_LIST,
+        headers: { Authorization: authToken },
+      });
+    });
+
+    it('should handle error in getNetworkList', async () => {
+      const error = { message: 'Network List Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getNetworkList error'));
+
+      await expect(services.getNetworkList(params)).rejects.toThrow('getNetworkList error');
     });
   });
 
-  it('should handle error in getNetworkList', async () => {
-    const params: TGetNetworkListRequest = {
-      type: BusinessType.Deposit,
-      chainId: 'AELF',
-    };
-    const error = { message: 'Network List Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getNetworkList error'));
+  describe('getTokenPrices', () => {
+    it('should get token prices successfully', async () => {
+      const params: TGetTokenPricesRequest = {
+        symbols: 'ELF',
+      };
+      const result: TGetTokenPricesResult = {
+        items: [],
+      };
 
-    await expect(services.getNetworkList(params)).rejects.toThrow('getNetworkList error');
-  });
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
 
-  it('should get token prices successfully', async () => {
-    const params: TGetTokenPricesRequest = {
-      symbols: 'ELF',
-    };
-    const result: TGetTokenPricesResult = {
-      items: [],
-    };
+      const response = await services.getTokenPrices(params);
 
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getTokenPrices, {
+        params,
+      });
+    });
 
-    const response = await services.getTokenPrices(params);
+    it('should handle error in getTokenPrices', async () => {
+      const params: TGetTokenPricesRequest = {
+        symbols: 'ELF',
+      };
+      const error = { message: 'Token Prices Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getTokenPrices error'));
 
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.common.getTokenPrices, {
-      params,
+      await expect(services.getTokenPrices(params)).rejects.toThrow('getTokenPrices error');
     });
   });
 
-  it('should handle error in getTokenPrices', async () => {
-    const params: TGetTokenPricesRequest = {
-      symbols: 'ELF',
-    };
-    const error = { message: 'Token Prices Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getTokenPrices error'));
+  describe('getDepositCalculate', () => {
+    it('should get deposit info successfully', async () => {
+      const params: TGetDepositInfoRequest = {
+        chainId: 'AELF',
+        network: '',
+      };
+      const result: TGetDepositInfoResult = {
+        depositInfo: {
+          depositAddress: '',
+          minAmount: '',
+          extraNotes: undefined,
+          minAmountUsd: '',
+          serviceFee: undefined,
+          serviceFeeUsd: undefined,
+          currentThreshold: undefined,
+          extraInfo: undefined,
+        },
+      };
 
-    await expect(services.getTokenPrices(params)).rejects.toThrow('getTokenPrices error');
-  });
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
 
-  it('should get deposit info successfully', async () => {
-    const params: TGetDepositInfoRequest = {
-      chainId: 'AELF',
-      network: '',
-    };
-    const result: TGetDepositInfoResult = {
-      depositInfo: {
-        depositAddress: '',
-        minAmount: '',
-        extraNotes: undefined,
-        minAmountUsd: '',
-        serviceFee: undefined,
-        serviceFeeUsd: undefined,
-        currentThreshold: undefined,
-        extraInfo: undefined,
-      },
-    };
+      const response = await services.getDepositInfo(params);
 
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.deposit.getDepositInfo, {
+        params,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_DEPOSIT_INFO,
+      });
+    });
 
-    const response = await services.getDepositInfo(params);
+    it('should handle error in getDepositInfo', async () => {
+      const params: TGetDepositInfoRequest = {
+        chainId: 'AELF',
+        network: '',
+      };
+      const error = { message: 'Deposit Info Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getDepositInfo error'));
 
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.deposit.getDepositInfo, {
-      params,
-      cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_DEPOSIT_INFO,
+      await expect(services.getDepositInfo(params)).rejects.toThrow('getDepositInfo error');
     });
   });
 
-  it('should handle error in getDepositInfo', async () => {
-    const params: TGetDepositInfoRequest = {
-      chainId: 'AELF',
-      network: '',
-    };
-    const error = { message: 'Deposit Info Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getDepositInfo error'));
-
-    await expect(services.getDepositInfo(params)).rejects.toThrow('getDepositInfo error');
-  });
-
-  it('should calculate deposit receive successfully', async () => {
-    const params: TGetDepositCalculateRequest = {
-      toChainId: 'AELF',
-      fromSymbol: 'USDT',
-      toSymbol: 'SGR-1',
-      fromAmount: '100',
-    };
-    const result: TGetDepositCalculateResult = {
-      conversionRate: {
+  describe('getDepositCalculate', () => {
+    it('should calculate deposit receive successfully', async () => {
+      const params: TGetDepositCalculateRequest = {
+        toChainId: 'AELF',
         fromSymbol: 'USDT',
         toSymbol: 'SGR-1',
         fromAmount: '100',
-        toAmount: '1000',
-        minimumReceiveAmount: '900',
-      },
-    };
+      };
+      const result: TGetDepositCalculateResult = {
+        conversionRate: {
+          fromSymbol: 'USDT',
+          toSymbol: 'SGR-1',
+          fromAmount: '100',
+          toAmount: '1000',
+          minimumReceiveAmount: '900',
+        },
+      };
 
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
 
-    const response = await services.getDepositCalculate(params);
+      const response = await services.getDepositCalculate(params);
 
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.deposit.depositCalculator, {
-      params,
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.deposit.depositCalculator, {
+        params,
+      });
+    });
+
+    it('should handle error in getDepositCalculate', async () => {
+      const params: TGetDepositCalculateRequest = {
+        toChainId: 'AELF',
+        fromSymbol: 'USDT',
+        toSymbol: 'SGR-1',
+        fromAmount: '100',
+      };
+      const error = { message: 'Deposit Calculate Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getDepositCalculate error'));
+
+      await expect(services.getDepositCalculate(params)).rejects.toThrow('getDepositCalculate error');
     });
   });
 
-  it('should handle error in getDepositCalculate', async () => {
-    const params: TGetDepositCalculateRequest = {
-      toChainId: 'AELF',
+  describe('getWithdrawInfo', () => {
+    it('should get withdraw info successfully', async () => {
+      const params: TGetWithdrawInfoRequest = {
+        chainId: 'AELF',
+      };
+      const result: TGetWithdrawInfoResult = {
+        withdrawInfo: {
+          maxAmount: '',
+          minAmount: '',
+          limitCurrency: '',
+          totalLimit: '',
+          remainingLimit: '',
+          transactionFee: '',
+          transactionUnit: '',
+          expiredTimestamp: 0,
+          aelfTransactionFee: '',
+          aelfTransactionUnit: '',
+          receiveAmount: '',
+          feeList: [],
+          receiveAmountUsd: '',
+          amountUsd: '',
+          feeUsd: '',
+        },
+      };
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.getWithdrawInfo(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.withdraw.getWithdrawInfo, {
+        params,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_WITHDRAW_INFO,
+      });
+    });
+
+    it('should handle error in getWithdrawInfo', async () => {
+      const params: TGetWithdrawInfoRequest = {
+        chainId: 'AELF',
+      };
+      const error = { message: 'Get Withdrawal Info Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getWithdrawInfo error'));
+
+      await expect(services.getWithdrawInfo(params)).rejects.toThrow('getWithdrawInfo error');
+    });
+  });
+
+  describe('createWithdrawOrder', () => {
+    it('should create withdraw order successfully', async () => {
+      const params: TCreateWithdrawOrderRequest = {
+        network: '',
+        symbol: '',
+        amount: '',
+        fromChainId: 'AELF',
+        toAddress: '',
+        rawTransaction: '',
+      };
+      const result: TCreateWithdrawOrderResult = {
+        orderId: '',
+        transactionId: '',
+      };
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.createWithdrawOrder(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.withdraw.createWithdrawOrder, {
+        data: params,
+      });
+    });
+
+    it('should handle error in createWithdrawOrder', async () => {
+      const params: TCreateWithdrawOrderRequest = {
+        network: '',
+        symbol: '',
+        amount: '',
+        fromChainId: 'AELF',
+        toAddress: '',
+        rawTransaction: '',
+      };
+      const error = { message: 'Create Withdraw Order Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('createWithdrawOrder error'));
+
+      await expect(services.createWithdrawOrder(params)).rejects.toThrow('createWithdrawOrder error');
+    });
+  });
+
+  describe('getRecordsList', () => {
+    it('should get record list successfully', async () => {
+      const params: TGetRecordsListRequest = {
+        type: RecordsRequestType.All,
+        status: RecordsRequestStatus.All,
+        skipCount: 0,
+        maxResultCount: 0,
+      };
+      const result: TGetRecordsListResult = {
+        totalCount: 0,
+        items: [],
+      };
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.getRecordsList(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.records.getRecordsList, { params });
+    });
+
+    it('should handle error in getRecordsList', async () => {
+      const params: TGetRecordsListRequest = {
+        type: RecordsRequestType.All,
+        status: RecordsRequestStatus.All,
+        skipCount: 0,
+        maxResultCount: 0,
+      };
+      const error = { message: 'Get Record List Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getRecordsList error'));
+
+      await expect(services.getRecordsList(params)).rejects.toThrow('getRecordsList error');
+    });
+  });
+
+  describe('getRecordStatus', () => {
+    it('should get record status successfully', async () => {
+      const result: TGetRecordStatusResult = {
+        status: false,
+      };
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.getRecordStatus();
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.records.getRecordStatus, {});
+    });
+
+    it('should get record status successfully with params', async () => {
+      const params: TGetRecordStatusRequest = {
+        addressList: ['address1', 'address2'],
+      };
+      const result: TGetRecordStatusResult = {
+        status: false,
+      };
+
+      mockRequest.send.mockImplementation((_url: any, config: any) => {
+        config?.paramsSerializer();
+        return Promise.resolve({ data: result, ...defaultResponse });
+      });
+
+      const response = await services.getRecordStatus(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalled();
+    });
+
+    it('should handle error in getRecordStatus', async () => {
+      const error = { message: 'Get Record Status Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getRecordStatus error'));
+
+      await expect(services.getRecordStatus()).rejects.toThrow('getRecordStatus error');
+    });
+  });
+
+  describe('getRecordDetail', () => {
+    it('should get record detail successfully', async () => {
+      const result: any = {};
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.getRecordDetail('0000-1111-2222');
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.records.getRecordDetail, { query: '0000-1111-2222' });
+    });
+
+    it('should handle error in getRecordDetail', async () => {
+      const error = { message: 'Get Record Detail Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getRecordDetail error'));
+
+      await expect(services.getRecordDetail('0000-1111-2222')).rejects.toThrow('getRecordDetail error');
+    });
+  });
+
+  describe('checkEOARegistration', () => {
+    it('should check EOA registration successfully', async () => {
+      const params: TCheckEOARegistrationRequest = {
+        address: '',
+      };
+      const result: TCheckEOARegistrationResult = {
+        result: false,
+      };
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.checkEOARegistration(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.user.checkEOARegistration, { params });
+    });
+
+    it('should handle error in checkEOARegistration', async () => {
+      const params: TCheckEOARegistrationRequest = { address: '' };
+      const error = { message: 'Check EOA Registration Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('checkEOARegistration error'));
+
+      await expect(services.checkEOARegistration(params)).rejects.toThrow('checkEOARegistration error');
+    });
+  });
+
+  describe('checkRegistration', () => {
+    it('should check registration successfully', async () => {
+      const params: TCheckRegistrationRequest = {
+        address: '',
+        sourceType: WalletSourceType.EVM,
+      };
+      const result: TCheckRegistrationResult = {
+        result: false,
+      };
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.checkRegistration(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.user.checkRegistration, { params });
+    });
+
+    it('should handle error in checkRegistration', async () => {
+      const params: TCheckRegistrationRequest = { address: '', sourceType: WalletSourceType.EVM };
+      const error = { message: 'Check Registration Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('checkRegistration error'));
+
+      await expect(services.checkRegistration(params)).rejects.toThrow('checkRegistration error');
+    });
+  });
+
+  describe('getTokenNetworkRelation', () => {
+    it('should get transfer info successfully', async () => {
+      const params: TGetTokenNetworkRelationRequest = {};
+      const result: TGetTokenNetworkRelationResult = {};
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.getTokenNetworkRelation({});
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.transfer.getTokenNetworkRelation, {
+        params,
+        headers: {
+          Authorization: '',
+        },
+      });
+    });
+
+    it('should handle error in getTokenNetworkRelation', async () => {
+      const params: TGetTokenNetworkRelationRequest = {};
+      const error = { message: 'Get Transfer Info Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getTokenNetworkRelation error'));
+
+      await expect(services.getTokenNetworkRelation(params)).rejects.toThrow('getTokenNetworkRelation error');
+    });
+  });
+
+  describe('getTransferInfo', () => {
+    it('should get transfer info successfully', async () => {
+      const params: TGetTransferInfoRequest = {
+        fromNetwork: 'EVM',
+        symbol: 'USDT',
+      };
+      const result: TGetTransferInfoResult = {
+        transferInfo: {
+          maxAmount: '',
+          minAmount: '',
+          limitCurrency: '',
+          totalLimit: '',
+          remainingLimit: '',
+          expiredTimestamp: 0,
+          receiveAmount: '',
+          receiveAmountUsd: '',
+          amountUsd: '',
+          feeUsd: '',
+        },
+      };
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.getTransferInfo(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.transfer.getTransferInfo, {
+        params,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_TRANSFER_INFO,
+        headers: {
+          Authorization: '',
+        },
+      });
+    });
+
+    it('should handle error in getTransferInfo', async () => {
+      const params: TGetTransferInfoRequest = {
+        fromNetwork: 'EVM',
+        symbol: 'ELF',
+      };
+      const error = { message: 'Get Transfer Info Error' };
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('getTransferInfo error'));
+
+      await expect(services.getTransferInfo(params)).rejects.toThrow('getTransferInfo error');
+    });
+  });
+
+  describe('createTransferOrder', () => {
+    const params: TCreateTransferOrderRequest = {
+      amount: '10',
+      fromNetwork: 'EVM',
+      toNetwork: 'AELF',
       fromSymbol: 'USDT',
-      toSymbol: 'SGR-1',
-      fromAmount: '100',
-    };
-    const error = { message: 'Deposit Calculate Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getDepositCalculate error'));
-
-    await expect(services.getDepositCalculate(params)).rejects.toThrow('getDepositCalculate error');
-  });
-
-  it('should get withdraw info successfully', async () => {
-    const params: TGetWithdrawInfoRequest = {
-      chainId: 'AELF',
-    };
-    const result: TGetWithdrawInfoResult = {
-      withdrawInfo: {
-        maxAmount: '',
-        minAmount: '',
-        limitCurrency: '',
-        totalLimit: '',
-        remainingLimit: '',
-        transactionFee: '',
-        transactionUnit: '',
-        expiredTimestamp: 0,
-        aelfTransactionFee: '',
-        aelfTransactionUnit: '',
-        receiveAmount: '',
-        feeList: [],
-        receiveAmountUsd: '',
-        amountUsd: '',
-        feeUsd: '',
-      },
+      toSymbol: 'USDT',
+      fromAddress: '0x',
+      toAddress: 'address',
     };
 
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+    it('should create transfer order successfully', async () => {
+      const result: TCreateTransferOrderResult = {
+        orderId: '',
+        transactionId: '',
+      };
 
-    const response = await services.getWithdrawInfo(params);
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
 
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.withdraw.getWithdrawInfo, {
-      params,
-      cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_WITHDRAW_INFO,
+      const response = await services.createTransferOrder(params);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.transfer.createTransferOrder, {
+        data: params,
+      });
+    });
+
+    it('should create transfer order successfully with auth token', async () => {
+      const result: TCreateTransferOrderResult = {
+        orderId: '',
+        transactionId: '',
+      };
+
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+
+      const response = await services.createTransferOrder(params, authToken);
+
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.transfer.createTransferOrder, {
+        data: params,
+        headers: { Authorization: authToken },
+      });
+    });
+
+    it('should handle error in createTransferOrder', async () => {
+      const error = { message: 'Create Transfer Order Error' };
+
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('createTransferOrder error'));
+
+      await expect(services.createTransferOrder(params)).rejects.toThrow('createTransferOrder error');
     });
   });
 
-  it('should handle error in getWithdrawInfo', async () => {
-    const params: TGetWithdrawInfoRequest = {
-      chainId: 'AELF',
+  describe('UpdateTransferOrder', () => {
+    const params: TUpdateTransferOrderRequest = {
+      amount: '10',
+      fromNetwork: 'EVM',
+      toNetwork: 'AELF',
+      fromSymbol: 'USDT',
+      toSymbol: 'USDT',
+      fromAddress: '0x',
+      toAddress: 'toAddress',
+      address: 'address',
+      txId: 'transactionId',
     };
-    const error = { message: 'Get Withdrawal Info Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getWithdrawInfo error'));
+    const orderId = 'orderid';
 
-    await expect(services.getWithdrawInfo(params)).rejects.toThrow('getWithdrawInfo error');
-  });
+    it('should create transfer order successfully', async () => {
+      const result: TUpdateTransferOrderResult = true;
 
-  it('should create withdraw order successfully', async () => {
-    const params: TCreateWithdrawOrderRequest = {
-      network: '',
-      symbol: '',
-      amount: '',
-      fromChainId: 'AELF',
-      toAddress: '',
-      rawTransaction: '',
-    };
-    const result: TCreateWithdrawOrderResult = {
-      orderId: '',
-      transactionId: '',
-    };
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
 
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+      const response = await services.updateTransferOrder(params, orderId);
 
-    const response = await services.createWithdrawOrder(params);
-
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.withdraw.createWithdrawOrder, {
-      data: params,
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.transfer.updateTransferOrder, {
+        data: params,
+        query: orderId,
+      });
     });
-  });
 
-  it('should handle error in createWithdrawOrder', async () => {
-    const params: TCreateWithdrawOrderRequest = {
-      network: '',
-      symbol: '',
-      amount: '',
-      fromChainId: 'AELF',
-      toAddress: '',
-      rawTransaction: '',
-    };
-    const error = { message: 'Create Withdraw Order Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('createWithdrawOrder error'));
+    it('should create transfer order successfully with auth token', async () => {
+      const result: TUpdateTransferOrderResult = true;
 
-    await expect(services.createWithdrawOrder(params)).rejects.toThrow('createWithdrawOrder error');
-  });
+      mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
 
-  it('should get record list successfully', async () => {
-    const params: TGetRecordsListRequest = {
-      type: RecordsRequestType.All,
-      status: RecordsRequestStatus.All,
-      skipCount: 0,
-      maxResultCount: 0,
-    };
-    const result: TGetRecordsListResult = {
-      totalCount: 0,
-      items: [],
-    };
+      const response = await services.updateTransferOrder(params, orderId, authToken);
 
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
+      expect(response).toEqual(result);
+      expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.transfer.updateTransferOrder, {
+        data: params,
+        query: orderId,
+        headers: { Authorization: authToken },
+      });
+    });
 
-    const response = await services.getRecordsList(params);
+    it('should handle error in updateTransferOrder', async () => {
+      const error = { message: 'Create Transfer Order Error' };
 
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.records.getRecordsList, { params });
-  });
+      mockRequest.send.mockRejectedValue(error);
+      (formatApiError as jest.Mock).mockReturnValue(new Error('updateTransferOrder error'));
 
-  it('should handle error in getRecordsList', async () => {
-    const params: TGetRecordsListRequest = {
-      type: RecordsRequestType.All,
-      status: RecordsRequestStatus.All,
-      skipCount: 0,
-      maxResultCount: 0,
-    };
-    const error = { message: 'Get Record List Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getRecordsList error'));
-
-    await expect(services.getRecordsList(params)).rejects.toThrow('getRecordsList error');
-  });
-
-  it('should get record status successfully', async () => {
-    const result: TGetRecordStatusResult = {
-      status: false,
-    };
-
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
-
-    const response = await services.getRecordStatus();
-
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.records.getRecordStatus, {});
-  });
-
-  it('should handle error in getRecordStatus', async () => {
-    const error = { message: 'Get Record Status Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getRecordStatus error'));
-
-    await expect(services.getRecordStatus()).rejects.toThrow('getRecordStatus error');
-  });
-
-  it('should get record detail successfully', async () => {
-    const result: any = {};
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
-
-    const response = await services.getRecordDetail('0000-1111-2222');
-
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.records.getRecordDetail, { query: '0000-1111-2222' });
-  });
-
-  it('should handle error in getRecordDetail', async () => {
-    const error = { message: 'Get Record Detail Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('getRecordDetail error'));
-
-    await expect(services.getRecordDetail('0000-1111-2222')).rejects.toThrow('getRecordDetail error');
-  });
-
-  it('should check EOA registration successfully', async () => {
-    const params: TCheckEOARegistrationRequest = {
-      address: '',
-    };
-    const result: TCheckEOARegistrationResult = {
-      result: false,
-    };
-
-    mockRequest.send.mockResolvedValue({ data: result, ...defaultResponse });
-
-    const response = await services.checkEOARegistration(params);
-
-    expect(response).toEqual(result);
-    expect(mockRequest.send).toHaveBeenCalledWith(API_LIST.user.checkEOARegistration, { params });
-  });
-
-  it('should handle error in checkEOARegistration', async () => {
-    const params: TCheckEOARegistrationRequest = { address: '' };
-    const error = { message: 'Check EOA Registration Error' };
-    mockRequest.send.mockRejectedValue(error);
-    (formatApiError as jest.Mock).mockReturnValue(new Error('checkEOARegistration error'));
-
-    await expect(services.checkEOARegistration(params)).rejects.toThrow('checkEOARegistration error');
+      await expect(services.updateTransferOrder(params, orderId)).rejects.toThrow('updateTransferOrder error');
+    });
   });
 });
