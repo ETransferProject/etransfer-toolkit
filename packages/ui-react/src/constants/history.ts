@@ -10,6 +10,7 @@ export enum BusinessTypeLabel {
   ALL = 'All',
   Deposit = 'Deposit',
   Withdraw = 'Withdrawal',
+  Transfer = 'Transfer',
 }
 
 export const BusinessTypeOptions = [
