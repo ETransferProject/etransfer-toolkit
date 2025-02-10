@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import { stringify } from 'query-string';
+import qs from 'qs';
 import {
   TCheckEOARegistrationRequest,
   TCheckEOARegistrationResult,
@@ -25,6 +26,17 @@ import {
   TGetTokenPricesRequest,
   TGetTokenPricesResult,
   TGetRecordDetailResult,
+  TCheckRegistrationRequest,
+  TCheckRegistrationResult,
+  TCreateTransferOrderRequest,
+  TCreateTransferOrderResult,
+  TGetTokenNetworkRelationRequest,
+  TGetTokenNetworkRelationResult,
+  TGetTransferInfoRequest,
+  TGetTransferInfoResult,
+  TUpdateTransferOrderRequest,
+  TUpdateTransferOrderResult,
+  TGetRecordStatusRequest,
 } from '@etransfer/types';
 import { TServices } from './types';
 import { formatApiError } from './utils';
@@ -82,12 +94,14 @@ export class Services extends BaseService implements TServices {
     }
   }
 
-  async getNetworkList(params: TGetNetworkListRequest): Promise<TGetNetworkListResult> {
+  async getNetworkList(params: TGetNetworkListRequest, authToken?: string): Promise<TGetNetworkListResult> {
     try {
-      const res = await this._request.send(API_LIST.common.getNetworkList, {
-        params,
-        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_NETWORK_LIST,
-      });
+      const _requestConfig: TRequestConfig = { params, cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_NETWORK_LIST };
+      if (authToken) {
+        _requestConfig.headers = { Authorization: authToken };
+      }
+
+      const res = await this._request.send(API_LIST.common.getNetworkList, _requestConfig);
       return res.data;
     } catch (error: any) {
       throw formatApiError(error, 'getNetworkList error', true);
@@ -151,6 +165,7 @@ export class Services extends BaseService implements TServices {
     }
   }
 
+  // About History
   async getRecordsList(params: TGetRecordsListRequest): Promise<TGetRecordsListResult> {
     try {
       const res = await this._request.send(API_LIST.records.getRecordsList, { params });
@@ -160,9 +175,16 @@ export class Services extends BaseService implements TServices {
     }
   }
 
-  async getRecordStatus(): Promise<TGetRecordStatusResult> {
+  async getRecordStatus(params?: TGetRecordStatusRequest): Promise<TGetRecordStatusResult> {
     try {
-      const res = await this._request.send(API_LIST.records.getRecordStatus, {});
+      const _requestConfig: TRequestConfig = {};
+      if (params) {
+        _requestConfig.params = params;
+        _requestConfig.paramsSerializer = function (params) {
+          return qs.stringify(params, { arrayFormat: 'repeat' });
+        };
+      }
+      const res = await this._request.send(API_LIST.records.getRecordStatus, _requestConfig);
       return res.data;
     } catch (error: any) {
       throw formatApiError(error, 'getRecordStatus error', false);
@@ -178,12 +200,94 @@ export class Services extends BaseService implements TServices {
     }
   }
 
+  // About Registration
   async checkEOARegistration(params: TCheckEOARegistrationRequest): Promise<TCheckEOARegistrationResult> {
     try {
       const res = await this._request.send(API_LIST.user.checkEOARegistration, { params });
       return res.data;
     } catch (error: any) {
       throw formatApiError(error, 'checkEOARegistration error', false);
+    }
+  }
+
+  async checkRegistration(params: TCheckRegistrationRequest): Promise<TCheckRegistrationResult> {
+    try {
+      const res = await this._request.send(API_LIST.user.checkRegistration, { params });
+      return res.data;
+    } catch (error: any) {
+      throw formatApiError(error, 'checkRegistration error', false);
+    }
+  }
+
+  // About Transfer
+  async getTokenNetworkRelation(
+    params: TGetTokenNetworkRelationRequest,
+    authToken?: string,
+  ): Promise<TGetTokenNetworkRelationResult> {
+    try {
+      const res = await this._request.send(API_LIST.transfer.getTokenNetworkRelation, {
+        params,
+        headers: {
+          Authorization: authToken || '',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      throw formatApiError(error, 'getTokenNetworkRelation error', false);
+    }
+  }
+
+  async getTransferInfo(params: TGetTransferInfoRequest): Promise<TGetTransferInfoResult> {
+    try {
+      const res = await this._request.send(API_LIST.transfer.getTransferInfo, {
+        params,
+        cancelTokenSourceKey: CANCEL_TOKEN_SOURCE_KEY.GET_TRANSFER_INFO,
+        headers: {
+          Authorization: '',
+        },
+      });
+
+      return res.data;
+    } catch (error: any) {
+      throw formatApiError(error, 'getTransferInfo error', true);
+    }
+  }
+
+  async createTransferOrder(
+    params: TCreateTransferOrderRequest,
+    authToken?: string,
+  ): Promise<TCreateTransferOrderResult> {
+    try {
+      const _requestConfig: TRequestConfig = { data: params };
+      if (authToken) {
+        _requestConfig.headers = { Authorization: authToken };
+      }
+
+      const res = await this._request.send(API_LIST.transfer.createTransferOrder, _requestConfig);
+
+      return res.data;
+    } catch (error: any) {
+      throw formatApiError(error, 'createTransferOrder error', false);
+    }
+  }
+
+  async updateTransferOrder(
+    params: TUpdateTransferOrderRequest,
+    orderId: string,
+    authToken?: string,
+  ): Promise<TUpdateTransferOrderResult> {
+    try {
+      const _requestConfig: TRequestConfig = { data: params, query: orderId };
+      if (authToken) {
+        _requestConfig.headers = { Authorization: authToken };
+      }
+
+      const res = await this._request.send(API_LIST.transfer.updateTransferOrder, _requestConfig);
+
+      return res.data;
+    } catch (error: any) {
+      throw formatApiError(error, 'updateTransferOrder error', false);
     }
   }
 }

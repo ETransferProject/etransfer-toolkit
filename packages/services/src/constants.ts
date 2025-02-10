@@ -30,6 +30,19 @@ const WithdrawApiList: Record<string, TBaseConfig> = {
   },
 };
 
+const TransferApiList: Record<string, TBaseConfig> = {
+  getTokenNetworkRelation: '/api/etransfer/network/tokens',
+  getTransferInfo: '/api/etransfer/transfer/info',
+  createTransferOrder: {
+    target: '/api/etransfer/transfer/order',
+    baseConfig: { method: 'POST' },
+  },
+  updateTransferOrder: {
+    target: '/api/etransfer/transfer',
+    baseConfig: { method: 'PUT' },
+  },
+};
+
 const HistoryApiList: Record<string, TBaseConfig> = {
   getRecordsList: '/api/etransfer/record/list',
   getRecordStatus: '/api/etransfer/record/status',
@@ -38,6 +51,7 @@ const HistoryApiList: Record<string, TBaseConfig> = {
 
 const UserApiList: Record<string, TBaseConfig> = {
   checkEOARegistration: '/api/etransfer/user/check-eoa-registration',
+  checkRegistration: '/api/etransfer/user/check-registration',
 };
 
 export const API_LIST: Record<string, Record<string, TBaseConfig>> = {
@@ -45,6 +59,7 @@ export const API_LIST: Record<string, Record<string, TBaseConfig>> = {
   common: CommonApiList,
   deposit: DepositApiList,
   withdraw: WithdrawApiList,
+  transfer: TransferApiList,
   records: HistoryApiList,
   user: UserApiList,
 };
@@ -53,6 +68,7 @@ export enum CANCEL_TOKEN_SOURCE_KEY {
   GET_DEPOSIT_INFO = 'GET_DEPOSIT_INFO',
   GET_WITHDRAW_INFO = 'GET_WITHDRAW_INFO',
   GET_NETWORK_LIST = 'GET_NETWORK_LIST',
+  GET_TRANSFER_INFO = 'GET_TRANSFER_INFO',
 }
 
 export const AUTH_API_BASE_PARAMS: TAuthApiBaseParams = {
