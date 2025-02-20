@@ -59,7 +59,7 @@ export const isWriteOperationError = (code: string | number, message: string) =>
 };
 
 export const handleWebLoginErrorMessage = (error: any, errorText?: string) => {
-  if (error.nativeError && error.nativeError.message) {
+  if (error?.nativeError && error.nativeError.message) {
     error = error.nativeError;
   }
 

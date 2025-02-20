@@ -47,7 +47,7 @@ export const getRawTx = ({
   return rawTx;
 };
 
-class TXError extends Error {
+export class TXError extends Error {
   public TransactionId?: string;
   public transactionId?: string;
   constructor(message: string, id?: string) {

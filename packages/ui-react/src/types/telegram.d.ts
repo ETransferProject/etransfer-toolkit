@@ -2,7 +2,7 @@ declare const Telegram: ITelegram;
 
 type Color = string | false;
 
-interface ITelegram {
+export interface ITelegram {
   Utils: {
     sessionStorageGet: (key) => any;
     sessionStorageSet: (key, value) => any;

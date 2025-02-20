@@ -24,6 +24,6 @@
     "outDir": "./dist/_types",
     "declaration": true
   },
-  "include": ["global.d.ts", "src", "index.ts"],
+  "include": ["global.d.ts", "src", "index.ts", "src/types/telegram.d.ts"],
   "exclude": ["./dist", "node_modules"]
 }
