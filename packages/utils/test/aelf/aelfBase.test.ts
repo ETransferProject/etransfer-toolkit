@@ -19,8 +19,8 @@ const signature =
 const pubkey =
   '04671bfc20edb4cdc171bd7d20877aa64862e88dc9f52173673db9789e0dea71aca45472fd4841cad362cae8b5b6f05c55a350014f7917fe90870fd680c845edae';
 const managerAddress = '7iC6EQtt4rKsqv9vFiwpUDvZVipSoKwvPLy7pRG189qJjyVT7';
-
 const correctAelfAddress = 'ELF_Py2TJpjTtt29zAtqLWyLEU1DEzBFPz1LJU594hy6evPF8Cvft_AELF';
+const evmAddress = '0x60eeCc4d19f65B9EaDe628F2711C543eD1cE6679';
 
 describe('getAElf', () => {
   test('get aelf testnet instance', () => {
@@ -91,8 +91,14 @@ describe('isDIDAddressSuffix', () => {
     const result = isDIDAddressSuffix(correctAelfAddress);
     expect(result).toBeTruthy();
   });
-  test('Input undefined, and return true.', () => {
+
+  test('Input undefined, and return false.', () => {
     const result = isDIDAddressSuffix();
+    expect(result).toBeFalsy();
+  });
+
+  test('Input evm address, and return false.', () => {
+    const result = isDIDAddressSuffix(evmAddress);
     expect(result).toBeFalsy();
   });
 });
