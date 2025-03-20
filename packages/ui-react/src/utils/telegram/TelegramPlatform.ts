@@ -1,3 +1,5 @@
+import { ITelegram } from '../../../src/types/telegram';
+
 declare const window: Window &
   typeof globalThis & {
     Telegram?: ITelegram;
@@ -6,7 +8,7 @@ declare const window: Window &
 export class TelegramPlatform {
   static getTelegram() {
     if (typeof window !== 'undefined') {
-      return window?.Telegram;
+      return window.Telegram;
     }
     return undefined;
   }

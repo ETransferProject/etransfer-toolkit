@@ -48,6 +48,7 @@ export interface ETransferAccountConfig {
   managerAddress?: string; // for portkey wallet
   tokenContractCallSendMethod?: <T, R>(props: ICallContractParamsV2<T>) => Promise<R & { transactionId?: string }>;
   getSignature?: TGetSignatureFunc;
+  getTransactionSignature?: TGetSignatureFunc;
 }
 
 export type TAelfAccounts = {

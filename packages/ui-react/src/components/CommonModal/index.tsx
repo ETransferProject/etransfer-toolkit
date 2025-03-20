@@ -5,10 +5,7 @@ import CommonSvg from '../CommonSvg';
 import CommonButton from '../CommonButton';
 import { CommonButtonType } from '../../types/components';
 
-export type CommonModalProps = Omit<
-  ModalProps,
-  'footer' | 'closeIcon' | 'confirmLoading' | 'okButtonProps' | 'okType'
-> & {
+export type CommonModalProps = Omit<ModalProps, 'footer' | 'confirmLoading' | 'okButtonProps' | 'okType'> & {
   footerClassName?: string;
   cancelText?: string;
   okText?: string;
@@ -33,11 +30,11 @@ export default function CommonModal({
       width={props.width || 480}
       centered
       zIndex={299}
+      closeIcon={<CommonSvg type="close" />}
       {...props}
       className={clsx('etransfer-ui-common-modal', className)}
       // To keep the title height by default
       title={props.title || ' '}
-      closeIcon={<CommonSvg type="close" />}
       footer={null}>
       {props.children}
       {(!hideCancelButton || !hideOkButton) && (

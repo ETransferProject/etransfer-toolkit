@@ -21,13 +21,13 @@ export const SupportedChainId = {
 };
 
 export const CHAIN_NAME: { [chainId in SupportedELFChainId]: string } = {
-  [SupportedELFChainId.AELF]: 'MainChain AELF',
-  [SupportedELFChainId.tDVV]: 'SideChain tDVV',
+  [SupportedELFChainId.AELF]: 'aelf MainChain',
+  [SupportedELFChainId.tDVV]: 'aelf dAppChain',
 };
 
 export enum CHAIN_NAME_ENUM {
-  'MainChain' = 'MainChain AELF',
-  'SideChain' = 'SideChain tDVV',
+  'MainChain' = 'aelf MainChain',
+  'SideChain' = 'aelf dAppChain',
 }
 
 export interface IChainNameItem {
@@ -71,8 +71,7 @@ export const AELF_NODES = {
 
 export const ETRANSFER_URL = 'https://app.etransfer.exchange';
 export const ETRANSFER_AUTH_URL = 'https://app.etransfer.exchange';
-export const WebLoginGraphqlUrl =
-  'https://dapp-aa-portkey.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql';
+export const WebLoginGraphqlUrl = 'https://indexer-api.aefinder.io/api/app/graphql/portkey';
 export const WebLoginServiceUrl = 'https://aa-portkey.portkey.finance';
 export const WebLoginConnectUrl = 'https://auth-aa-portkey.portkey.finance';
 

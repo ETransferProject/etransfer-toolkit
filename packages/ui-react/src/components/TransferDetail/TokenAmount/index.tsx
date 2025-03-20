@@ -29,6 +29,7 @@ export default function TokenAmount({
 
   const formatAmount = useMemo(() => {
     if (!amount) return '';
+    if (amount === '0') return '0';
     if (ZERO.plus(amount).isLessThan(ZERO.plus(MIN_AMOUNT_DISPLAY))) {
       return `<${MIN_AMOUNT_DISPLAY}`;
     }
@@ -37,6 +38,7 @@ export default function TokenAmount({
 
   const formatUsd = useMemo(() => {
     if (!amountUsd) return '';
+    if (amountUsd === '0') return '$0';
     if (ZERO.plus(amountUsd).isLessThan(ZERO.plus(MIN_AMOUNT_USD_DISPLAY))) {
       return `<$${MIN_AMOUNT_USD_DISPLAY}`;
     }

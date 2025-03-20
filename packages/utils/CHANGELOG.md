@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.1...v1.13.0) (2025-02-10)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.12.2-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.0...v1.12.2-alpha.1) (2025-01-08)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.12.2-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1...v1.12.2-alpha.0) (2025-01-06)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.12.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.1...v1.12.1) (2025-01-03)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.12.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.0...v1.12.1-alpha.1) (2025-01-02)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.12.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.0...v1.12.1-alpha.0) (2025-01-02)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.12.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0...v1.12.0) (2024-12-25)
+
+### Features
+
+- dev service fee ([b1dc842](https://github.com/ETransferProject/etransfer-toolkit/commit/b1dc8424cc8d18a1af8801a343448bc4aa754a4d))
+
+## [1.11.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.5...v1.11.0) (2024-12-13)
+
+### Features
+
+- update max validate and txn signature ([1ace5a2](https://github.com/ETransferProject/etransfer-toolkit/commit/1ace5a2b598f603f19d7f3d95c2a8d037154e913))
+
+## [1.11.0-alpha.5](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.4...v1.11.0-alpha.5) (2024-11-28)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.11.0-alpha.4](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.3...v1.11.0-alpha.4) (2024-11-28)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.11.0-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.2...v1.11.0-alpha.3) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.11.0-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.1...v1.11.0-alpha.2) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.11.0-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.0...v1.11.0-alpha.1) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.11.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.10.1...v1.11.0-alpha.0) (2024-11-15)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.10.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.10.0...v1.10.1) (2024-11-01)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.10.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.9.1...v1.10.0) (2024-11-01)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.9.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.9.0...v1.9.1) (2024-10-31)
+
+**Note:** Version bump only for package @etransfer/utils
+
+## [1.9.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.8.0...v1.9.0) (2024-10-31)
+
+### Features
+
+- 🎸 update aelf chain name and update sdk ([958fbfc](https://github.com/ETransferProject/etransfer-toolkit/commit/958fbfc211e3b6dc334ec14bf9ad1ba0494b7c59))
+
 ## [1.8.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.7.1-alpha.1...v1.8.0) (2024-10-14)
 
 ### Features

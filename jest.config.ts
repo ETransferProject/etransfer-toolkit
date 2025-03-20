@@ -37,9 +37,9 @@ export default {
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: ['/node_modules/', '/__generated__/'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/__generated__/', 'dist'],
 
   // Indicates which provider should be used to instrument code for coverage
   // coverageProvider: "babel",

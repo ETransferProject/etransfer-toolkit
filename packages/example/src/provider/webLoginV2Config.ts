@@ -34,6 +34,7 @@ const baseConfig = {
   showVconsole: false,
   networkType: NETWORK_TYPE,
   chainId: SupportedChainId.sideChain,
+  sideChainId: SupportedChainId.sideChain,
   keyboard: true,
   noCommonBaseModal: false,
   design: SignInDesignEnum.CryptoDesign,

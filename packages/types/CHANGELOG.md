@@ -3,6 +3,87 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.1...v1.13.0) (2025-02-10)
+
+### Features
+
+- add other chain auth token api ([e5f4d46](https://github.com/ETransferProject/etransfer-toolkit/commit/e5f4d4601de8ba2bc76c75e651829ce3ea94bdaf))
+- add transfer services ([3401208](https://github.com/ETransferProject/etransfer-toolkit/commit/34012081339b487ad16953443bd0b54cf9ab94e4))
+
+## [1.12.2-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.0...v1.12.2-alpha.1) (2025-01-08)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.12.2-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1...v1.12.2-alpha.0) (2025-01-06)
+
+### Features
+
+- update BusinessType enum ([4cfb5ae](https://github.com/ETransferProject/etransfer-toolkit/commit/4cfb5ae4b3927f104866d4d482adbd1d3c7446d1))
+
+## [1.12.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.1...v1.12.1) (2025-01-03)
+
+### Features
+
+- dev deposit minimum amount and threshold ([05b56a1](https://github.com/ETransferProject/etransfer-toolkit/commit/05b56a1e2d2c54a75edd9d5571fa154643e211a4))
+
+## [1.12.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.0...v1.12.1-alpha.1) (2025-01-02)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.12.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.0...v1.12.1-alpha.0) (2025-01-02)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.12.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0...v1.12.0) (2024-12-25)
+
+### Features
+
+- dev service fee ([b1dc842](https://github.com/ETransferProject/etransfer-toolkit/commit/b1dc8424cc8d18a1af8801a343448bc4aa754a4d))
+
+## [1.11.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.5...v1.11.0) (2024-12-13)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.11.0-alpha.5](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.4...v1.11.0-alpha.5) (2024-11-28)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.11.0-alpha.4](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.3...v1.11.0-alpha.4) (2024-11-28)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.11.0-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.2...v1.11.0-alpha.3) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.11.0-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.1...v1.11.0-alpha.2) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.11.0-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.0...v1.11.0-alpha.1) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.11.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.10.1...v1.11.0-alpha.0) (2024-11-15)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.10.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.10.0...v1.10.1) (2024-11-01)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.10.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.9.1...v1.10.0) (2024-11-01)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.9.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.9.0...v1.9.1) (2024-10-31)
+
+**Note:** Version bump only for package @etransfer/types
+
+## [1.9.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.8.0...v1.9.0) (2024-10-31)
+
+**Note:** Version bump only for package @etransfer/types
+
 ## [1.8.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.7.1-alpha.1...v1.8.0) (2024-10-14)
 
 **Note:** Version bump only for package @etransfer/types

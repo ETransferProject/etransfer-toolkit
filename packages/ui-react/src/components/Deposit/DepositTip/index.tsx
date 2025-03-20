@@ -9,28 +9,41 @@ type TDepositTipProps = {
   fromToken: string;
   toToken: string;
   isShowIcon?: boolean;
+  renderDepositTip?: (fromToken: string, toToken: string) => React.ReactNode;
 };
 
-export default function DepositTip({ className, fromToken, toToken, isShowIcon = true }: TDepositTipProps) {
+export default function DepositTip({
+  className,
+  fromToken,
+  toToken,
+  isShowIcon = true,
+  renderDepositTip,
+}: TDepositTipProps) {
   const { isMobilePX } = useScreenSize();
 
   return (
     <div className={clsx('etransfer-ui-flex-row-center', 'etransfer-ui-deposit-tip', className)}>
-      {isShowIcon && <CommonSvg type="infoBrand" className="etransfer-ui-flex-shrink-0" />}
-      <span className="text">
-        <span>{`Your deposit address may change. Please use the latest address for deposits.`}</span>
+      {renderDepositTip ? (
+        renderDepositTip(fromToken, toToken)
+      ) : (
+        <>
+          {isShowIcon && <CommonSvg type="infoBrand" className="etransfer-ui-flex-shrink-0" />}
+          <span className="text">
+            <span>{`Your deposit address may change. Please use the latest address for deposits.`}</span>
 
-        {!isMobilePX && (
-          <>
-            <br />
-            <span>{`Deposit `}</span>
-            <span className="token">{formatSymbolDisplay(fromToken)}</span>
-            <span>{` to the address below to receive `}</span>
-            <span className="token">{formatSymbolDisplay(toToken)}</span>
-            <span>{` in your wallet.`}</span>
-          </>
-        )}
-      </span>
+            {!isMobilePX && (
+              <>
+                <br />
+                <span>{`Deposit `}</span>
+                <span className="token">{formatSymbolDisplay(fromToken)}</span>
+                <span>{` to the address below to receive `}</span>
+                <span className="token">{formatSymbolDisplay(toToken)}</span>
+                <span>{` in your wallet.`}</span>
+              </>
+            )}
+          </span>
+        </>
+      )}
     </div>
   );
 }

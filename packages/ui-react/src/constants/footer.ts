@@ -22,12 +22,12 @@ export const FOOTER_CONFIG: TFooterConfig = {
           iconBigType: 'twitterBig',
           link: 'https://x.com/ETransfer_Web3',
         },
-        {
-          name: 'Discord',
-          iconType: 'discord',
-          iconBigType: 'discordBig',
-          link: 'https://discord.gg/zuN2wrZrd9',
-        },
+        // {
+        //   name: 'Discord',
+        //   iconType: 'discord',
+        //   iconBigType: 'discordBig',
+        //   link: 'https://discord.gg/zuN2wrZrd9',
+        // },
         {
           name: 'Telegram',
           iconType: 'telegram',

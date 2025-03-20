@@ -13,3 +13,5 @@ export const ETRANSFER_LOGO = 'https://cms.etransfer.exchange/assets/b4f969c7-bd
 export const LOGIN = 'Log In';
 
 export const COBO_CUSTODY = 'Cobo Custody';
+
+export const NOTICE = 'Notice';

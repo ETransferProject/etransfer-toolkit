@@ -21,13 +21,13 @@ export const SupportedChainId = {
 };
 
 export const CHAIN_NAME: { [chainId in SupportedELFChainId]: string } = {
-  [SupportedELFChainId.AELF]: 'MainChain AELF Testnet',
-  [SupportedELFChainId.tDVW]: 'SideChain tDVW Testnet',
+  [SupportedELFChainId.AELF]: 'aelf MainChain Testnet',
+  [SupportedELFChainId.tDVW]: 'aelf dAppChain Testnet',
 };
 
 export enum CHAIN_NAME_ENUM {
-  'MainChain' = 'MainChain AELF',
-  'SideChain' = 'SideChain tDVW',
+  'MainChain' = 'aelf MainChain',
+  'SideChain' = 'aelf dAppChain',
 }
 
 export interface IChainNameItem {
@@ -72,9 +72,7 @@ export const AELF_NODES = {
 // testnet-jenkins
 export const ETRANSFER_URL = 'https://test-app.etransfer.exchange';
 export const ETRANSFER_AUTH_URL = 'https://test-app.etransfer.exchange';
-export const WebLoginGraphqlUrl =
-  'https://dapp-aa-portkey-test.portkey.finance/Portkey_V2_DID/PortKeyIndexerCASchema/graphql';
-// 'https://dapp-aa-portkey-test.portkey.finance/Portkey_DID/PortKeyIndexerCASchema/graphql';
+export const WebLoginGraphqlUrl = 'https://test-indexer-api.aefinder.io/api/app/graphql/portkey';
 export const WebLoginServiceUrl = 'https://aa-portkey-test.portkey.finance';
 export const WebLoginConnectUrl = 'https://auth-aa-portkey-test.portkey.finance';
 

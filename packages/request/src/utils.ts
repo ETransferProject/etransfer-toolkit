@@ -23,10 +23,10 @@ export function getRequestConfig(base: TBaseConfig, config?: TRequestConfig) {
     return {
       ...config,
       ...baseConfig,
-      query: (baseConfig.query || '') + (query || ''),
-      method: method ? method : baseConfig.method,
-      params: Object.assign({}, baseConfig.params, params),
-      data: Object.assign({}, baseConfig.data, data),
+      query: (baseConfig?.query || '') + (query || ''),
+      method: method ? method : baseConfig?.method,
+      params: Object.assign({}, baseConfig?.params, params),
+      data: Object.assign({}, baseConfig?.data, data),
     };
   }
 }

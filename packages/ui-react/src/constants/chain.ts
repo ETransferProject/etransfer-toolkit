@@ -13,9 +13,9 @@ export const CHAIN_ID_LIST: ChainId[] = [CHAIN_ID.AELF, CHAIN_ID.tDVV, CHAIN_ID.
 export const DEFAULT_CHAIN_ID = CHAIN_ID.tDVV;
 
 export enum CHAIN_NAME_ENUM {
-  AELF = 'MainChain AELF',
-  tDVW = 'SideChain tDVW',
-  tDVV = 'SideChain tDVV',
+  AELF = 'aelf MainChain',
+  tDVW = 'aelf dAppChain',
+  tDVV = 'aelf dAppChain',
 }
 
 export const CHAIN_MENU_DATA: {

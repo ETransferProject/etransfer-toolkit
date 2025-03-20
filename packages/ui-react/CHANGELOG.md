@@ -3,6 +3,118 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.1...v1.13.0) (2025-02-10)
+
+### Features
+
+- add transfer services ([3401208](https://github.com/ETransferProject/etransfer-toolkit/commit/34012081339b487ad16953443bd0b54cf9ab94e4))
+
+## [1.12.2-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.0...v1.12.2-alpha.1) (2025-01-08)
+
+### Features
+
+- 🎸 add renderDepositTip ([3fa3d4a](https://github.com/ETransferProject/etransfer-toolkit/commit/3fa3d4a6c08e1698c9fda61464a85cc404e5826c))
+
+## [1.12.2-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1...v1.12.2-alpha.0) (2025-01-06)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.12.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.1...v1.12.1) (2025-01-03)
+
+### Features
+
+- dev deposit minimum amount and threshold ([05b56a1](https://github.com/ETransferProject/etransfer-toolkit/commit/05b56a1e2d2c54a75edd9d5571fa154643e211a4))
+- update service fee ([80cd60a](https://github.com/ETransferProject/etransfer-toolkit/commit/80cd60ab683e497493c3fe72d7967bb877101acc))
+
+## [1.12.1-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.1-alpha.0...v1.12.1-alpha.1) (2025-01-02)
+
+### Features
+
+- update ETransferContent component ([5cc6e7a](https://github.com/ETransferProject/etransfer-toolkit/commit/5cc6e7af611f496dfdf1e7daa879eba421ef3c37))
+
+## [1.12.1-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.0...v1.12.1-alpha.0) (2025-01-02)
+
+### Features
+
+- add custom deposit info config ([1174a02](https://github.com/ETransferProject/etransfer-toolkit/commit/1174a02a25c4abffdf8bf5c3094e3021cede0505))
+
+## [1.12.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0...v1.12.0) (2024-12-25)
+
+### Features
+
+- dev service fee ([b1dc842](https://github.com/ETransferProject/etransfer-toolkit/commit/b1dc8424cc8d18a1af8801a343448bc4aa754a4d))
+- modify styles and service fee tip and example auth logic ([5abdf5a](https://github.com/ETransferProject/etransfer-toolkit/commit/5abdf5af2881496e1bcbba27dd1fec250f9c4e63))
+- update notice and fee display ([cf5cdfb](https://github.com/ETransferProject/etransfer-toolkit/commit/cf5cdfb83f032cd1bb1e3f7b81d4c30b96e20286))
+- update text ([e9a8792](https://github.com/ETransferProject/etransfer-toolkit/commit/e9a87929f2bac3f889ad3c4b739b4e0492d1f093))
+
+### Bug Fixes
+
+- type error ([cabcc8c](https://github.com/ETransferProject/etransfer-toolkit/commit/cabcc8cc48376ee165eb78ef9632a50ba3614e88))
+
+## [1.11.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.5...v1.11.0) (2024-12-13)
+
+### Features
+
+- update approve elf fee ([f47d826](https://github.com/ETransferProject/etransfer-toolkit/commit/f47d8269654803f442c1e4cb446e220b73f2fea5))
+- update max validate ([447803b](https://github.com/ETransferProject/etransfer-toolkit/commit/447803b21e8cfec69d51aea447dc0d07997cfd5e))
+- update max validate and txn signature ([1ace5a2](https://github.com/ETransferProject/etransfer-toolkit/commit/1ace5a2b598f603f19d7f3d95c2a8d037154e913))
+
+### Bug Fixes
+
+- after click max, fetch info api ([c4116c7](https://github.com/ETransferProject/etransfer-toolkit/commit/c4116c7d75e339b2c50f90d7cfb994ce322c996a))
+- max validate ([3633d36](https://github.com/ETransferProject/etransfer-toolkit/commit/3633d36c5076fe305bbb0017c8e6eeab338c4204))
+
+## [1.11.0-alpha.5](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.4...v1.11.0-alpha.5) (2024-11-28)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.11.0-alpha.4](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.3...v1.11.0-alpha.4) (2024-11-28)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.11.0-alpha.3](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.2...v1.11.0-alpha.3) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.11.0-alpha.2](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.1...v1.11.0-alpha.2) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.11.0-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.11.0-alpha.0...v1.11.0-alpha.1) (2024-11-25)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.11.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.10.1...v1.11.0-alpha.0) (2024-11-15)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.10.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.10.0...v1.10.1) (2024-11-01)
+
+### Features
+
+- 🎸 update aelf dAppChain logo ([410727e](https://github.com/ETransferProject/etransfer-toolkit/commit/410727e4ca8618fa7f5e474c76f80368b29a1131))
+
+## [1.10.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.9.1...v1.10.0) (2024-11-01)
+
+### Features
+
+- 🎸 update aelf dAppChain logo ([9cb91e0](https://github.com/ETransferProject/etransfer-toolkit/commit/9cb91e03501ba3a39edb0a1ebdcb966e2349fa86))
+- 🎸 update portkey aefinder v2 and hidden discord entry ([3f3bb46](https://github.com/ETransferProject/etransfer-toolkit/commit/3f3bb468615ad9bbdb5b7bd15000c17be79cade3))
+
+## [1.9.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.9.0...v1.9.1) (2024-10-31)
+
+**Note:** Version bump only for package @etransfer/ui-react
+
+## [1.9.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.8.0...v1.9.0) (2024-10-31)
+
+### Features
+
+- 🎸 update aelf chain name and update sdk ([958fbfc](https://github.com/ETransferProject/etransfer-toolkit/commit/958fbfc211e3b6dc334ec14bf9ad1ba0494b7c59))
+
+### Bug Fixes
+
+- 🐛 aelf chain img ([19b082e](https://github.com/ETransferProject/etransfer-toolkit/commit/19b082efc7e67980b1763c11893f96132547558a))
+
 ## [1.8.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.7.1-alpha.1...v1.8.0) (2024-10-14)
 
 ### Features

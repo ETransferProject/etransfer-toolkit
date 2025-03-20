@@ -30,6 +30,8 @@ export interface DepositProps {
   isListenNoticeAuto?: boolean;
   isShowProcessingTip?: boolean;
   withdrawProcessingCount?: number;
+  customDescriptionNode?: React.ReactNode;
+  renderDepositTip?: (fromToken: string, toToken: string) => React.ReactNode;
   onClickProcessingTip?: () => void;
   onActionChange?: (data: TDepositActionData) => void;
   onConnect?: () => void;
@@ -59,6 +61,8 @@ export interface DepositDetailProps {
   showRetry?: boolean;
   isCheckTxnLoading?: boolean;
   isShowNotLoginTip?: boolean;
+  customDescriptionNode?: React.ReactNode;
+  renderDepositTip?: (fromToken: string, toToken: string) => React.ReactNode;
   onRetry?: () => void;
   onCheckTxnClick?: () => void;
   onLogin?: () => void;

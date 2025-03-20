@@ -1,8 +1,6 @@
-import AElf from 'aelf-sdk';
-import { APP_NAME } from '@/constants/index';
 import { useCallback, useRef } from 'react';
 import { etransferEvents, recoverManagerAddressByPubkey, recoverPubKeyBySignature } from '@etransfer/utils';
-import { AuthTokenSource, PortkeyVersion } from '@etransfer/types';
+import { AuthTokenSource, PortkeyVersion, TWalletType } from '@etransfer/types';
 import { eTransferCore } from '@/utils/core';
 import {
   ETRANSFER_USER_ACCOUNT,
@@ -14,10 +12,12 @@ import { getCaHashAndOriginChainIdByWallet } from '@/utils/wallet';
 import { ETransferConfig, WalletTypeEnum, useReCaptchaModal } from '@etransfer/ui-react';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 import { useGetAccount, useIsLogin } from './wallet';
-import { ExtraInfoForDiscover, WalletInfo } from '@/types/wallet';
+import { WalletInfo } from '@/types/wallet';
+import { useGetManagerSignature } from './useGetManagerSignature';
 
 export function useQueryAuthToken() {
-  const { getSignature, walletType, walletInfo } = useConnectWallet();
+  const { walletType, walletInfo } = useConnectWallet();
+  const getManagerSignature = useGetManagerSignature();
   const isLogin = useIsLogin();
   const isLoginRef = useRef(isLogin);
   isLoginRef.current = isLogin;
@@ -43,56 +43,7 @@ This request will not trigger a blockchain transaction or cost any gas fees.
 Nonce:
 ${Date.now()}`;
     const plainText: any = Buffer.from(plainTextOrigin).toString('hex').replace('0x', '');
-    let signResult: {
-      error: number;
-      errorMessage: string;
-      signature: string;
-      from: string;
-    } | null;
-    if (walletType === WalletTypeEnum.discover) {
-      // discover
-      const discoverInfo = walletInfo?.extraInfo as ExtraInfoForDiscover;
-      if ((discoverInfo?.provider as any).methodCheck('wallet_getManagerSignature')) {
-        const sin = await discoverInfo?.provider?.request({
-          method: 'wallet_getManagerSignature',
-          payload: { hexData: plainText },
-        });
-        const signInfo = [
-          sin.r.toString('hex', 32),
-          sin.s.toString('hex', 32),
-          `0${sin.recoveryParam.toString()}`,
-        ].join('');
-        signResult = {
-          error: 0,
-          errorMessage: '',
-          signature: signInfo,
-          from: WalletTypeEnum.discover,
-        };
-      } else {
-        const signInfo = AElf.utils.sha256(plainText);
-        signResult = await getSignature({
-          appName: APP_NAME,
-          address: walletInfo.address,
-          signInfo,
-        });
-      }
-    } else if (walletType === WalletTypeEnum.elf) {
-      // nightElf
-      const signInfo = AElf.utils.sha256(plainText);
-      signResult = await getSignature({
-        appName: APP_NAME,
-        address: walletInfo.address,
-        signInfo,
-      });
-    } else {
-      // portkey sdk
-      const signInfo = Buffer.from(plainText).toString('hex');
-      signResult = await getSignature({
-        appName: APP_NAME,
-        address: walletInfo.address,
-        signInfo,
-      });
-    }
+    const signResult = await getManagerSignature(plainText);
 
     if (signResult?.error) throw signResult.errorMessage;
 
@@ -101,7 +52,7 @@ ${Date.now()}`;
     if (signResult?.error) throw signResult.errorMessage;
 
     return { signature: signResult?.signature || '', plainText };
-  }, [getSignature, walletInfo, walletType]);
+  }, [getManagerSignature, walletInfo]);
 
   const getUserInfo = useCallback(
     async (isCheckReCaptcha: boolean = true) => {
@@ -155,19 +106,43 @@ ${Date.now()}`;
     if (!walletInfo) throw new Error('Failed to obtain wallet information.');
     if (!isLoginRef.current) throw new Error('You are not logged in.');
     try {
-      const { pubkey, signature, plainText, caHash, managerAddress, originChainId, recaptchaToken } =
-        await getUserInfo();
-      const jwt = await eTransferCore.getAuthToken({
-        pubkey,
-        signature,
-        plainText,
-        caHash,
-        chainId: originChainId,
-        managerAddress,
-        version: PortkeyVersion.v2,
-        source: walletType === WalletTypeEnum.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey,
-        recaptchaToken: walletType === WalletTypeEnum.elf ? recaptchaToken : undefined,
+      const source = walletType === WalletTypeEnum.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey;
+      const _caHash = localStorage.getItem(ETRANSFER_USER_CA_HASH);
+      const _managerAddress = localStorage.getItem(ETRANSFER_USER_MANAGER_ADDRESS);
+      // 1: local storage has JWT token
+      let jwt = await eTransferCore.getAuthTokenFromStorage({
+        walletType: (source as unknown as TWalletType) || TWalletType.Portkey,
+        caHash: _caHash || undefined,
+        managerAddress: _managerAddress || '',
       });
+      if (!jwt) {
+        const { pubkey, signature, plainText, caHash, managerAddress, originChainId, recaptchaToken } =
+          await getUserInfo();
+        // 2: local storage don not has JWT token
+        jwt = await eTransferCore.getAuthTokenFromApi({
+          pubkey,
+          signature,
+          plain_text: plainText,
+          ca_hash: caHash || undefined,
+          chain_id: originChainId || undefined,
+          managerAddress,
+          version: PortkeyVersion.v2,
+          source: source,
+          recaptchaToken: walletType === WalletTypeEnum.elf ? recaptchaToken : undefined,
+        });
+      }
+
+      // const jwt = await eTransferCore.getAuthToken({
+      //   pubkey,
+      //   signature,
+      //   plainText,
+      //   caHash,
+      //   chainId: originChainId,
+      //   managerAddress,
+      //   version: PortkeyVersion.v2,
+      //   source: walletType === WalletTypeEnum.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey,
+      //   recaptchaToken: walletType === WalletTypeEnum.elf ? recaptchaToken : undefined,
+      // });
 
       ETransferConfig.setConfig({
         authorization: {

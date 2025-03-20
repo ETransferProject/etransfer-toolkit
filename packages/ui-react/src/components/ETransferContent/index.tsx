@@ -18,6 +18,8 @@ import { TDepositActionData } from '../Deposit/types';
 import { TTransferDetailActionData } from '../TransferDetail/types';
 import { TWithdrawActionData } from '../Withdraw/types';
 import { THistoryActionData } from '../History/types';
+import { CHAIN_MENU_DATA } from '../../constants';
+import { ChainId } from '@portkey/types';
 
 type TPageActionData = TDepositActionData | TWithdrawActionData | THistoryActionData | TTransferDetailActionData | null;
 
@@ -30,6 +32,8 @@ export default function ETransferContent({
   isShowSider = true,
   isShowMobileFooter = false,
   isShowErrorTip = true,
+  customDepositDescriptionNode,
+  renderDepositTip,
   onClickHeaderLogo,
   onLifeCycleChange,
   onLogin,
@@ -42,6 +46,8 @@ export default function ETransferContent({
   isShowSider?: boolean;
   isShowMobileFooter?: boolean;
   isShowErrorTip?: boolean;
+  customDepositDescriptionNode?: React.ReactNode;
+  renderDepositTip?: (fromToken: string, toToken: string) => React.ReactNode;
   onClickHeaderLogo?: () => void;
   onLifeCycleChange?: (lifeCycle: PageKey, data?: any) => void;
   onLogin?: () => void;
@@ -69,10 +75,11 @@ export default function ETransferContent({
     const accounts: any = accountInfo.accounts;
     const temp: AccountAddressProps['accountList'] = [];
     Object.keys(accounts)?.forEach((key) => {
-      if (accounts?.[key]) {
+      const _key = key as ChainId;
+      if (accounts?.[_key]) {
         temp.push({
-          label: key,
-          value: accounts?.[key],
+          label: CHAIN_MENU_DATA?.[_key]?.label,
+          value: accounts?.[_key],
         });
       }
     }, []);
@@ -165,6 +172,8 @@ export default function ETransferContent({
                   transferDetailId={transferDetailId}
                   isUnreadHistory={isUnreadHistory}
                   isShowErrorTip={isShowErrorTip}
+                  customDepositDescriptionNode={customDepositDescriptionNode}
+                  renderDepositTip={renderDepositTip}
                   onClickProcessingTip={handleClickProcessingTip}
                   onClickHistoryItem={handleClickHistoryItem}
                   onTransferDetailBack={handleTransferDetailBack}

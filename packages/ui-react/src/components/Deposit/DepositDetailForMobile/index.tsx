@@ -34,6 +34,8 @@ export default function DepositDetailForMobile({
   showRetry = false,
   isCheckTxnLoading = false,
   isShowNotLoginTip = false,
+  customDescriptionNode,
+  renderDepositTip,
   onLogin,
   onRetry,
   onCheckTxnClick,
@@ -133,7 +135,14 @@ export default function DepositDetailForMobile({
   const renderDepositInfo = useMemo(() => {
     return (
       <>
-        {allSelected && <DepositTip fromToken={depositTokenSymbol} toToken={receiveTokenSymbol} isShowIcon={false} />}
+        {allSelected && (
+          <DepositTip
+            fromToken={depositTokenSymbol}
+            toToken={receiveTokenSymbol}
+            isShowIcon={false}
+            renderDepositTip={renderDepositTip}
+          />
+        )}
 
         <CommonSpace direction="vertical" size={16} />
 
@@ -149,9 +158,13 @@ export default function DepositDetailForMobile({
             contractAddress={contractAddress}
             contractAddressLink={contractAddressLink}
             minAmountUsd={depositInfo.minAmountUsd}
+            serviceFee={depositInfo.serviceFee || ''}
+            serviceFeeUsd={depositInfo.serviceFeeUsd || ''}
+            threshold={depositInfo.currentThreshold || ''}
             depositTokenSymbol={depositTokenSymbol}
             extraNotes={depositInfo.extraNotes}
             componentStyle={componentStyle}
+            customDescriptionNode={customDescriptionNode}
           />
         )}
       </>
@@ -160,16 +173,21 @@ export default function DepositDetailForMobile({
     allSelected,
     depositTokenSymbol,
     receiveTokenSymbol,
+    renderDepositTip,
     networkItem?.network,
     networkItem?.name,
     renderDepositAddress,
     depositInfo?.depositAddress,
     depositInfo.minAmount,
     depositInfo.minAmountUsd,
+    depositInfo.serviceFee,
+    depositInfo.serviceFeeUsd,
+    depositInfo.currentThreshold,
     depositInfo.extraNotes,
     contractAddress,
     contractAddressLink,
     componentStyle,
+    customDescriptionNode,
   ]);
 
   return (

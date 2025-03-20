@@ -3,9 +3,9 @@ import './index.less';
 import { TTransferDetailBodyData } from '../types';
 import { ComponentStyle } from '../../../types';
 import { useMemo } from 'react';
-import { BusinessType, OrderStatusEnum } from '@etransfer/types';
+import { BusinessType } from '@etransfer/types';
 import { getOmittedStr } from '@etransfer/utils';
-import { formatSymbolDisplay, viewTxDetailInExplore } from '../../../utils';
+import { viewTxDetailInExplore } from '../../../utils';
 import { BusinessTypeLabel, COBO_CUSTODY, DEFAULT_NULL_VALUE } from '../../../constants';
 import FromOrToChain from '../FromOrToChain';
 import TokenAmount from '../TokenAmount';
@@ -14,6 +14,7 @@ import WalletAddress from '../WalletAddress';
 import { formatPastTime } from '../../../utils';
 import { TRANSFER_DETAIL_LABEL } from '../../../constants/transfer';
 import { useScreenSize } from '../../../hooks';
+import FeeInfo from '../../History/FeeInfo';
 
 export default function TransferDetailBody({
   componentStyle,
@@ -65,13 +66,14 @@ export default function TransferDetailBody({
       )}
 
       <div className={'etransfer-ui-transfer-detail-item'}>
-        <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.TransactionFee}</div>
+        <div className={'etransfer-ui-transfer-detail-label'}>{TRANSFER_DETAIL_LABEL.Fee}</div>
         <div className={clsx('etransfer-ui-transfer-detail-value', 'detail-value-fee')}>
-          {data.status === OrderStatusEnum.Failed
-            ? DEFAULT_NULL_VALUE
-            : data.orderType === BusinessType.Withdraw
-            ? `${data.toFeeInfo?.[0].amount} ${formatSymbolDisplay(data.toFeeInfo?.[0].symbol || '')}`
-            : 'Free'}
+          <FeeInfo
+            feeInfo={data.toFeeInfo || []}
+            status={data.status}
+            orderType={data.orderType}
+            componentStyle={componentStyle}
+          />
         </div>
       </div>
 
