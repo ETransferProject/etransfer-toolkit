@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.13.0...v1.14.0) (2025-03-21)
+
+**Note:** Version bump only for package @etransfer/services
+
 ## [1.13.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.1...v1.13.0) (2025-02-10)
 
 ### Features
