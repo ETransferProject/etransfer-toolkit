@@ -10,4 +10,5 @@ export const EVENT_LIST = [
   'ETransferConfigUpdated',
   'GlobalTxnNotice',
   'DisplayNewPage',
+  'SetRecaptchaConfig',
 ] as const;

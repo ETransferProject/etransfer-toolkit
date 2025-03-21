@@ -2,6 +2,7 @@ import { TETransferCoreOptions } from '@etransfer/core';
 import { ChainId } from '@portkey/types';
 import { NetworkType } from '../types';
 import { ICallContractParamsV2, TGetSignatureFunc } from '@etransfer/utils';
+import { BaseReCaptcha } from '../components/GoogleReCaptcha/types';
 
 export interface ETransferConfigProviderProps {
   config: ETransferConfigProps;
@@ -21,6 +22,8 @@ export interface AelfReact {
   nodes: { [chainId in ChainId]?: AelfReactNodesInfo };
 }
 
+export type ETransferReCaptchaConfig = Omit<BaseReCaptcha, 'siteKey'> & { modalWidth?: number };
+
 export interface ETransferConfigProps extends TETransferCoreOptions {
   networkType: NetworkType;
   accountInfo: ETransferAccountConfig;
@@ -28,6 +31,7 @@ export interface ETransferConfigProps extends TETransferCoreOptions {
   depositConfig?: ETransferDepositConfig;
   withdrawConfig?: ETransferWithdrawConfig;
   authorization?: ETransferAuthorizationConfig;
+  reCaptchaConfig?: ETransferReCaptchaConfig;
 }
 
 export enum WalletTypeEnum {

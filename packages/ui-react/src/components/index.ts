@@ -33,6 +33,7 @@ export { default as SimpleTipAutoScreen } from './Modal/SimpleTipAutoScreen';
 export { default as SimpleTipModal } from './Modal/SimpleTipModal';
 export { default as SynchronizingChainModal } from './Modal/SynchronizingChainModal';
 export { default as ViewContractAddressModal } from './Modal/ViewContractAddressModal';
+export { default as GoogleReCaptchaIframeModal } from './GoogleReCaptcha/GoogleReCaptchaIframeModal';
 
 // feature - select chain
 export { default as SelectChain } from './SelectChain/ChainSelect';

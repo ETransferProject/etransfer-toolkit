@@ -20,7 +20,7 @@
     "url": "https://github.com/ETransferProject/etransfer-toolkit",
     "directory": "packages/ui-react"
   },
-  "version": "1.13.0",
+  "version": "1.14.0",
   "main": "dist/index.js",
   "types": "dist/_types/index.d.ts",
   "type": "module",
@@ -41,9 +41,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@etransfer/core": "^1.13.0",
-    "@etransfer/types": "^1.13.0",
-    "@etransfer/utils": "^1.13.0",
+    "@etransfer/core": "^1.14.0",
+    "@etransfer/types": "^1.14.0",
+    "@etransfer/utils": "^1.14.0",
     "@portkey/types": "2.15.10",
     "@portkey/utils": "2.15.10",
     "antd": "4.24.14",

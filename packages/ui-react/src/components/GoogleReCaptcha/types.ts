@@ -20,3 +20,5 @@ export interface GoogleReCaptchaProps extends BaseReCaptcha {
   onExpired?: (e?: any) => any;
   onError?: (e?: any) => any;
 }
+
+export type GoogleReCaptchaMethods = Pick<GoogleReCaptchaProps, 'onError' | 'onSuccess' | 'onExpired'>;

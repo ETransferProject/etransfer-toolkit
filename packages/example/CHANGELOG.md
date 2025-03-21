@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.13.0...v1.14.0) (2025-03-21)
+
+### Features
+
+- 🎸 add export type and update demo ([50cec83](https://github.com/ETransferProject/etransfer-toolkit/commit/50cec83f6aee445c2db2109f49c7ef616cf05274))
+- 🎸 dev recaptcha iframe ([613b928](https://github.com/ETransferProject/etransfer-toolkit/commit/613b9288088bd8e73b5ce0dad2f17605e40d8e8a))
+
 ## [1.13.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.12.2-alpha.1...v1.13.0) (2025-02-10)
 
 ### Features
