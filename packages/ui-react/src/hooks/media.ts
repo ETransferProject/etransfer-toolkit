@@ -19,7 +19,7 @@ export function useScreenSize() {
         window.removeEventListener('resize', resize);
       };
     }
-  }, [isMobilePX, isPadPX]);
+  }, []);
 
   return {
     isMobilePX,
