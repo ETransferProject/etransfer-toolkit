@@ -19,5 +19,6 @@
     "strictNullChecks": true,
     "esModuleInterop": true
   },
+  "types": ["jest", "@testing-library/jest-dom"],
   "include": ["index.d.ts"]
 }

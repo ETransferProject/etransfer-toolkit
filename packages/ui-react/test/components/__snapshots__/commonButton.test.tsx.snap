@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommonButton Snapshot Matching 1`] = `
+<DocumentFragment>
+  <button
+    class="mocked-classname"
+    data-testid="antd-button"
+  >
+    Submit
+  </button>
+</DocumentFragment>
+`;

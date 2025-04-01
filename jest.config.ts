@@ -9,7 +9,9 @@ const { lstatSync, readdirSync } = require('fs');
 const basePath = path.resolve(__dirname, 'packages');
 const packages = readdirSync(basePath).filter((name: string) => lstatSync(path.join(basePath, name)).isDirectory());
 
-const moduleNameMapper: any = {};
+const moduleNameMapper: any = {
+  '\\.(less|css)$': 'identity-obj-proxy',
+};
 packages.forEach((key: string) => {
   moduleNameMapper[`@etransfer/${key}/test/(.+)$`] = `<rootDir>/packages/${key}/test/$1`;
   moduleNameMapper[`@etransfer/${key}`] = `<rootDir>/packages/${key}/src`;
