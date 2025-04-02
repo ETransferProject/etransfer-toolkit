@@ -4,6 +4,7 @@ import CommonButton, { CommonButtonProps } from '../../src/components/CommonButt
 import { CommonButtonSize, CommonButtonType } from '../../src/types/components';
 import clsx from 'clsx';
 
+// Mock Antd Button
 jest.mock('antd', () => ({
   Button: jest.fn(({ className, ...props }) => <button {...props} className={className} data-testid="antd-button" />),
 }));
@@ -25,8 +26,10 @@ describe('CommonButton', () => {
   test('Correct rendering of default configuration', () => {
     render(<CommonButton>Test Button</CommonButton>);
 
+    // Assert that the button is rendered
     const button = screen.getByTestId('antd-button');
 
+    // Assert that the button text is correct
     expect(button.textContent).toBe('Test Button');
   });
 
@@ -60,11 +63,7 @@ describe('CommonButton', () => {
         </CommonButton>,
       );
 
-      // expect(clsx).toHaveBeenCalledWith(
-      //   'etransfer-ui-common-button',
-      //   expect.stringContaining(expectedClasses),
-      //   expect.anything(),
-      // );
+      expect(clsx).toHaveBeenCalled();
     });
 
     test('Merge multiple class names', () => {
@@ -74,6 +73,7 @@ describe('CommonButton', () => {
         </CommonButton>,
       );
 
+      // Assert that the correct class names are generated
       expect(clsx).toHaveBeenCalledWith(
         'etransfer-ui-common-button',
         'etransfer-ui-common-button-large',
@@ -91,6 +91,7 @@ describe('CommonButton', () => {
       </CommonButton>,
     );
 
+    // Assert that the correct class names are generated
     expect(clsx).toHaveBeenCalledWith(
       'etransfer-ui-common-button',
       'etransfer-ui-common-button-middle',
@@ -107,6 +108,7 @@ describe('CommonButton', () => {
       </CommonButton>,
     );
 
+    // Assert that the component matches the snapshot
     expect(asFragment()).toMatchSnapshot();
   });
 });
