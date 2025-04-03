@@ -7,8 +7,8 @@ export default function CommonModalTip({ open = false, getContainer = 'body', ..
     <CommonModal
       {...props}
       getContainer={getContainer}
-      className={clsx('etransfer-ui-common-modal-tip', props?.className)}
-      footerClassName={clsx('etransfer-ui-common-modal-tip-footer', props?.footerClassName)}
+      className={clsx('etransfer-ui-common-modal-tip', props.className)}
+      footerClassName={clsx('etransfer-ui-common-modal-tip-footer', props.footerClassName)}
       open={open}
       hideCancelButton={true}>
       {props.children}
