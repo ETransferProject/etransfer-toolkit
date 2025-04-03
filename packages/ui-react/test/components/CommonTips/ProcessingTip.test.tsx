@@ -122,7 +122,7 @@ describe('ProcessingTip Component', () => {
     render(<ProcessingTip depositProcessingCount={1} onClick={mockOnClick} />);
 
     // Simulate click through the mocked CommonWarningTip
-    const clickHandler = (CommonWarningTip as jest.Mock).mock.calls[0][0].onClick;
+    const clickHandler = (CommonWarningTip as any).mock.calls[0][0].onClick;
     clickHandler();
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
