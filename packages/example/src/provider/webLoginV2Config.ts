@@ -1,7 +1,8 @@
+import { FairyVaultDiscoverWallet } from '@aelf-web-login/wallet-adapter-fairy-vault-discover';
 import { PortkeyDiscoverWallet } from '@aelf-web-login/wallet-adapter-portkey-discover';
-import { PortkeyAAWallet } from '@aelf-web-login/wallet-adapter-portkey-aa';
+import { PortkeyInnerWallet } from '@aelf-web-login/wallet-adapter-portkey-web';
 import { NightElfWallet } from '@aelf-web-login/wallet-adapter-night-elf';
-import { IConfigProps } from '@aelf-web-login/wallet-adapter-bridge';
+import { IBaseConfig, IConfigProps } from '@aelf-web-login/wallet-adapter-bridge';
 import { SignInDesignEnum } from '@aelf-web-login/wallet-adapter-base';
 import {
   APP_NAME,
@@ -14,7 +15,7 @@ import {
   WebLoginServiceUrl,
 } from '@/constants/index';
 
-const didConfig = {
+export const didConfig = {
   graphQLUrl: WebLoginGraphqlUrl,
   connectUrl: WebLoginConnectUrl,
   serviceUrl: WebLoginServiceUrl,
@@ -30,27 +31,39 @@ const didConfig = {
   networkType: NETWORK_TYPE,
 };
 
-const baseConfig = {
-  showVconsole: false,
+const baseConfig: IBaseConfig = {
+  showVconsole: true,
   networkType: NETWORK_TYPE,
   chainId: SupportedChainId.sideChain,
   sideChainId: SupportedChainId.sideChain,
-  keyboard: true,
-  noCommonBaseModal: false,
+  // keyboard: true,
+  // noCommonBaseModal: false,
   design: SignInDesignEnum.CryptoDesign,
   enableAcceleration: true,
+  appName: APP_NAME,
+  theme: 'light',
 };
 
-const portkeyAAWallet = new PortkeyAAWallet({
-  appName: APP_NAME,
+const portkeyInnerWallet = new PortkeyInnerWallet({
+  networkType: NETWORK_TYPE,
   chainId: SupportedChainId.sideChain,
-  autoShowUnlock: true,
+  disconnectConfirm: true,
 });
 
 const portkeyDiscoverWallet = new PortkeyDiscoverWallet({
   networkType: NETWORK_TYPE,
   chainId: SupportedChainId.sideChain,
   autoRequestAccount: true,
+  autoLogoutOnDisconnected: true,
+  autoLogoutOnNetworkMismatch: true,
+  autoLogoutOnAccountMismatch: true,
+  autoLogoutOnChainMismatch: true,
+});
+
+const fairyVaultDiscoverWallet = new FairyVaultDiscoverWallet({
+  networkType: NETWORK_TYPE,
+  chainId: SupportedChainId.sideChain,
+  autoRequestAccount: true, // If set to true, please contact Portkey to add whitelist
   autoLogoutOnDisconnected: true,
   autoLogoutOnNetworkMismatch: true,
   autoLogoutOnAccountMismatch: true,
@@ -66,7 +79,7 @@ const nightElfWallet = new NightElfWallet({
 });
 
 export const config: IConfigProps = {
-  didConfig,
+  // didConfig,
   baseConfig,
-  wallets: [portkeyAAWallet, portkeyDiscoverWallet, nightElfWallet],
+  wallets: [portkeyInnerWallet, portkeyDiscoverWallet, fairyVaultDiscoverWallet, nightElfWallet],
 };

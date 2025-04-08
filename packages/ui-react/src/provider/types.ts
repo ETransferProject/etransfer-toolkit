@@ -3,6 +3,7 @@ import { ChainId } from '@portkey/types';
 import { NetworkType } from '../types';
 import { ICallContractParamsV2, TGetSignatureFunc } from '@etransfer/utils';
 import { BaseReCaptcha } from '../components/GoogleReCaptcha/types';
+import { WalletTypeEnum } from '@aelf-web-login/wallet-adapter-base';
 
 export interface ETransferConfigProviderProps {
   config: ETransferConfigProps;
@@ -34,12 +35,7 @@ export interface ETransferConfigProps extends TETransferCoreOptions {
   reCaptchaConfig?: ETransferReCaptchaConfig;
 }
 
-export enum WalletTypeEnum {
-  unknown = 'Unknown',
-  elf = 'NightElf',
-  aa = 'PortkeyAA',
-  discover = 'PortkeyDiscover',
-}
+export { WalletTypeEnum };
 
 export interface ETransferAccountConfig {
   walletType: WalletTypeEnum;

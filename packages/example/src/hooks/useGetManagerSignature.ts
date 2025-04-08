@@ -1,5 +1,5 @@
 import { APP_NAME } from '@/constants';
-import { ExtraInfoForDiscover } from '@/types/wallet';
+import { ExtraInfoForDiscoverAndWeb } from '@/types/wallet';
 import { WalletTypeEnum } from '@aelf-web-login/wallet-adapter-base';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 import { SignatureData } from '@etransfer/utils';
@@ -16,7 +16,7 @@ export function useGetManagerSignature() {
 
       if (walletType === WalletTypeEnum.discover) {
         // discover
-        const discoverInfo = walletInfo?.extraInfo as ExtraInfoForDiscover;
+        const discoverInfo = walletInfo?.extraInfo as ExtraInfoForDiscoverAndWeb;
         if ((discoverInfo?.provider as any).methodCheck('wallet_getManagerSignature')) {
           const sin = await discoverInfo?.provider?.request({
             method: 'wallet_getManagerSignature',
@@ -58,6 +58,7 @@ export function useGetManagerSignature() {
           signInfo,
         });
       }
+      // TODO new eoa
 
       return signResult;
     },

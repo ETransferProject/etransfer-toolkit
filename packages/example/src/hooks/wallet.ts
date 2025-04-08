@@ -31,7 +31,7 @@ export function useGetAccount() {
   const { walletInfo } = useConnectWallet();
   const isLogin = useIsLogin();
 
-  // WalletInfo TAelfAccounts ExtraInfoForDiscover | ExtraInfoForPortkeyAA | ExtraInfoForNightElf;
+  // WalletInfo TAelfAccounts ExtraInfoForDiscoverAndWeb | ExtraInfoForNightElf;
   return useMemo(() => {
     if (!isLogin) return undefined;
 

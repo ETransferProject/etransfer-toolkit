@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { etransferEvents, recoverManagerAddressByPubkey, recoverPubKeyBySignature } from '@etransfer/utils';
+import { etransferEvents } from '@etransfer/utils';
 import { AuthTokenSource, PortkeyVersion, TWalletType } from '@etransfer/types';
 import { eTransferCore } from '@/utils/core';
 import {
@@ -8,12 +8,13 @@ import {
   ETRANSFER_USER_ORIGIN_CHAIN_ID,
   ETRANSFER_USER_MANAGER_ADDRESS,
 } from '@/constants/storage';
-import { getCaHashAndOriginChainIdByWallet } from '@/utils/wallet';
+import { getCaHashAndOriginChainIdByWallet, getManagerAddressAndPubkeyByWallet } from '@/utils/wallet';
 import { ETransferConfig, WalletTypeEnum, useReCaptchaModal } from '@etransfer/ui-react';
 import { useConnectWallet } from '@aelf-web-login/wallet-adapter-react';
 import { useGetAccount, useIsLogin } from './wallet';
 import { WalletInfo } from '@/types/wallet';
 import { useGetManagerSignature } from './useGetManagerSignature';
+import { getAuthPlainText } from '@/utils/auth';
 
 export function useQueryAuthToken() {
   const { walletType, walletInfo } = useConnectWallet();
@@ -34,20 +35,17 @@ export function useQueryAuthToken() {
 
   const handleGetSignature = useCallback(async () => {
     if (!walletInfo || !walletInfo.address) return;
-    const plainTextOrigin = `Welcome to ETransfer!
 
-Click to sign in and accept the ETransfer Terms of Service (https://etransfer.gitbook.io/docs/more-information/terms-of-service) and Privacy Policy (https://etransfer.gitbook.io/docs/more-information/privacy-policy).
+    // signature text
+    const authPlainText = getAuthPlainText();
+    const plainText: any = authPlainText.plainTextHex;
 
-This request will not trigger a blockchain transaction or cost any gas fees.
-
-Nonce:
-${Date.now()}`;
-    const plainText: any = Buffer.from(plainTextOrigin).toString('hex').replace('0x', '');
+    // get signature
     const signResult = await getManagerSignature(plainText);
 
     if (signResult?.error) throw signResult.errorMessage;
 
-    console.log('getSignature');
+    console.log('getSignature', signResult);
 
     if (signResult?.error) throw signResult.errorMessage;
 
@@ -74,8 +72,13 @@ ${Date.now()}`;
 
         const signatureResult = await handleGetSignature();
         if (!signatureResult) throw Error('Signature error');
-        const pubkey = recoverPubKeyBySignature(signatureResult.plainText, signatureResult.signature) + '';
-        const managerAddress = recoverManagerAddressByPubkey(pubkey);
+
+        const { managerAddress, pubkey } = getManagerAddressAndPubkeyByWallet(
+          walletType,
+          signatureResult.plainText,
+          signatureResult.signature,
+        );
+
         localStorage.setItem(ETRANSFER_USER_MANAGER_ADDRESS, managerAddress);
         console.log('>>>>>> user information:', {
           pubkey,
