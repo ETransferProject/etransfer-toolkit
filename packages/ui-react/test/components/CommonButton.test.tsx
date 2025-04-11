@@ -12,7 +12,7 @@ jest.mock('antd', () => ({
 // Emulate clsx class name generation
 jest.mock('clsx', () => jest.fn(() => 'mocked-classname'));
 
-describe('CommonButton', () => {
+describe('CommonButton Component', () => {
   const defaultProps: CommonButtonProps = {
     size: CommonButtonSize.Middle,
     type: CommonButtonType.Primary,

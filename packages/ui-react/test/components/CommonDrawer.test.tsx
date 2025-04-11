@@ -14,7 +14,7 @@ jest.mock('../../src/components/CommonSvg', () => ({
   default: jest.fn(() => 'svg-close-icon'),
 }));
 
-describe('CommonDrawer', () => {
+describe('CommonDrawer Component', () => {
   afterEach(() => {
     jest.clearAllMocks(); // Clear mocks after each test
   });

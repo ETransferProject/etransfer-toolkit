@@ -7,7 +7,7 @@ import { ComponentStyle, CopySize } from '../../src/types';
 // Mock the Copy component
 jest.mock('../../src/components/Copy', () => jest.fn(() => <div data-testid="copy" />));
 
-describe('CommonAddress', () => {
+describe('CommonAddress Component', () => {
   const mockValue = '0x123...abc';
   const mockLabel = 'Wallet Address';
 

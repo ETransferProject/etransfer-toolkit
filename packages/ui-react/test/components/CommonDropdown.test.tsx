@@ -12,7 +12,7 @@ jest.mock('antd', () => ({
 // Mock the DynamicArrow component
 jest.mock('../../src/components/DynamicArrow', () => jest.fn(() => <div data-testid="arrow" />));
 
-describe('CommonDropdown', () => {
+describe('CommonDropdown Component', () => {
   const mockHandleClick = jest.fn();
   const mockGetContainer = 'test-container';
 
