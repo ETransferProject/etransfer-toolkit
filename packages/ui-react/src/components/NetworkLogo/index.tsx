@@ -85,7 +85,7 @@ export function NetworkLogo({
   className?: string;
   size?: TNetworkLogoSize;
 }) {
-  const renderNetworkLogo = useMemo(() => NetworkLogoMap?.[network]?.[size], [network, size]);
+  const renderNetworkLogo = useMemo(() => NetworkLogoMap[network]?.[size], [network, size]);
 
   if (renderNetworkLogo) {
     return (
