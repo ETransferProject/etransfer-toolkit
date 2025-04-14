@@ -9,7 +9,9 @@ const { lstatSync, readdirSync } = require('fs');
 const basePath = path.resolve(__dirname, 'packages');
 const packages = readdirSync(basePath).filter((name: string) => lstatSync(path.join(basePath, name)).isDirectory());
 
-const moduleNameMapper: any = {};
+const moduleNameMapper: any = {
+  '\\.(less|css)$': 'identity-obj-proxy',
+};
 packages.forEach((key: string) => {
   moduleNameMapper[`@etransfer/${key}/test/(.+)$`] = `<rootDir>/packages/${key}/test/$1`;
   moduleNameMapper[`@etransfer/${key}`] = `<rootDir>/packages/${key}/src`;
@@ -39,7 +41,7 @@ export default {
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: ['/node_modules/', '/__generated__/', 'dist'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/__generated__/', 'dist', 'ui-react/src/provider'],
 
   // Indicates which provider should be used to instrument code for coverage
   // coverageProvider: "babel",
@@ -146,7 +148,7 @@ export default {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

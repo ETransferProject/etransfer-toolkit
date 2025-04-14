@@ -3,7 +3,7 @@ import { ETransferConfig } from '../provider/ETransferConfigProvider';
 import { etransferEvents, handleErrorMessage } from '@etransfer/utils';
 import { ETransferReCaptchaConfig } from '../provider/types';
 import { ReCaptchaType } from '../components/GoogleReCaptcha/types';
-import { etransferCore } from '../utils';
+import { etransferCore } from '../utils/core';
 import { setReCaptchaModal } from '../utils/recaptcha';
 
 export function useReCaptcha() {
@@ -51,11 +51,13 @@ export function useReCaptchaModal() {
               throw info;
             }
           }
+          return;
         }
+        return;
       } catch (e: any) {
-        if (e.type === 'cancel') throw handleErrorMessage(e, 'User Cancel');
-        if (e.type === 'error') throw handleErrorMessage(e, 'ReCaptcha error');
-        if (e.type === 'expire') throw handleErrorMessage(e, 'ReCaptcha expire');
+        if (e.type === ReCaptchaType.cancel) throw handleErrorMessage(e, 'User Cancel');
+        if (e.type === ReCaptchaType.error) throw handleErrorMessage(e, 'ReCaptcha error');
+        if (e.type === ReCaptchaType.expire) throw handleErrorMessage(e, 'ReCaptcha expired');
         throw e;
       }
     },

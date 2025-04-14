@@ -10,7 +10,7 @@ export default function GlobalLoading() {
   const [loadingInfo, setLoadingInfo] = useState<GlobalLoadingInfo>();
 
   const setLoadingHandler = useCallback((isLoading: boolean, loadingInfo?: GlobalLoadingInfo) => {
-    const isHasText = typeof loadingInfo?.isHasText === 'boolean' ? loadingInfo?.isHasText : true;
+    const isHasText = typeof loadingInfo?.isHasText === 'boolean' ? loadingInfo.isHasText : true;
     const info = {
       ...loadingInfo,
       isHasText,
@@ -42,7 +42,7 @@ export default function GlobalLoading() {
       <CircleLoading />
       {!!loadingInfo?.text && (
         <span className={clsx('etransfer-ui-text-center', 'etransfer-ui-global-loading-modal-text')}>
-          {loadingInfo?.text}
+          {loadingInfo.text}
         </span>
       )}
     </Modal>

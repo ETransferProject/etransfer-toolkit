@@ -31,12 +31,7 @@ export default function CommonAddress({
       <div className={clsx('etransfer-ui-flex-row-center', valueWrapperClassName)}>
         <div className={clsx('etransfer-ui-flex-1', 'address-text-content', valueClassName)}>{value}</div>
         {showCopy && !!value && (
-          <Copy
-            className="etransfer-ui-flex-none"
-            toCopy={value || ''}
-            size={copySize}
-            componentStyle={componentStyle}
-          />
+          <Copy className="etransfer-ui-flex-none" toCopy={value} size={copySize} componentStyle={componentStyle} />
         )}
       </div>
     </div>

@@ -1,8 +1,9 @@
-import { etransferCore, getAccountAddress } from '../utils';
 import { useCallback, useEffect, useRef } from 'react';
 import { etransferEvents, removeAddressSuffix } from '@etransfer/utils';
 import { TOrderRecordsNoticeResponse } from '@etransfer/socket';
 import { CHAIN_ID } from '../constants';
+import { etransferCore } from '../utils/core';
+import { getAccountAddress } from '../utils/login';
 import {
   connectUserOrderRecord,
   handleDepositNoticeDataAndShow,

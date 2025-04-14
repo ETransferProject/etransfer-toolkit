@@ -33,7 +33,7 @@ export function useCheckTxn() {
 
   useEffect(() => {
     return () => {
-      stopTimer;
+      stopTimer();
     };
   });
 
