@@ -23,6 +23,13 @@
     "test:browser": "jest --config=jest.browser.config.ts",
     "make-badges": "istanbul-badges-readme"
   },
+  "resolutions": {
+    "@portkey/contracts": "^2.23.0-alpha.3",
+    "@portkey/did-ui-react": "^2.23.0-alpha.3",
+    "@portkey/types": "^2.23.0-alpha.3",
+    "@portkey/utils": "^2.23.0-alpha.3",
+    "@portkey/provider-types": "^2.5.0-alpha.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/plugin-proposal-decorators": "^7.20.13",
