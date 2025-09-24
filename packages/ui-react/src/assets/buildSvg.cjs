@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 const svgDir = path.resolve(__dirname, './svgIcon');
 
 function readfile(filename) {

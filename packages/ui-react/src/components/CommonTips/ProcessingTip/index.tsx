@@ -20,16 +20,16 @@ export default function ProcessingTip({
   if (!withdrawProcessingCount && !depositProcessingCount) return null;
 
   let text;
-  if (!withdrawProcessingCount && depositProcessingCount) {
+  if (withdrawProcessingCount) {
+    if (depositProcessingCount) {
+      text = `${withdrawProcessingCount} ${
+        withdrawProcessingCount > 1 ? 'withdrawals' : 'withdrawal'
+      } and ${depositProcessingCount} ${depositProcessingCount > 1 ? 'deposits' : 'deposit'} processing`;
+    } else {
+      text = `${withdrawProcessingCount} ${withdrawProcessingCount > 1 ? 'withdrawals' : 'withdrawal'} processing`;
+    }
+  } else if (depositProcessingCount) {
     text = `${depositProcessingCount} ${depositProcessingCount > 1 ? 'deposits' : 'deposit'} processing`;
-  } else if (!depositProcessingCount && withdrawProcessingCount) {
-    text = `${withdrawProcessingCount} ${withdrawProcessingCount > 1 ? 'withdrawals' : 'withdrawal'} processing`;
-  } else if (withdrawProcessingCount && depositProcessingCount) {
-    text = `${withdrawProcessingCount} ${
-      withdrawProcessingCount > 1 ? 'withdrawals' : 'withdrawal'
-    } and ${depositProcessingCount} ${depositProcessingCount > 1 ? 'deposits' : 'deposit'} processing`;
-  } else {
-    text = '';
   }
 
   if (!text) return null;
