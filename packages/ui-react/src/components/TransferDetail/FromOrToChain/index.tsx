@@ -1,4 +1,4 @@
-import { TChainId } from '@aelf-web-login/wallet-adapter-base';
+import { ChainId } from '@portkey/types';
 import { useMemo } from 'react';
 import clsx from 'clsx';
 import './index.less';
@@ -12,7 +12,7 @@ export default function FromOrToChain({
   className,
 }: {
   network: string;
-  chainId?: TChainId;
+  chainId?: ChainId;
   className?: string;
 }) {
   const renderNetworkLogo = useMemo(() => {
