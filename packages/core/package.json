@@ -54,7 +54,7 @@
   },
   "peerDependencies": {
     "@portkey/types": "2.15.10",
-    "aelf-sdk": "^3.4.8",
+    "aelf-sdk": "^3.5.1-beta.0",
     "bignumber.js": "^9.1.0",
     "qs": "^6.13.1",
     "query-string": "^7.1.1"
