@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.0-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.15.0-alpha.0...v1.15.0-alpha.1) (2025-09-29)
+
+### Features
+
+- 🎸 update @portkey/xxx sdks's version ([8d354c4](https://github.com/ETransferProject/etransfer-toolkit/commit/8d354c4feb4db93684049ff72c12861503dd6637))
+
 ## [1.15.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.14.0...v1.15.0-alpha.0) (2025-09-24)
 
 **Note:** Version bump only for package @etransfer/core
