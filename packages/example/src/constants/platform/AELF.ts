@@ -2,7 +2,7 @@ export const CHAIN_INFO = {
   chainId: 'AELF',
   exploreUrl: 'https://aelfscan.io/AELF/',
   // rpcUrl: 'https://aelf-public-node.aelf.io',
-  rpcUrl: 'https://aelfscan.io/AELF/chain',
+  rpcUrl: 'https://aelf-public-node.aelf.io',
 };
 
 export const TOKEN_CONTRACT = 'JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE';

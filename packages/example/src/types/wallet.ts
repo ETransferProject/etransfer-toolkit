@@ -1,8 +1,6 @@
 import { TChainId } from '@aelf-web-login/wallet-adapter-base';
 import type { Accounts, IPortkeyProvider } from '@portkey/provider-types';
-import { PortkeyDid } from '@aelf-web-login/wallet-adapter-bridge';
 import { TAelfAccounts } from '@etransfer/ui-react';
-
 export type TChainIds = TChainId[];
 export type TChainType = 'ethereum' | 'aelf';
 
@@ -20,7 +18,7 @@ export interface ExtraInfoForDiscover {
 
 export interface ExtraInfoForPortkeyAA {
   publicKey: string;
-  portkeyInfo: PortkeyDid.DIDWalletInfo & {
+  portkeyInfo: any & {
     accounts: TAelfAccounts;
     nickName: string;
   };

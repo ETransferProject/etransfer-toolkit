@@ -39,6 +39,8 @@ export enum WalletTypeEnum {
   elf = 'NightElf',
   aa = 'PortkeyAA',
   discover = 'PortkeyDiscover',
+  fairyVault = 'FairyVaultDiscover',
+  web = 'PortkeyWebWallet',
 }
 
 export interface ETransferAccountConfig {

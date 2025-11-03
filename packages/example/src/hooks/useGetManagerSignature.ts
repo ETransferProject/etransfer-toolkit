@@ -14,7 +14,9 @@ export function useGetManagerSignature() {
       let signResult: SignatureData | null = null;
       if (!walletInfo?.address) return signResult;
 
-      if (walletType === WalletTypeEnum.discover) {
+      const isFairyVault = walletType === WalletTypeEnum.fairyVault;
+
+      if (walletType === WalletTypeEnum.discover || isFairyVault) {
         // discover
         const discoverInfo = walletInfo?.extraInfo as ExtraInfoForDiscover;
         if ((discoverInfo?.provider as any).methodCheck('wallet_getManagerSignature')) {
@@ -50,8 +52,8 @@ export function useGetManagerSignature() {
           signInfo,
         });
       } else {
-        // portkey sdk
-        const signInfo = Buffer.from(plainText).toString('hex');
+        // portkey web wallet
+        const signInfo = plainText;
         signResult = await getSignature({
           appName: APP_NAME,
           address: walletInfo.address,

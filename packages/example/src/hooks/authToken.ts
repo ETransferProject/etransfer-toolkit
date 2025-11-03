@@ -17,6 +17,8 @@ import { useGetManagerSignature } from './useGetManagerSignature';
 
 export function useQueryAuthToken() {
   const { walletType, walletInfo } = useConnectWallet();
+  console.log(walletInfo, '===walletInfo');
+
   const getManagerSignature = useGetManagerSignature();
   const isLogin = useIsLogin();
   const isLoginRef = useRef(isLogin);
@@ -60,7 +62,7 @@ ${Date.now()}`;
       if (!isLoginRef.current) throw new Error('You are not logged in.');
 
       let reCaptchaToken = undefined;
-      if (isCheckReCaptcha && walletType === WalletTypeEnum.elf) {
+      if (isCheckReCaptcha && (walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault)) {
         // 1. need to add your dapp's domain
         // reCaptchaToken = await getETransferReCaptcha(walletInfo.address);
         // 2. don't need to add your dapp's domain
@@ -69,6 +71,8 @@ ${Date.now()}`;
 
       try {
         const { caHash, originChainId } = await getCaHashAndOriginChainIdByWallet(walletInfo as WalletInfo, walletType);
+        console.log(caHash, originChainId, '===caHash, originChainId');
+
         localStorage.setItem(ETRANSFER_USER_CA_HASH, caHash);
         localStorage.setItem(ETRANSFER_USER_ORIGIN_CHAIN_ID, originChainId);
 
@@ -96,6 +100,8 @@ ${Date.now()}`;
           recaptchaToken: reCaptchaToken || undefined,
         };
       } catch (error) {
+        console.log(error, '=====error');
+
         throw new Error('Failed to obtain user information');
       }
     },
@@ -106,7 +112,10 @@ ${Date.now()}`;
     if (!walletInfo) throw new Error('Failed to obtain wallet information.');
     if (!isLoginRef.current) throw new Error('You are not logged in.');
     try {
-      const source = walletType === WalletTypeEnum.elf ? AuthTokenSource.NightElf : AuthTokenSource.Portkey;
+      const source =
+        walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault
+          ? AuthTokenSource.NightElf
+          : AuthTokenSource.Portkey;
       const _caHash = localStorage.getItem(ETRANSFER_USER_CA_HASH);
       const _managerAddress = localStorage.getItem(ETRANSFER_USER_MANAGER_ADDRESS);
       // 1: local storage has JWT token
@@ -119,6 +128,7 @@ ${Date.now()}`;
         const { pubkey, signature, plainText, caHash, managerAddress, originChainId, recaptchaToken } =
           await getUserInfo();
         // 2: local storage don not has JWT token
+        // feature/add-fairyVault
         jwt = await eTransferCore.getAuthTokenFromApi({
           pubkey,
           signature,
@@ -128,7 +138,8 @@ ${Date.now()}`;
           managerAddress,
           version: PortkeyVersion.v2,
           source: source,
-          recaptchaToken: walletType === WalletTypeEnum.elf ? recaptchaToken : undefined,
+          recaptchaToken:
+            walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault ? recaptchaToken : undefined,
         });
       }
 

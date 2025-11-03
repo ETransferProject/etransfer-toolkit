@@ -147,7 +147,7 @@ export default function WithdrawPage() {
       const managerAddress = localStorage.getItem(ETRANSFER_USER_MANAGER_ADDRESS);
       const account = JSON.parse(localStorage.getItem(ETRANSFER_USER_ACCOUNT) || '');
       const ownerAddress = account?.[currentChain] || '';
-      if (walletType !== WalletTypeEnum.elf && (!caHash || !managerAddress))
+      if (walletType !== WalletTypeEnum.elf && walletType !== WalletTypeEnum.fairyVault && (!caHash || !managerAddress))
         throw new Error('User information is missing');
       if (!ownerAddress) throw new Error('User address is missing');
 
@@ -165,11 +165,15 @@ export default function WithdrawPage() {
         toAddress: address,
         caContractAddress,
         eTransferContractAddress,
-        walletType: walletType === WalletTypeEnum.elf ? TWalletType.NightElf : TWalletType.Portkey,
+        walletType:
+          walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault
+            ? TWalletType.NightElf
+            : TWalletType.Portkey,
         caHash: caHash || undefined,
         network: currentNetwork,
         chainId: currentChain,
-        managerAddress: walletType === WalletTypeEnum.elf ? ownerAddress : managerAddress,
+        managerAddress:
+          walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault ? ownerAddress : managerAddress,
         accountAddress: removeDIDAddressSuffix(ownerAddress),
         getSignature: async (ser: any) => {
           let signInfo: string;
