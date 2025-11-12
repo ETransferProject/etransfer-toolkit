@@ -2,8 +2,8 @@
 
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { ETransferConfig, ETransferLayoutProvider, ETransferStyleProvider, ReCaptchaType } from '@etransfer/ui-react';
-import { ETRANSFER_AUTH_URL, ETRANSFER_URL } from '@/constants';
+import { ETransferConfig, ETransferLayoutProvider, ETransferStyleProvider } from '@etransfer/ui-react';
+import { ETRANSFER_AUTH_URL, ETRANSFER_URL, NETWORK_TYPE } from '@/constants';
 const GetAuth = dynamic(() => import('@/pageComponents/login'), { ssr: false });
 
 export default function ETransferLayout({ children }: { children: React.ReactNode }) {
@@ -22,7 +22,7 @@ export default function ETransferLayout({ children }: { children: React.ReactNod
     etransferUrl: ETRANSFER_URL,
     etransferAuthUrl: ETRANSFER_AUTH_URL,
     etransferSocketUrl: ETRANSFER_URL,
-    networkType: 'TESTNET',
+    networkType: NETWORK_TYPE,
     // reCaptchaConfig: {
     //   theme: 'dark',
     //   size: 'compact',

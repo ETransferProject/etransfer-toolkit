@@ -12,7 +12,9 @@ import { etransferEvents } from '@etransfer/utils';
 import { useIsLogin } from '@/hooks/wallet';
 
 export default function GetAuth() {
-  const { walletType, connectWallet, disConnectWallet } = useConnectWallet();
+  const { walletType, connectWallet, disConnectWallet, walletInfo } = useConnectWallet();
+  console.log(walletInfo, '===walletInfo');
+
   const isLogin = useIsLogin();
   const isLoginRef = useRef(isLogin);
   isLoginRef.current = isLogin;

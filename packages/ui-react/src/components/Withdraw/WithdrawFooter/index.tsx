@@ -103,7 +103,7 @@ export default function WithdrawFooter({
       const accountAddress = getAccountAddress(chainItem.key);
       const { walletType, caHash, managerAddress } = getAccountInfo();
 
-      if (walletType !== WalletTypeEnum.elf && (!caHash || !managerAddress))
+      if (walletType !== WalletTypeEnum.elf && walletType !== WalletTypeEnum.fairyVault && (!caHash || !managerAddress))
         throw new Error('User information is missing');
       if (!accountAddress) throw new Error('User address is missing');
 
@@ -126,11 +126,17 @@ export default function WithdrawFooter({
         memo,
         caContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.CA],
         eTransferContractAddress: currentTokenAddress,
-        walletType: walletType === WalletTypeEnum.elf ? TWalletType.NightElf : TWalletType.Portkey,
+        walletType:
+          walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault
+            ? TWalletType.NightElf
+            : TWalletType.Portkey,
         caHash: caHash || undefined,
         network: networkItem?.network || '',
         chainId: chainItem.key,
-        managerAddress: managerAddress || removeDIDAddressSuffix(accountAddress),
+        managerAddress:
+          walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault
+            ? removeDIDAddressSuffix(accountAddress)
+            : managerAddress || removeDIDAddressSuffix(accountAddress),
         accountAddress: removeDIDAddressSuffix(accountAddress),
         getSignature: async (ser: any) => {
           if (!walletType || walletType === WalletTypeEnum.unknown) {
