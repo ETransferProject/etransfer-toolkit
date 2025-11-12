@@ -1988,6 +1988,57 @@
     "@ethersproject/properties" "^5.8.0"
     "@ethersproject/strings" "^5.8.0"
 
+"@etransfer/core@^1.15.0-alpha.0":
+  version "1.15.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@etransfer/core/-/core-1.15.0-alpha.1.tgz#36045520050ad2d9b262e36b885e1b9b0be1478d"
+  integrity sha512-v0IUesRSeKAhgqZVZpFm6UDgPnBdSMNXVcLag8C30bOWLoYJ+psVG9CG99KtkgIKRsfYysjGaE1NDvi8q55OBw==
+  dependencies:
+    "@etransfer/services" "^1.15.0-alpha.1"
+    "@etransfer/socket" "^1.15.0-alpha.1"
+    "@etransfer/types" "^1.15.0-alpha.1"
+    "@etransfer/utils" "^1.15.0-alpha.1"
+
+"@etransfer/request@^1.15.0-alpha.1":
+  version "1.15.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@etransfer/request/-/request-1.15.0-alpha.1.tgz#31b85549950df716d680dd570061add40be40dc4"
+  integrity sha512-1nxqNzN39VZNaW74zl+cZsMRIK+PPGaUtwCPHXf4donHOLODnxiLiJMUJLwEis6Pef7mPxv0bo6wLMeR1awnig==
+  dependencies:
+    "@etransfer/types" "^1.15.0-alpha.1"
+    "@etransfer/utils" "^1.15.0-alpha.1"
+    axios "^0.24.0"
+
+"@etransfer/services@^1.15.0-alpha.0", "@etransfer/services@^1.15.0-alpha.1":
+  version "1.15.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@etransfer/services/-/services-1.15.0-alpha.1.tgz#6b870aaa659f401477fb129ee73c71ea1842d715"
+  integrity sha512-H3OQlqDzh51IiGZ9ngcQRgIxNcRm9+6YwLld7FGroThuKOZ1K340BIg7nBSvYYb9jlihta6PNAjCoov6ZVdQhQ==
+  dependencies:
+    "@etransfer/request" "^1.15.0-alpha.1"
+    "@etransfer/types" "^1.15.0-alpha.1"
+    "@etransfer/utils" "^1.15.0-alpha.1"
+    "@portkey/types" "^2.23.0-alpha.7"
+
+"@etransfer/socket@^1.15.0-alpha.1":
+  version "1.15.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@etransfer/socket/-/socket-1.15.0-alpha.1.tgz#841c5f14bc5549cbf298ec2966e215a25c4a023f"
+  integrity sha512-OE9UFXsAuh7s5BdV40KLXKI6zkRv/T7ziZhwr6mCLwl5uOxgu8zpnZMgVz6qswuIrC6Bssq94/eG6+BkYs+QMA==
+  dependencies:
+    "@abp/signalr" "^7.0.0"
+    "@etransfer/utils" "^1.15.0-alpha.1"
+
+"@etransfer/types@^1.15.0-alpha.0", "@etransfer/types@^1.15.0-alpha.1":
+  version "1.15.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@etransfer/types/-/types-1.15.0-alpha.1.tgz#b94dd6ad66d73b376715c3d2379e8f010d5b3137"
+  integrity sha512-9bFjCSP6yvrbPyEq0cekZEcgjvI+2Yrvu9fuWPRYc88YjbEFZcb60A/vqvbsdX9whX/5PyOmSbGWaSZez/tRFA==
+
+"@etransfer/utils@^1.15.0-alpha.0", "@etransfer/utils@^1.15.0-alpha.1":
+  version "1.15.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@etransfer/utils/-/utils-1.15.0-alpha.1.tgz#56c2717f54821574b913694c40933e7329c8aabc"
+  integrity sha512-P9PWNGGdDxBIz9PRNtOAe7kW/YBjLahP0A9ZdhExRtSvhNgM7MHeJltTUxP+0l7WnlxDaw793nUASmQXGqeWhQ==
+  dependencies:
+    "@etransfer/services" "^1.15.0-alpha.1"
+    "@etransfer/types" "^1.15.0-alpha.1"
+    bn.js "^5.2.1"
+
 "@floating-ui/core@^1.6.0":
   version "1.6.7"
   resolved "https://registry.npmjs.org/@floating-ui/core/-/core-1.6.7.tgz#7602367795a390ff0662efd1c7ae8ca74e75fb12"

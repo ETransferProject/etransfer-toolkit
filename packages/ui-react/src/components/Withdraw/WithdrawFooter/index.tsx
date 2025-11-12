@@ -133,10 +133,7 @@ export default function WithdrawFooter({
         caHash: caHash || undefined,
         network: networkItem?.network || '',
         chainId: chainItem.key,
-        managerAddress:
-          walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault
-            ? removeDIDAddressSuffix(accountAddress)
-            : managerAddress || removeDIDAddressSuffix(accountAddress),
+        managerAddress: managerAddress || removeDIDAddressSuffix(accountAddress),
         accountAddress: removeDIDAddressSuffix(accountAddress),
         getSignature: async (ser: any) => {
           if (!walletType || walletType === WalletTypeEnum.unknown) {
