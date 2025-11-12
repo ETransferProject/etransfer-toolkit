@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.0-alpha.0](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.15.0-alpha.1...v1.16.0-alpha.0) (2025-11-12)
+
+### Features
+
+- 🎸 add fairy vault ([c4a0c29](https://github.com/ETransferProject/etransfer-toolkit/commit/c4a0c29d50be76b0087bdff72aaf4162bddc0d31))
+- 🎸 fix withdraw ([c485517](https://github.com/ETransferProject/etransfer-toolkit/commit/c485517e7338005253906e6184729f64f656dac6))
+
 ## [1.15.0-alpha.1](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.15.0-alpha.0...v1.15.0-alpha.1) (2025-09-29)
 
 **Note:** Version bump only for package @etransfer/example
