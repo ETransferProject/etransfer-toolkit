@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.0-alpha.5](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.16.0-alpha.4...v1.16.0-alpha.5) (2025-11-12)
+
+### Features
+
+- 🎸 fix sign transfer ([82f51b3](https://github.com/ETransferProject/etransfer-toolkit/commit/82f51b3d45181813dd742551482e5e9a2fe6c74e))
+
 ## [1.16.0-alpha.4](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.16.0-alpha.3...v1.16.0-alpha.4) (2025-11-12)
 
 **Note:** Version bump only for package @etransfer/ui-react
