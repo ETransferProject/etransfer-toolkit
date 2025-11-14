@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.0-alpha.6](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.16.0-alpha.5...v1.16.0-alpha.6) (2025-11-14)
+
+### Bug Fixes
+
+- 🐛 etransfer contract address ([0088b93](https://github.com/ETransferProject/etransfer-toolkit/commit/0088b932556e43ad84c0eb7a0f2e36cdbbbb75e7))
+
 ## [1.16.0-alpha.5](https://github.com/ETransferProject/etransfer-toolkit/compare/v1.16.0-alpha.4...v1.16.0-alpha.5) (2025-11-12)
 
 ### Features
