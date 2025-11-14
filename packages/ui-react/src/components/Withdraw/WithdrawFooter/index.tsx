@@ -88,7 +88,10 @@ export default function WithdrawFooter({
 
   const currentTokenDecimal = useMemo(() => currentToken.decimals, [currentToken.decimals]);
 
-  const currentTokenAddress = useMemo(() => currentToken.contractAddress, [currentToken.contractAddress]);
+  const eTransferContractAddress = useMemo(
+    () => getAelfReact(getNetworkType(), chainItem.key).contractAddress[CONTRACT_TYPE.ETRANSFER],
+    [chainItem.key],
+  );
 
   const onSubmit = useCallback(() => {
     if (!currentNetwork) return;
@@ -125,7 +128,7 @@ export default function WithdrawFooter({
         toAddress: address,
         memo,
         caContractAddress: aelfReact.contractAddress[CONTRACT_TYPE.CA],
-        eTransferContractAddress: currentTokenAddress,
+        eTransferContractAddress,
         walletType:
           walletType === WalletTypeEnum.elf || walletType === WalletTypeEnum.fairyVault
             ? TWalletType.NightElf
@@ -203,7 +206,7 @@ export default function WithdrawFooter({
     address,
     amount,
     chainItem,
-    currentTokenAddress,
+    eTransferContractAddress,
     currentTokenDecimal,
     memo,
     networkItem,
