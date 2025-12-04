@@ -1,0 +1,161 @@
+@import '../../../assets/theme/breakpoint.less';
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-transfer-detail-step {
+  display: flex;
+  justify-content: center;
+
+  @media @mediaWeb {
+    max-width: 784px;
+  }
+
+  .etransfer-ui-transfer-detail-step-horizontal {
+    .etransfer-ant-steps-item {
+      .etransfer-ant-steps-item-tail {
+        margin-left: 12px;
+        padding: 3.5px 20px;
+      }
+      .etransfer-ant-steps-item-icon {
+        margin-left: 0;
+      }
+
+      .etransfer-ant-steps-item-content {
+        width: 100%;
+        margin-right: 24px;
+        text-align: left;
+
+        .etransfer-ant-steps-item-title {
+          font-family: var(--etransfer-ui-font-family-medium);
+          font-weight: var(--etransfer-ui-font-weight-medium);
+          font-size: 12px;
+          height: 20px;
+          line-height: 20px;
+        }
+        .etransfer-ant-steps-item-description {
+          color: var(--etransfer-ui-secondary-text);
+          font-size: 12px;
+          line-height: 20px;
+        }
+      }
+    }
+
+    .etransfer-ant-steps-item-finish {
+      .etransfer-ant-steps-item-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .etransfer-ant-steps-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          top: 0;
+        }
+      }
+    }
+
+    .etransfer-ant-steps-item-process {
+      .etransfer-ant-steps-item-tail {
+        &::after {
+          background-color: var(--etransfer-ui-border);
+        }
+      }
+    }
+
+    .etransfer-ant-steps-item-wait {
+      .etransfer-ant-steps-item-icon {
+        border-color: var(--etransfer-ui-secondary-text);
+        .etransfer-ant-steps-icon {
+          color: var(--etransfer-ui-secondary-text);
+        }
+      }
+      .etransfer-ant-steps-item-tail {
+        &::after {
+          background-color: var(--etransfer-ui-border);
+        }
+      }
+      .etransfer-ant-steps-item-title {
+        color: var(--etransfer-ui-primary-text);
+      }
+    }
+  }
+
+  .etransfer-ui-transfer-detail-step-vertical {
+    height: 240px;
+
+    .etransfer-ant-steps-item {
+      .etransfer-ant-steps-item-tail {
+        left: 10px;
+      }
+      .etransfer-ant-steps-item-icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .etransfer-ant-steps-icon {
+          font-size: 10px;
+        }
+      }
+      .etransfer-ant-steps-item-content {
+        .etransfer-ant-steps-item-title {
+          font-family: var(--etransfer-ui-font-family-medium);
+          font-weight: var(--etransfer-ui-font-weight-medium);
+          font-size: 12px;
+          height: 20px;
+          line-height: 20px;
+        }
+        .etransfer-ant-steps-item-description {
+          color: var(--etransfer-ui-secondary-text);
+          font-size: 12px;
+          line-height: 20px;
+        }
+      }
+    }
+
+    .etransfer-ant-steps-item-finish {
+      .etransfer-ant-steps-item-icon {
+        .etransfer-ant-steps-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          top: 0;
+        }
+      }
+    }
+
+    .etransfer-ant-steps-item-process {
+      .etransfer-ant-steps-item-icon {
+        .etransfer-ant-steps-icon {
+          font-size: 18px;
+          line-height: 36px;
+        }
+      }
+      .etransfer-ant-steps-item-tail {
+        &::after {
+          background-color: var(--etransfer-ui-border);
+        }
+      }
+    }
+
+    .etransfer-ant-steps-item-wait {
+      .etransfer-ant-steps-item-icon {
+        border-color: var(--etransfer-ui-secondary-text);
+        .etransfer-ant-steps-icon {
+          color: var(--etransfer-ui-secondary-text);
+        }
+      }
+      .etransfer-ant-steps-item-tail {
+        &::after {
+          background-color: var(--etransfer-ui-border);
+        }
+      }
+      .etransfer-ant-steps-item-title {
+        color: var(--etransfer-ui-primary-text);
+      }
+    }
+
+    @media @mediaMobile {
+      width: auto;
+    }
+  }
+}

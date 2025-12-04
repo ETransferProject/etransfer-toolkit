@@ -1,0 +1,69 @@
+@import '../../../../assets/theme/constants.less';
+
+.etransfer-ui-mobile-user-profile {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border: 1px solid var(--etransfer-ui-border);
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.etransfer-ui-mobile-user-profile-drawer {
+  .etransfer-ant-drawer-content {
+    border-radius: 0;
+  }
+  .etransfer-ant-drawer-body {
+    padding: 0 0 16px 0;
+  }
+}
+
+.etransfer-ui-mobile-user-profile-drawer-title-wrapper {
+  text-align: left;
+}
+
+.etransfer-ui-mobile-user-profile-drawer-title {
+  height: 28px;
+  line-height: 28px;
+  font-size: 20px;
+  .font-medium();
+}
+
+.etransfer-ui-mobile-user-profile-drawer-user-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: calc(100% - 56px);
+}
+
+.etransfer-ui-mobile-user-profile-drawer-top-wrapper {
+  width: 100%;
+}
+
+.etransfer-ui-mobile-user-profile-drawer-address-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--etransfer-ui-dividers);
+}
+
+.etransfer-ui-mobile-user-profile-drawer-address {
+  font-size: 16px;
+  height: 24px;
+  line-height: 24px;
+  .font-medium();
+}
+
+.etransfer-ui-mobile-user-profile-drawer-address-show {
+  border-bottom: none;
+}
+
+.etransfer-ui-mobile-user-profile-drawer-address-content {
+  padding-left: 40px;
+}
+.etransfer-ui-mobile-user-profile-drawer-address-content-border {
+  border-bottom: 1px solid var(--etransfer-ui-dividers);
+}

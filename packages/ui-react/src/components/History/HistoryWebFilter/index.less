@@ -1,0 +1,75 @@
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-history-web-filter-title {
+  height: 42px;
+  line-height: 42px;
+  font-size: 24px;
+  .font-medium();
+}
+
+.etransfer-ui-history-web-filter-search-wrapper {
+  padding: 16px 0;
+
+  .etransfer-ant-select {
+    .etransfer-ant-select-selector {
+      display: flex;
+      align-items: center;
+      height: 42px;
+      border: 1px solid var(--etransfer-ui-border);
+      border-radius: 6px;
+
+      &:hover {
+        border: 1px solid var(--etransfer-ui-hover);
+      }
+
+      .ant-select-selection-item {
+        color: var(--etransfer-ui-primary-text);
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.etransfer-ui-history-web-filter-select-type,
+.etransfer-ui-history-web-filter-select-status {
+  width: 156px;
+  border-radius: 6px;
+}
+
+.etransfer-ui-history-web-filter-select-status {
+  margin: 0 12px;
+}
+
+.etransfer-ui-history-web-filter-range-picker {
+  border-radius: 6px;
+  margin-right: 12px;
+}
+
+.etransfer-ui-history-web-filter-reset-button {
+  width: 92px;
+  margin-right: 12px;
+  border: none;
+  background: none;
+  color: var(--etransfer-ui-normal);
+  border-radius: 6px;
+  box-shadow: none;
+  &:hover {
+    color: var(--etransfer-ui-normal);
+    background: var(--etransfer-ui-hover-bg);
+  }
+  &:active {
+    color: var(--etransfer-ui-normal);
+    background: var(--etransfer-ui-click-bg);
+  }
+}
+
+.etransfer-ui-history-web-filter-reset-icon {
+  color: var(--etransfer-ui-normal);
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.etransfer-ui-history-web-filter-reset-word {
+  font-size: 14px;
+  margin-left: 8px;
+}

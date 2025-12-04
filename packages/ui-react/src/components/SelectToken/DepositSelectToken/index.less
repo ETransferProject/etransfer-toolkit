@@ -1,0 +1,106 @@
+@import '../../../assets/theme/breakpoint.less';
+@import '../../../assets/theme/constants.less';
+
+.etransfer-ui-deposit-select-token {
+  position: relative;
+
+  .etransfer-ui-select-token-result {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+
+    .select-token-value-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .select-token-value-selected {
+        gap: 8px;
+        .primary {
+          color: var(--etransfer-ui-primary-text);
+          font-size: 18px;
+          //   line-height: 28px;
+          // margin-right: 8px;
+          .font-medium();
+
+          //   @media @mediaWeb {
+          //     font-size: 16px;
+          //     line-height: 24px;
+          //   }
+        }
+        .secondary {
+          color: var(--etransfer-ui-secondary-text);
+          font-size: 14px;
+          //   line-height: 22px;
+          .etransfer-ui-text-overflow(1);
+          word-break: break-all;
+        }
+        .icon {
+          width: 28px;
+          height: 28px;
+          margin-right: 8px;
+
+          //   @media @mediaWeb {
+          //     width: 24px;
+          //     height: 24px;
+          //   }
+        }
+      }
+    }
+  }
+
+  .etransfer-ui-select-token-not-selected {
+    gap: 8px;
+    .select-token-value-placeholder {
+      color: var(--etransfer-ui-brand);
+      font-size: 16px;
+      //   line-height: 24px;
+      user-select: none;
+      .font-medium();
+
+      //   @media @mediaWeb {
+      //     font-size: 18px;
+      //     line-height: 28px;
+      //   }
+    }
+  }
+
+  .etransfer-ui-deposit-token-select-dropdown {
+    position: absolute;
+    top: 53px;
+    left: 0;
+    width: 100%;
+  }
+}
+
+.etransfer-ui-deposit-select-token-for-web {
+  padding: 12px;
+  border-radius: 6px;
+  background-color: var(--etransfer-ui-normal-bg);
+
+  .etransfer-ui-select-token-result {
+    .select-token-value-row {
+      .select-token-value-selected {
+        .primary {
+          font-size: 16px;
+          //   line-height: 24px;
+        }
+
+        .icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+  .etransfer-ui-select-token-not-selected {
+    .select-token-value-placeholder {
+      font-size: 18px;
+      //   line-height: 28px;
+    }
+  }
+}
