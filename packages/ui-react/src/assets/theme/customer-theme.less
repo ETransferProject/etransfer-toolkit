@@ -1,0 +1,99 @@
+@import './constants.less';
+
+#etransfer-ui-root {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--etransfer-ui-page-bg);
+  min-width: var(--etransfer-ui-page-min-width);
+  font-size: 14px;
+
+  // Solve the font loading error problem caused by the UI framework taking effect in the first place
+  .font-regular-important();
+
+  /* set list-style */
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  /* set text-decoration */
+  a,
+  a:hover {
+    text-decoration: none;
+  }
+
+  .pointer-events-none {
+    pointer-events: none !important;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    appearance: textfield;
+  }
+}
+
+// selected option
+.etransfer-ant-select-dropdown.etransfer-ui-drop-wrap {
+  .etransfer-ant-select-item-option-selected {
+    color: var(--etransfer-ui-normal) !important;
+    background: none !important;
+  }
+}
+
+.etransfer-ui-wrapper {
+  height: 100%;
+}
+
+.etransfer-ui-txn-notification {
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: none;
+  border: 1px solid #96e2b0;
+  background-color: #e6f8ec;
+
+  .ant-notification-notice-content {
+    .ant-notification-notice-with-icon {
+      .ant-notification-notice-icon {
+        margin-top: 2px;
+        margin-left: 0;
+      }
+      .ant-notification-notice-message {
+        margin-left: 28px;
+        font-size: 16px;
+        .font-medium();
+      }
+      .ant-notification-notice-description {
+        margin-left: 28px;
+      }
+    }
+  }
+  .ant-notification-notice-close {
+    top: 12px;
+    right: 12px;
+  }
+}
+
+.etransfer-ui-txn-notification-success {
+  border: 1px solid #96e2b0;
+  background-color: #e6f8ec;
+}
+
+.etransfer-ui-txn-notification-error {
+  border: 1px solid #fbb0b0;
+  background-color: #feecec;
+
+  .ant-notification-notice-content {
+    .ant-notification-notice-with-icon {
+      .ant-notification-notice-icon {
+        svg path {
+          fill: var(--etransfer-ui-error);
+        }
+      }
+    }
+  }
+}

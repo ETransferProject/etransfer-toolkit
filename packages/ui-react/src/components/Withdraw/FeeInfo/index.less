@@ -1,0 +1,40 @@
+@import '../../../assets/theme/breakpoint.less';
+
+.etransfer-ui-withdraw-fee-info-item {
+  flex-wrap: nowrap;
+  gap: 0;
+}
+
+.etransfer-ui-withdraw-fee-info-label {
+  flex: none;
+  margin-right: 8px;
+  color: var(--etransfer-ui-secondary-text);
+  font-size: 14px;
+  line-height: 22px;
+  @media @mediaMobileAndPad {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+.etransfer-ui-withdraw-fee-info-value {
+  color: var(--etransfer-ui-primary-text);
+  font-size: 14px;
+  line-height: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @media @mediaMobileAndPad {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+.etransfer-ui-withdraw-fee-info-unit {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 22px;
+  @media @mediaMobileAndPad {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

@@ -1,0 +1,35 @@
+@import '../../../assets/theme/constants.less';
+@import '../../../assets/theme/breakpoint.less';
+
+.etransfer-ui-withdraw-select-chain {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+
+  @media @mediaMobileAndPad {
+    justify-content: center;
+  }
+  @media @mediaWeb {
+    min-width: 440px;
+  }
+  @media @mediaWeb-2xl {
+    max-width: 614px;
+    min-width: 440px;
+    width: 100%;
+  }
+
+  .etransfer-ui-withdraw-select-chain-label {
+    @media @mediaMobileAndPad {
+      margin-right: 8px;
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--etransfer-ui-secondary-text);
+    }
+    @media @mediaWeb {
+      margin-right: 16px;
+      font-size: 24px;
+      line-height: 32px;
+      .font-medium();
+    }
+  }
+}

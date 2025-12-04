@@ -1,0 +1,26 @@
+@import '../../../assets/theme/breakpoint.less';
+
+.etransfer-ui-common-warning-tip {
+  width: 100%;
+  padding: 9px 12px;
+  background-color: var(--etransfer-ui-warning-bg);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 22px;
+  gap: 16px;
+
+  @media @mediaPad {
+    padding: 9px 24px;
+  }
+  @media @mediaMobile {
+    padding: 9px 16px;
+  }
+}
+
+.etransfer-ui-common-warning-tip-arrow{
+  transform: rotate(-90deg);
+}
+
+.etransfer-ui-common-warning-tip-content {
+  margin-left: 8px;
+}
